@@ -24,6 +24,7 @@ use Tribe\Events\Views\V2\Template\Featured_Title;
 use Tribe\Events\Views\V2\Template\Title;
 use Tribe\Events\Views\V2\Utils\View as View_Utils;
 use Tribe__Context as Context;
+use Tribe__Customizer__Section as Customizer_Section;
 use Tribe__Events__Main as TEC;
 use Tribe__Rewrite as TEC_Rewrite;
 use Tribe__Utils__Array as Arr;
@@ -44,6 +45,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function register() {
 		$this->container->tag( [ Event_Query_Controller::class, ], 'query_controllers' );
+
+		// Register the Views V2 Customizer controls asset.
+		tribe_asset( TEC::instance(), 'tribe-customizer-views-v2-controls', 'customizer-views-v2-controls.css' );
+
 		$this->add_actions();
 		$this->add_filters();
 	}
@@ -65,6 +70,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_action( 'the_post', [ $this, 'manage_sensitive_info' ] );
 		add_action( 'get_header', [ $this, 'print_single_json_ld' ] );
 		add_action( 'tribe_template_after_include:events/v2/components/after', [ $this, 'action_add_promo_banner' ], 10, 3 );
+
+		// Customizer.
+		add_action( 'tribe_customizer_register_global_elements_settings', [ $this, 'action_include_global_elements_settings' ], 10, 3 );
+		add_action( 'tribe_customizer_register_single_event_settings', [ $this, 'action_include_single_event_settings' ], 15, 3 );
 	}
 
 	/**
@@ -115,6 +124,27 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12, 2 );
 		add_filter( 'tribe_events_views_v2_view_data', [ View_Utils::class, 'clean_data' ] );
+
+		// Customizer.
+		add_filter( 'tribe_customizer_print_styles_action', [ $this, 'print_inline_styles_in_footer' ] );
+		add_filter( 'tribe_customizer_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 3 );
+		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
+
+		// Register the asset for Customizer controls.
+		add_action( 'customize_controls_print_styles', [ $this, 'enqueue_customizer_controls_styles' ] );
+
+		// Add filters to change the display of website links on the Single Event template.
+		add_filter( 'tribe_get_event_website_link_label', [ $this, 'filter_single_event_details_event_website_label' ], 10, 2 );
+		add_filter( 'tribe_events_get_event_website_title', '__return_empty_string' );
+
+		add_filter( 'tribe_get_venue_website_link_label', [ $this, 'filter_single_event_details_venue_website_label' ], 10, 2 );
+		add_filter( 'tribe_events_get_venue_website_title', '__return_empty_string' );
+
+		add_filter( 'tribe_get_organizer_website_link_label', [ $this, 'filter_single_event_details_organizer_website_label' ], 10, 2 );
+		add_filter( 'tribe_events_get_organizer_website_title', '__return_empty_string' );
+
+		// iCalendar export request handling.
+		add_filter( 'tribe_ical_template_event_ids', [ $this, 'inject_ical_event_ids' ] );
 	}
 
 	/**
@@ -839,5 +869,214 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		return array_merge( $sheets, $v2_sheets );
+	}
+
+	/**
+	 * Changes the action the Customizer should use to try and print inline styles to print the inline
+	 * styles in the footer.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @return string The action the Customizer should use to print inline styles.
+	 */
+	public function print_inline_styles_in_footer() {
+		return 'wp_print_footer_scripts';
+	}
+
+	/**
+	 * Adds new Global Elements settings via the hook in common.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param \Tribe__Customizer__Section $section    The Global Elements Customizer section.
+	 * @param WP_Customize_Manager        $manager    The settings manager.
+	 * @param \Tribe__Customizer          $customizer The Customizer object.
+	 */
+	public function action_include_global_elements_settings( $section, $manager, $customizer ) {
+		$this->container->make( Customizer::class )->include_global_elements_settings( $section, $manager, $customizer );
+	}
+
+	/**
+	 * Adds new Single Event settings via the hook in common.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param \Tribe__Customizer__Section $section    The Single Event Customizer section.
+	 * @param WP_Customize_Manager        $manager    The settings manager.
+	 * @param \Tribe__Customizer          $customizer The Customizer object.
+	 */
+	public function action_include_single_event_settings( $section, $manager, $customizer ) {
+		$this->container->make( Customizer::class )->include_single_event_settings( $section, $manager, $customizer );
+	}
+
+	/**
+	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_global_elements_css_template( $css_template, $section, $customizer ) {
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section, $customizer );
+	}
+
+	/**
+	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.3.1
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Single Event section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_single_event_css_template( $css_template, $section, $customizer ) {
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section && $customizer instanceof \Tribe__Customizer ) ) {
+			return $css_template;
+		}
+
+		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section, $customizer );
+	}
+
+	/**
+	 * Enqueues Customizer controls styles specific to Views v2 components.
+	 *
+	 * @since 5.4.0
+	 */
+	public function enqueue_customizer_controls_styles() {
+		return $this->container->make( Customizer::class )->enqueue_customizer_controls_styles();
+	}
+
+	/**
+	 * Filter the website link label and change it for Single Event Classic Editor.
+	 * Use the following in functions.php to disable:
+	 * remove_filter( 'tribe_get_venue_website_link_label', [ tribe( 'events.views.v2.hooks' ), 'filter_single_event_details_website_label' ] );
+	 *
+	 * @since 5.5.0
+	 *
+	 * @param string     $label The filtered label.
+	 * @param null|string|int $post_id The current post ID.
+	 *
+	 * @return string
+	 */
+	public function filter_single_event_details_event_website_label( $label, $post_id = null ) {
+		// If not V2 or not Classic Editor, return the website url.
+		if ( $this->is_v1_or_blocks( $post_id ) ) {
+			return $label;
+		}
+
+		return sprintf(
+			_x(
+				'View %s Website',
+				'Capitalized label for the event website link.',
+				'the-events-calendar'
+			),
+			tribe_get_event_label_singular()
+		);
+	}
+
+	/**
+	 * Filter the website link label and change it for Single Event Classic Editor.
+	 * Use the following in functions.php to disable:
+	 * remove_filter( 'tribe_get_venue_website_link_label', [ tribe( 'events.views.v2.hooks' ), 'filter_single_event_details_venue_website_label' ] );
+	 *
+	 * @since 5.5.0
+	 *
+	 * @param string     $label The filtered label.
+	 * @param null|string|int $post_id The current post ID.
+	 *
+	 * @return string
+	 */
+	public function filter_single_event_details_venue_website_label( $label, $post_id = null ) {
+		// If not V2 or not Classic Editor, return the website url.
+		if ( $this->is_v1_or_blocks( $post_id ) ) {
+			return $label;
+		}
+
+		return sprintf(
+			_x(
+				'View %s Website',
+				'Capitalized label for the venue website link.',
+				'the-events-calendar'
+			),
+			tribe_get_venue_label_singular()
+		);
+	}
+
+	/**
+	 * Filter the website link label and change it for Single Event Classic Editor.
+	 * Use the following in functions.php to disable:
+	 * remove_filter( 'tribe_get_organizer_website_link_label', [ tribe( 'events.views.v2.hooks' ), 'filter_single_event_details_organizer_website_label' ] );
+	 *
+	 * @since 5.5.0
+	 *
+	 * @param string     $label The filtered label.
+	 * @param null|string|int $post_id The current post ID.
+	 *
+	 * @return string
+	 */
+	public function filter_single_event_details_organizer_website_label( $label, $post_id = null ) {
+		// If not V2 or not Classic Editor, return the website url.
+		if ( $this->is_v1_or_blocks( $post_id ) ) {
+			return $label;
+		}
+
+		return sprintf(
+			_x(
+				'View %s Website',
+				'Capitalized label for the organizer website link.',
+				'the-events-calendar'
+			),
+			tribe_get_organizer_label_singular()
+		);
+	}
+
+	/**
+	 * Sugar function for the above that determines if the labels should be filtered.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param null|string|int $post_id The current post ID.
+	 *
+	 * @return boolean
+	 */
+	public function is_v1_or_blocks( $post_id = null ) {
+		return is_null( $post_id )
+				|| ! tribe_events_single_view_v2_is_enabled()
+				|| has_blocks( $post_id );
+	}
+
+	/**
+	 * Overrides the default iCalendar export link logic to inject a list of event
+	 * post IDs fitting the Views V2 criteria.
+	 *
+	 * @since 4.6.0
+	 *
+	 * @param array<int>|false $event_ids Either a list of event post IDs that has been
+	 *                                    explicitly requested or `false` to indicate the
+	 *                                    iCalendar export link did not indicate a specific
+	 *                                    set of event post IDs.
+	 *
+	 * @return array<int> Either the original input value if a specific set of event post IDs
+	 *                    was requested as part of the iCalendar export link, or a filtered
+	 *                    set of event post IDs compiled depending on the current View context
+	 *                    and request arguments.
+	 */
+	public function inject_ical_event_ids( $event_ids = null ) {
+		if ( false !== $event_ids ) {
+			// The request already specifies a set of Event post IDs to return, bail.
+			return $event_ids;
+		}
+
+		return $this->container->make( iCalendar\Request::class )->get_event_ids();
 	}
 }
