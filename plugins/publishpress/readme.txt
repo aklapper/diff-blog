@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.5
-Stable tag: 3.0.1
+Tested up to: 5.7
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,79 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.3.2] - 2021-05-27 =
+
+* Fixed: Fix the icons for statuses, #841;
+* Fixed: Fix HTML syntax error in the custom status module for the admin pages;
+* Changed: Add new background color for the PublishPress Debug button;
+
+= [3.3.1] - 2021-04-15 =
+
+* Fixed: Fix the editorial comments for non-admins, #827;
+* Fixed: Check capability "edit_pp_notif_workflows" before displaying the "Active Notifications" list in the post edit page, not displaying it for those who can't edit notifications;
+* Fixed: Fix PHP warning about undefined index "untrashed" after trashing a scheduled post, #831;
+
+= [3.3.0] - 2021-03-18 =
+
+* Added: Add filters to customize the available fields in the notifications "shortcode" help text: publishpress_notifications_shortcode_post_fields, publishpress_notifications_shortcode_actor_fields, publishpress_notifications_shortcode_workflow_fields, publishpress_notifications_shortcode_edcomments_fields, publishpress_notifications_shortcode_receiver_fields;
+* Fixed: Fix the value of the notification channel for authors identified by the email, #793;
+* Fixed: Fixed the admin menu icon restoring the calendar dashicon, #802;
+* Fixed: Fixed PHP Fatal error Uncaught ArgumentCountError: Too few arguments to function MA_Multiple_Authors::filter_workflow_receiver_post_authors, #814;
+* Fixed: Fixed bug on WP 5.7 that breaks the toggle button on accordion of metaboxes, #816;
+* Fixed: Fixed PHP notice: array to string conversion in debug.php:87, #813;
+* Fixed: Fixed The Upgrade to Pro banner and menu item to show only for the users who can install plugins, #599;
+
+= [3.2.0] - 2021-02-10 =
+
+* Added: Add option to rescheduled failed notifications in the notifications log. We only had that option for scheduled notifications, #786;
+* Added: Added option to the notification workflow for avoiding notifying the user who triggered the action, #778;
+* Added: Add the name of blog in the notification log content column, if in a multisite network;
+* Fixed: Fix calendar picking up the wrong day, depending on the time and timezone, #572;
+* Fixed: Fix styling for the error messages in the notifications log. The error lines were moved to the top of the screen due the "error" CSS class, #765;
+* Fixed: Add sanitization and escape variables in some variables, increasing compatibility with WP VIP and more security, #773;
+* Fixed: Fix PHP warning "Creating default object from empty value in publishpress-authors.php:772", correctly assigning the filter "pp_pre_insert_editorial_comment". (Allows PublishPress Revisions integration), #231;
+* Fixed: Fixed timezone information in the calendar subscription and .ics file, #784;
+* Fixed: Fixed role selection when adding a new user in a multisite, #788;
+
+= [3.1.0] - 2021-01-20 =
+
+* Added: Add shortcodes to the email notifications for the post content, excerpt and post type, #288
+* Fixed: Fixed support to PHP 5.6, #772;
+
+= [3.0.3] - 2021-01-11 =
+
+* Fixed: Fix fatal error when "editor" or "author" user roles are missed in the site, #767;
+* Fixed: Update the list of capabilities in the PublishPress Capabilities plugin;
+
+= [3.0.2] - 2021-01-07 =
+
+* Fixed: Fix JS warning: $(html) HTML text after last tag is ignored in the custom-status.js file, #754;
+* Fixed: Fix JS warning: jQuery.fn.attr(‘selected’) might use property instead of attribute on custom-status.js, #753;
+* Fixed: Fix JS warning: jQuery.fn.attr(‘multiple’) might use property instead of attribute on custom-status.js, #753;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/calendar/lib/calendar.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.keydown() event shorthand is deprecated on "publishpress/modules/calendar/lib/calendar.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.mouseover() event shorthand is deprecated on "publishpress/modules/calendar/lib/calendar.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.mouseout() event shorthand is deprecated on "publishpress/modules/calendar/lib/calendar.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.change() event shorthand is deprecated on "publishpress/modules/calendar/lib/calendar.js", #761;
+* Fixed: Fix JS warning: jQuery.isArray is deprecated; use Array.isArray on "publishpress/common/libs/select2/js/select2.min.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/content-overview/lib/content-overview.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.change() event shorthand is deprecated on "publishpress/modules/content-overview/lib/content-overview.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/notifications-log/assets/js/admin.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/editorial-metadata/lib/editorial-metadata-configure.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.keyup() event shorthand is deprecated on "publishpress/modules/custom-status/lib/custom-status-configure.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/custom-status/lib/custom-status-configure.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.keydown() event shorthand is deprecated on "publishpress/modules/custom-status/lib/custom-status-configure.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.mousedown() event shorthand is deprecated on "publishpress/modules/custom-status/lib/custom-status-configure.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.focus() event shorthand is deprecated on "publishpress/common/js/jquery-ui-timepicker-addon.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.bind() is deprecated on "publishpress/common/js/jquery-ui-timepicker-addon.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.bind() is deprecated on "publishpress/modules/custom-status/lib/custom-status.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/editorial-comments/lib/editorial-comments.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.bind() is deprecated on "publishpress/modules/improved-notifications/libs/opentip/downloads/opentip-jquery.js", #761;
+* Fixed: Fix JS warning: jQuery.fn.click() event shorthand is deprecated on "publishpress/modules/improved-notifications/assets/js/multiple-select.js", #761;
+* Fixed: Fix the post_id passed to the method "get_workflows_related_to_post" that lists the notification workflows related to the post being edited;
+* Changed: Removed the user field in the Roles page to avoid break big sites, #750;
+* Added: Add capability to control who can view ("pp_view_editorial_metadata") or edit ("pp_edit_editorial_metadata") the editorial metadata, deprecating the capability "pp_editorial_metadata_user_can_edit", #758;
 
 = [3.0.1] - 2020-11-24 =
 

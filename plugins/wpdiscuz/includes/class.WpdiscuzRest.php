@@ -51,10 +51,16 @@ class WpdiscuzRest extends WP_REST_Controller {
 
 	public function checkNewComments($data) {
 		$params    = $data->get_params();
-		$response  = ["ids" => []];
+		$response  = ["ids" => [], "commentIDsToRemove" => []];
 		$status    = current_user_can("moderate_comments") ? "all" : "approved";
 		$args      = ["status" => $status, "post_id" => $params["postId"]];
+		global $wpdiscuz;
+		$wpdiscuz->isWpdiscuzLoaded = true;
 		$commentId = $this->dbManager->getLastCommentId($args);
+		if ($params["visibleCommentIds"]) {
+			$response["commentIDsToRemove"] = $this->dbManager->commentIDsToRemove($args, $params["visibleCommentIds"]);
+		}
+		$form = $this->wpdiscuzForm->getForm($params["postId"]);
 		if ($commentId > $params["lastId"]) {
 			$currentUser   = WpdiscuzHelper::getCurrentUser();
 			$sentEmail     = !empty($_COOKIE["comment_author_email_" . COOKIEHASH]) ? trim($_COOKIE["comment_author_email_" . COOKIEHASH]) : "";
@@ -64,7 +70,7 @@ class WpdiscuzRest extends WP_REST_Controller {
 			if (!empty($newCommentIds)) {
 				$response["ids"] = $newCommentIds;
 				if ($this->options->live["bubbleShowNewCommentMessage"]) {
-					$comment                  = get_comment($commentId);
+					$comment = get_comment($commentId);
 					$comment->comment_content = apply_filters("comment_text", $comment->comment_content, $comment, ["is_wpdiscuz_comment" => true]);
 					$comment->comment_content = strip_tags($comment->comment_content);
 					if (stripos($comment->comment_content, "[/spoiler]") === false) {
@@ -80,7 +86,7 @@ class WpdiscuzRest extends WP_REST_Controller {
 							$gravatarUserId    = $user->ID;
 							$gravatarUserEmail = $user->user_email;
 						} else {
-							$authorName        = $comment->comment_author ? $comment->comment_author : esc_html($this->options->phrases["wc_anonymous"]);
+							$authorName        = $comment->comment_author ? $comment->comment_author : esc_html($this->options->getPhrase("wc_anonymous"));
 							$authorAvatarField = $comment->comment_author_email;
 							$gravatarUserId    = 0;
 							$gravatarUserEmail = $comment->comment_author_email;
@@ -106,11 +112,11 @@ class WpdiscuzRest extends WP_REST_Controller {
 						$response["avatar"]      = get_avatar($gravatarArgs["wpdiscuz_gravatar_field"], $gravatarArgs["wpdiscuz_gravatar_size"], "", $authorName, $gravatarArgs);
 					}
 				}
-				$form                                = $this->wpdiscuzForm->getForm($params["postId"]);
-				$response["all_comments_count"]      = esc_html(get_comments_number($params["postId"]));
-				$response["all_comments_count_html"] = "<span class='wpdtc'>" . esc_html($response["all_comments_count"]) . "</span> " . esc_html(1 == $response["all_comments_count"] ? $form->getHeaderTextSingle() : $form->getHeaderTextPlural());
 			}
 		}
+		$response["all_comments_count"]      = get_comments_number($params["postId"]);
+		$response["all_comments_count_before_threads_html"] = "<span class='wpdtc' title='" . esc_attr($response["all_comments_count"]) . "'>" . esc_html($this->helper->getNumber($response["all_comments_count"])) . "</span> " . esc_html(1 == $response["all_comments_count"] ? $form->getHeaderTextSingle() : $form->getHeaderTextPlural());
+		$response["all_comments_count_bubble_html"] = "<span id='wpd-bubble-all-comments-count'" . ($response["all_comments_count"] ? "" : " style='display:none;'") . " title='" . esc_attr($response["all_comments_count"]) . "'>" . esc_html($this->helper->getNumber($response["all_comments_count"])) . "</span>";
 		return $response;
 	}
 

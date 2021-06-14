@@ -59,12 +59,11 @@ if (!defined("ABSPATH")) {
                     fit: true, // 100% fit in a container
                     tabidentify: 'phrases_tab_id' // The tab groups identifier
                 });
-                $(document).delegate('.phrases_tab_id .resp-tab-item', 'click', function () {
-                    var activeTabIndex = $('.resp-tabs-list.phrases_tab_id li.resp-tab-active').index();
-                    Cookies.set('phrasesActiveTabIndex', activeTabIndex, {expires: 30});
+                $(document).on('click', '.phrases_tab_id .resp-tab-item', function () {
+                    Cookies.set('phrasesActiveTabIndex', $('.resp-tabs-list.phrases_tab_id li.resp-tab-active').index(), {expires: 30});
                 });
                 var savedIndex = Cookies.get('phrasesActiveTabIndex') >= 0 ? Cookies.get('phrasesActiveTabIndex') : 0;
-                $('.resp-tabs-list.phrases_tab_id li').eq(savedIndex).click();
+                $('.resp-tabs-list.phrases_tab_id li').eq(savedIndex).trigger('click');
             });
         </script>
         <table class="form-table wc-form-table">

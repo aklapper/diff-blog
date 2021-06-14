@@ -1440,7 +1440,7 @@ class SocialLogin {
         global $post;
         if (!is_user_logged_in() && wpDiscuz()->helper->isLoadWpdiscuz($post) && $this->generalOptions->isShowLoginButtons()) {
             echo "<div class='wpd-social-login'>";
-            echo "<span class='wpd-connect-with'>" . esc_html($this->generalOptions->phrases["wc_connect_with"]) . "</span>";
+            echo "<span class='wpd-connect-with'>" . esc_html($this->generalOptions->getPhrase("wc_connect_with")) . "</span>";
             $this->facebookButton();
             $this->instagramButton();
             $this->twitterButton();
@@ -1472,10 +1472,10 @@ class SocialLogin {
         if (!is_user_logged_in() && wpDiscuz()->helper->isLoadWpdiscuz($post) && $this->generalOptions->isShowLoginButtons() && $this->generalOptions->social["socialLoginAgreementCheckbox"]) {
             ?>
             <div class="wpd-social-login-agreement" style="display: none;">
-                <div class="wpd-agreement-title"><?php echo $this->generalOptions->phrases["wc_social_login_agreement_label"]; ?></div>
-                <div class="wpd-agreement"><?php echo $this->generalOptions->phrases["wc_social_login_agreement_desc"]; ?></div>
+                <div class="wpd-agreement-title"><?php echo $this->generalOptions->getPhrase("wc_social_login_agreement_label"); ?></div>
+                <div class="wpd-agreement"><?php echo $this->generalOptions->getPhrase("wc_social_login_agreement_desc"); ?></div>
                 <div class="wpd-agreement-buttons">
-                    <div class="wpd-agreement-buttons-right"><span class="wpd-agreement-button wpd-agreement-button-disagree"><?php echo $this->generalOptions->phrases["wc_agreement_button_disagree"]; ?></span><span class="wpd-agreement-button wpd-agreement-button-agree"><?php echo $this->generalOptions->phrases["wc_agreement_button_agree"]; ?></span></div>
+                    <div class="wpd-agreement-buttons-right"><span class="wpd-agreement-button wpd-agreement-button-disagree"><?php echo $this->generalOptions->getPhrase("wc_agreement_button_disagree"); ?></span><span class="wpd-agreement-button wpd-agreement-button-agree"><?php echo $this->generalOptions->getPhrase("wc_agreement_button_agree"); ?></span></div>
                     <div class="wpd-clear"></div>
                 </div>
             </div>
@@ -1609,7 +1609,7 @@ class SocialLogin {
     }
 
     public function socialScripts() {
-        if (!$this->generalOptions->general["loadComboVersion"] && ($this->generalOptions->social["enableFbShare"] || $this->generalOptions->isShowLoginButtons())) {
+        if (!$this->generalOptions->general["loadComboVersion"] && ($this->generalOptions->social["enableFbShare"] || (!is_user_logged_in() && $this->generalOptions->isShowLoginButtons()))) {
             $suf = $this->generalOptions->general["loadMinVersion"] ? ".min" : "";
             wp_register_script("wpdiscuz-social-js", plugins_url(WPDISCUZ_DIR_NAME . "/assets/js/wpdiscuz-social$suf.js"), ["wpdiscuz-ajax-js"], get_option("wc_plugin_version", "1.0.0"), true);
             wp_enqueue_script("wpdiscuz-social-js");

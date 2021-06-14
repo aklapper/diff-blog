@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
     QTags.addButton('wpdiscuz_spoiler', 'spoiler', '[spoiler title=" "]', '[/spoiler]', '', 'Spoiler', 115);
     quicktags(settings);
 
-    $(document).delegate('.wpd-reply-button', 'click', function () {
+    $(document).on('click', '.wpd-reply-button', function () {
         var uniqueId = 'wc-textarea-' + wpdiscuzGetUniqueId($(this));
         if (uniqueId) {
             var settings = {

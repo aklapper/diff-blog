@@ -189,6 +189,10 @@ class Row {
         if (isset($fieldData["meta_key_replace"]) && $fieldData["meta_key_replace"]) {
             $sql = $wpdb->prepare("UPDATE `{$wpdb->commentmeta}` SET `meta_key` = %s WHERE `meta_key` = %s", $newKey, $oldKey);
             $wpdb->query($sql);
+            $sql = $wpdb->prepare("UPDATE `{$wpdb->postmeta}` SET `meta_key` = %s WHERE `meta_key` = %s", wpdFormConst::WPDISCUZ_RATING_SEPARATE_AVG . $newKey, wpdFormConst::WPDISCUZ_RATING_SEPARATE_AVG . $oldKey);
+            $wpdb->query($sql);
+            $sql = $wpdb->prepare("UPDATE `{$wpdb->postmeta}` SET `meta_key` = %s WHERE `meta_key` = %s", wpdFormConst::WPDISCUZ_RATING_SEPARATE_COUNT . $newKey, wpdFormConst::WPDISCUZ_RATING_SEPARATE_COUNT . $oldKey);
+            $wpdb->query($sql);
         }
     }
 

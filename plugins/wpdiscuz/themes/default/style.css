@@ -192,6 +192,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-form-wrap{padding-bottom: 10px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap{display: flex; flex-wrap: nowrap; flex-direction: row; justify-content:space-between; padding: 20px 0; align-items: center;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper]{flex-grow:1; position: relative; width: 100%;}
+#wpdcom .wpd-form .wpd-textarea-wrap{position: relative;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper] textarea{width: 100%;}
 #wpdcom .wpd-form .wpd-avatar{margin-right: 15px; border-radius: 100%; text-align: left;flex-shrink: 0; align-self: flex-start;}
 #wpdcom .wpd-form .wpd-avatar img,
@@ -218,6 +219,9 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wpd-textarea-wrap textarea{width: 100%;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wmu-upload-wrap {flex-basis: 100%;text-align: right; margin-top: 3px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wmu-upload-wrap i{color: #888; font-size: 18px;}
+#wpdcom .wpd-form .wpdiscuz-textarea-wrap .wpd-editor-buttons-right{float:right;}
+#wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wpd-editor-buttons-right{display:flex;align-items:center;margin-left: auto;}
+#comments #wpdcom .wpd-form .wpd_comm_form .wpdiscuz-textarea-wrap.wpd-txt .wpd-editor-buttons-right span{display: inline-block;margin:3px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt [wpd-tooltip]::after{left:auto; margin-left: -35px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt [wpd-tooltip]::before{right: 25px; left:auto;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .quicktags-toolbar .ed_button {opacity: 0.8; box-shadow:none; background: #eeeeee; color: #666; font-size: 13px; padding: 1px 12px; margin: 2px 1px; display: inline-block; border-radius: 0; line-height: 20px;}
@@ -272,6 +276,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 
 /* Comment Form | ROWS and COLS */
 #wpdcom .wpd-form-foot{margin-left: 70px;}
+#wpdcom .wpd-form-row .wpdiscuz-item{clear: both;}
 #wpdcom .wpd-form-row .wpd-form-col-full{width:100%; float:none; margin:0; text-align:left; padding:0; }
 #wpdcom .wpd-form-row .wpd-form-col-left{width:49%; float:left; margin:0; text-align:left; padding:0; }
 #wpdcom .wpd-form-row .wpd-form-col-right{width:49%; float:right; margin:0; text-align:right; padding:0; }
@@ -283,8 +288,8 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpdiscuz-item label.wpd-field-label{ float:none; }
 #wpdcom .wpd-form-row .wpdiscuz-item{width:100%; vertical-align:baseline; padding:1px 0 7px 0; position:relative; }
 #wpdcom .wpd-form-row .wpd-field{width:100%; line-height:20px; color:#777777; display:inline-block; float:none; clear:both; margin:0; box-sizing:border-box; padding-top:2%; padding-bottom: 2%; font-size:14px; border-radius:3px; vertical-align:baseline;}
-#wpdcom .wpd-form-row .wpd-has-icon .wpd-field{padding-left:30px; }
-#wpdcom .wpd-form-row .wpd-has-desc .wpd-field{padding-right:30px; }
+#wpdcom .wpd-form-row .wpd-has-icon .wpd-field{padding-left:30px;}
+#wpdcom .wpd-form-row .wpd-has-desc .wpd-field{padding-right:30px;}
 #wpdcom .wpd-form-row .wpdiscuz-item .wpd-field-icon {display:inline-block; font-size:16px; line-height:16px; opacity:0.3; padding:0; margin:0px; position:absolute; top:9px; left:8px; width:20px; text-align:left; }
 #wpdcom .wpd-form-row .wpdiscuz-item .wpd-field-desc{display:inline-block; font-size:16px; line-height:16px; opacity:1; margin:0px; position:absolute; top:8px; right:8px; width:20px; text-align:right; border-left:1px solid #ccc; color:#aaa; padding:0px 5px; cursor:pointer; }
 #wpdcom .wpd-form-row .wpdiscuz-item.wpd-field-select .wpd-field-desc{border-left: none;}
@@ -330,11 +335,11 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-single{ border-bottom:none; }
 #wpdcom .wpd-form-col-left .wpd-field-group.wpd-field-single .wpd-field-group-title, #wpdcom .wpd-form-col-right .wpd-field-group.wpd-field-single .wpd-field-group-title{ font-size:inherit; text-align:right; line-height:inherit; height:25px; }
 #wpdcom .wpdiscuz-item.wpd-field-radio, #wpdcom .wpdiscuz-item.wpd-field-checkbox{ padding-bottom:12px;}
-#wpdcom .wpdiscuz-item.wpd-field-radio input, #wpdcom .wpdiscuz-item.wpd-field-checkbox input{box-shadow: none;}
+#wpdcom .wpdiscuz-item.wpd-field-radio input, #wpdcom .wpdiscuz-item.wpd-field-checkbox input{box-shadow: none; border: 1px solid; display: inline-block; padding: initial!important;}
 #wpdcom .wpd-form-col-left div:last-of-type, #wpdcom .wpd-form-col-right div:last-of-type{ border-bottom:none; }
 #wpdcom .wpd-field-radio .wpd-item, #wpdcom .wpd-field-checkbox .wpd-item{ display:inline-block; padding:1px; margin:1px 0; min-width:60px; }
-#wpdcom .wpd-field-radio .wpd-field, #wpdcom .wpd-field-checkbox .wpd-field { width:auto; height:25px; display:inline-block; float:left; padding:0px; line-height:20px; vertical-align:baseline; margin:0px 6px 0 0; }
-#wpdcom .wpd-field-radio .wpd-field-label, #wpdcom .wpd-field-checkbox .wpd-field-label{ width:auto; height:22px; display:inline; float:none; padding:0px; line-height:20px; font-size:12px; margin:0px; vertical-align:middle; }
+#wpdcom .wpd-field-radio .wpd-field, #wpdcom .wpd-field-checkbox .wpd-field { width:18px; height:18px; display:inline-block; float:left; padding:0px; line-height:20px; vertical-align:baseline; margin:0px 6px 0 0; box-sizing: border-box;}
+#wpdcom .wpd-field-radio .wpd-field-label, #wpdcom .wpd-field-checkbox .wpd-field-label{ width:auto; height:22px; display:inline; float:none; padding:0px; line-height:20px; font-size:12px; margin:0px;}
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-agreement,
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-cookies-consent{padding-top:0px;}
 #wpdcom .wpd-form-col-full .wpdiscuz-item.wpd-field-group.wpd-field-radio .wpd-item-wrap,
@@ -359,6 +364,8 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-top-custom-fields .wpd-custom-field.wpd-cf-rating .wpd-cf-value i{min-width: 20px; align-self: center; text-align: center;}
 
 /* Comment Fields | RATING */
+#wpdcom .wpdiscuz-item .wpdiscuz-rating,
+#wpdcom .wpd-item-wrap fieldset{display:inline-block;}
 #wpdcom .wpdiscuz-item.wpd-field-group.wpd-field-rating{ border-bottom:1px dotted #ddd; height:77px; margin-bottom:0px; }
 #wpdcom .wpdiscuz-item .wpdiscuz-rating {border: none; float: left; margin:0px; padding:5px 0 5px 1px; margin-left:-5px; }
 #wpdcom .wpdiscuz-item .wpdiscuz-rating > input { visibility:visible;opacity:0; position:absolute; z-index: -1;}
@@ -1041,7 +1048,8 @@ _:-ms-lang(x), #wpdcom.wpd-layout-3 .wpd-comment.wpd-reply .wpd-comment-footer .
     #wpdcom {padding: 5px 3%;overflow: hidden;}
     #wpdcom .wpd-form-row div:hover.wpd-field-desc span {margin-left: -187px;}
     #wpdcom .wpd-form-row div.wpd-field-desc span::after { margin-left: 80px;}
-    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{left: -150%;}
+    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{left: -150%;top:-16px}
+    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::before{top:-16px}
     #wpdcom #wpd-threads .wpd-tool-wrap [wpd-tooltip]::after{left: -50%;}
     /* Inline Commenting */
     .wpd-inline-form-wrapper{left: 0; width: 320px; position:relative; top: 7px; bottom: 15px;}

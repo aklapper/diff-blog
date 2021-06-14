@@ -50,7 +50,7 @@ class Name extends Field {
                     <div class="wpd-field-icon"><i class="<?php echo strpos(trim($args["icon"]), " ") ? esc_attr($args["icon"]) : "fas " . esc_attr($args["icon"]); ?>"></i></div>
                     <?php
                 }
-                $required = $args["required"] ? "required='required'" : "";
+                $required = $args["required"] ? "required='required' aria-required='true'" : "";
                 ?>
                 <input id="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" value="" <?php echo $required; ?> class="<?php echo esc_attr($name); ?> wpd-field" type="text" name="<?php echo esc_attr($name); ?>" placeholder="<?php echo esc_attr__($args["name"], "wpdiscuz") . (!empty($args["required"]) ? "*" : ""); ?>" maxlength="<?php echo esc_attr($options->form["commenterNameMaxLength"]); ?>" <?php echo $nameLengthRange; ?> title="">
                 <label for="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" class="wpdlb"><?php echo esc_attr($args["name"]) . (!empty($args["required"]) ? "*" : ""); ?></label>
@@ -74,7 +74,7 @@ class Name extends Field {
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
         $name = isset($_POST[$fieldName]) ? filter_var(wp_unslash($_POST[$fieldName])) : "";
         if (!$args["required"]) {
-            $name = !($name) ? esc_html($options->phrases["wc_anonymous"]) : $name;
+            $name = !($name) ? esc_html($options->getPhrase("wc_anonymous")) : $name;
         }
         return $name;
     }

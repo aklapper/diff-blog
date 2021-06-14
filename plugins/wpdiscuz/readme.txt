@@ -2,8 +2,8 @@
 Contributors: gVectors Team
 Tags: comment, comments, ajax comments, comment form, comment fields
 Requires at least: 5.0
-Tested up to: 5.6
-Stable tag: 7.0.9
+Tested up to: 5.7
+Stable tag: 7.2.2
 Requires PHP: 5.4 and higher
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -23,7 +23,6 @@ wpDiscuz version 7 is a revolutionary perspective on the commenting world! This 
 * wpDiscuz Addons: [https://wpdiscuz.com/addons/](https://wpdiscuz.com/addons/)
 * wpDiscuz Documentation: [https://wpdiscuz.com/docs/](https://wpdiscuz.com/docs/)
 * wpDiscuz Addons Bundle: [https://gvectors.com/product/wpdiscuz-addons-bundle/](https://gvectors.com/product/wpdiscuz-addons-bundle/)
-
 
 = Comments - wpDiscuz Features =
 
@@ -89,7 +88,6 @@ wpDiscuz version 7 is a revolutionary perspective on the commenting world! This 
 * | [wpDiscuz - Front-end Moderation](https://gvectors.com/product/wpdiscuz-frontend-moderation/)
 * | [wpDiscuz - Subscription Manager](https://gvectors.com/product/wpdiscuz-subscribe-manager/)
 * | [wpDiscuz - Comment Search](https://gvectors.com/product/wpdiscuz-comment-search/)
-* | [wpDiscuz - Comment Translation](https://gvectors.com/product/wpdiscuz-comment-translation/)
 * | [wpDiscuz - Comment Report and Flagging](https://gvectors.com/product/wpdiscuz-report-flagging/)
 * | [wpDiscuz - Ads Manager](https://gvectors.com/product/wpdiscuz-ads-manager/)
 * | [wpDiscuz - User & Comment Mentioning](https://gvectors.com/product/wpdiscuz-user-comment-mentioning/)
@@ -98,6 +96,11 @@ wpDiscuz version 7 is a revolutionary perspective on the commenting world! This 
 * | [wpDiscuz - Online Users](https://gvectors.com/product/wpdiscuz-online-users/)
 * | [wpDiscuz - Private Comments](https://gvectors.com/product/wpdiscuz-private-comments/)
 * | [wpDiscuz - Syntax Highlighter](https://gvectors.com/product/wpdiscuz-syntax-highlighter/)
+
+= Integration Add-ons =
+
+* | [wpDiscuz - BuddyPress Integration](https://gvectors.com/product/wpdiscuz-buddypress-integration/)
+* | [wpDiscuz - Tenor GIFs Integration](https://gvectors.com/product/wpdiscuz-tenor-integration/)
 
 
 == Installation ==
@@ -179,10 +182,97 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 
 == Changelog ==
 
+= Comments - wpDiscuz v7.2.2 =
+
+* Added: Comment bubble compatibility on WooCommerce product page
+* Added: Open product review tab when user click the comment bubble
+* Fixed Bug: Problem with the media uploader delete button
+* Fixed Bug: Issues with the user mentioning feature
+
+**IMPORTANT!**
+* Please don't forget delete all caches and purge CDN after the update.
+
+
+= Comments - wpDiscuz v7.2.1 =
+
+* New Addon: [wpDiscuz - Tenor GIFs Integration](https://gvectors.com/product/wpdiscuz-tenor-integration/)
+* Fixed Bug: Issues on product pages
+* Fixed Bug: Problem with placeholder of the rich comment editor
+* Fixed Bug: Problem with unsubscribe URL when it links to the home page
+* Fixed Bug: Conflicts with Facebook widgets
+
+
+= Comments - wpDiscuz v7.2.0 =
+
+* New Addon: [wpDiscuz - BuddyPress Integration](https://gvectors.com/product/wpdiscuz-buddypress-integration/)
+* Added: Option to set replies maximum length
+* Added: Character counter for comment field (plain text mode)
+* Added: Sends email notification to followers and mentioned users once comment is approved
+* Fixed Bug: Comment editor placeholder issue
+* Fixed Bug: Missing calendar icon
+* Fixed Bug: Lots of small bugs have been fixed
+
+
+= Comments - wpDiscuz v7.1.5 =
+
+* Fixed Bug: Small issue with feedback forms
+* Added: Removes post related feedback forms when post is deleted
+
+
+= Comments - wpDiscuz v7.1.4 =
+
+* Added: WordPress 5.7 compatibility
+* Added: Keep showing "hide/show replies" button on expending replies
+* Added: wpDiscuz dashboard and settings menu on the top admin menu
+* Added: Removes user subscription and follow data when user is deleted
+* Added: Store post average rating information in _postmeta table
+* Fixed Bug: wpDiscuz inline commenting and Block editor conflict
+
+
+= Comments - wpDiscuz v7.1.3 =
+
+* Updated: Better protection of AJAX requests
+* Updated: Better optimization of AJAX requests
+
+
+= Comments - wpDiscuz v7.1.2 =
+
+* Fixed Bug: Guest doesn't see comments
+* Fixed Bug: Some issues with the previous version.
+
+
+= Comments - wpDiscuz v7.1.1 =
+
+* Added: Auto-cleanup of orphaned comment attachments
+* Added: Option to hide comments for user roles in comment form settings
+* Added: Option to hide comments for guests in comment form settings
+* Added: All options with color picker are changed to WordPress color picker
+* Added: Filter hook `comments_array` for WPML compatibility.
+* Added: Action hook `wpdiscuz_add_rating` on submitting a new rating
+* Added: Filter hook `wpdiscuz_enable_feedback_shortcode_button` to disable inline comment button from the editor toolbar
+
+
+= Comments - wpDiscuz v7.1.0 =
+
+* Added: Live removing of moderated comments when the live update is enabled
+* Added: Display full date on moving mouse over comment dates
+* Added: Compatibility with new versions of jQuery lib
+* Added: Lots of new hooks for more flexibility and extendability of the plugin
+* Changed: Human readable counts and statistics
+* Fixed bug: Style comment custom fields on different themes
+* Fixed bug: Problems with lightbox functions
+* Fixed bug: Comment link icon issue on mobile devices
+* Fixed bug: Many small bugs has been fixed
+
+
+= Comments - wpDiscuz v7.0.10 =
+
+* Fixed bug: Phrases and translations issues
+
+
 = Comments - wpDiscuz v7.0.9 =
 
 * Core optimization
-
 
 
 = Comments - wpDiscuz v7.0.8 =
@@ -205,12 +295,6 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 * Fixed bug: User mentioning notification issue if replies are posted in dashboard
 
 
-**IMPORTANT!**
-1. Please don't forget delete all caches and purge CDN after the update.
-2. If you're updating from 5.x.x versions please read this topic: [https://wordpress.org/support/topic/before-updating-to-wpdiscuz-7-version/](https://wordpress.org/support/topic/before-updating-to-wpdiscuz-7-version/)
-
-
-
 = Comments - wpDiscuz v7.0.7 =
 
 * Added: Important changes for WordPress 5.5 compatibility
@@ -231,10 +315,6 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 
 
 = Comments - wpDiscuz v7.0.5 =
-
-**IMPORTANT!**
-Security vulnerability issue is fixed, please update!
-We have got a report that, there is a security vulnerability issue in 7.0.0 > 7.0.4 versions. This issue was fixed on 23rd July with the new update 7.0.5. We recommend keep using the latest versions and update wpDiscuz to 7.0.5 and higher versions.
 
 * Security vulnerability issue is fixed
 * Changed: New and better way to check allowed comment attachments
@@ -303,10 +383,6 @@ We have got a report that, there is a security vulnerability issue in 7.0.0 > 7.
 [https://wpdiscuz.com/community/news/security-vulnerability-issue-in-5-3-5-please-udate/](https://wpdiscuz.com/community/news/security-vulnerability-issue-in-5-3-5-please-udate/)
 
 = Comments - wpDiscuz v7.0.0 / v7.0.1 / v7.0.2 =
-
-**IMPORTANT!**
-This is a major version update!
-As you can see we jump from 5.3.5 version to 7.0.x, so you should understand, that lots of things are changed. This is a totally different wpDiscuz. Therefore, we recommend you follow these steps before updating to version 7:
 
 1. You'll lose old wpDiscuz template customization in the active WordPress theme /wpdiscuz/ folder. If you don't have customized wpDiscuz template files, just ignore this note.
 2. Please check [wpDiscuz v7 demo](https://wpdiscuz.com/) to make sure you want to update.
