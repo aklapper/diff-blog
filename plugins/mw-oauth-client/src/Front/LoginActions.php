@@ -1,4 +1,25 @@
 <?php // phpcs:ignore Wordpress.Files.InvalidClassFileName
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @package     mediawiki\wp-oauth-client
+ * @author      Brad Morris <hello@bradleymorris.co.uk>
+ * @license     https://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (or later)
+ * @copyright   Wikimedia Foundation
+ */
 
 namespace MW\WPOAuth\Front;
 
@@ -16,8 +37,6 @@ use MW\WPOAuth\Helpers;
  *
  * @package     mediawiki\wp-oauth-client
  * @author      Brad Morris <hello@bradleymorris.co.uk>
- * @license     Proprietary
- * @copyright   Wikimedia Foundation
  */
 final class LoginActions {
 
@@ -119,13 +138,13 @@ final class LoginActions {
 			$url      = wp_nonce_url( $action, Helpers::PLUGIN_SLUG . '_begin' );
 			$position = 'top'; // @todo: provide this as an option in the plugin settings
 
-			$output  = '<div class="mw-sso-login mw-sso-login--'. esc_attr( $position ) . '">';
+			$output  = '<div class="mw-sso-login mw-sso-login--' . esc_attr( $position ) . '">';
 			$output .= '	<a class="button button-large" href="' . esc_url( $url ) . '">' . esc_html__( 'Login with MediaWiki' ) . '</a>';
 			$output .= '	<span class="mw-sso-login__or">' . esc_html__( 'Or', 'mw-oauth' ) . '</span>';
 			$output .= '</div>';
 
 			if ( 'top' === $position ) {
-				add_action( 'login_footer', array($this, 'output_button_position_script'), 100 );
+				add_action( 'login_footer', array( $this, 'output_button_position_script' ), 100 );
 			}
 			echo apply_filters( 'mw_oauth_login_button_html', $output, $url ); // phpcs:ignore
 		}

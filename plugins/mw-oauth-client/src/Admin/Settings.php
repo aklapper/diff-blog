@@ -1,4 +1,25 @@
 <?php // phpcs:ignore Wordpress.Files.InvalidClassFileName
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @package     mediawiki\wp-oauth-client
+ * @author      Brad Morris <hello@bradleymorris.co.uk>
+ * @license     https://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (or later)
+ * @copyright   Wikimedia Foundation
+ */
 
 namespace MW\WPOAuth\Admin;
 
@@ -9,8 +30,6 @@ use MW\WPOAuth\Helpers;
  *
  * @package     mediawiki\wp-oauth-client
  * @author      Brad Morris <hello@bradleymorris.co.uk>
- * @license     Proprietary
- * @copyright   Wikimedia Foundation
  */
 final class Settings {
 
@@ -143,7 +162,7 @@ final class Settings {
 			esc_attr( $this->key ),
 			esc_attr( $value )
 		);
-		echo '<p class="description">' . esc_html__( 'If left blank this will default to the homepage' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'If left blank this will default to the homepage', 'mw-oauth' ) . '</p>';
 	}
 
 	/**
@@ -159,7 +178,7 @@ final class Settings {
 			esc_attr( $this->key ),
 			esc_attr( $value )
 		);
-		echo '<p class="description">' . esc_html__( 'For most wikis this will be https://yourdomain/rest.php.' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'For most wikis this will be https://yourdomain/rest.php.', 'mw-oauth' ) . '</p>';
 
 	}
 
@@ -198,14 +217,14 @@ final class Settings {
 	 * @return void
 	 */
 	public function settings_section_callback(): void {
-		echo esc_html__( 'The following details will be provided to you by MediaWiki when a new OAuth consumer is registered.', 'mw-outh' );
+		echo esc_html__( 'The following details will be provided to you by MediaWiki when a new OAuth consumer is registered.', 'mw-oauth' );
 	}
 
 	/**
 	 * @return void
 	 */
 	public function appearance_section_callback(): void {
-		echo esc_html__( 'Control how the login button appears on the WordPress Login Screen', 'mw-outh' );
+		echo esc_html__( 'Control how the login button appears on the WordPress Login Screen', 'mw-oauth' );
 	}
 
 	/**
@@ -214,8 +233,8 @@ final class Settings {
 	public function render_settings_page(): void {
 		?>
 		<div class="wrap">
-			<h1>MediaWiki SSO Settings</h1>
-			<p class="description">Not sure what to enter on this page? Check the help tab in the top right of the page for more info</p>
+			<h1><?php esc_html_e( 'MediaWiki SSO Settings', 'mw-oauth' ); ?></h1>
+			<p class="description"><?php esc_html_e( 'Not sure what to enter on this page? Check the help tab in the top right of the page for more info', 'mw-oauth' ); ?></p>
 			<form method="POST" action="options.php">
 					<?php
 					settings_fields( $this->key );

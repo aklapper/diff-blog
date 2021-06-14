@@ -4,8 +4,8 @@
  *
  * @package     mediawiki\wp-oauth-client
  * @author      Brad Morris <hello@bradleymorris.co.uk>
- * @license     Proprietary
- * @copyright   MediaWiki
+ * @license     https://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (or later)
+ * @copyright   Wikimedia Foundation
  *
  * @wordpress-plugin
  * Plugin Name:         MediaWiki OAuth Client

@@ -266,4 +266,3 @@ if ( $media ) {
 }
 }
 add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 3 );
-

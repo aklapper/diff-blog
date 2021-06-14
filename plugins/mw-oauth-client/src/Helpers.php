@@ -1,4 +1,25 @@
 <?php // phpcs:ignore Wordpress.Files.InvalidClassFileName
+/*
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ * http://www.gnu.org/copyleft/gpl.html
+ *
+ * @package     mediawiki\wp-oauth-client
+ * @author      Brad Morris <hello@bradleymorris.co.uk>
+ * @license     https://opensource.org/licenses/GPL-2.0 GNU General Public License, version 2 (or later)
+ * @copyright   Wikimedia Foundation
+ */
 
 namespace MW\WPOAuth;
 
@@ -7,8 +28,6 @@ namespace MW\WPOAuth;
  *
  * @package     mediawiki\wp-oauth-client
  * @author      Brad Morris <hello@bradleymorris.co.uk>
- * @license     Proprietary
- * @copyright   Wikimedia Foundation
  */
 final class Helpers {
 
@@ -53,7 +72,7 @@ final class Helpers {
 	 * @return void
 	 */
 	public static function enqueue_style( string $handle, string $src, array $deps = array() ): void {
-		wp_enqueue_style( PLUGIN_SLUG . '-' . $handle, static::plugins_url( $src ), $deps, time() );
+		wp_enqueue_style( PLUGIN_SLUG . '-' . $handle, self::plugins_url( $src ), $deps, time() );
 	}
 
 	/**
@@ -64,7 +83,7 @@ final class Helpers {
 	 * @return void
 	 */
 	public static function enqueue_script( string $handle, string $src, array $deps, $in_footer = true ): void {
-		wp_enqueue_script( PLUGIN_SLUG . '-' . $handle, static::plugins_url( $src ), $deps, time(), $in_footer );
+		wp_enqueue_script( PLUGIN_SLUG . '-' . $handle, self::plugins_url( $src ), $deps, time(), $in_footer );
 	}
 
 	/**
