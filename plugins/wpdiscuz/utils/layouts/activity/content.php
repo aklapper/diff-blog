@@ -28,7 +28,7 @@ if ($items && is_array($items)) {
     ?>
     <input type="hidden" class="wpd-page-number" value="0"/>
 <?php } else { ?>
-    <div class='wpd-item'><?php echo esc_html($this->options->phrases["wc_user_settings_no_data"]); ?></div>
+    <div class='wpd-item'><?php echo esc_html($this->options->getPhrase("wc_user_settings_no_data")); ?></div>
     <?php
 }
 $html .= ob_get_clean();

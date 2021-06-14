@@ -189,6 +189,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-form-wrap{padding-bottom: 10px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap{display: flex; flex-wrap: nowrap; flex-direction: row; justify-content:space-between; padding: 20px 0; align-items: center;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper]{flex-grow:1; position: relative; width: 100%;/*overflow: hidden;*/}
+#wpdcom .wpd-form .wpd-textarea-wrap{position: relative;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper] textarea{width: 100%;}
 #wpdcom .wpd-form .wpd-avatar{margin-left: 15px; border-radius: 100%; text-align: right;flex-shrink: 0; align-self: flex-start;}
 #wpdcom .wpd-form .wpd-avatar img,
@@ -216,6 +217,9 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wpd-textarea-wrap textarea{width: 100%;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wmu-upload-wrap {flex-basis: 100%; text-align: left; margin-top: 3px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wmu-upload-wrap i{color: #888; font-size: 18px;}
+#wpdcom .wpd-form .wpdiscuz-textarea-wrap .wpd-editor-buttons-right{float:right;}
+#wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .wpd-editor-buttons-right{display:flex;align-items:center;margin-right: auto;}
+#comments #wpdcom .wpd-form .wpd_comm_form .wpdiscuz-textarea-wrap.wpd-txt .wpd-editor-buttons-right span{display: inline-block;margin:2px;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt [wpd-tooltip]::after{left: 28px; right: auto;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt [wpd-tooltip]::before{left: 25px; right:auto;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap.wpd-txt .quicktags-toolbar .ed_button {opacity: 0.8; box-shadow:none; background: #eeeeee; color: #666; font-size: 13px; padding: 1px 12px; margin: 2px 1px; display: inline-block; border-radius: 0; line-height: 20px;}
@@ -270,6 +274,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 
 /* Comment Form | ROWS and COLS */
 #wpdcom .wpd-form-foot{margin-right: 70px;}
+#wpdcom .wpd-form-row .wpdiscuz-item{clear: both;}
 #wpdcom .wpd-form-row .wpd-form-col-full{width:100%; float:none; margin:0; text-align:right; padding:0; }
 #wpdcom .wpd-form-row .wpd-form-col-left{width:49%; float:right; margin:0; text-align:right; padding:0; }
 #wpdcom .wpd-form-row .wpd-form-col-right{width:49%; float:left; margin:0; text-align:left; padding:0; }
@@ -334,11 +339,11 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-single{ border-bottom:none; }
 #wpdcom .wpd-form-col-left .wpd-field-group.wpd-field-single .wpd-field-group-title, #wpdcom .wpd-form-col-right .wpd-field-group.wpd-field-single .wpd-field-group-title{ font-size:inherit; text-align:left; line-height:inherit; height:25px; }
 #wpdcom .wpdiscuz-item.wpd-field-radio, #wpdcom .wpdiscuz-item.wpd-field-checkbox{padding-bottom:12px;}
-#wpdcom .wpdiscuz-item.wpd-field-radio input, #wpdcom .wpdiscuz-item.wpd-field-checkbox input{box-shadow: none;}
+#wpdcom .wpdiscuz-item.wpd-field-radio input, #wpdcom .wpdiscuz-item.wpd-field-checkbox input{box-shadow: none; border: 1px solid; display: inline-block; padding: initial !important;}
 #wpdcom .wpd-form-col-left div:last-of-type, #wpdcom .wpd-form-col-right div:last-of-type{ border-bottom:none; }
 #wpdcom .wpd-field-radio .wpd-item, #wpdcom .wpd-field-checkbox .wpd-item{ display:inline-block; padding:1px; margin:1px 0; min-width:60px; }
-#wpdcom .wpd-field-radio .wpd-field, #wpdcom .wpd-field-checkbox .wpd-field { width:auto; height:25px; display:inline-block; float:right; padding:0px; line-height:20px; vertical-align:baseline; margin:0px 0 0 6px; }
-#wpdcom .wpd-field-radio .wpd-field-label, #wpdcom .wpd-field-checkbox .wpd-field-label{ width:auto; height:22px; display:inline; float:none; padding:0px; line-height:20px; font-size:12px; margin:0px; vertical-align:middle; }
+#wpdcom .wpd-field-radio .wpd-field, #wpdcom .wpd-field-checkbox .wpd-field { width:18px; height:18px; display:inline-block; float:right; padding:0px; line-height:20px; vertical-align:baseline; margin:0px 0 0 6px; box-sizing: border-box;}
+#wpdcom .wpd-field-radio .wpd-field-label, #wpdcom .wpd-field-checkbox .wpd-field-label{ width:auto; height:22px; display:inline; float:none; padding:0px; line-height:20px; font-size:12px; margin:0px;}
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-agreement,
 #wpdcom .wpdiscuz-item.wpd-field-checkbox.wpd-field-cookies-consent{padding-top:0px;}
 
@@ -357,6 +362,8 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-top-custom-fields .wpd-custom-field.wpd-cf-rating .wpd-cf-value i{min-width: 20px; align-self: center; text-align: center;}
 
 /* Comment Fields | RATING */
+#wpdcom .wpdiscuz-item .wpdiscuz-rating,
+#wpdcom .wpd-item-wrap fieldset{display:inline-block;}
 #wpdcom .wpdiscuz-item.wpd-field-group.wpd-field-rating{ border-bottom:1px dotted #ddd; height:77px; margin-bottom:0px; }
 #wpdcom .wpdiscuz-item .wpdiscuz-rating {border: none; float: right; margin:0px; padding:5px 1px 5px 0; margin-right:-5px; }
 #wpdcom .wpdiscuz-item .wpdiscuz-rating > input { visibility:visible;opacity:0; position:absolute; z-index: -1;}
@@ -1024,7 +1031,8 @@ _:-ms-lang(x), #wpdcom.wpd-layout-3 .wpd-comment.wpd-reply .wpd-comment-footer .
     #wpdcom {padding: 5px 3%;overflow: hidden;}
     #wpdcom .wpd-form-row div:hover.wpd-field-desc span {margin-right: -187px;}
     #wpdcom .wpd-form-row div.wpd-field-desc span::after { margin-right: 80px;}
-    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{right: -150%;}
+    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{right: -150%;top:-16px}
+    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::before{top:-16px}
     #wpdcom #wpd-threads .wpd-tool-wrap [wpd-tooltip]::after{right: -50%;}
     /* Inline Commenting */
     .wpd-inline-form-wrapper{right: 0; width: 320px; position:relative; top: 7px; bottom: 15px;}

@@ -96,8 +96,7 @@ class Website extends Field {
             }
 
             if (filter_var($website_url, FILTER_VALIDATE_URL) === false) {
-                $messageArray["code"] = "wc_error_url_text";
-                wp_die(json_encode($messageArray));
+				wp_send_json_error("wc_error_url_text");
             }
         }
         return esc_url_raw($website_url, ["http", "https"]);

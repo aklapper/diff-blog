@@ -172,7 +172,12 @@ if (!class_exists('PP_Roles')) {
             add_action('publishpress_admin_submenu', [$this, 'action_admin_submenu'], 40);
 
             add_action('profile_update', [$this, 'action_profile_update'], 10, 2);
-            add_action('user_register', [$this, 'action_profile_update'], 9);
+
+            if (is_multisite()) {
+                add_action('add_user_to_blog', [$this, 'action_profile_update'], 9);
+            } else {
+            	add_action('user_register', [$this, 'action_profile_update'], 9);
+            }
 
             if ($this->wasPublishPressInstalledBefore()) {
                 add_action('publishpress_migrate_groups_to_role', [$this, 'migrateUserGroupsToRoles']);
@@ -816,6 +821,7 @@ if (!class_exists('PP_Roles')) {
         {
             global $publishpress;
 
+
             $publishpress->settings->print_default_header($publishpress->modules->roles);
 
             echo '<div class="wrap">';
@@ -854,26 +860,6 @@ if (!class_exists('PP_Roles')) {
                 }
             }
 
-            // Get a list of users to display in the select field.
-            $users = get_users();
-
-            // Get selected users, if any role is being edited.
-            $role_users = [];
-
-            if (!empty($role->name)) {
-                $users_in_the_role = get_users(
-                    [
-                        'role' => $role->name,
-                    ]
-                );
-
-                if (!empty($users_in_the_role)) {
-                    foreach ($users_in_the_role as $user) {
-                        $role_users[] = $user->ID;
-                    }
-                }
-            }
-
             $this->configureTwig();
 
             echo $this->twig->render(
@@ -897,8 +883,6 @@ if (!class_exists('PP_Roles')) {
                         'users_description'        => __("Add users to this role.", 'publishpress'),
                     ],
                     'role'               => $role,
-                    'users'              => $users,
-                    'role_users'         => $role_users,
                     'nonce'              => wp_nonce_field('manage-role'),
                     'errors'             => isset($_REQUEST['form-errors']) ? $_REQUEST['form-errors'] : [],
                 ]
@@ -986,14 +970,6 @@ if (!class_exists('PP_Roles')) {
                 wp_die(__('Error adding role.', 'publishpress'));
             }
 
-            // Check if we have to add users to this role.
-            if (!empty($users)) {
-                foreach ($users as $user_id) {
-                    $user = get_user_by('ID', (int)$user_id);
-                    $user->add_role($name);
-                }
-            }
-
             $args         = [
                 'action'  => 'edit-role',
                 'role-id' => $role->name,
@@ -1070,34 +1046,6 @@ if (!class_exists('PP_Roles')) {
             $roles[$name]['name'] = $display_name;
 
             update_option($wpdb->prefix . 'user_roles', $roles);
-
-            // Check if we have to remove users from this role.
-            $users_in_the_role = get_users(
-                [
-                    'role' => $name,
-                ]
-            );
-
-            if (!empty($users_in_the_role)) {
-                foreach ($users_in_the_role as $user) {
-                    // Check if you not are trying to remove yourself from administrator, and block if so.
-                    if ('administrator' === $name && $user->ID === get_current_user_id()) {
-                        continue;
-                    }
-
-                    if (!in_array($user->ID, $users)) {
-                        $user->remove_role($name);
-                    }
-                }
-            }
-
-            // Check if we have to add users to this role.
-            if (!empty($users)) {
-                foreach ($users as $user_id) {
-                    $user = get_user_by('ID', (int)$user_id);
-                    $user->add_role($name);
-                }
-            }
 
             $args         = [
                 'action'  => 'edit-role',

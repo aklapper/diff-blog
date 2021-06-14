@@ -106,7 +106,7 @@ if (!defined("ABSPATH")) {
                 <label for="showFollowsTab"></label>
             </div>
             <div class="wpd-optset-label">
-                <label for="showFollowsTab"><?php esc_html_e("Show Followers Tab", "wpdiscuz") ?></label>
+                <label for="showFollowsTab"><?php esc_html_e("Show Follows Tab", "wpdiscuz") ?></label>
             </div>
         </div>
     </div>

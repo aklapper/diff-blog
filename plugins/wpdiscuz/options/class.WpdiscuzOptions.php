@@ -60,13 +60,11 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 		$this->wp["threadCommentsDepth"] = get_option("thread_comments_depth");
 		$this->wp["isPaginate"]          = get_option("page_comments");
 		$wordpressCommentOrder           = strtolower(get_option("comment_order"));
-		$this->wp["commentOrder"]        = in_array($wordpressCommentOrder, [
-			"asc",
-			"desc",
-		]) ? $wordpressCommentOrder : "desc";
+		$this->wp["commentOrder"]        = in_array($wordpressCommentOrder, ["asc", "desc",]) ? $wordpressCommentOrder : "desc";
 		$this->wp["commentPerPage"]      = get_option("comments_per_page");
 		$this->wp["showAvatars"]         = get_option("show_avatars");
 		$this->wp["defaultCommentsPage"] = get_option("default_comments_page");
+		$this->general["humanReadableNumbers"] = apply_filters("wpdiscuz_enable_human_readable_numbers", true);
 		$this->isFileFunctionsExists     = function_exists("file_get_contents") && function_exists("file_put_contents");
 		$this->initFormRelations();
 		$this->initGoodbyeCaptchaField();
@@ -274,7 +272,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 		$this->moderation["userCommentsLimit"]            = isset($options[self::TAB_MODERATION]["userCommentsLimit"]) ? $options[self::TAB_MODERATION]["userCommentsLimit"] : $defaultOptions[self::TAB_MODERATION]["userCommentsLimit"];
 		/* content */
 		$this->content["commentTextMinLength"]    = isset($options[self::TAB_CONTENT]["commentTextMinLength"]) ? $options[self::TAB_CONTENT]["commentTextMinLength"] : $defaultOptions[self::TAB_CONTENT]["commentTextMinLength"];
+		$this->content["replyTextMinLength"]      = isset($options[self::TAB_CONTENT]["replyTextMinLength"]) ? $options[self::TAB_CONTENT]["replyTextMinLength"] : $defaultOptions[self::TAB_CONTENT]["replyTextMinLength"];
 		$this->content["commentTextMaxLength"]    = isset($options[self::TAB_CONTENT]["commentTextMaxLength"]) ? $options[self::TAB_CONTENT]["commentTextMaxLength"] : $defaultOptions[self::TAB_CONTENT]["commentTextMaxLength"];
+		$this->content["replyTextMaxLength"]      = isset($options[self::TAB_CONTENT]["replyTextMaxLength"]) ? $options[self::TAB_CONTENT]["replyTextMaxLength"] : $defaultOptions[self::TAB_CONTENT]["replyTextMaxLength"];
 		$this->content["enableImageConversion"]   = isset($options[self::TAB_CONTENT]["enableImageConversion"]) ? $options[self::TAB_CONTENT]["enableImageConversion"] : $defaultOptions[self::TAB_CONTENT]["enableImageConversion"];
 		$this->content["enableShortcodes"]        = isset($options[self::TAB_CONTENT]["enableShortcodes"]) ? $options[self::TAB_CONTENT]["enableShortcodes"] : $defaultOptions[self::TAB_CONTENT]["enableShortcodes"];
 		$this->content["commentReadMoreLimit"]    = isset($options[self::TAB_CONTENT]["commentReadMoreLimit"]) ? $options[self::TAB_CONTENT]["commentReadMoreLimit"] : $defaultOptions[self::TAB_CONTENT]["commentReadMoreLimit"];
@@ -366,7 +366,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			"wc_confirm_email"                                  => esc_html__("Confirm your subscription", "wpdiscuz"),
 			"wc_comfirm_success_message"                        => esc_html__("You've successfully confirmed your subscription.", "wpdiscuz"),
 			"wc_confirm_email_subject"                          => esc_html__("Subscription Confirmation", "wpdiscuz"),
-			"wc_confirm_email_message"                          => __("Hi, <br/> You just subscribed for new comments on our website. This means you will receive an email when new comments are posted according to subscription option you've chosen. <br/> To activate, click confirm below. If you believe this is an error, ignore this message and we'll never bother you again. <br/><br/><a href='[POST_URL]'>[POST_TITLE]</a><br/><br/><a href='[CONFIRM_URL]'>Confirm Your Subscrption</a><br/><br/><a href='[CANCEL_URL]'>Cancel Subscription</a>", "wpdiscuz"),
+			"wc_confirm_email_message"                          => __("Hi, <br/> You just subscribed for new comments on our website. This means you will receive an email when new comments are posted according to subscription option you've chosen. <br/> To activate, click confirm below. If you believe this is an error, ignore this message and we'll never bother you again. <br/><br/><a href='[POST_URL]'>[POST_TITLE]</a><br/><br/><a href='[CONFIRM_URL]'>Confirm Your Subscription</a><br/><br/><a href='[CANCEL_URL]'>Cancel Subscription</a>", "wpdiscuz"),
 			"wc_error_empty_text"                               => esc_html__("please fill out this field to comment", "wpdiscuz"),
 			"wc_error_email_text"                               => esc_html__("email address is invalid", "wpdiscuz"),
 			"wc_error_url_text"                                 => esc_html__("url is invalid", "wpdiscuz"),
@@ -454,6 +454,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			"wc_user_settings_subscribed_to_all_comments"       => esc_html__("subscribed to all follow-up comments of this post", "wpdiscuz"),
 			"wc_user_settings_check_email"                      => esc_html__("Please check your email."),
 			"wc_user_settings_email_error"                      => esc_html__("Error : Can't send email.", "wpdiscuz"),
+			"wc_delete_this_comment"                            => esc_html__("Delete this comment", "wpdiscuz"),
+			"wc_cancel_this_subscription"                       => esc_html__("Cancel this subscription", "wpdiscuz"),
+			"wc_cancel_this_follow"                             => esc_html__("Cancel this follow", "wpdiscuz"),
 			"wc_confirm_comment_delete"                         => esc_html__("Are you sure you want to delete this comment?", "wpdiscuz"),
 			"wc_confirm_cancel_subscription"                    => esc_html__("Are you sure you want to cancel this subscription?", "wpdiscuz"),
 			"wc_confirm_cancel_follow"                          => esc_html__("Are you sure you want to cancel this follow?", "wpdiscuz"),
@@ -522,6 +525,24 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			"wmuChangeImage"                                    => esc_html__("Change the attached image", "wpdiscuz"),
 		];
 	}
+
+	/**
+     * Method to get phrase and apply filter on it for more dynamic control over it
+     *
+	 * @param $key string key of phrase
+	 * @param array $args custom arguments for filtering
+	 * @return string|null phrase as string (if exists), default phrase (if exists in $args) or null
+	 */
+	public function getPhrase($key, $args = []) {
+	    $args = wp_parse_args($args, [
+	            "default" => null,
+                "apply_filter" => true,
+        ]);
+	    if (isset($this->phrases[$key])) {
+	        return $args["apply_filter"] ? apply_filters("wpdiscuz_phrase", $this->phrases[$key], $key, $args) : $this->phrases[$key];
+        }
+	    return $args["default"];
+    }
 
 	public function toArray() {
 		$options = [
@@ -727,7 +748,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			],
 			self::TAB_CONTENT        => [
 				"commentTextMinLength"    => $this->content["commentTextMinLength"],
+				"replyTextMinLength"      => $this->content["replyTextMinLength"],
 				"commentTextMaxLength"    => $this->content["commentTextMaxLength"],
+				"replyTextMaxLength"      => $this->content["replyTextMaxLength"],
 				"enableImageConversion"   => $this->content["enableImageConversion"],
 				"enableShortcodes"        => $this->content["enableShortcodes"],
 				"commentReadMoreLimit"    => $this->content["commentReadMoreLimit"],
@@ -971,7 +994,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			],
 			self::TAB_CONTENT        => [
 				"commentTextMinLength"    => 1,
+				"replyTextMinLength"      => 1,
 				"commentTextMaxLength"    => "",
+				"replyTextMaxLength"      => "",
 				"enableImageConversion"   => 1,
 				"enableShortcodes"        => 0,
 				"commentReadMoreLimit"    => 0,
@@ -1032,7 +1057,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 	}
 
 	public function isShareEnabled() {
-		return ($this->social["enableFbShare"] || $this->social["enableTwitterShare"] || $this->social["enableVkShare"] || $this->social["enableOkShare"]);
+		return $this->social["enableFbShare"] || $this->social["enableTwitterShare"] || $this->social["enableVkShare"] || $this->social["enableOkShare"];
 	}
 
 	public function getOptionsForJs() {
@@ -1076,8 +1101,10 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 		$jsArgs["liveUpdateGuests"]             = $this->live["liveUpdateGuests"];
 		$jsArgs["wordpressThreadCommentsDepth"] = $this->wp["threadCommentsDepth"];
 		$jsArgs["wordpressIsPaginate"]          = $this->wp["isPaginate"];
-		$jsArgs["commentTextMaxLength"]         = $this->content["commentTextMaxLength"] ? $this->content["commentTextMaxLength"] : null;
+		$jsArgs["commentTextMaxLength"]         = $this->content["commentTextMaxLength"] ? $this->content["commentTextMaxLength"] : 0;
+		$jsArgs["replyTextMaxLength"]           = $this->content["replyTextMaxLength"] ? $this->content["replyTextMaxLength"] : 0;
 		$jsArgs["commentTextMinLength"]         = $this->content["commentTextMinLength"];
+		$jsArgs["replyTextMinLength"]           = $this->content["replyTextMinLength"];
 		if ($this->form["storeCommenterData"] < 0) {
 			$jsArgs["storeCommenterData"] = 100000;
 		} else if ($this->form["storeCommenterData"] == 0) {
@@ -1090,6 +1117,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 		}
 		$jsArgs["socialLoginAgreementCheckbox"] = $this->social["socialLoginAgreementCheckbox"];
 		$jsArgs["enableFbLogin"]                = $this->social["enableFbLogin"];
+		$jsArgs["fbUseOAuth2"]                  = $this->social["fbUseOAuth2"];
 		$jsArgs["enableFbShare"]                = $this->social["enableFbShare"];
 		$jsArgs["facebookAppID"]                = $this->social["fbAppID"];
 		$jsArgs["facebookUseOAuth2"]            = $this->social["fbUseOAuth2"];
@@ -1163,12 +1191,15 @@ class WpdiscuzOptions implements WpDiscuzConstants {
         toolbar: "",
         counter: {
         uniqueID: "",
-        maxcount : <?php echo $this->content["commentTextMaxLength"] ? $this->content["commentTextMaxLength"] : 0; ?>,
-        mincount : <?php echo $this->content["commentTextMinLength"]; ?>,
+        commentmaxcount : <?php echo $this->content["commentTextMaxLength"] ? $this->content["commentTextMaxLength"] : 0; ?>,
+        replymaxcount : <?php echo $this->content["replyTextMaxLength"] ? $this->content["replyTextMaxLength"] : 0; ?>,
+        commentmincount : <?php echo $this->content["commentTextMinLength"]; ?>,
+        replymincount : <?php echo $this->content["replyTextMinLength"]; ?>,
         },
 		<?php do_action("wpdiscuz_editor_modules"); ?>
         },
-        placeholder: <?php echo json_encode(get_comments_number() ? $this->phrases["wc_comment_join_text"] : $this->phrases["wc_be_the_first_text"]); ?>,
+        wc_be_the_first_text: <?php echo json_encode($this->getPhrase("wc_be_the_first_text", ["unique_id" => "0_0"])); ?>,
+        wc_comment_join_text: <?php echo json_encode($this->getPhrase("wc_comment_join_text", ["unique_id" => "0_0"])); ?>,
         theme: 'snow',
         debug: '<?php echo $this->general["loadComboVersion"] || $this->general["loadMinVersion"] ? 'error' : 'warn'; ?>'
         };
@@ -1430,7 +1461,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				$this->moderation["userCommentsLimit"]            = isset($_POST[self::TAB_MODERATION]["userCommentsLimit"]) ? absint($_POST[self::TAB_MODERATION]["userCommentsLimit"]) : 1;
 			} else if (self::TAB_CONTENT === $_POST["wpd_tab"]) {
 				$this->content["commentTextMinLength"]    = isset($_POST[self::TAB_CONTENT]["commentTextMinLength"]) && absint($_POST[self::TAB_CONTENT]["commentTextMinLength"]) > 0 ? absint($_POST[self::TAB_CONTENT]["commentTextMinLength"]) : 1;
+				$this->content["replyTextMinLength"]      = isset($_POST[self::TAB_CONTENT]["replyTextMinLength"]) && absint($_POST[self::TAB_CONTENT]["replyTextMinLength"]) > 0 ? absint($_POST[self::TAB_CONTENT]["replyTextMinLength"]) : 1;
 				$this->content["commentTextMaxLength"]    = isset($_POST[self::TAB_CONTENT]["commentTextMaxLength"]) && absint($_POST[self::TAB_CONTENT]["commentTextMaxLength"]) > 0 ? absint($_POST[self::TAB_CONTENT]["commentTextMaxLength"]) : "";
+				$this->content["replyTextMaxLength"]      = isset($_POST[self::TAB_CONTENT]["replyTextMaxLength"]) && absint($_POST[self::TAB_CONTENT]["replyTextMaxLength"]) > 0 ? absint($_POST[self::TAB_CONTENT]["replyTextMaxLength"]) : "";
 				$this->content["enableImageConversion"]   = isset($_POST[self::TAB_CONTENT]["enableImageConversion"]) ? absint($_POST[self::TAB_CONTENT]["enableImageConversion"]) : 0;
 				$this->content["enableShortcodes"]        = isset($_POST[self::TAB_CONTENT]["enableShortcodes"]) ? absint($_POST[self::TAB_CONTENT]["enableShortcodes"]) : 0;
 				$this->content["commentReadMoreLimit"]    = isset($_POST[self::TAB_CONTENT]["commentReadMoreLimit"]) && absint($_POST[self::TAB_CONTENT]["commentReadMoreLimit"]) >= 0 ? absint($_POST[self::TAB_CONTENT]["commentReadMoreLimit"]) : 0;
@@ -1614,6 +1647,9 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 			$this->phrases["wc_user_settings_subscribed_to_all_comments"]       = esc_attr($_POST["wc_user_settings_subscribed_to_all_comments"]);
 			$this->phrases["wc_user_settings_check_email"]                      = esc_attr($_POST["wc_user_settings_check_email"]);
 			$this->phrases["wc_user_settings_email_error"]                      = esc_attr($_POST["wc_user_settings_email_error"]);
+			$this->phrases["wc_delete_this_comment"]                            = esc_attr($_POST["wc_delete_this_comment"]);
+			$this->phrases["wc_cancel_this_subscription"]                       = esc_attr($_POST["wc_cancel_this_subscription"]);
+			$this->phrases["wc_cancel_this_follow"]                             = esc_attr($_POST["wc_cancel_this_follow"]);
 			$this->phrases["wc_confirm_comment_delete"]                         = esc_attr($_POST["wc_confirm_comment_delete"]);
 			$this->phrases["wc_confirm_cancel_subscription"]                    = esc_attr($_POST["wc_confirm_cancel_subscription"]);
 			$this->phrases["wc_confirm_cancel_follow"]                          = esc_attr($_POST["wc_confirm_cancel_follow"]);
@@ -1850,6 +1886,24 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				"desc"     => esc_html__("All 16 addons in one bundle. Save 90% and get Unlimited Site License with one year premium support.", "wpdiscuz"),
 				"url"      => "https://gvectors.com/product/wpdiscuz-addons-bundle/",
 			],
+            "buddypress"          => [
+                "version"  => "7.2.0",
+                "requires" => "7.2.0",
+                "class"    => "wpDiscuzBPIntegration",
+                "title"    => "BuddyPress Integration",
+                "thumb"    => plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/buddypress/header.png"),
+                "desc"     => esc_html__("Integrates wpDiscuz with BuddyPress plugin. Profile Tabs, Notifications, Activities, etc...", "wpdiscuz"),
+                "url"      => "https://gvectors.com/product/wpdiscuz-buddypress-integration/",
+            ],
+			"tenor"          => [
+				"version"  => "7.2.0",
+				"requires" => "7.2.0",
+				"class"    => "wpDiscuzTenorIntegration",
+				"title"    => "Tenor GIFs Integration",
+				"thumb"    => plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/tenor/header.png"),
+				"desc"     => esc_html__("Adds [GIF] button and opens popup where you can search for gifs and insert them in comment content.", "wpdiscuz"),
+				"url"      => "https://gvectors.com/product/wpdiscuz-tenor-integration/",
+			],
 			"uploader"            => [
 				"version"  => "7.0.0",
 				"requires" => "7.0.0",
@@ -1872,7 +1926,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				"version"  => "1.0.0",
 				"requires" => "7.0.0",
 				"class"    => "wpDiscuzSyntaxHighlighter",
-				"title"    => "wpDiscuzSyntaxHighlighter",
+				"title"    => "Syntax Highlighter",
 				"thumb"    => plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/syntax/header.png"),
 				"desc"     => esc_html__("Syntax highlighting for comments, automatic language detection and multi-language code highlighting.", "wpdiscuz"),
 				"url"      => "https://gvectors.com/product/wpdiscuz-syntax-highlighter/",
@@ -1975,15 +2029,6 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				"thumb"    => plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/likers/header.png"),
 				"desc"     => esc_html__("See comment likers and voters of each comment. Adds user reputation and badges based on received likes.", "wpdiscuz"),
 				"url"      => "https://gvectors.com/product/wpdiscuz-advanced-likers/",
-			],
-			"translate"           => [
-				"version"  => "7.0.0",
-				"requires" => "7.0.0",
-				"class"    => "WpDiscuzTranslate",
-				"title"    => "Comment Translate",
-				"thumb"    => plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/translate/header.png"),
-				"desc"     => esc_html__('Adds a smart and intuitive AJAX "Translate" button with 60 language options. Uses free translation API.', "wpdiscuz"),
-				"url"      => "https://gvectors.com/product/wpdiscuz-comment-translation/",
 			],
 			"search"              => [
 				"version"  => "7.0.0",
@@ -2102,39 +2147,32 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				])) || strpos($_SERVER["REQUEST_URI"], "edit.php?post_type=wpdiscuz_form") !== false) {
 			$lastHash      = get_option("wpdiscuz-addon-note-dismissed");
 			$lastHashArray = explode(",", $lastHash);
-			$currentHash   = "wpDiscuz Addon Bundle";
-			if ($lastHash !== $currentHash && !in_array("Addons Bundle", $lastHashArray)) {
+			$currentHash   = "BuddyPress Integration, Tenor GIFs Integration";
+			if ($lastHash !== $currentHash
+                    && ( !in_array("BuddyPress Integration", $lastHashArray)
+                         || !in_array("Tenor GIFs Integration", $lastHashArray))
+                ) {
 				?>
                 <div class="updated notice wpdiscuz_addon_note is-dismissible" style="margin-top:10px;">
                     <p style="font-weight:normal; font-size:15px; border-bottom:1px dotted #DCDCDC; padding-bottom:10px; clear: both;">
-						<?php //esc_html_e("New Addons are available for wpDiscuz Comments Plugin");         ?>
-						<?php esc_html_e("Finally wpDiscuz Addons Bundle is ready for You!", "wpdiscuz"); ?>
+						<?php esc_html_e("New wpDiscuz addon!"); ?>
                     </p>
                     <div style="font-size:14px;">
-						<?php
-						foreach ($this->addons as $key => $addon) {
-							if ($addon["class"] !== "Bundle") {
-								continue;
-							}
-							if (in_array($addon["title"], $lastHashArray)) {
-								continue;
-							}
-							?>
+                        <?php if(!in_array("BuddyPress Integration", $lastHashArray)): ?>
                             <div style="display:inline-block; min-width:27%; padding-right:10px; margin-bottom:10px;">
-                                <img src="<?php echo esc_url_raw($addon["thumb"]); ?>"
-                                     style="height:40px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none;"/>
-                                <a href="<?php echo esc_url_raw($addon["url"]) ?>" target="_blank"
-                                   style="color:#444; text-decoration:none;"
-                                   title="<?php esc_attr_e("View Addons Bundle", "wpdiscuz"); ?>"><?php echo esc_html($addon["title"]); ?></a>
+                                <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/buddypress/header.png"); ?>" style="height:50px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none; float: left;"/>
+                                <a href="https://gvectors.com/product/wpdiscuz-buddypress-integration/" target="_blank" style="color:#444; text-decoration:none;" title="<?php esc_attr_e("Go to the addon page", "wpdiscuz"); ?>">wpDiscuz - BuddyPress Integration <br><span style="margin: 0; font-size: 12px; line-height: 15px; display: block; padding-top: 5px;">This addon integrates wpDiscuz with BuddyPress plugin. Creates &laquoDiscussion&raquo; tab in the users profile page, intgartes notifications, activities, and more...</span></a>
                             </div>
-							<?php
-						}
-						?>
+                        <?php endif; ?>
+				        <?php if(!in_array("Tenor GIFs Integration", $lastHashArray)): ?>
+                            <div style="display:inline-block; min-width:27%; padding-right:10px; margin-bottom:10px;">
+                                <img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/tenor/header.png"); ?>" style="height:50px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none; float: left;"/>
+                                <a href="https://gvectors.com/product/wpdiscuz-tenor-integration/" target="_blank" style="color:#444; text-decoration:none;" title="<?php esc_attr_e("Go to the addon page", "wpdiscuz"); ?>">wpDiscuz - Tenor GIFs Integration <br><span style="margin: 0; font-size: 12px; line-height: 15px; display: block; padding-top: 5px;">This adds [GIF] button on the toolbar of comment editor. Clicking this will open a new popup where you can search for your favorite gifs and insert them in your comment content.</span></a>
+                            </div>
+				        <?php endif; ?>
                         <div style="clear:both;"></div>
                     </div>
-                    <p>&nbsp;&nbsp;&nbsp;<a
-                                href="<?php echo esc_url_raw(admin_url("admin.php?page=" . self::PAGE_ADDONS)); ?>"><?php esc_html_e("Go to wpDiscuz Addons subMenu"); ?>
-                            &raquo;</a></p>
+                    <p>&nbsp;&nbsp;&nbsp;<a href="<?php echo esc_url_raw(admin_url("admin.php?page=" . self::PAGE_ADDONS)); ?>"><?php esc_html_e("Go to wpDiscuz Addons subMenu"); ?> &raquo;</a></p>
                 </div>
 				<?php
 			}
@@ -2159,19 +2197,19 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 	}
 
 	public function addonHash() {
-		$viewed = "";
-		foreach ($this->addons as $key => $addon) {
-			$viewed .= $addon["title"] . ",";
-		}
+		$viewed = "BuddyPress Integration, Tenor GIFs Integration";
+//		foreach ($this->addons as $key => $addon) {
+//			$viewed .= $addon["title"] . ",";
+//		}
 		$hash = $viewed;
 		return $hash;
 	}
 
 	public function tipHash() {
-		$viewed = "";
-		foreach ($this->tips as $key => $tip) {
-			$viewed .= $tip["title"] . ",";
-		}
+        $viewed = "BuddyPress Integration, Tenor GIFs Integration";
+//		foreach ($this->tips as $key => $tip) {
+//			$viewed .= $tip["title"] . ",";
+//		}
 		$hash = $viewed;
 		return $hash;
 	}
@@ -2203,7 +2241,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 
 	public function adminNotices() {
 		if (current_user_can("manage_options")) {
-			//$this->addonNote(); //temporary disabled.
+            $this->addonNote();
 			$this->regenerateMessage();
 			$this->addonActivationMessages();
 		}
@@ -2274,6 +2312,18 @@ class WpdiscuzOptions implements WpDiscuzConstants {
                     &nbsp;
                     <a href="<?php echo esc_url_raw(admin_url("admin.php?page=" . self::PAGE_TOOLS . "#wpdtool-regenerate")); ?>"
                        class="button button-primary"><?php esc_html_e("Synchronize Commenters Data", "wpdiscuz"); ?></a>
+                </p>
+            </div>
+			<?php
+		}
+		if ($wizardCompleted && intval(get_option(self::OPTION_SLUG_SHOW_RATING_REBUIL_MSG))) {
+			?>
+            <div class='notice notice-warning'>
+                <p>
+					<?php esc_html_e("Please rebuild ratings for the best performance and fastest experience", "wpdiscuz"); ?>
+                    &nbsp;
+                    <a href="<?php echo esc_url_raw(admin_url("admin.php?page=" . self::PAGE_TOOLS . "#wpdtool-ratings")); ?>"
+                       class="button button-primary"><?php esc_html_e("Rebuild Ratings", "wpdiscuz"); ?></a>
                 </p>
             </div>
 			<?php
@@ -3045,16 +3095,36 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 				"name"     => "wpDiscuz - Widgets",
 			];
 		}
+		if (is_plugin_active("wpdiscuz-buddypress-integration/wpDiscuzBPIntegration.php")) {
+			global $wpDiscuzBPIntegration;
+			$instance = null;
+			if (!empty($wpDiscuzBPIntegration->apimanager)) {
+				$instance = $wpDiscuzBPIntegration->apimanager;
+			}
+			$plugins["wpdiscuz-buddypress-integration"] = [
+				"file"     => "wpdiscuz-buddypress-integration/wpDiscuzBPIntegration.php",
+				"instance" => $instance,
+				"name"     => "wpDiscuz - BuddyPress Integration",
+			];
+		}
+		if (is_plugin_active("wpdiscuz-tenor-integration/wpDiscuzTenorIntegration.php")) {
+			global $wpDiscuzTenorIntegration;
+			$instance = null;
+			if (!empty($wpDiscuzTenorIntegration->apimanager)) {
+				$instance = $wpDiscuzTenorIntegration->apimanager;
+			}
+			$plugins["wpdiscuz-tenor-integration"] = [
+				"file"     => "wpdiscuz-tenor-integration/wpDiscuzTenorIntegration.php",
+				"instance" => $instance,
+				"name"     => "wpDiscuz - Tenor GIFs Integration",
+			];
+		}
 		$checkedData       = get_option("wpd_checked_data", []);
 		$deactivatePlugins = [];
 		$adminNotices      = [];
 		foreach ($plugins as $key => $value) {
-			$secret   = get_option("gvt_product_secret_" . $key, "");
-			$redpoint = (int) get_option("gvt_product_" . $key . "_redpoint", "1");
-			if (is_null($value["instance"]) || $redpoint) {
-				$adminNotices[$key . "_redpoint"] =  sprintf(__("Something wrong with %s addon license and files. If this addon has not been purchased and downloaded from the official gVectors.com website it's probably hacked and may lead lots of security issues.", "wpdiscuz"), $value["name"]);
-			}
-			if ($secret && !$redpoint) {
+			$redpoint = (int) get_option("gvt_product_" . $key . "_redpoint", "0");
+			if (!$redpoint) {
 				$checkedData[$key] = [
 					"last_checked"  => $this->getLastCheckedDate(),
 					"checked_count" => 0,
@@ -3070,7 +3140,7 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 							"checked_count" => $checkedData[$key]["checked_count"] + 1,
 							"valid"         => 0,
 						];
-						$adminNotices[$key]  = $value["name"] . __(" addon was deactivated, because your license isn't valid.", "wpdiscuz");
+						$adminNotices[$key]  = sprintf(__("%s addon was deactivated, because your license isn't valid.", "wpdiscuz"), $value["name"]);
 					}
 				} else if ($diff->m >= 1) {
 					$deactivatePlugins[] = $value["file"];
@@ -3079,7 +3149,8 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 						"checked_count" => $checkedData[$key]["checked_count"] + 1,
 						"valid"         => 0,
 					];
-					$adminNotices[$key]  = $value["name"] . __(" addon was deactivated, because your license isn't valid.", "wpdiscuz");
+                    $adminNotices[$key . "_redpoint"] =  sprintf(__("Something is wrong with %s addon license and files. Please activate it using its license key. If this addon has not been purchased and downloaded from the official gVectors.com website, it's probably hacked and may lead to lots of security issues.", "wpdiscuz"), $value["name"]);
+					$adminNotices[$key]  = sprintf(__("%s addon was deactivated, because your license isn't valid.", "wpdiscuz"), $value["name"]);
 				}
 			} else {
 				$checkedData[$key] = [
@@ -4147,6 +4218,13 @@ class WpdiscuzOptions implements WpDiscuzConstants {
 							"description"          => esc_html__("Allows to set minimum and maximum number of chars can be inserted in comment textarea. Leave the max value empty to remove the limit.", "wpdiscuz"),
 							"description_original" => "Allows to set minimum and maximum number of chars can be inserted in comment textarea. Leave the max value empty to remove the limit.",
 							"docurl"               => "https://wpdiscuz.com/docs/wpdiscuz-7/plugin-settings/comment-content-and-media/#comment-text-length",
+						],
+                        "replyTextLength"       => [
+							"label"                => esc_html__("Reply Text Length", "wpdiscuz"),
+							"label_original"       => "Reply Text Length",
+							"description"          => esc_html__("Allows to set minimum and maximum number of chars can be inserted in reply textarea. Leave the max value empty to remove the limit.", "wpdiscuz"),
+							"description_original" => "Allows to set minimum and maximum number of chars can be inserted in reply textarea. Leave the max value empty to remove the limit.",
+							"docurl"               => "",
 						],
 						"enableImageConversion"   => [
 							"label"                => esc_html__("Image Source URL to Image Conversion", "wpdiscuz"),

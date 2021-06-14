@@ -31,13 +31,13 @@ if ($action && $currentUserEmail) {
             $sType = $item->subscribtion_type;
             $sKey = $item->activation_key;
 
-            if ($sType === "reply") {
+            if ($sType === self::SUBSCRIPTION_COMMENT) {
                 $object = get_comment($scId);
                 $link = get_comment_link($scId);
                 $author = $object->comment_author;
                 $postedDate = $this->getCommentDate($object);
                 $content = wp_trim_words($object->comment_content, 20, "&hellip;");
-                $sTypeInfo = $this->options->phrases["wc_user_settings_subscribed_to_replies"];
+                $sTypeInfo = $this->options->getPhrase("wc_user_settings_subscribed_to_replies");
             } else {
                 $object = get_post($sPostId);
                 $link = get_permalink($sPostId);
@@ -45,7 +45,7 @@ if ($action && $currentUserEmail) {
                 $author = $postAuthor->display_name ? $postAuthor->display_name : $postAuthor->user_login;
                 $postedDate = $this->getPostDate($object);
                 $content = $object->post_title;
-                $sTypeInfo = $sType === "all_comment" ? $this->options->phrases["wc_user_settings_subscribed_to_replies_own"] : $this->options->phrases["wc_user_settings_subscribed_to_all_comments"];
+                $sTypeInfo = $this->options->getPhrase($sType === "all_comment" ? "wc_user_settings_subscribed_to_replies_own" : "wc_user_settings_subscribed_to_all_comments");
             }
 
             if ($object && !is_wp_error($object)) {
@@ -56,7 +56,7 @@ if ($action && $currentUserEmail) {
         ?>
         <input type="hidden" class="wpd-page-number" value="<?php echo esc_attr($page); ?>"/>
     <?php } else { ?>
-        <div class='wpd-item'><?php echo esc_html($this->options->phrases["wc_user_settings_no_data"]); ?></div>
+        <div class='wpd-item'><?php echo esc_html($this->options->getPhrase("wc_user_settings_no_data")); ?></div>
         <?php
     }
 }

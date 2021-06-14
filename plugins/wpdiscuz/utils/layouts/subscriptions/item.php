@@ -20,7 +20,7 @@ if (!defined("ABSPATH")) {
         </div>
     </div>
     <div class="wpd-item-right">
-        <a href="#" class="wpd-delete-content wpd-not-clicked" data-wpd-content-id="<?php echo esc_attr($sId); ?>" data-wpd-delete-action="wpdCancelSubscription" title="<?php esc_attr_e("Cancel this subscription", "wpdiscuz"); ?>">
+        <a href="#" class="wpd-delete-content wpd-not-clicked" data-wpd-content-id="<?php echo esc_attr($sId); ?>" data-wpd-delete-action="wpdCancelSubscription" title="<?php esc_attr_e($this->options->getPhrase("wc_cancel_this_subscription")); ?>">
             <i class="far fa-bell-slash"></i>
         </a>
     </div>

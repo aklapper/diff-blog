@@ -400,6 +400,8 @@ class wpDiscuzForm implements wpdFormConst {
     private function getDefaultFormGeneralOptions($version, $lang, $wpdGeneralOptions, $phrases, &$postTypes) {
         $generalOptions = [
             "lang" => $lang,
+            "roles_cannot_see_comments" => [],
+            "guest_can_see_comments" => 1,
             "roles_cannot_comment" => [],
             "guest_can_comment" => get_option("comment_registration") ? 0 : 1,
             "show_subscription_bar" => 1,
@@ -541,6 +543,7 @@ class wpDiscuzForm implements wpdFormConst {
             }
         }
         update_post_meta($comment->comment_post_ID, self::WPDISCUZ_RATING_COUNT, $postRatings);
+        $form->updateSeparateRatingMeta($postRatings, $comment->comment_post_ID);
     }
 
     private function chagePostSingleRating($metaKey, $commentID, $difference, $postRatings) {

@@ -73,7 +73,7 @@ class NumberField extends Field {
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $html .= "<div class='wpdiscuz-item'>";
-        $required = $data["required"] ? "required='required'" : "";
+        $required = $data["required"] ? "required='required' aria-required='true'" : "";
         $min = is_numeric($data["min"]) ? "min='" . $data["min"] . "'" : "";
         $max = is_numeric($data["max"]) ? "max='" . $data["max"] . "'" : "";
         $html .= "<input " . $required . " class='wpd-field wpd-field-number' type='number' id='" . esc_attr($key) . "' value='" . esc_attr($value) . "'  name='" . esc_attr($key) . "'  " . $min . " " . $max . ">";
@@ -94,7 +94,7 @@ class NumberField extends Field {
                 <div class="wpd-field-icon"><i style="opacity: 0.8;" class="<?php echo strpos(trim($args["icon"]), " ") ? esc_attr($args["icon"]) : "fas " . esc_attr($args["icon"]); ?>"></i></div>
             <?php } ?>
             <?php
-            $required = $args["required"] ? "required='required'" : "";
+            $required = $args["required"] ? "required='required' aria-required='true'" : "";
             $min = is_numeric($args["min"]) ? "min='" . $args["min"] . "'" : "";
             $max = is_numeric($args["max"]) ? "max='" . $args["max"] . "'" : "";
             ?>

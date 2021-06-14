@@ -109,13 +109,10 @@ add_action("wpdiscuz_wpdGetFollowsPage", [$wpdiscuz->helper, "getFollowsPage"]);
 add_action("wpdiscuz_nopriv_wpdGetFollowsPage", [$wpdiscuz->helper, "getFollowsPage"]);
 // Delete users" comment
 add_action("wpdiscuz_wpdDeleteComment", [$wpdiscuz->helperAjax, "deleteComment"]);
-add_action("wpdiscuz_nopriv_wpdDeleteComment", [$wpdiscuz->helperAjax, "deleteComment"]);
 // Delete users" subscription
 add_action("wpdiscuz_wpdCancelSubscription", [$wpdiscuz->helperAjax, "deleteSubscription"]);
-add_action("wpdiscuz_nopriv_wpdCancelSubscription", [$wpdiscuz->helperAjax, "deleteSubscription"]);
 // Delete users" follow
 add_action("wpdiscuz_wpdCancelFollow", [$wpdiscuz->helperAjax, "deleteFollow"]);
-add_action("wpdiscuz_nopriv_wpdCancelFollow", [$wpdiscuz->helperAjax, "deleteFollow"]);
 // Email to user the delete links
 add_action("wpdiscuz_wpdEmailDeleteLinks", [$wpdiscuz->helperAjax, "emailDeleteLinks"]);
 // Guest action
