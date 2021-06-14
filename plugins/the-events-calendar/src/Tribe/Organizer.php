@@ -100,6 +100,14 @@ class Tribe__Events__Organizer extends Tribe__Events__Linked_Posts__Base {
 			'item_reverted_to_draft'   => sprintf( esc_html__( '%s reverted to draft.', 'the-events-calendar' ), $this->singular_organizer_label ),
 			'item_scheduled'           => sprintf( esc_html__( '%s scheduled.', 'the-events-calendar' ), $this->singular_organizer_label ),
 			'item_updated'             => sprintf( esc_html__( '%s updated.', 'the-events-calendar' ), $this->singular_organizer_label ),
+			'item_link'                => sprintf(
+				// Translators: %s: Organizer singular.
+				esc_html__( '%s Link.', 'the-events-calendar' ), $this->singular_organizer_label
+			),
+			'item_link_description'    => sprintf(
+				// Translators: %s: Organizer singular.
+				esc_html__( 'A link to a particular %s.', 'the-events-calendar' ), $this->singular_organizer_label
+			),
 		] );
 
 		$this->register_post_type();
@@ -626,7 +634,7 @@ class Tribe__Events__Organizer extends Tribe__Events__Linked_Posts__Base {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @since TBD Changed the method to return Organizer post objects, not just organizer names.
+	 * @since 5.3.0 Changed the method to return Organizer post objects, not just organizer names.
 	 */
 	public static function get_fetch_callback( $event ) {
 		$event = Tribe__Main::post_id_helper( $event );
@@ -636,7 +644,7 @@ class Tribe__Events__Organizer extends Tribe__Events__Linked_Posts__Base {
 		 *
 		 * Returning a non `null` value here will skip the default logic.
 		 *
-		 * @since TBD
+		 * @since 5.3.0
 		 *
 		 * @param callable|null The fetch callback.
 		 * @param int $event The event post ID.
@@ -666,7 +674,7 @@ class Tribe__Events__Organizer extends Tribe__Events__Linked_Posts__Base {
 	/**
 	 * Builds and returns a Closure to lazily fetch an event Organizer names.
 	 *
-	 * @since TBD Changed the name of this method from `get_fetch_callback` to `get_fetch_names_callback`.
+	 * @since 5.3.0 Changed the name of this method from `get_fetch_callback` to `get_fetch_names_callback`.
 	 */
 	public static function get_fetch_names_callback( $event ) {
 		$event = Tribe__Main::post_id_helper( $event );
