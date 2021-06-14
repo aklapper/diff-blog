@@ -6,6 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Tribe\\Tickets\\Admin\\Manager\\Service_Provider' => $baseDir . '/src/Tribe/Admin/Manager/Service_Provider.php',
+    'Tribe\\Tickets\\Admin\\Settings\\Service_Provider' => $baseDir . '/src/Tribe/Admin/Settings/Service_Provider.php',
+    'Tribe\\Tickets\\Editor\\Warnings' => $baseDir . '/src/Tribe/Editor/Warnings.php',
     'Tribe\\Tickets\\Events\\Attendees_List' => $baseDir . '/src/Tribe/Events/Attendees_List.php',
     'Tribe\\Tickets\\Events\\Service_Provider' => $baseDir . '/src/Tribe/Events/Service_Provider.php',
     'Tribe\\Tickets\\Events\\Views\\V2\\Hooks' => $baseDir . '/src/Tribe/Events/Views/V2/Hooks.php',
@@ -24,6 +27,7 @@ return array(
     'Tribe\\Tickets\\Promoter\\Triggers\\Models\\Attendee' => $baseDir . '/src/Tribe/Promoter/Triggers/Models/Attendee.php',
     'Tribe\\Tickets\\Promoter\\Triggers\\Observers\\Commerce' => $baseDir . '/src/Tribe/Promoter/Triggers/Observers/Commerce.php',
     'Tribe\\Tickets\\Promoter\\Triggers\\Observers\\RSVP' => $baseDir . '/src/Tribe/Promoter/Triggers/Observers/RSVP.php',
+    'Tribe\\Tickets\\Repositories\\Order' => $baseDir . '/src/Tribe/Repositories/Order.php',
     'Tribe\\Tickets\\Repositories\\Post_Repository' => $baseDir . '/src/Tribe/Repositories/Post_Repository.php',
     'Tribe\\Tickets\\Repositories\\Traits\\Event' => $baseDir . '/src/Tribe/Repositories/Traits/Event.php',
     'Tribe\\Tickets\\Repositories\\Traits\\Post_Attendees' => $baseDir . '/src/Tribe/Repositories/Traits/Post_Attendees.php',

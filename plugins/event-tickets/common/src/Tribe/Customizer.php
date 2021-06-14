@@ -64,7 +64,7 @@ final class Tribe__Customizer {
 	 * @access private
 	 * @var array
 	 */
-	private $sections_class = array();
+	private $sections_class = [];
 
 	/**
 	 * Array of Sections Classes, for non-panel pages
@@ -73,7 +73,7 @@ final class Tribe__Customizer {
 	 * @access private
 	 * @var array
 	 */
-	private $settings = array();
+	private $settings = [];
 
 	/**
 	 * Inline Style has been added
@@ -110,16 +110,31 @@ final class Tribe__Customizer {
 		$this->ID = apply_filters( 'tribe_customizer_panel_id', 'tribe_customizer', $this );
 
 		// Hook the Registering methods
-		add_action( 'customize_register', array( $this, 'register' ), 15 );
+		add_action( 'customize_register', [ $this, 'register' ], 15 );
 
-		add_action( 'wp_print_footer_scripts', array( $this, 'print_css_template' ), 15 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'print_css_template' ], 15 );
 
 		// front end styles from customizer
-		add_action( 'wp_enqueue_scripts', array( $this, 'inline_style' ), 15 );
-		add_action( 'tribe_events_pro_widget_render', array( $this, 'inline_style' ), 101 );
-		add_action( 'wp_print_footer_scripts', array( $this, 'shortcode_inline_style' ), 5 );
+		add_action( 'tribe_events_pro_widget_render', [ $this, 'inline_style' ], 101 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'shortcode_inline_style' ], 10 );
+		add_action( 'wp_print_footer_scripts', [ $this, 'widget_inline_style' ], 10 );
 
-		add_filter( "default_option_{$this->ID}", array( $this, 'maybe_fallback_get_option' ) );
+		/**
+		 * Allows filtering the action that will be used to trigger the printing of inline scripts.
+		 *
+		 * By default inline scripts will be printed on the `wp_enqueue_scripts` action, but other
+		 * plugins or later iterations might require inline styles to be printed on other actions.
+		 *
+		 * @since 4.12.15
+		 *
+		 * @param string $inline_script_action_handle The handle of the action that will be used to try
+		 *                                            and attempt to print inline scripts.
+		 */
+		$print_styles_action = apply_filters( 'tribe_customizer_print_styles_action', 'wp_enqueue_scripts' );
+
+		add_action( $print_styles_action, [ $this, 'inline_style' ], 15 );
+
+		add_filter( "default_option_{$this->ID}", [ $this, 'maybe_fallback_get_option' ] );
 	}
 
 	/**
@@ -137,11 +152,11 @@ final class Tribe__Customizer {
 			return $sections;
 		}
 
-		return get_option( 'tribe_events_pro_customizer', array() );
+		return get_option( 'tribe_events_pro_customizer', [] );
 	}
 
 	/**
-	 * Loads a Section to the Customizer on the The Events Calendar Panel
+	 * Loads a Section to the Customizer on The Events Calendar's Panel
 	 *
 	 * @since  4.4
 	 *
@@ -176,7 +191,7 @@ final class Tribe__Customizer {
 		 * @deprecated
 		 * @since 4.0
 		 *
-		 * @param array $selection_class
+		 * @param array $sections_class
 		 * @param self  $customizer
 		 */
 		$this->sections_class = apply_filters( 'tribe_events_pro_customizer_sections_class', $this->sections_class, $this );
@@ -186,12 +201,31 @@ final class Tribe__Customizer {
 		 *
 		 * @since 4.4
 		 *
-		 * @param array $selection_class
+		 * @param array $sections_class
 		 * @param self  $customizer
 		 */
 		$this->sections_class = apply_filters( 'tribe_customizer_sections_class', $this->sections_class, $this );
 
 		return $this->sections_class;
+	}
+
+	/**
+	 * Returns the section requested by ID.
+	 *
+	 * @since 4.13.3
+	 *
+	 * @param string $id The ID of the desired section.
+	 *
+	 * @return boolean|Tribe__Customizer__Section The requested section or boolean false if not found.
+	 */
+	public function get_section( $id ) {
+		$sections = $this->get_loaded_sections();
+
+		if ( empty( $sections[ $id ] ) ) {
+			return false;
+		}
+
+		return $sections[ $id ];
 	}
 
 	/**
@@ -230,7 +264,7 @@ final class Tribe__Customizer {
 	 *
 	 * @return mixed            Return the variable based on the index
 	 */
-	public static function search_var( $variable = null, $indexes = array(), $default = null ) {
+	public static function search_var( $variable = null, $indexes = [], $default = null ) {
 		if ( is_object( $variable ) ) {
 			$variable = (array) $variable;
 		}
@@ -252,11 +286,14 @@ final class Tribe__Customizer {
 	}
 
 	/**
-	 * Get an option from the database, using index search you can retrieve the full panel, a section or even a setting
+	 * Get an option from the database, using index search you can retrieve the full panel, a section or even a setting.
 	 *
-	 * @param  array $search   Index search, array( 'section_name', 'setting_name' )
-	 * @param  mixed $default  The default, if the requested variable doesn't exits
-	 * @return mixed           The requested option or the default
+	 * @since 4.4
+	 *
+	 * @param  array $search   Index search, array( 'section_name', 'setting_name' ).
+	 * @param  mixed $default  The default, if the requested variable doesn't exits.
+	 *
+	 * @return mixed           The requested option or the default.
 	 */
 	public function get_option( $search = null, $default = null ) {
 		$sections = get_option( $this->ID, $default );
@@ -270,7 +307,7 @@ final class Tribe__Customizer {
 			 *
 			 * @param array $defaults
 			 */
-			$defaults[ $section->ID ] = apply_filters( "tribe_events_pro_customizer_section_{$section->ID}_defaults", array() );
+			$defaults[ $section->ID ] = apply_filters( "tribe_events_pro_customizer_section_{$section->ID}_defaults", [] );
 
 			/**
 			 * Allow filtering the defaults for each settings to be filtered before the Ghost options to be set
@@ -279,7 +316,7 @@ final class Tribe__Customizer {
 			 *
 			 * @param array $defaults
 			 */
-			$settings = isset( $sections[ $section->ID ] ) ? $sections[ $section->ID ] : array();
+			$settings                 = isset( $sections[ $section->ID ] ) ? $sections[ $section->ID ] : [];
 			$defaults[ $section->ID ] = apply_filters( "tribe_customizer_section_{$section->ID}_defaults", $settings );
 			$sections[ $section->ID ] = wp_parse_args( $settings, $defaults[ $section->ID ] );
 		}
@@ -331,14 +368,14 @@ final class Tribe__Customizer {
 	 *
 	 * @param strings Using the following structure: self::has_option( 'section_name', 'setting_name' );
 	 *
-	 * @return boolean Wheter the option exists in the database
+	 * @return boolean Whether the option exists in the database
 	 */
 	public function has_option() {
 		$search = func_get_args();
 		$option = self::get_option();
-		$real_option = get_option( $this->ID, array() );
+		$real_option = get_option( $this->ID, [] );
 
-		// Get section and Settign based on keys
+		// Get section and Settings based on keys
 		$section = reset( $search );
 		$setting = end( $search );
 
@@ -374,7 +411,7 @@ final class Tribe__Customizer {
 	/**
 	 * Print the CSS for the customizer for shortcodes.
 	 *
-	 * @return void
+	 * @since 4.12.6
 	 */
 	public function shortcode_inline_style() {
 		/**
@@ -394,13 +431,37 @@ final class Tribe__Customizer {
 	}
 
 	/**
+	 * Print the CSS for the customizer for widgets.
+	 *
+	 * @since 4.12.14
+	 */
+	public function widget_inline_style() {
+		/**
+		 * Whether customizer styles should print for widgets or not.
+		 *
+		 * @since 4.12.14
+		 *
+		 * @param boolean $should_print Whether the inline styles should be printed on screen.
+		 */
+		$should_print = apply_filters( 'tribe_customizer_should_print_widget_customizer_styles', false );
+
+		if ( empty( $should_print ) ) {
+			return;
+		}
+
+		$this->inline_style();
+	}
+
+	/**
 	 * Print the CSS for the customizer using wp_add_inline_style
 	 *
-	 * @return void
+	 * @since 4.12.15 Added the `$force` parameter to force the print of the style inline.
+	 *
+	 * @param bool $force Whether to ignore the context to try and print the style inline, or not.
 	 */
-	public function inline_style() {
+	public function inline_style( $force = false ) {
 		// Only load once on front-end.
-		if ( is_customize_preview() || is_admin() || $this->inline_style ) {
+		if ( ! $force && ( is_customize_preview() || is_admin() || $this->inline_style ) ) {
 			return false;
 		}
 
@@ -420,7 +481,9 @@ final class Tribe__Customizer {
 			return false;
 		}
 
-		$sheets = [];
+		$sheets = [
+			'tribe-common-full-style',
+		];
 
 		/**
 		 * Allow plugins to add themselves to this list.
@@ -436,10 +499,34 @@ final class Tribe__Customizer {
 			return false;
 		}
 
-		// add customizer styles inline with the latest stylesheet that is enqueued.
+		// Add customizer styles inline with the latest stylesheet that is enqueued.
 		foreach ( array_reverse( $sheets ) as $sheet ) {
 			if ( wp_style_is( $sheet ) ) {
-				wp_add_inline_style( $sheet, wp_strip_all_tags( $this->parse_css_template( $css_template ) ) );
+				$inline_style = wp_strip_all_tags( $this->parse_css_template( $css_template ) );
+
+				/**
+				 * Fires before a style is, possibly, printed inline depending on the stylesheet.
+				 *
+				 * @since 4.12.15
+				 *
+				 * @param string $sheet The handle of the stylesheet the style will be printed inline for.
+				 * @param string $inline_style The inline style contents, as they will be printed on the page.
+				 */
+				do_action( 'tribe_customizer_before_inline_style', $sheet, $inline_style );
+
+				// Just print styles if doing 'wp_print_footer_scripts' action.
+				$just_print = (bool) doing_action( 'wp_print_footer_scripts' );
+
+				if ( $just_print ) {
+					printf(
+						"<style id='%s-inline-css' type='text/css'>\n%s\n</style>\n",
+						esc_attr( $sheet ),
+						$inline_style
+					);
+				} else {
+					wp_add_inline_style( $sheet, $inline_style );
+				}
+
 				$this->inline_style = true;
 
 				break;
@@ -457,15 +544,15 @@ final class Tribe__Customizer {
 		$css      = $template;
 		$sections = $this->get_option();
 
-		$search  = array();
-		$replace = array();
+		$search  = [];
+		$replace = [];
 
 		foreach ( $sections as $section => $settings ) {
 			if ( ! is_array( $settings ) ) {
 				continue;
 			}
 			foreach ( $settings as $setting => $value ) {
-				$index = array( $section, $setting );
+				$index = [ $section, $setting ];
 
 				// Add search based on Underscore template
 				$search[] = '<%= ' . implode( '.', $index ) . ' %>';
@@ -488,7 +575,7 @@ final class Tribe__Customizer {
 	 * @return void
 	 */
 	public function register( WP_Customize_Manager $customizer ) {
-		// Set the Cutomizer on a class variable
+		// Set the Customizer on a class variable
 		$this->manager = $customizer;
 
 		/**
@@ -502,7 +589,7 @@ final class Tribe__Customizer {
 		$this->panel = apply_filters( 'tribe_customizer_panel', $this->register_panel(), $this );
 
 		/**
-		 * Filter the Sections within our Panel before they are added to the Cutomize Manager
+		 * Filter the Sections within our Panel before they are added to the Customize Manager
 		 *
 		 * @since 4.4
 		 *
@@ -518,11 +605,13 @@ final class Tribe__Customizer {
 			 * Allows people to Register and de-register the method to register more Fields
 			 *
 			 * @since 4.4
+			 * @since 4.12.15 Add Customizer instance as a parameter.
 			 *
 			 * @param array                $section
 			 * @param WP_Customize_Manager $manager
+			 * @param Tribe__Customizer    $customizer The current customizer instance.
 			 */
-			do_action( "tribe_customizer_register_{$id}_settings", $this->sections[ $id ], $this->manager );
+			do_action( "tribe_customizer_register_{$id}_settings", $this->sections[ $id ], $this->manager, $this );
 		}
 
 		/**
@@ -554,13 +643,13 @@ final class Tribe__Customizer {
 			return $panel;
 		}
 
-		$panel_args = array(
-			'title' => esc_html__( 'The Events Calendar', 'tribe-common' ),
+		$panel_args = [
+			'title'       => esc_html__( 'The Events Calendar', 'tribe-common' ),
 			'description' => esc_html__( 'Use the following panel of your customizer to change the styling of your Calendar and Event pages.', 'tribe-common' ),
 
 			// After `static_front_page`
-			'priority' => 125,
-		);
+			'priority'    => 125,
+		];
 
 		/**
 		 * Filter the Panel Arguments for WP Customize
@@ -640,10 +729,10 @@ final class Tribe__Customizer {
 	 * @param  string $slug    The actual Setting name
 	 * @param  string|WP_Customize_Section $section [description]
 	 *
-	 * @return string          HTML name Attribute name o the setting
+	 * @return string          HTML name Attribute name of the setting.
 	 */
 	public function get_setting_name( $slug, $section = null ) {
-		$name = $this->panel->id;
+		$name = ! empty( $this->panel->id ) ? $this->panel->id : '';
 
 		// If there is a section set append it
 		if ( $section instanceof WP_Customize_Section ) {
@@ -714,10 +803,10 @@ final class Tribe__Customizer {
 			// Add the Partial
 			$this->manager->selective_refresh->add_partial(
 				$name,
-				array(
+				[
 					'selector'        => '#' . esc_attr( $this->ID . '_css' ),
-					'render_callback' => array( $this, 'print_css_template' ),
-				)
+					'render_callback' => [ $this, 'print_css_template' ],
+				]
 			);
 		}
 	}

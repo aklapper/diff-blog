@@ -35,6 +35,14 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $
 					$event_id
 				)
 			);
+			/**
+			 * Add an action to render content after text title.
+			 *
+			 * @since 5.1.0
+			 *
+			 * @param int $event_id Post ID.
+			 */
+			do_action( 'tribe_report_page_after_text_label', $event_id );
 			?>
 		</h1>
 	<?php endif; ?>
@@ -154,7 +162,7 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $
 	</div>
 	<?php do_action( 'tribe_events_tickets_attendees_event_summary_table_after', $event_id ); ?>
 
-	<form id="topics-filter" class="topics-filter" method="post">
+	<form id="event-tickets__attendees-admin-form" class="topics-filter event-tickets__attendees-admin-form" method="post">
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'page' : 'tribe[page]' ); ?>" value="<?php echo esc_attr( isset( $_GET['page'] ) ? $_GET['page'] : '' ); ?>" />
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'event_id' : 'tribe[event_id]' ); ?>" id="event_id" value="<?php echo esc_attr( $event_id ); ?>" />
 		<input type="hidden" name="<?php echo esc_attr( is_admin() ? 'post_type' : 'tribe[post_type]' ); ?>" value="<?php echo esc_attr( $event->post_type ); ?>" />

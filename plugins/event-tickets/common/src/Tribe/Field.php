@@ -68,7 +68,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		public function __construct( $id, $field, $value = null ) {
 
 			// setup the defaults
-			$this->defaults = array(
+			$this->defaults = [
 				'type'                => 'html',
 				'name'                => $id,
 				'fieldset_attributes' => [],
@@ -90,10 +90,10 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				'clear_after'         => true,
 				'tooltip_first'       => false,
 				'allow_clear'         => false,
-			);
+			];
 
 			// a list of valid field types, to prevent screwy behavior
-			$this->valid_field_types = array(
+			$this->valid_field_types = [
 				'heading',
 				'html',
 				'text',
@@ -107,9 +107,10 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				'dropdown_select2', // Deprecated use `dropdown`
 				'dropdown_chosen', // Deprecated use `dropdown`
 				'license_key',
+				'number',
 				'wrapped_html',
 				'email',
-			);
+			];
 
 			$this->valid_field_types = apply_filters( 'tribe_valid_field_types', $this->valid_field_types );
 
@@ -221,7 +222,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				} elseif ( in_array( $this->type, $this->valid_field_types ) ) {
 
 					// the specified type exists, run the appropriate method
-					$field = call_user_func( array( $this, $this->type ) );
+					$field = call_user_func( [ $this, $this->type ] );
 
 					// filter the output
 					$field = apply_filters( 'tribe_field_output_' . $this->type, $field, $this->id, $this );
@@ -275,8 +276,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			if ( $this->label ) {
 				if ( isset( $this->label_attributes ) ) {
 					$this->label_attributes['class'] = isset( $this->label_attributes['class'] ) ?
-						implode( ' ', array_merge( array( 'tribe-field-label' ), $this->label_attributes['class'] ) ) :
-						array( 'tribe-field-label' );
+						implode( ' ', array_merge( [ 'tribe-field-label' ], $this->label_attributes['class'] ) ) :
+						[ 'tribe-field-label' ];
 					$this->label_attributes = $this->concat_attributes( $this->label_attributes );
 				}
 				$return = sprintf( '<legend class="tribe-field-label" %s>%s</legend>', $this->label_attributes, $this->label );
@@ -496,10 +497,10 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function wysiwyg() {
-			$settings = array(
+			$settings = [
 				'teeny'   => true,
 				'wpautop' => true,
-			);
+			];
 			ob_start();
 			wp_editor( html_entity_decode( ( $this->value ) ), $this->name, $settings );
 			$editor = ob_get_clean();
@@ -560,7 +561,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 
 			if ( ! is_array( $this->value ) ) {
 				if ( ! empty( $this->value ) ) {
-					$this->value = array( $this->value );
+					$this->value = [ $this->value ];
 				} else {
 					$this->value = [];
 				}
@@ -779,7 +780,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * Example usage:
 		 *
-		 *      $attrs = array( 'class' => array('one', 'two'), 'style' => 'color:red;' );
+		 *      $attrs = [ 'class' => ['one', 'two'], 'style' => 'color:red;' ];
 		 *      printf ( '<p %s>%s</p>', tribe_concat_attributes( $attrs ), 'bar' );
 		 *
 		 *      // <p> class="one two" style="color:red;">bar</p>
