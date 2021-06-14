@@ -12,7 +12,7 @@
  * Event Tickets - Common responsive
  *
  * @since 5.0.3
- * @todo @juanfra: Check this once we define https://github.com/moderntribe/tribe-common/pull/1379
+ * @todo @juanfra: Check this once we define https://github.com/the-events-calendar/tribe-common/pull/1379
  */
 
 /* -----------------------------------------------------------------------------
@@ -395,6 +395,12 @@
 	/* From: base/full/typography/_body.pcss*/
 
 	/* From: base/full/typography/_headings.pcss */
+
+	/* -------------------------------------------------------------------------
+	 *
+	 * Common responsive: Theme Overrides
+	 *
+	 * ------------------------------------------------------------------------- */
 }
 
 /* From: base/full/forms/_text.pcss */
@@ -466,6 +472,14 @@
 /* From: base/skeleton/forms/_text.pcss */
 
 /* From: base/skeleton/grid/_rows.pcss*/
+
+/* -------------------------------------------------------------------------
+	 * Theme Overrides - Twenty Twenty
+	 * ------------------------------------------------------------------------- */
+
+.tribe-theme-twentytwenty .event-tickets {
+		background-color: transparent;
+	}
 
 @media(min-width: 768px) {
 

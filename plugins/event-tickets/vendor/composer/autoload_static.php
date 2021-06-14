@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8
+class ComposerStaticInit12a8c8abb5951e32bf3e65205f18b5d2
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -21,6 +21,9 @@ class ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8
     );
 
     public static $classMap = array (
+        'Tribe\\Tickets\\Admin\\Manager\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Service_Provider.php',
+        'Tribe\\Tickets\\Admin\\Settings\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Admin/Settings/Service_Provider.php',
+        'Tribe\\Tickets\\Editor\\Warnings' => __DIR__ . '/../..' . '/src/Tribe/Editor/Warnings.php',
         'Tribe\\Tickets\\Events\\Attendees_List' => __DIR__ . '/../..' . '/src/Tribe/Events/Attendees_List.php',
         'Tribe\\Tickets\\Events\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Events/Service_Provider.php',
         'Tribe\\Tickets\\Events\\Views\\V2\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Events/Views/V2/Hooks.php',
@@ -39,6 +42,7 @@ class ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8
         'Tribe\\Tickets\\Promoter\\Triggers\\Models\\Attendee' => __DIR__ . '/../..' . '/src/Tribe/Promoter/Triggers/Models/Attendee.php',
         'Tribe\\Tickets\\Promoter\\Triggers\\Observers\\Commerce' => __DIR__ . '/../..' . '/src/Tribe/Promoter/Triggers/Observers/Commerce.php',
         'Tribe\\Tickets\\Promoter\\Triggers\\Observers\\RSVP' => __DIR__ . '/../..' . '/src/Tribe/Promoter/Triggers/Observers/RSVP.php',
+        'Tribe\\Tickets\\Repositories\\Order' => __DIR__ . '/../..' . '/src/Tribe/Repositories/Order.php',
         'Tribe\\Tickets\\Repositories\\Post_Repository' => __DIR__ . '/../..' . '/src/Tribe/Repositories/Post_Repository.php',
         'Tribe\\Tickets\\Repositories\\Traits\\Event' => __DIR__ . '/../..' . '/src/Tribe/Repositories/Traits/Event.php',
         'Tribe\\Tickets\\Repositories\\Traits\\Post_Attendees' => __DIR__ . '/../..' . '/src/Tribe/Repositories/Traits/Post_Attendees.php',
@@ -49,9 +53,9 @@ class ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd6cfa8ba521c6aa62a7f69c86b2b4eb8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit12a8c8abb5951e32bf3e65205f18b5d2::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit12a8c8abb5951e32bf3e65205f18b5d2::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit12a8c8abb5951e32bf3e65205f18b5d2::$classMap;
 
         }, null, ClassLoader::class);
     }

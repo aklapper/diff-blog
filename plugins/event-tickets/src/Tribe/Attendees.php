@@ -307,22 +307,35 @@ class Tribe__Tickets__Attendees {
 
 		add_thickbox();
 
-		$mail_data = array(
-			'nonce'           => wp_create_nonce( 'email-attendee-list' ),
-			'required'        => esc_html__( 'You need to select a user or type a valid email address', 'event-tickets' ),
-			'sending'         => esc_html__( 'Sending...', 'event-tickets' ),
-			'ajaxurl'         => admin_url( 'admin-ajax.php' ),
-			'checkin_nonce'   => wp_create_nonce( 'checkin' ),
-			'uncheckin_nonce' => wp_create_nonce( 'uncheckin' ),
-			'cannot_move'     => esc_html__( 'You must first select one or more tickets before you can move them!', 'event-tickets' ),
-			'move_url'        => add_query_arg( array(
-				'dialog'    => Tribe__Tickets__Main::instance()->move_tickets()->dialog_name(),
-				'check'     => wp_create_nonce( 'move_tickets' ),
-				'TB_iframe' => 'true',
-			) ),
-		);
+		$move_url_args = [
+			'dialog'    => Tribe__Tickets__Main::instance()->move_tickets()->dialog_name(),
+			'check'     => wp_create_nonce( 'move_tickets' ),
+			'TB_iframe' => 'true',
+		];
 
-		wp_localize_script( $this->slug() . '-js', 'Attendees', $mail_data );
+		$config_data = [
+			'nonce'             => wp_create_nonce( 'email-attendee-list' ),
+			'required'          => esc_html__( 'You need to select a user or type a valid email address', 'event-tickets' ),
+			'sending'           => esc_html__( 'Sending...', 'event-tickets' ),
+			'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+			'checkin_nonce'     => wp_create_nonce( 'checkin' ),
+			'uncheckin_nonce'   => wp_create_nonce( 'uncheckin' ),
+			'cannot_move'       => esc_html__( 'You must first select one or more tickets before you can move them!', 'event-tickets' ),
+			'move_url'          => add_query_arg( $move_url_args ),
+			'confirmation'      => esc_html__( 'Please confirm that you would like to delete this attendee.', 'event-tickets' ),
+			'bulk_confirmation' => esc_html__( 'Please confirm you would like to delete these attendees.', 'event-tickets' ),
+		];
+
+		/**
+		 * Allow filtering the configuration data for the Attendee objects on Attendees report page.
+		 *
+		 * @since 5.0.4
+		 *
+		 * @param array $config_data List of configuration data to be localized.
+		 */
+		$config_data = apply_filters( 'tribe_tickets_attendees_report_js_config', $config_data );
+
+		wp_localize_script( $this->slug() . '-js', 'Attendees', $config_data );
 	}
 
 	/**
@@ -338,7 +351,7 @@ class Tribe__Tickets__Attendees {
 		}
 
 		$dismissed = explode( ',', (string) get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
-		$pointer   = null;
+		$pointer   = [];
 
 		if ( version_compare( get_bloginfo( 'version' ), '3.3', '>' ) && ! in_array( 'attendees_filters', $dismissed ) ) {
 			$pointer = array(
@@ -499,8 +512,10 @@ class Tribe__Tickets__Attendees {
 		$export_columns['order_id']           = esc_html_x( 'Order ID', 'attendee export', 'event-tickets' );
 		$export_columns['order_status_label'] = esc_html_x( 'Order Status', 'attendee export', 'event-tickets' );
 		$export_columns['attendee_id']        = esc_html( sprintf( _x( '%s ID', 'attendee export', 'event-tickets' ), tribe_get_ticket_label_singular( 'attendee_export_ticket_id' ) ) );
-		$export_columns['purchaser_name']     = esc_html_x( 'Customer Name', 'attendee export', 'event-tickets' );
-		$export_columns['purchaser_email']    = esc_html_x( 'Customer Email Address', 'attendee export', 'event-tickets' );
+		$export_columns['holder_name']        = esc_html_x( 'Ticket Holder Name', 'attendee export', 'event-tickets' );
+		$export_columns['holder_email']       = esc_html_x( 'Ticket Holder Email Address', 'attendee export', 'event-tickets' );
+		$export_columns['purchaser_name']     = esc_html_x( 'Purchaser Name', 'attendee export', 'event-tickets' );
+		$export_columns['purchaser_email']    = esc_html_x( 'Purchaser Email Address', 'attendee export', 'event-tickets' );
 
 		/**
 		 * Used to modify what columns should be shown on the CSV export
@@ -640,21 +655,25 @@ class Tribe__Tickets__Attendees {
 			$charset  = get_option( 'blog_charset' );
 			$filename = sanitize_file_name( $event->post_title . '-' . __( 'attendees', 'event-tickets' ) );
 
-			// output headers so that the file is downloaded rather than displayed
+			// Output headers so that the file is downloaded rather than displayed.
 			header( "Content-Type: text/csv; charset=$charset" );
 			header( "Content-Disposition: attachment; filename=$filename.csv" );
 
-			// create a file pointer connected to the output stream
+			// Create the file pointer connected to the output stream.
 			$output = fopen( 'php://output', 'w' );
 
-			// Get indexes by keys
-			$flip  = array_flip( $items[0] );
-			$name  = $flip['Customer Name'];
-			$email = $flip['Customer Email Address'];
+			/**
+			 * Allow filtering the field delimiter used in the CSV export file.
+			 *
+			 * @since 5.1.3
+			 *
+			 * @param string $delimiter The field delimiter used in the CSV export file.
+			 */
+			$delimiter = apply_filters( 'tribe_tickets_attendees_csv_export_delimiter', ',' );
 
-			//And echo the data
+			// Output the lines into the file.
 			foreach ( $items as $item ) {
-				fputcsv( $output, $item );
+				fputcsv( $output, $item, $delimiter );
 			}
 
 			fclose( $output );
@@ -859,4 +878,59 @@ class Tribe__Tickets__Attendees {
 
 		return $user_can;
 	}
+
+	/**
+	 * Create an attendee for any Commerce provider from a ticket.
+	 *
+	 * @since 5.1.0
+	 *
+	 * @param Tribe__Tickets__Ticket_Object|int $ticket        Ticket object or ID to create the attendee for.
+	 * @param array                             $attendee_data Attendee data to create from.
+	 *
+	 * @return WP_Post|false The new post object or false if unsuccessful.
+	 */
+	public function create_attendee( $ticket, $attendee_data ) {
+		if ( is_numeric( $ticket ) ) {
+			// Try to get provider from the ticket ID.
+			$provider = tribe_tickets_get_ticket_provider( (int) $ticket );
+		} else {
+			// Get provider from ticket object.
+			$provider = $ticket->get_provider();
+		}
+
+		if ( ! $provider ) {
+			return false;
+		}
+
+		return $provider->create_attendee( $ticket, $attendee_data );
+	}
+
+	/**
+	 * Update an attendee for any Commerce provider.
+	 *
+	 * @since 5.1.0
+	 *
+	 * @param array|int $attendee      The attendee data or ID for the attendee to update.
+	 * @param array     $attendee_data The attendee data to update to.
+	 *
+	 * @return WP_Post|false The updated post object or false if unsuccessful.
+	 */
+	public function update_attendee( $attendee, $attendee_data ) {
+		$provider = false;
+
+		if ( is_numeric( $attendee ) ) {
+			// Try to get provider from the attendee ID.
+			$provider = tribe_tickets_get_ticket_provider( (int) $attendee );
+		} elseif ( is_array( $attendee ) && isset( $attendee['provider'] ) ) {
+			// Try to get provider from the attendee data.
+			$provider = Tribe__Tickets__Tickets::get_ticket_provider_instance( $attendee['provider'] );
+		}
+
+		if ( ! $provider ) {
+			return false;
+		}
+
+		return $provider->update_attendee( $attendee, $attendee_data );
+	}
+
 }

@@ -1146,6 +1146,7 @@
 		text-align: center;
 		transition: background-color 0.2s ease;
 		margin: 0;
+		padding: 11px 14px;
 	}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn {

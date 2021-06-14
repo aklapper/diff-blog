@@ -641,10 +641,6 @@
 				color: #a2aab2;
 			}
 
-.tribe-right input[type="text"]::-ms-input-placeholder, .tribe-right input[type="email"]::-ms-input-placeholder {
-				color: #a2aab2;
-			}
-
 .tribe-right input[type="text"]::placeholder, .tribe-right input[type="email"]::placeholder {
 				color: #a2aab2;
 			}

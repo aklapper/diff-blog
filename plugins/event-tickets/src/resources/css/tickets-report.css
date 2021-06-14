@@ -154,7 +154,8 @@
 	}
 
 .tribe-report-page .column-check_in {
-		width: 90px;
+		min-width: 90px;
+		width: auto;
 	}
 
 .tribe-report-page .attendees-actions input.print,

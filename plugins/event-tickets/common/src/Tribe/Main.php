@@ -19,7 +19,7 @@ class Tribe__Main {
 	const OPTIONNAME          = 'tribe_events_calendar_options';
 	const OPTIONNAMENETWORK   = 'tribe_events_calendar_network_options';
 
-	const VERSION             = '4.12.13.1';
+	const VERSION             = '4.13.4';
 
 	const FEED_URL            = 'https://theeventscalendar.com/feed/';
 
@@ -67,12 +67,7 @@ class Tribe__Main {
 			return;
 		}
 
-		// the 5.2 compatible autoload file
-		if ( version_compare( PHP_VERSION, '5.2.17', '<=' ) ) {
-			require_once realpath( dirname( dirname( dirname( __FILE__ ) ) ) . '/vendor/autoload_52.php' );
-		} else {
-			require_once realpath( dirname( dirname( dirname( __FILE__ ) ) ) . '/vendor/autoload.php' );
-		}
+		require_once realpath( dirname( dirname( dirname( __FILE__ ) ) ) . '/vendor/autoload.php' );
 
 		// the DI container class
 		require_once dirname( __FILE__ ) . '/Container.php';
@@ -145,14 +140,14 @@ class Tribe__Main {
 	}
 
 	/**
-	 * Get's the instantiated context of this class. I.e. the object that instantiated this one.
+	 * Gets the instantiated context of this class. I.e. the object that instantiated this one.
 	 */
 	public function context() {
 		return $this->plugin_context;
 	}
 
 	/**
-	 * Get's the class name of the instantiated plugin context of this class. I.e. the class name of the object that instantiated this one.
+	 * Gets the class name of the instantiated plugin context of this class. I.e. the class name of the object that instantiated this one.
 	 */
 	public function context_class() {
 		return $this->plugin_context_class;
@@ -428,11 +423,14 @@ class Tribe__Main {
 		// Are we on the Plugins page?
 		$is_plugins = $helper->is_screen( 'plugins' );
 
+		// Are we on the Widgets page?
+		$is_widgets = $helper->is_screen( 'widgets' );
+
 		// Are we viewing a generic Tribe screen?
 		// Includes: Events > Settings, Events > Help, App Shop page, and more.
 		$is_tribe_screen = $helper->is_screen();
 
-		return $is_post_type || $is_plugins || $is_tribe_screen;
+		return $is_post_type || $is_plugins || $is_widgets || $is_tribe_screen;
 	}
 
 	/**
@@ -561,7 +559,7 @@ class Tribe__Main {
 		if ( 'plugins.php' !== $page ) {
 			return;
 		}
-		$notices = apply_filters( 'tribe_plugin_notices', array() );
+		$notices = apply_filters( 'tribe_plugin_notices', [] );
 		wp_localize_script( 'tribe-pue-notices', 'tribe_plugin_notices', $notices );
 	}
 
@@ -578,6 +576,8 @@ class Tribe__Main {
 			tribe( 'admin.notice.marketing' );
 		}
 
+		tribe( \Tribe\Admin\Notice\WP_Version::class );
+
 		/**
 		 * Runs after all plugins including Tribe ones have loaded
 		 *
@@ -591,7 +591,7 @@ class Tribe__Main {
 	 *
 	 * @since 4.4
 	 *
-	 * @return void Implementation of components loader doesnt return anything.
+	 * @return void Implementation of components loader doesn't return anything.
 	 */
 	public function bind_implementations() {
 		tribe_singleton( 'settings.manager', 'Tribe__Settings_Manager' );
@@ -626,6 +626,7 @@ class Tribe__Main {
 
 		tribe_singleton( 'admin.notice.php.version', 'Tribe__Admin__Notice__Php_Version', [ 'hook' ] );
 		tribe_singleton( 'admin.notice.marketing', 'Tribe__Admin__Notice__Marketing', [ 'hook' ] );
+		tribe_singleton( \Tribe\Admin\Notice\WP_Version::class, \Tribe\Admin\Notice\WP_Version::class, [ 'hook' ] );
 
 		tribe_register_provider( Tribe__Editor__Provider::class );
 		tribe_register_provider( Tribe__Service_Providers__Debug_Bar::class );

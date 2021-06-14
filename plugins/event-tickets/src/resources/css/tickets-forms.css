@@ -409,6 +409,7 @@
 	.event-tickets .tribe-tickets__form .tribe-tickets__form-field-label {
 		color: #141827;
 		display: block;
+		font-size: inherit;
 		font-weight: 400;
 		margin-bottom: 4px;
 	}
@@ -438,6 +439,7 @@
 		border-color: #d5d5d5;
 		border-width: 1px;
 		margin-right: 8px;
+		box-shadow: none;
 	}
 
  .event-tickets .tribe-tickets__form .tribe-common-form-control-radio__input:hover,
@@ -492,6 +494,7 @@
 
  .event-tickets .tribe-tickets__form input[type="text"]:focus, .event-tickets .tribe-tickets__form input[type="email"]:focus, .event-tickets .tribe-tickets__form input[type="url"]:focus, .event-tickets .tribe-tickets__form input[type="password"]:focus, .event-tickets .tribe-tickets__form input[type="search"]:focus, .event-tickets .tribe-tickets__form input[type="number"]:focus, .event-tickets .tribe-tickets__form input[type="tel"]:focus, .event-tickets .tribe-tickets__form input[type="range"]:focus, .event-tickets .tribe-tickets__form input[type="date"]:focus, .event-tickets .tribe-tickets__form input[type="month"]:focus, .event-tickets .tribe-tickets__form input[type="week"]:focus, .event-tickets .tribe-tickets__form input[type="time"]:focus, .event-tickets .tribe-tickets__form input[type="datetime"]:focus, .event-tickets .tribe-tickets__form input[type="datetime-local"]:focus, .event-tickets .tribe-tickets__form input[type="color"]:focus, .event-tickets .tribe-tickets__form select:focus, .event-tickets .tribe-tickets__form textarea:focus {
 			border-color: rgba(20,24,39, 0.8);
+			box-shadow: none;
 		}
 
  .event-tickets .tribe-tickets__form input[type="text"]:invalid, .event-tickets .tribe-tickets__form input[type="email"]:invalid, .event-tickets .tribe-tickets__form input[type="url"]:invalid, .event-tickets .tribe-tickets__form input[type="password"]:invalid, .event-tickets .tribe-tickets__form input[type="search"]:invalid, .event-tickets .tribe-tickets__form input[type="number"]:invalid, .event-tickets .tribe-tickets__form input[type="tel"]:invalid, .event-tickets .tribe-tickets__form input[type="range"]:invalid, .event-tickets .tribe-tickets__form input[type="date"]:invalid, .event-tickets .tribe-tickets__form input[type="month"]:invalid, .event-tickets .tribe-tickets__form input[type="week"]:invalid, .event-tickets .tribe-tickets__form input[type="time"]:invalid, .event-tickets .tribe-tickets__form input[type="datetime"]:invalid, .event-tickets .tribe-tickets__form input[type="datetime-local"]:invalid, .event-tickets .tribe-tickets__form input[type="color"]:invalid, .event-tickets .tribe-tickets__form input[type="checkbox"]:invalid, .event-tickets .tribe-tickets__form input[type="radio"]:invalid, .event-tickets .tribe-tickets__form select:invalid, .event-tickets .tribe-tickets__form textarea:invalid {
@@ -545,11 +548,6 @@
 		}
 
  .event-tickets .tribe-tickets__form input[type="text"]:-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="search"]:-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="url"]:-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="tel"]:-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="email"]:-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="password"]:-ms-input-placeholder {
-			color: #5d5d5d;
-			font-family: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-		}
-
- .event-tickets .tribe-tickets__form input[type="text"]::-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="search"]::-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="url"]::-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="tel"]::-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="email"]::-ms-input-placeholder, .event-tickets .tribe-tickets__form input[type="password"]::-ms-input-placeholder {
 			color: #5d5d5d;
 			font-family: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
 		}

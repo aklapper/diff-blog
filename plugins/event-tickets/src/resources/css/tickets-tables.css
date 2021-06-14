@@ -21,8 +21,9 @@
 	margin: 20px 0;
 }
 
-.tribe-tickets-editor-table thead {
-		background-color: #f9f9f9;
+.tribe-tickets-editor-table thead,
+	.tribe-tickets-editor-table .table-header {
+		background-color: #fafafa;
 		border-bottom: 1px solid #ccc;
 	}
 
@@ -60,14 +61,17 @@
 			border-bottom-right-radius: 3px;
 		}
 
+.tribe-tickets-editor-table tbody tr:only-child .tribe-tickets__tickets-editor-ticket-name-sortable, .tribe-tickets-editor-table tr.Tribe__Tickets__RSVP .tribe-tickets__tickets-editor-ticket-name-sortable {
+			display: none;
+		}
+
 .tribe-tickets-editor-table td.column-primary .tribe-handle {
 			color: #ccc;
-			cursor: pointer;
+			cursor: move;
 			font-size: 1.8em;
 			margin-right: 10px;
 			position: relative;
 			float: left;
-			display: none;
 		}
 
 .tribe-tickets-editor-table .ui-sortable td.column-primary .tribe-handle {
@@ -78,8 +82,40 @@
 		display: none;
 	}
 
+.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name {
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+
+.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name-sortable,
+	.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name-title {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name-title .dashicons {
+			heigth: 16px;
+			width: 16px;
+			line-height: 16px;
+		}
+
+.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name-title .dashicons:before {
+				font-size: 16px;
+			}
+
+.tribe-tickets-editor-table .tribe-tickets__tickets-editor-ticket-name-sortable {
+		width: 32px;
+	}
+
+.tribe-tickets-editor-table .ticket_available,
+	.tribe-tickets-editor-table .ticket_capacity,
+	.tribe-tickets-editor-table .ticket_price {
+		width: 115px;
+	}
+
 .tribe-tickets-editor-table .ticket_edit {
-		width: 100px;
+		width: 30px;
 	}
 
 /* Edit button styles - separate for portability */
