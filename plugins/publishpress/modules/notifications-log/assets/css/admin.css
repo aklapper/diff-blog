@@ -13,6 +13,7 @@
 
 .publishpress_page_pp-notif-log .column-status .dashicons-no,
 .publishpress_page_pp-notif-log .column-status .error,
+.publishpress_page_pp-notif-log .column-status .status-error,
 .publishpress_page_pp-notif-log tr.error {
   color: #d0393b;
 }
@@ -52,6 +53,14 @@
 .notif-log-modal table td {
   border: 1px solid silver;
   padding: 4px;
+}
+
+.notif-log-modal .content ul {
+  list-style-type: disc;
+}
+
+.notif-log-modal .content ul li {
+  margin-left: 25px;
 }
 
 .publishpress_page_pp-notif-log .ui-dialog-titlebar {

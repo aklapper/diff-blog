@@ -146,7 +146,6 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
             $inlineType = " INNER JOIN `{$this->db->commentmeta}` AS `cmi` ON `c`.`comment_ID` = `cmi`.`comment_id` AND `cmi`.`meta_key` = '" . self::META_KEY_FEEDBACK_FORM_ID . "'";
         }
         if ($args["post_id"]) {
-            $approved = "";
             if ($args["status"] === "all") {
                 $approved = " AND `c`.`comment_approved` IN('1','0')";
             } else {
@@ -171,11 +170,35 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         }
         $visible = "";
         if ($visibleCommentIds) {
-            $visible = " AND `comment_ID` NOT IN(" . rtrim($visibleCommentIds, ",") . ")";
+            $visible = " AND `comment_ID` NOT IN(" . $visibleCommentIds . ")";
         }
         $sqlCommentIds = $this->db->prepare("SELECT `comment_ID` FROM `{$this->db->comments}` WHERE `comment_post_ID` = %d AND `comment_ID` > %d AND `comment_author_email` != %s" . $approved . $visible . " ORDER BY `{$wpdiscuz->options->thread_display["orderCommentsBy"]}` ASC;", $args["post_id"], $loadLastCommentId, $email);
         return $this->db->get_col($sqlCommentIds);
     }
+
+	/**
+	 * check comment availability
+	 */
+	public function commentIDsToRemove($args, $visibleCommentIds) {
+		if ($args["status"] === "all") {
+			$approved = " AND `comment_approved` IN('1','0')";
+		} else {
+			$approved = " AND `comment_approved` = '1'";
+		}
+		$sqlCommentIds = "SELECT `comment_ID` FROM `{$this->db->comments}` WHERE `comment_ID` IN(" . $visibleCommentIds . ")" . $approved . ";";
+		$notRemovedCommentIDs = $this->db->get_col($sqlCommentIds);
+		return array_values(array_diff(explode(",", $visibleCommentIds), $notRemovedCommentIDs));
+	}
+
+	public function getUserByNickname($nickname) {
+		$sql = $this->db->prepare("SELECT `u`.`ID`, `u`.`user_email`, `u`.`display_name` FROM `{$this->db->users}` AS `u` INNER JOIN `{$this->db->usermeta}` AS `um` ON `u`.`ID` = `um`.`user_id` AND `um`.`meta_key` = 'nickname' WHERE `um`.`meta_value` = %s LIMIT 1", $nickname);
+		return $this->db->get_row($sql);
+	}
+
+	public function getUserByNicknameOrNicename($nickname) {
+		$sql = $this->db->prepare("SELECT `u`.`ID`, `u`.`user_email`, `u`.`display_name` FROM `{$this->db->users}` AS `u` INNER JOIN `{$this->db->usermeta}` AS `um` ON `u`.`ID` = `um`.`user_id` AND `um`.`meta_key` = 'nickname' WHERE `um`.`meta_value` = %s OR `u`.`user_nicename` = %s LIMIT 1", $nickname, $nickname);
+		return $this->db->get_row($sql);
+	}
 
     /**
      * @param type $visibleCommentIds comment ids which is visible at the moment on front end
@@ -207,7 +230,7 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     }
 
     public function addEmailNotification($subsriptionId, $postId, $email, $subscriptionType, $confirm = 0) {
-        if (strpos($email, "@example.com") !== false) {
+        if (!WpdiscuzHelper::isUserCanFollowOrSubscribe($email)) {
             return false;
         }
         if ($subscriptionType !== self::SUBSCRIPTION_COMMENT) {
@@ -377,6 +400,11 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
             $this->db->query($sql);
         }
     }
+
+	public function deleteSubscriptionsByEmail($email) {
+		$sql = $this->db->prepare("DELETE FROM `{$this->emailNotification}` WHERE `email` = %s;", trim($email));
+		$this->db->query($sql);
+	}
 
     public function deleteVotes($commnetId) {
         if ($cId = intval($commnetId)) {
@@ -719,15 +747,18 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
 
     public function getSubscriptionsCount($userEmail) {
         $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->emailNotification}` WHERE `email` = %s;", trim($userEmail));
-        $result = $this->db->get_var($sql);
-        return $result;
+        return $this->db->get_var($sql);
     }
 
     public function getSubscriptions($userEmail, $limit, $offset) {
         $limitCondition = ($l = intval($limit)) > 0 ? "LIMIT $l OFFSET $offset" : "";
         $sql = $this->db->prepare("SELECT * FROM `{$this->emailNotification}` WHERE `email` = %s $limitCondition;", trim($userEmail));
-        $result = $this->db->get_results($sql);
-        return $result;
+        return $this->db->get_results($sql);
+    }
+
+    public function getSubscriptionById($sId) {
+        $sql = $this->db->prepare("SELECT * FROM `{$this->emailNotification}` WHERE `id` = %d;", $sId);
+        return $this->db->get_row($sql);
     }
 
     public function unsubscribeById($sId) {
@@ -743,15 +774,18 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     // FOLLOWS
     public function getFollowsCount($userEmail) {
         $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->followUsers}` WHERE `follower_email` = %s;", trim($userEmail));
-        $result = $this->db->get_var($sql);
-        return $result;
+        return $this->db->get_var($sql);
     }
 
     public function getFollows($userEmail, $limit, $offset) {
         $limitCondition = ($l = intval($limit)) > 0 ? "LIMIT $l OFFSET $offset" : "";
         $sql = $this->db->prepare("SELECT * FROM `{$this->followUsers}` WHERE `follower_email` = %s $limitCondition;", trim($userEmail));
-        $result = $this->db->get_results($sql);
-        return $result;
+        return $this->db->get_results($sql);
+    }
+
+    public function getFollowById($fId) {
+        $sql = $this->db->prepare("SELECT * FROM `{$this->followUsers}` WHERE `id` = %d;", $fId);
+        return $this->db->get_row($sql);
     }
 
     public function unfollowById($fId) {
@@ -768,8 +802,13 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
      * remove user related follows
      * @param type $email the user email who other users following
      */
-    public function deleteFollowsByEmail($email) {
+    public function deleteFollowersByEmail($email) {
         $sql = $this->db->prepare("DELETE FROM `{$this->followUsers}` WHERE `user_email` = %s;", trim($email));
+        $this->db->query($sql);
+    }
+
+    public function deleteFollowsByEmail($email) {
+        $sql = $this->db->prepare("DELETE FROM `{$this->followUsers}` WHERE `follower_email` = %s;", trim($email));
         $this->db->query($sql);
     }
 
@@ -815,7 +854,7 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $followerName = isset($args["follower_name"]) ? trim($args["follower_name"]) : "";
         $confirm = isset($args["confirm"]) ? intval($args["confirm"]) : 0;
 
-        if (strpos($followerEmail, "@example.com") !== false) {
+        if (!WpdiscuzHelper::isUserCanFollowOrSubscribe($followerEmail)) {
             return false;
         }
 
@@ -982,13 +1021,20 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     /* === /Synchronize Commenter Data === */
     /* === Rebuild Ratings === */
 
+    public function showRatingRebuildMsg() {
+        $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` = %s", self::POSTMETA_RATING_COUNT);
+		$ratingCount = intval($this->db->get_var($sql));
+		$separateCount = intval($this->db->get_var("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` LIKE '" . self::POSTMETA_RATING_SEPARATE_AVG . "%'"));
+        return $ratingCount > 0 && $separateCount === 0;
+    }
+
     public function getRebuildRatingsCount() {
         $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` = %s", self::POSTMETA_RATING_COUNT);
         return intval($this->db->get_var($sql));
     }
 
     public function getRebuildRatingsData($startId, $limit) {
-        $sql = $this->db->prepare("SELECT * FROM `{$this->db->postmeta}` WHERE `meta_key` = %s AND `meta_id` > %d LIMIT %d", self::POSTMETA_RATING_COUNT, $startId, $limit);
+        $sql = $this->db->prepare("SELECT * FROM `{$this->db->postmeta}` WHERE `meta_key` = %s AND `meta_id` > %d ORDER BY `meta_id` ASC LIMIT %d", self::POSTMETA_RATING_COUNT, $startId, $limit);
         return $this->db->get_results($sql, ARRAY_A);
     }
 
@@ -998,11 +1044,17 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
             if ($val) {
                 $newValues = [];
                 foreach ($val as $k => $v) {
-                    $sql = $this->db->prepare("SELECT COUNT(`cm`.`meta_id`) AS `count`, `cm`.`meta_value` FROM `{$this->db->commentmeta}` AS `cm` INNER JOIN `{$this->db->comments}` AS `c` ON `cm`.`comment_id` = `c`.`comment_ID` WHERE `c`.`comment_post_ID` = %d AND `cm`.`meta_key` = '%s' AND `cm`.`meta_value` IS NOT NULL AND `cm`.`meta_value` != 0 GROUP BY `cm`.`meta_value`", $value["post_id"], $k);
+                    $sql = $this->db->prepare("SELECT COUNT(`cm`.`meta_id`) AS `count`, `cm`.`meta_value` FROM `{$this->db->commentmeta}` AS `cm` INNER JOIN `{$this->db->comments}` AS `c` ON `cm`.`comment_id` = `c`.`comment_ID` WHERE `c`.`comment_post_ID` = %d AND `c`.`comment_approved` = '1' AND `cm`.`meta_key` = '%s' AND `cm`.`meta_value` IS NOT NULL AND `cm`.`meta_value` != 0 GROUP BY `cm`.`meta_value`", $value["post_id"], $k);
                     $values = $this->db->get_results($sql, ARRAY_A);
+                    $avg = 0;
+                    $c = 0;
                     foreach ($values as $newData) {
                         $newValues[$k][$newData["meta_value"]] = $newData["count"];
+                        $avg += $newData["meta_value"] * $newData["count"];
+                        $c += $newData["count"];
                     }
+                	update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_AVG . $k, round($avg / $c, 1));
+                	update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_COUNT . $k, $c);
                 }
                 update_post_meta($value["post_id"], self::POSTMETA_RATING_COUNT, $newValues, $val);
             }
@@ -1049,6 +1101,11 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $sql = $this->db->prepare("SELECT `id` FROM `{$this->feedbackForms}` WHERE `post_id` = %d AND `opened` = 1;", $post_id);
         return $this->db->get_col($sql);
     }
+
+	public function deleteFeedbackFormsForPost($post_id) {
+		$sql = $this->db->prepare("DELETE FROM `{$this->feedbackForms}` WHERE `post_id` = %d", $post_id);
+		$this->db->query($sql);
+	}
 
     /* === /Feedback Comments === */
     /* === User Votes === */

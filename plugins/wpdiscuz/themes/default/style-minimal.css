@@ -166,7 +166,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 /* Comment Form */
 #wpdcom .wpd-form .wpd-avatar{display: none;}
 #wpdcom .wpd-form .wpdiscuz-textarea-wrap{margin-bottom: 10px; margin-top: 10px;}
-#wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper]{position: relative;}
+#wpdcom .wpd-form .wpdiscuz-textarea-wrap [id^=wpd-editor-wraper],#wpdcom .wpd-form .wpd-textarea-wrap{position: relative;}
 #wpdcom .wpdiscuz-form-loading{margin:auto;}
 
 /* COMMENT FORM | BUTTONS */

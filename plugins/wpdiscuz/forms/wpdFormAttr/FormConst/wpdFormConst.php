@@ -15,7 +15,8 @@ interface wpdFormConst {
     const WPDISCUZ_META_FORMS_FIELDS                  = "wpdiscuz_form_fields";
     const WPDISCUZ_META_FORMS_CSS                     = "wpd_form_custom_css";
     const WPDISCUZ_RATING_COUNT                       = "wpdiscuz_rating_count";
-    const WPDISCUZ_RATINGS_UPDATE_DATE                = "_wpd_ratings_update_date";
+	const WPDISCUZ_RATING_SEPARATE_AVG                = "wpdiscuz_post_rating_";
+	const WPDISCUZ_RATING_SEPARATE_COUNT              = "wpdiscuz_post_rating_count_";
     /* === DEFAULT FIELDS NAMES ===*/
     const WPDISCUZ_FORMS_NAME_FIELD                   = "wc_name";
     const WPDISCUZ_FORMS_EMAIL_FIELD                  = "wc_email";

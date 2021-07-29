@@ -151,6 +151,18 @@ if (!defined("ABSPATH")) {
                 <td colspan="3"><input type="text" value="<?php echo esc_attr($this->phrases["wc_user_settings_email_error"]); ?>" name="wc_user_settings_email_error" id="wc_user_settings_email_error" /></td>
             </tr>
             <tr valign="top">
+                <th scope="row"><label for="wc_delete_this_comment"><?php esc_html_e("Delete this comment", "wpdiscuz"); ?></label></th>
+                <td colspan="3"><input type="text" value="<?php echo esc_attr($this->phrases["wc_delete_this_comment"]); ?>" name="wc_delete_this_comment" id="wc_delete_this_comment" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><label for="wc_cancel_this_subscription"><?php esc_html_e("Cancel this subscription", "wpdiscuz"); ?></label></th>
+                <td colspan="3"><input type="text" value="<?php echo esc_attr($this->phrases["wc_cancel_this_subscription"]); ?>" name="wc_cancel_this_subscription" id="wc_cancel_this_subscription" /></td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><label for="wc_cancel_this_follow"><?php esc_html_e("Cancel this follow", "wpdiscuz"); ?></label></th>
+                <td colspan="3"><input type="text" value="<?php echo esc_attr($this->phrases["wc_cancel_this_follow"]); ?>" name="wc_cancel_this_follow" id="wc_cancel_this_follow" /></td>
+            </tr>
+            <tr valign="top">
                 <th scope="row"><label for="wc_confirm_comment_delete"><?php esc_html_e("Are you sure you want to delete this comment?", "wpdiscuz"); ?></label></th>
                 <td colspan="3"><input type="text" value="<?php echo esc_attr($this->phrases["wc_confirm_comment_delete"]); ?>" name="wc_confirm_comment_delete" id="wc_confirm_comment_delete" /></td>
             </tr>

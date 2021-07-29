@@ -84,7 +84,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                     $user["commentWrapClass"][] = "wpd-blog-user";
                     $user["commentWrapClass"][] = "wpd-blog-post_author";
                     if (!empty($this->options->labels["blogRoleLabels"]["post_author"])) {
-                        $user["author_title"] = esc_html($this->options->phrases["wc_blog_role_post_author"]);
+                        $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_post_author"));
                     }
                 } else {
                     if ($this->options->labels["blogRoles"]) {
@@ -93,7 +93,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                                 if (isset($this->options->labels["blogRoles"][$role])) {
                                     $user["commentWrapClass"][] = "wpd-blog-user";
                                     $user["commentWrapClass"][] = "wpd-blog-" . $role;
-                                    $rolePhrase = isset($this->options->phrases["wc_blog_role_" . $role]) ? esc_html($this->options->phrases["wc_blog_role_" . $role]) : "";
+                                    $rolePhrase = esc_html($this->options->getPhrase("wc_blog_role_" . $role, ["default" => ""]));
                                     if (!empty($this->options->labels["blogRoleLabels"][$role])) {
                                         $user["author_title"] = apply_filters("wpdiscuz_user_label", $rolePhrase, $user["user"]);
                                     }
@@ -103,7 +103,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                         } else {
                             $user["commentWrapClass"][] = "wpd-blog-guest";
                             if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
-                                $user["author_title"] = esc_html($this->options->phrases["wc_blog_role_guest"]);
+                                $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
                             }
                         }
                     }
@@ -127,14 +127,14 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                     }
                 }
             } else {
-                $user["authorName"] = $comment->comment_author ? $comment->comment_author : esc_html($this->options->phrases["wc_anonymous"]);
+                $user["authorName"] = $comment->comment_author ? $comment->comment_author : esc_html($this->options->getPhrase("wc_anonymous"));
                 $user["authorAvatarField"] = $comment->comment_author_email;
                 $user["gravatarUserId"] = 0;
                 $user["gravatarUserEmail"] = $comment->comment_author_email;
                 $user["profileUrl"] = "";
                 $user["commentWrapClass"][] = "wpd-blog-guest";
                 if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
-                    $user["author_title"] = esc_html($this->options->phrases["wc_blog_role_guest"]);
+                    $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
                 }
             }
             $this->users[$userKey] = $user;
@@ -193,9 +193,11 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $search[] = "{DATE_WRAPPER_CLASSES}";
             $search[] = "{DATE_ICON}";
             $search[] = "{DATE}";
+            $search[] = "{POSTED_DATE}";
             $replace[] = "wpd-comment-date";
             $replace[] = "<i class='far fa-clock' aria-hidden='true'></i>";
             $replace[] = esc_html($this->options->general["simpleCommentDate"] ? get_comment_date($this->options->wp["dateFormat"] . " " . $this->options->wp["timeFormat"], $comment->comment_ID) : $this->helper->dateDiff($comment->comment_date_gmt));
+            $replace[] = esc_html(get_comment_date($this->options->wp["dateFormat"] . " " . $this->options->wp["timeFormat"], $comment->comment_ID));
             $showDate = true;
         }
 
@@ -205,18 +207,18 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         if ($comment->comment_parent == 0) {
             if ($comment->comment_type === self::WPDISCUZ_STICKY_COMMENT) {
                 $commentWrapperClass[] = "wpd-sticky-comment";
-                $statusIcons .= "<div class='wpd-sticky' wpd-tooltip='" . esc_attr($this->options->phrases["wc_sticky_comment_icon_title"]) . "'><i class='fas fa-thumbtack' aria-hidden='true'></i></div>";
-                $stickText = esc_html($this->options->phrases["wc_unstick_comment"]);
+                $statusIcons .= "<div class='wpd-sticky' wpd-tooltip='" . esc_attr($this->options->getPhrase("wc_sticky_comment_icon_title", ["comment" => $comment])) . "'><i class='fas fa-thumbtack' aria-hidden='true'></i></div>";
+                $stickText = esc_html($this->options->getPhrase("wc_unstick_comment", ["comment" => $comment]));
             } else {
-                $stickText = esc_html($this->options->phrases["wc_stick_comment"]);
+                $stickText = esc_html($this->options->getPhrase("wc_stick_comment", ["comment" => $comment]));
             }
 
             if ($isClosed) {
                 $commentWrapperClass[] = "wpd-closed-comment";
-                $statusIcons .= "<div class='wpd-closed' wpd-tooltip='" . esc_attr($this->options->phrases["wc_closed_comment_icon_title"]) . "'><i class='fas fa-lock' aria-hidden='true'></i></div>";
-                $closeText = esc_html($this->options->phrases["wc_open_comment"]);
+                $statusIcons .= "<div class='wpd-closed' wpd-tooltip='" . esc_attr($this->options->getPhrase("wc_closed_comment_icon_title", ["comment" => $comment])) . "'><i class='fas fa-lock' aria-hidden='true'></i></div>";
+                $closeText = esc_html($this->options->getPhrase("wc_open_comment", ["comment" => $comment]));
             } else {
-                $closeText = esc_html($this->options->phrases["wc_close_comment"]);
+                $closeText = esc_html($this->options->getPhrase("wc_close_comment", ["comment" => $comment]));
             }
             if ($isApproved) {
                 if ($comment->comment_type !== self::WPDISCUZ_PRIVATE_COMMENT) {
@@ -236,9 +238,9 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $search[] = "{REPLY_TO_USER_NAME}";
             $replace[] = "wpd-reply-to";
             $replace[] = "<i class='far fa-comments'></i>";
-            $replace[] = esc_html($this->options->phrases["wc_reply_to"]) . "&nbsp;";
+            $replace[] = esc_html($this->options->getPhrase("wc_reply_to", ["comment" => $comment])) . "&nbsp;";
             $replace[] = esc_url_raw($parentCommentLink);
-            $replace[] = esc_html($parentCommentUserName);
+            $replace[] = apply_filters("wpdiscuz_comment_author", $parentCommentUserName, $parentComment);
             $showReplyTo = true;
         }
 
@@ -256,8 +258,8 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $showShare = false;
         if ($isApproved) {
             if ($args["is_share_enabled"]) {
-                $shareButtons = $this->options->social["enableTwitterShare"] ? "<a class='wc_tw' rel='noreferrer' target='_blank' href='https://twitter.com/intent/tweet?text=" . $this->helper->getTwitterShareContent($comment->comment_content, $commentLink) . "&url=" . urlencode($commentLink) . "' title='" . esc_attr($this->options->phrases["wc_share_twitter"]) . "'><i class='fab fa-twitter wpf-cta' aria-hidden='true'></i></a>" : "";
-                $shareButtons .= $this->options->social["enableWhatsappShare"] ? "<a class='wc_whatsapp' rel='noreferrer' href='{$args["whatsapp_url"]}/send?text=" . $this->helper->getWhatsappShareContent($comment->comment_content, $commentLink) . "' target='_blank' title='" . esc_attr($this->options->phrases["wc_share_whatsapp"]) . "'><i class='fab fa-whatsapp wpf-cta' aria-hidden='true'></i></a>" : "";
+                $shareButtons = $this->options->social["enableTwitterShare"] ? "<a class='wc_tw' rel='noreferrer' target='_blank' href='https://twitter.com/intent/tweet?text=" . $this->helper->getTwitterShareContent($comment->comment_content, $commentLink) . "&url=" . urlencode($commentLink) . "' title='" . esc_attr($this->options->getPhrase("wc_share_twitter")) . "'><i class='fab fa-twitter wpf-cta' aria-hidden='true'></i></a>" : "";
+                $shareButtons .= $this->options->social["enableWhatsappShare"] ? "<a class='wc_whatsapp' rel='noreferrer' href='{$args["whatsapp_url"]}/send?text=" . $this->helper->getWhatsappShareContent($comment->comment_content, $commentLink) . "' target='_blank' title='" . esc_attr($this->options->getPhrase("wc_share_whatsapp")) . "'><i class='fab fa-whatsapp wpf-cta' aria-hidden='true'></i></a>" : "";
                 $shareButtons .= $args["share_buttons"];
                 $showShare = true;
                 $search[] = "{SHARE_WRAPPER_CLASSES}";
@@ -271,7 +273,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             }
         } else {
             $commentWrapperClass[] = "wpd-unapproved-comment";
-            $statusIcons .= "<div class='wpd-unapproved'><i class='fas fa-exclamation-circle'></i>" . esc_html($this->options->phrases["wc_awaiting_for_approval"]) . "</div>";
+            $statusIcons .= "<div class='wpd-unapproved'><i class='fas fa-exclamation-circle'></i>" . esc_html($this->options->getPhrase("wc_awaiting_for_approval", ["comment" => $comment])) . "</div>";
         }
 
         $trackOrPingback = $comment->comment_type === "pingback" || $comment->comment_type === "trackback";
@@ -320,10 +322,10 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         if ($args["can_user_follow"] && $args["current_user_email"] !== $comment->comment_author_email) {
             if (is_array($args["user_follows"]) && in_array($comment->comment_author_email, $args["user_follows"])) {
                 $followClass = "wpd-unfollow wpd-follow-active";
-                $followTip = $this->options->phrases["wc_unfollow_user"];
+                $followTip = $this->options->getPhrase("wc_unfollow_user", ["comment" => $comment]);
             } else {
                 $followClass = "wpd-follow";
-                $followTip = $this->options->phrases["wc_follow_user"];
+                $followTip = $this->options->getPhrase("wc_follow_user", ["comment" => $comment]);
             }
             $showFollow = true;
             $search[] = "{FOLLOW_WRAPPER_CLASSES}";
@@ -332,7 +334,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $search[] = "{FOLLOW_ICON}";
             $replace[] = "wpd-follow-link wpd_not_clicked " . $followClass;
             $replace[] = esc_attr($followTip);
-            $replace[] = $args["layout"] == 1 ? ( !is_rtl() ? ( wp_is_mobile() ? 'left' : 'right') : ( wp_is_mobile() ? 'right' : 'left') ) : "top";
+            $replace[] = $args["layout"] == 1 ? (!is_rtl() ? (wp_is_mobile() ? 'left' : 'right') : (wp_is_mobile() ? 'right' : 'left')) : "top";
             $replace[] = "<i class='fas fa-rss' aria-hidden='true'></i>";
         }
 
@@ -365,7 +367,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                 $commentLinkIcon = $beforeCommentLink;
             }
             if ($this->options->thread_layouts["showCommentLink"]) {
-                $commentLinkIcon .= apply_filters("wpdiscuz_comment_link_img", "<span wpd-tooltip='" . esc_attr($this->options->phrases["wc_comment_link"]) . "'><i class='fas fa-link' aria-hidden='true' data-comment-url='" . esc_url_raw($commentLink) . "'></i></span>", $comment);
+                $commentLinkIcon .= apply_filters("wpdiscuz_comment_link_img", "<span wpd-tooltip='" . esc_attr($this->options->getPhrase("wc_comment_link", ["comment" => $comment])) . "'><i class='fas fa-link' aria-hidden='true' data-comment-url='" . esc_url_raw($commentLink) . "'></i></span>", $comment);
             }
             if ($afterCommentLink) {
                 $commentLinkIcon .= $afterCommentLink;
@@ -382,15 +384,15 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             if ($this->options->thread_layouts["votingButtonsStyle"]) {
                 $voteCount = isset($commentMetas[self::META_KEY_VOTES_SEPARATE]) ? unserialize($commentMetas[self::META_KEY_VOTES_SEPARATE][0]) : ["like" => 0, "dislike" => 0];
                 $like = !empty($voteCount["like"]) ? intval($voteCount["like"]) : 0;
-                $voteResult = "<div class='wpd-vote-result wpd-vote-result-like" . ($like ? " wpd-up" : "") . "'>" . esc_html($like) . "</div>";
+                $voteResult = "<div class='wpd-vote-result wpd-vote-result-like" . ($like ? " wpd-up" : "") . "' title='" . esc_attr($like) . "'>" . esc_html($this->helper->getNumber($like)) . "</div>";
                 if ($this->options->thread_layouts["enableDislikeButton"]) {
-                    $dislike = !empty($voteCount["dislike"]) ? -$voteCount["dislike"] : 0;
+                    $dislike = !empty($voteCount["dislike"]) ? intval($voteCount["dislike"]) : 0;
                     $voteResult .= "<div class='wpd-vote-result-sep'></div>";
-                    $voteResult .= "<div class='wpd-vote-result wpd-vote-result-dislike" . ($dislike ? " wpd-down" : "") . "'>" . esc_html($dislike) . "</div>";
+                    $voteResult .= "<div class='wpd-vote-result wpd-vote-result-dislike" . ($dislike ? " wpd-down" : "") . "' title='" . esc_attr(-$dislike) . "'>" . esc_html($this->helper->getNumber(-$dislike)) . "</div>";
                 }
             } else {
                 $votes = isset($commentMetas[self::META_KEY_VOTES]) ? intval($commentMetas[self::META_KEY_VOTES][0]) : 0;
-                $voteResult = "<div class='wpd-vote-result" . ($votes > 0 ? " wpd-up" : ($votes < 0 ? " wpd-down" : "")) . "'>" . esc_html($votes) . "</div>";
+                $voteResult = "<div class='wpd-vote-result" . ($votes > 0 ? " wpd-up" : ($votes < 0 ? " wpd-down" : "")) . "' title='" . esc_attr($votes) . "'>" . esc_html($this->helper->getNumber($votes)) . "</div>";
             }
             $wpdUpClass = "";
             $wpdDownClass = "";
@@ -419,7 +421,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $showReply = false;
         if (!$isClosed) {
             if ($args["high_level_user"] || ($this->helper->isCommentEditable($comment) && $this->helper->canUserEditComment($comment, $args["current_user"], $args))) {
-                $toolsActions = "<span class='wpd_editable_comment wpd-cta-button'>" . esc_html($this->options->phrases["wc_edit_text"]) . "</span>" . $toolsActions;
+                $toolsActions = "<span class='wpd_editable_comment wpd-cta-button'>" . esc_html($this->options->getPhrase("wc_edit_text", ["comment" => $comment])) . "</span>" . $toolsActions;
             }
 
             if ($args["can_user_reply"] && $isApproved) {
@@ -429,7 +431,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                 $search[] = "{REPLY_TEXT}";
                 $replace[] = "wpd-reply-button";
                 $replace[] = "<svg xmlns='https://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z'/><path d='M0 0h24v24H0z' fill='none'/></svg>";
-                $replace[] = esc_html($this->options->phrases["wc_reply_text"]);
+                $replace[] = esc_html($this->options->getPhrase("wc_reply_text", ["comment" => $comment]));
                 $search[] = "{PANEL}";
                 if ($args["layout"] == 3 && !$comment->comment_parent) {
                     $replace[] = "<div class='wpd-wpanel'></div>";
@@ -449,8 +451,8 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                     $search[] = "{TOGGLE_TOOLTIP_TEXT}";
                     $search[] = "{TOGGLE_ICON}";
                     $replace[] = "wpd-toggle wpd-hidden wpd_not_clicked";
-                    $replace[] = esc_html($this->options->phrases["wc_show_replies_text"]);
-                    $replace[] = "<span class='wpd-view-replies'>" . esc_html($this->options->phrases["wc_show_replies_text"]) . " ($countChildren)</span><i class='fas fa-chevron-down'></i>";
+                    $replace[] = esc_html($this->options->getPhrase("wc_show_replies_text", ["comment" => $comment]));
+                    $replace[] = "<span class='wpd-view-replies'><span class='wpd-view-replies-text'>" . esc_html($this->options->getPhrase("wc_show_replies_text", ["comment" => $comment])) . "</span> ($countChildren)</span><i class='fas fa-chevron-down'></i>";
                     $showToggle = true;
                 }
             } else if ($comment->get_children(["post_id" => $args["post_id"]])) {
@@ -458,7 +460,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                 $search[] = "{TOGGLE_TOOLTIP_TEXT}";
                 $search[] = "{TOGGLE_ICON}";
                 $replace[] = "wpd-toggle wpd-hidden wpd_not_clicked";
-                $replace[] = esc_html($this->options->phrases["wc_hide_replies_text"]);
+                $replace[] = esc_html($this->options->getPhrase("wc_hide_replies_text", ["comment" => $comment]));
                 $replace[] = "<i class='fas fa-chevron-up'></i>";
                 $showToggle = true;
             }
@@ -472,7 +474,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $search[] = "{TOOLS_ICON}";
             $search[] = "{TOOLS_ACTIONS}";
             $replace[] = "wpd-tools wpd-hidden";
-            $replace[] = esc_attr($this->options->phrases["wc_manage_comment"]);
+            $replace[] = esc_attr($this->options->getPhrase("wc_manage_comment", ["comment" => $comment]));
             $replace[] = "<i class='fas fa-cog'></i>";
             $replace[] = "<div class='wpd-tools-actions'>" . $toolsActions . "</div>";
             $search[] = "{SEPARATOR}";
@@ -484,7 +486,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         if ($this->options->moderation["displayEditingInfo"] && isset($commentMetas[self::META_KEY_LAST_EDITED_AT]) && isset($commentMetas[self::META_KEY_LAST_EDITED_BY])) {
             $lastEditUser = get_user_by(is_numeric($commentMetas[self::META_KEY_LAST_EDITED_BY][0]) ? "id" : "email", $commentMetas[self::META_KEY_LAST_EDITED_BY][0]);
             $username = $lastEditUser ? $lastEditUser->display_name : $comment->comment_author;
-            $lastEdited = "<div class='wpd-comment-last-edited'><i class='far fa-edit'></i>" . esc_html(sprintf($this->options->phrases["wc_last_edited"], $this->helper->dateDiff($commentMetas[self::META_KEY_LAST_EDITED_AT][0]), $username)) . "</div>";
+            $lastEdited = "<div class='wpd-comment-last-edited'><i class='far fa-edit'></i>" . esc_html(sprintf($this->options->getPhrase("wc_last_edited", ["comment" => $comment]), $this->helper->dateDiff($commentMetas[self::META_KEY_LAST_EDITED_AT][0]), $username)) . "</div>";
         }
 
         $commentWrapClass = array_merge($commentWrapClass, $user["commentWrapClass"]);
@@ -505,7 +507,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $replace[] = "wpd-comment-text";
             $content = "";
             if ($isInline) {
-                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->phrases["wc_feedback_content_text"]) . "</span> <i class=\"fas fa-quote-left\"></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->phrases["wc_read_more"]) . "</a></div>";
+                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->getPhrase("wc_feedback_content_text")) . "</span> <i class='fas fa-quote-left'></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->getPhrase("wc_read_more")) . "</a></div>";
             }
             $replace[] = $content . $comment->comment_content;
             $replace[] = "wpd-comment-left " . esc_attr($commentLeftClass);
@@ -534,7 +536,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $replace[] = "wpd-comment-text";
             $content = "";
             if ($isInline) {
-                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->phrases["wc_feedback_content_text"]) . "</span> <i class=\"fas fa-quote-left\"></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->phrases["wc_read_more"]) . "</a></div>";
+                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->getPhrase("wc_feedback_content_text")) . "</span> <i class='fas fa-quote-left'></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->getPhrase("wc_read_more")) . "</a></div>";
             }
             $replace[] = $content . $comment->comment_content;
             $replace[] = "wpd-user-info";
@@ -567,7 +569,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $replace[] = "wpd-comment-text";
             $content = "";
             if ($isInline) {
-                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->phrases["wc_feedback_content_text"]) . "</span> <i class=\"fas fa-quote-left\"></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->phrases["wc_read_more"]) . "</a></div>";
+                $content = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->getPhrase("wc_feedback_content_text")) . "</span> <i class=\"fas fa-quote-left\"></i>" . wp_trim_words($this->feedbacks[$isInline]->content, $args["feedback_content_words_count"]) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$this->feedbacks[$isInline]->id}' href='#wpd-inline-{$this->feedbacks[$isInline]->id}'>" . esc_html($this->options->getPhrase("wc_read_more")) . "</a></div>";
             }
             $replace[] = $content . $comment->comment_content;
             $replace[] = "wpd-comment-left " . esc_attr($commentLeftClass);

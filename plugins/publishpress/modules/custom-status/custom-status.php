@@ -168,7 +168,6 @@ if (!class_exists('PP_Custom_Status')) {
             add_filter('page_row_actions', [$this, 'fix_post_row_actions'], 10, 2);
 
             add_filter('wp_insert_post_data', [$this, 'filter_insert_post_data'], 10, 2);
-            add_action('transition_post_status', [$this, 'fix_publish_date_after_publish'], 10, 3);
         }
 
         /**
@@ -299,7 +298,7 @@ if (!class_exists('PP_Custom_Status')) {
                     [
                         'hierarchical'          => false,
                         'update_count_callback' => '_update_post_term_count',
-                        'label'                 => false,
+                        'label'                 => __('Statuses', 'publishpress'),
                         'query_var'             => false,
                         'rewrite'               => false,
                         'show_ui'               => false,
@@ -308,12 +307,6 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             if (function_exists('register_post_status')) {
-                // Users can delete draft and pending statuses if they want, so let's get rid of them
-                // They'll get re-added if the user hasn't "deleted" them
-                // TODO: Disabled this code for now - PPRESS-316 - unsetting the pending status, sending to pend will make the post disappear.
-                // unset($wp_post_statuses['draft']);
-                // unset($wp_post_statuses['pending']);
-
                 $custom_statuses = $this->get_custom_statuses($args, !is_admin());
 
                 // Unfortunately, register_post_status() doesn't accept a
@@ -328,10 +321,11 @@ if (!class_exists('PP_Custom_Status')) {
                     }
 
                     $postStatusArgs = [
-                        'label'       => $status->name,
-                        'protected'   => true,
-                        '_builtin'    => false,
-                        'label_count' => _n_noop(
+                        'label'         => $status->name,
+                        'protected'     => true,
+                        'date_floating' => true,
+                        '_builtin'      => false,
+                        'label_count'   => _n_noop(
                             "{$status->name} <span class='count'>(%s)</span>",
                             "{$status->name} <span class='count'>(%s)</span>"
                         ),
@@ -425,6 +419,14 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_enqueue_style(
                     'publishpress-icon-preview',
                     $this->module_url . 'lib/icon-picker.css',
+                    ['dashicons'],
+                    PUBLISHPRESS_VERSION,
+                    'all'
+                );
+
+                wp_enqueue_style(
+                    'publishpress-custom_status-admin',
+                    $this->module_url . 'lib/custom-status-admin.css',
                     false,
                     PUBLISHPRESS_VERSION,
                     'all'
@@ -436,7 +438,7 @@ if (!class_exists('PP_Custom_Status')) {
                 wp_enqueue_script(
                     'publishpress-custom_status',
                     $this->module_url . 'lib/custom-status.js',
-                    ['jquery', 'post'],
+                    ['jquery'],
                     PUBLISHPRESS_VERSION,
                     true
                 );
@@ -2002,10 +2004,11 @@ if (!class_exists('PP_Custom_Status')) {
                                        value="<?php if (isset($icon)) {
                                            echo esc_attr($icon);
                                        } ?>"/>
-                                <div id="preview_icon_picker_example_icon" data-target="#status_icon"
-                                     class="button icon-picker dashicons <?php if (isset($icon)) {
-                                         echo esc_attr($icon);
-                                     } ?>"></div>
+
+                                <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                    <span id="icon_picker_preview" class="dashicons <?php echo isset($icon) ? esc_attr($icon) : ''; ?>"></span>
+                                    <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                </div>
 
                                 <?php $publishpress->settings->helper_print_error_or_description(
                                     'status_icon',
@@ -2035,23 +2038,23 @@ if (!class_exists('PP_Custom_Status')) {
                     <div class='col-wrap'>
                         <div class='form-wrap'>
                             <h3 class='nav-tab-wrapper'>
-                                <a href="<?php echo esc_url($this->get_link()); ?>" ;
+                                <a href="<?php echo esc_url($this->get_link()); ?>"
                                    class="nav-tab<?php if (!isset($_GET['action']) || $_GET['action'] != 'add-new') {
                                        echo ' nav-tab-active';
                                    } ?>"><?php _e('Options', 'publishpress'); ?></a>
-                                <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>" ;
+                                <a href="<?php echo esc_url($this->get_link(['action' => 'add-new'])); ?>"
                                    class="nav-tab<?php if (isset($_GET['action']) && $_GET['action'] == 'add-new') {
                                        echo ' nav-tab-active';
                                    } ?>"><?php _e('Add New', 'publishpress'); ?></a>
                             </h3>
                             <?php if (isset($_GET['action']) && $_GET['action'] == 'add-new'): ?>
                                 <?php /** Custom form for adding a new Custom Status term **/ ?>
-                                <form class='add:the-list:' ; action="<?php echo esc_url($this->get_link()); ?>" ;
-                                      method='post' ; id='addstatus' ; name='addstatus'>
+                                <form class='add:the-list:' action="<?php echo esc_url($this->get_link()); ?>"
+                                      method='post' id='addstatus' name='addstatus'>
                                     <div class='form-field form-required'>
                                         <label for='status_name'><?php _e('Name', 'publishpress'); ?></label>
-                                        <input type="text" ; aria-required='true' ; size='20' ; maxlength='20' ;
-                                               id='status_name' ; name='status_name' ;
+                                        <input type="text" aria-required='true' size='20' maxlength='20'
+                                               id='status_name' name='status_name'
                                                value="<?php if (!empty($_POST['status_name'])) {
                                                    echo esc_attr($_POST['status_name']);
                                                } ?>"/>
@@ -2068,7 +2071,7 @@ if (!class_exists('PP_Custom_Status')) {
                                                 'Description',
                                                 'publishpress'
                                             ); ?></label>
-                                        <textarea cols="40" ; rows='5' ; id='status_description' ;
+                                        <textarea cols="40" rows='5' id='status_description'
                                                   name='status_description'><?php if (!empty($_POST['status_description'])) {
                                                 echo esc_textarea($_POST['status_description']);
                                             } ?></textarea>
@@ -2093,18 +2096,19 @@ if (!class_exists('PP_Custom_Status')) {
                                         ); ?>
                                     </div>
                                     <div class='form-field'>
-                                        <label for='status_icon'><?php _e('Icon', 'publishpress'); ?></label>
+                                        <label for="status_icon"><?php _e('Icon', 'publishpress'); ?></label>
 
                                         <?php
                                         $status_icon = isset($_POST['icon']) ? $_POST['icon'] : 'dashicons-yes'; ?>
-                                        <input class='regular-text' ; type='hidden' ; id='status_icon' ; name='icon' ;
+                                        <input class='regular-text' type='hidden' id='status_icon' name='icon'
                                                value="<?php if (isset($status_icon)) {
                                                    echo 'dashicons ' . esc_attr($status_icon);
                                                } ?>"/>
-                                        <div id='preview_icon_picker_example_icon' ; data-target='#status_icon' ;
-                                             class="button icon-picker dashicons <?php if (isset($status_icon)) {
-                                                 echo esc_attr($status_icon);
-                                             } ?>"></div>
+
+                                        <div id="icon_picker_wrap" id="icon_picker_button" data-target='#status_icon' data-preview="#icon_picker_preview" class="button dashicons-picker">
+                                            <span id="icon_picker_preview" class="dashicons <?php echo isset($status_icon) ? esc_attr($status_icon) : ''; ?>"></span>
+                                            <span class="icon_picker_button_label"><?php echo __('Select Icon', 'publishpress'); ?></span>
+                                        </div>
 
                                         <?php $publishpress->settings->helper_print_error_or_description(
                                             'status_icon',
@@ -2124,8 +2128,8 @@ if (!class_exists('PP_Custom_Status')) {
                                         ); ?>&nbsp;</p>
                                 </form>
                             <?php else: ?>
-                                <form class='basic-settings' ;
-                                      action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>" ;
+                                <form class='basic-settings'
+                                      action="<?php echo esc_url($this->get_link(['action' => 'change-options'])); ?>"
                                       method='post'>
                                     <br/>
                                     <p><?php echo __(
@@ -2211,9 +2215,11 @@ if (!class_exists('PP_Custom_Status')) {
             }
 
             //Is this published?
-            if (in_array($post->post_status, $this->published_statuses)) {
-                return $permalink;
-            }
+            if ($status_obj = get_post_status_object($post->post_status)) {
+                if (!empty($status_obj->public) || !empty($status_obj->private)) {
+                	return $permalink;
+            	}
+            } 
 
             //Are we overriding the permalink? Don't do anything
             if (isset($_POST['action']) && $_POST['action'] == 'sample-permalink') {
@@ -2517,91 +2523,23 @@ if (!class_exists('PP_Custom_Status')) {
              * set the post_date_gmt to the current date time, like it was being published. But since
              * we provide other post statuses, this produces wrong date for posts not published yet.
              * They should have the post_date_gmt empty, so they are kept as "publish immediately".
+             *
+             * As of WordPress 5.3, we can opt out of the date setting by setting date_floating on
+             * custom statuses instead.
              */
-            if (!in_array($data['post_status'], ['publish', 'future'])) {
-                // Check if the dates are the same, indicating they were auto-set.
-                if (get_gmt_from_date(
-                        $data['post_date']
-                    ) === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
-                    // Reset the date
-                    $data['post_date_gmt'] = '0000-00-00 00:00:00';
+            if (version_compare(get_bloginfo('version'), '5.3', '<')) {
+                if (!in_array($data['post_status'], ['publish', 'future'])) {
+                    // Check if the dates are the same, indicating they were auto-set.
+                    if (get_gmt_from_date(
+                            $data['post_date']
+                        ) === $data['post_date_gmt'] && $data['post_modified'] === $data['post_date']) {
+                        // Reset the date
+                        $data['post_date_gmt'] = '0000-00-00 00:00:00';
+                    }
                 }
             }
 
             return $data;
-        }
-
-        /**
-         * Fix the publish date for custom statuses. By default WP will set a publish date if the post has a status
-         * different from draft or pending review (not considering scheduled or publish). So if we set assigned, WP
-         * will set the current date as the publish date. So when we publish, the date will be outdated.
-         *
-         * @param string $newStatus
-         * @param string $oldStatus
-         * @param WP_Post $post
-         */
-        public function fix_publish_date_after_publish($newStatus, $oldStatus, $post)
-        {
-            try {
-                if ($oldStatus !== 'publish' && $newStatus === 'publish') {
-                    if (!function_exists('current_datetime')) {
-                        include_once ABSPATH . '/wp-includes/functions.php';
-                    }
-
-                    if (function_exists('current_datetime')) {
-                        $currentDateTime = current_datetime();
-                    } else {
-                        // Workaround for when wp_timezone_string is not defined
-                        $timezone_string = get_option('timezone_string');
-
-                        if ($timezone_string) {
-                            return $timezone_string;
-                        }
-
-                        $offset  = (float)get_option('gmt_offset');
-                        $hours   = (int)$offset;
-                        $minutes = ($offset - $hours);
-
-                        $sign      = ($offset < 0) ? '-' : '+';
-                        $abs_hour  = abs($hours);
-                        $abs_mins  = abs($minutes * 60);
-                        $tz_offset = sprintf('%s%02d:%02d', $sign, $abs_hour, $abs_mins);
-
-                        $timeZoneString = $tz_offset;
-
-                        // Workaround for when wp_timezone is not defined
-                        $timeZone = new DateTimeZone($timeZoneString);
-
-                        // Workaround for when current_datetime is not defined
-                        $currentDateTime = new DateTimeImmutable('now', $timeZone);
-                    }
-
-                    $currentDateTime = $currentDateTime->format('Y-m-d H:i:s');
-
-                    if ($currentDateTime !== $post->post_date) {
-                        global $wpdb;
-
-                        $data = [
-                            'post_date'     => $currentDateTime,
-                            'post_date_gmt' => get_gmt_from_date($currentDateTime),
-                        ];
-
-                        $where = [
-                            'ID' => $post->ID,
-                        ];
-
-                        $wpdb->update($wpdb->posts, $data, $where, ['%s', '%s'], ['%d']);
-                    }
-                }
-            } catch (Exception $e) {
-                error_log(
-                    sprintf(
-                        '[PublishPress] Exception %s: %s',
-                        __METHOD__,
-                        $e->getMessage()
-                    )
-                );
-            }
         }
 
         /**

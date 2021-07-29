@@ -58,67 +58,6 @@
     content: "\64";
 }
 
-/* Admin icon */
-#adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-#adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before {
-    background-image: url(../../modules/settings/lib/new-menu-icon.png);
-    background-repeat: no-repeat;
-    background-position: 0 8px;
-    background-size: 19px auto;
-    content: " ";
-    transition: none;
-    -moz-transition: none;
-    -webkit-transition: none;
-    -o-transition: none;
-}
-
-/* Admin icon customized per admin theme, excluding the default and light */
-.admin-color-blue #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-coffee #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-ectoplasm #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-midnight #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-ocean #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-sunrise #adminmenu > li[id^="toplevel_page_pp-"] .dashicons-before::before,
-.admin-color-blue #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-coffee #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-ectoplasm #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-midnight #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-ocean #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-sunrise #adminmenu > li[id^="toplevel_page_pp-"] .wp-has-current-submenu .dashicons-before::before,
-.admin-color-blue #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-coffee #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-ectoplasm #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-midnight #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-ocean #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-sunrise #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-blue #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before,
-.admin-color-coffee #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before,
-.admin-color-ectoplasm #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before,
-.admin-color-midnight #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before,
-.admin-color-ocean #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before,
-.admin-color-sunrise #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before {
-    background-position: 0 -60px;
-}
-
-#adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-#adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before {
-    background-position: 0 -26px;
-}
-
-/* Customize the icon for "Light" admin theme's hover and active states */
-.admin-color-light #adminmenu > li[id^="toplevel_page_pp-"]:active .wp-not-current-submenu .dashicons-before::before,
-.admin-color-light #adminmenu > li[id^="toplevel_page_pp-"]:hover .wp-not-current-submenu .dashicons-before::before {
-    background-position: 0 8px;
-}
-
-#adminmenu > li[id^="toplevel_page_pp-"] .wp-menu-open .dashicons-before::before {
-    background-position: 0 -60px;
-}
-
-#adminmenu > li[id^="toplevel_page_pp-"] > a.wp-menu-open {
-    background: #655997 !important;
-}
-
 .pp-page-icon {
     font-size: 30px;
     display: inline-block;
@@ -200,4 +139,11 @@ Status color box */
 .psppno_no_events_warning {
     font-style: italic;
     color: #9c9c9c;
+}
+
+#wp-admin-bar-publishpress_debug {
+    background: #635A93 !important;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0 2px !important;
 }

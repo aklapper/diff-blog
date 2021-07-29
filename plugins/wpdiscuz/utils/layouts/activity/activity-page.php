@@ -39,7 +39,7 @@ if ($action && $currentUserEmail) {
         ?>
         <input type="hidden" class="wpd-page-number" value="<?php echo esc_attr($page); ?>"/>
     <?php } else { ?>
-        <div class='wpd-item'><?php echo esc_html($this->options->phrases["wc_user_settings_no_data"]); ?></div>
+        <div class='wpd-item'><?php echo esc_html($this->options->getPhrase("wc_user_settings_no_data")); ?></div>
         <?php
     }
 }

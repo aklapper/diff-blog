@@ -18,6 +18,7 @@ interface WpDiscuzConstants {
     const OPTION_SLUG_WIZARD_COMPLETED                = "wpdiscuz_wizard_completed";
     const OPTION_SLUG_WIZARD_AFTER_UPDATE             = "wpdiscuz_wizard_after_update";
     const OPTION_SLUG_WIZARD_SHOW_ADDONS_MSG          = "wpdiscuz_wizard_show_addons_msg";
+    const OPTION_SLUG_SHOW_RATING_REBUIL_MSG          = "wpdiscuz_show_rating_rebuild_message";
     /* === OPTIONS SLUGS === */
     const PAGE_WPDISCUZ                               = "wpdiscuz";
     const PAGE_SETTINGS                               = "wpdiscuz_options_page";
@@ -76,6 +77,8 @@ interface WpDiscuzConstants {
     const POSTMETA_STATISTICS                         = "_wpdiscuz_statistics";
     const POSTMETA_REACTED                            = "reacted";
     const POSTMETA_RATING_COUNT                       = "wpdiscuz_rating_count";
+	const POSTMETA_RATING_SEPARATE_AVG                = "wpdiscuz_post_rating_";
+	const POSTMETA_RATING_SEPARATE_COUNT              = "wpdiscuz_post_rating_count_";
     /* === USER CONTENT === */
     const TRS_USER_HASH                               = "wpdiscuz_user_hash_";
     /* === SOCIAL LOGIN */
@@ -91,6 +94,9 @@ interface WpDiscuzConstants {
     const METAKEY_ATTACHMENTS                         = "wmu_attachments";
     const KEY_IMAGES                                  = "images";
     const INPUT_NAME                                  = "wmu_files";
+	const DELETE_UNATTACHED_FILES_ACTION              = "wpdiscuz_delete_unattached_images";
+	const DELETE_UNATTACHED_FILES_KEY_RECURRENCE      = "wpdiscuz_delete_unattached_images_every_48h";
+	const DELETE_UNATTACHED_FILES_RECURRENCE          = 48;
     /* === POST RATING */
     const POSTMETA_POST_RATING                        = "wpdiscuz_post_rating";
     const POSTMETA_POST_RATING_COUNT                  = "wpdiscuz_post_rating_count";

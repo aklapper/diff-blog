@@ -66,7 +66,7 @@ class SelectField extends Field {
         $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-select'><td class='first'>";
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
-        $required = $data["required"] ? " required='required' " : "";
+        $required = $data["required"] ? " required='required' aria-required='true' " : "";
         $html .= "<div class='wpdiscuz-item  wpd-field-group wpd-field-select'>";
         $html .= "<select name='" . esc_attr($key) . "' class='" . esc_attr($key) . " wpd-field wpd-field-select wpdiscuz_select'$required>";
         $html .= "<option value=''>...</option>";
@@ -86,7 +86,7 @@ class SelectField extends Field {
             return;
         $hasDesc = $args["desc"] ? true : false;
         ?>
-        <?php $required = $args["required"] ? " required='required' " : ""; ?>
+        <?php $required = $args["required"] ? " required='required' aria-required='true' " : ""; ?>
         <div class="wpdiscuz-item wpd-field-group wpd-field-select <?php echo esc_attr($name) . "-wrapper" . ($hasDesc ? " wpd-has-desc" : ""); ?>">
             <select <?php echo $required; ?> name="<?php echo esc_attr($name); ?>" class="<?php echo esc_attr($name); ?> wpd-field wpdiscuz_select">
                 <option value=""><?php echo htmlentities($args["name"]); ?></option>

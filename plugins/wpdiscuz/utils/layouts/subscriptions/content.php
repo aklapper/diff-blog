@@ -25,7 +25,7 @@ if ($items && is_array($items)) {
             $author = $object->comment_author;
             $postedDate = $this->getCommentDate($object);
             $content = wp_trim_words($object->comment_content, 20, "&hellip;");
-            $sTypeInfo = $this->options->phrases["wc_user_settings_subscribed_to_replies"];
+            $sTypeInfo = $this->options->getPhrase("wc_user_settings_subscribed_to_replies");
         } else {
             $object = get_post($sPostId);
             $link = get_permalink($sPostId);
@@ -33,7 +33,7 @@ if ($items && is_array($items)) {
             $author = $postAuthor->display_name ? $postAuthor->display_name : $postAuthor->user_login;
             $postedDate = $this->getPostDate($object);
             $content = $object->post_title;
-            $sTypeInfo = $sType === "all_comment" ? $this->options->phrases["wc_user_settings_subscribed_to_replies_own"] : $this->options->phrases["wc_user_settings_subscribed_to_all_comments"];
+            $sTypeInfo = $this->options->getPhrase($sType === "all_comment" ? "wc_user_settings_subscribed_to_replies_own" : "wc_user_settings_subscribed_to_all_comments");
         }
         if ($object && !is_wp_error($object)) {
             include WPDISCUZ_DIR_PATH . "/utils/layouts/subscriptions/item.php";
@@ -43,7 +43,7 @@ if ($items && is_array($items)) {
     ?>
     <input type="hidden" class="wpd-page-number" value="0"/>
 <?php } else { ?>
-    <div class='wpd-item'><?php echo esc_html($this->options->phrases["wc_user_settings_no_data"]); ?></div>
+    <div class='wpd-item'><?php echo esc_html($this->options->getPhrase("wc_user_settings_no_data")); ?></div>
     <?php
 }
 $html .= ob_get_clean();

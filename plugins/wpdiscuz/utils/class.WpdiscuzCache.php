@@ -187,7 +187,7 @@ class WpdiscuzCache implements WpDiscuzConstants {
     }
 
     public function deleteGravatars() {
-        $files = function_exists("scandir") ? scandir($this->avBaseDir) : false;
+        $files = function_exists("scandir") && is_dir($this->avBaseDir) ? scandir($this->avBaseDir) : false;
         if ($files && is_array($files)) {
             foreach ($files as $k => $file) {
                 if ($file !== "." && $file !== ".." && $file !== ".htaccess") {
