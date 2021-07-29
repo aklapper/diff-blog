@@ -11,7 +11,7 @@ if (!defined("ABSPATH")) {
         </div>
     </div>
     <div class="wpd-item-right">
-        <a href="#" class="wpd-delete-content wpd-not-clicked" data-wpd-content-id="<?php echo esc_attr($fId); ?>" data-wpd-delete-action="wpdCancelFollow" title="<?php esc_attr_e("Cancel this follow", "wpdiscuz"); ?>">
+        <a href="#" class="wpd-delete-content wpd-not-clicked" data-wpd-content-id="<?php echo esc_attr($fId); ?>" data-wpd-delete-action="wpdCancelFollow" title="<?php esc_attr_e($this->options->getPhrase("wc_cancel_this_follow")); ?>">
             <i class="fas fa-trash-alt"></i>
         </a>
     </div>

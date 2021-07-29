@@ -7,6 +7,8 @@ if (!defined("ABSPATH")) {
     <h3 style="padding:5px 10px 10px 10px; margin:0px; text-align:right; border-bottom:1px solid #ddd; max-width:60%; margin:0px 0px 20px auto; font-weight:normal;">
         wpDiscuz Addons
     </h3>
+    <div style="display:inline-block; min-width:27%; padding-right:10px; margin-bottom:10px;"><img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/buddypress/header.png") ?>" style="height:40px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none;"> <a target="_blank" href="https://gvectors.com/product/wpdiscuz-buddypress-integration/" style="color:#444; text-decoration:none;" title="Addon Details and Screenshots">BuddyPress Integration</a>
+    </div>
     <div style="display:inline-block; min-width:27%; padding-right:10px; margin-bottom:10px;"><img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/emoticons/header.png") ?>" style="height:40px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none;"> <a target="_blank" href="https://gvectors.com/product/wpdiscuz-emoticons/" style="color:#444; text-decoration:none;" title="Addon Details and Screenshots">Emoticons</a>
     </div>
     <div style="display:inline-block; min-width:27%; padding-right:10px; margin-bottom:10px;"><img src="<?php echo plugins_url(WPDISCUZ_DIR_NAME . "/assets/addons/author-info/header.png") ?>" style="height:40px; width:auto; vertical-align:middle; margin:0px 10px; text-decoration:none;"> <a target="_blank" href="https://gvectors.com/product/wpdiscuz-comment-author-info/" style="color:#444; text-decoration:none;" title="Addon Details and Screenshots">Comment Author Info</a>

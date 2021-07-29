@@ -2,8 +2,10 @@ class wpdEditorCounter {
     constructor(quill, options) {
         this.quill = quill;
         this.options = options;
-        this.maxCount = options.maxcount;
-        this.minCount = options.mincount;
+        this.commentmaxcount = options.commentmaxcount;
+        this.replymaxcount = options.replymaxcount;
+        this.commentmincount = options.commentmincount;
+        this.replymincount = options.replymincount;
         this.container = document.getElementById('wpd-editor-char-counter-' + options.uniqueID);
         this.submit = document.getElementById('wpd-field-submit-' + options.uniqueID);
         quill.on('editor-change', this.update.bind(this));
@@ -31,13 +33,16 @@ class wpdEditorCounter {
     update() {
         let length = this.calculate(),
                 _length = length - 1;
-        if (this.maxCount > 0 && length >= this.maxCount) {
-            this.quill.deleteText(this.maxCount, length);
+        let parentId = this.quill.container.id.substring(this.quill.container.id.lastIndexOf('_') + 1);
+        let commentmaxcount = parseInt(parentId) ? this.replymaxcount : this.commentmaxcount;
+
+        if (commentmaxcount > 0 && length >= commentmaxcount) {
+            this.quill.deleteText(commentmaxcount, length);
         }
-        if (this.maxCount > 0) {
-            let range = this.maxCount - _length;
+        if (commentmaxcount > 0) {
+            let range = commentmaxcount - _length;
             this.container.innerText = range >= 0 ? range : 0;
-            if (length + 10 > this.maxCount) {
+            if (length + 10 > commentmaxcount) {
                 this.container.classList.add("error");
             } else {
                 this.container.classList.remove("error");
@@ -45,11 +50,6 @@ class wpdEditorCounter {
         } else if (this.container) {
             this.container.remove();
         }
-//        if (_length < this.minCount) {
-//            this.submit.disabled = true;
-//        } else {
-//            this.submit.disabled = false;
-//        }
     }
 }
 
@@ -78,6 +78,7 @@ class wpdEditorLink extends Link {
 
 }
 Quill.register(wpdEditorLink, true);
+
 class WpdEditor {
     constructor() {
         this.editorWraperPrefix = 'wpd-editor-wraper';
@@ -152,6 +153,16 @@ class WpdEditor {
                     return delta;
                 }
             });
+            
+            editor.clipboard.addMatcher('img', (node, delta) => {
+                let Delta = Quill.import('delta');
+                let src  = node.getAttribute("src");
+                if (/^data:image\/.+;base64/.test(src)) {
+                    return new Delta([{insert: ''}]);
+                } else {
+                   return new Delta([{insert: src}]);
+                }
+            });
             document.querySelectorAll(`${toolbar} button`).forEach(
                     (button) => {
                 button.onclick = () => {
@@ -171,6 +182,12 @@ class WpdEditor {
         } else {
             this.currentEditor = this._editors.get(this.uniqueid);
         }
+        let commentsCount = 0;
+        if (document.getElementsByClassName('wpd-thread-info').length) {
+            commentsCount = parseInt(document.getElementsByClassName('wpd-thread-info')[0].getAttribute('data-comments-count'));
+        }
+        let phraseKey = commentsCount ? 'wc_comment_join_text' : 'wc_be_the_first_text';
+        this.currentEditor.root.setAttribute('data-placeholder', wpdiscuzAjaxObj.applyFilterOnPhrase(wpdiscuzEditorOptions[phraseKey], phraseKey, jQuery(container)));
         return this.currentEditor;
     }
 
@@ -230,8 +247,8 @@ class WpdEditor {
             if (spoilerTitle === null) {
                 return;
             }
-            let sopilerShortCodeLeft = ` [spoiler title="${spoilerTitle}"] `,
-                    sopilerShortCodeRight = ' [/spoiler] ',
+            let spoilerShortCodeLeft = ` [spoiler title="${spoilerTitle}"] `,
+                    spoilerShortCodeRight = ' [/spoiler] ',
                     reng = editor.getSelection();
             if (reng === null) {
                 reng = {
@@ -240,12 +257,12 @@ class WpdEditor {
                 };
             }
             if (reng.length === 0) {
-                editor.insertText(reng.index, sopilerShortCodeLeft + sopilerShortCodeRight, Quill.sources.USER);
-                editor.setSelection(reng.index + sopilerShortCodeLeft.length, Quill.sources.USER);
+                editor.insertText(reng.index, spoilerShortCodeLeft + spoilerShortCodeRight, Quill.sources.USER);
+                editor.setSelection(reng.index + spoilerShortCodeLeft.length, Quill.sources.USER);
             } else {
-                editor.insertText(reng.index, sopilerShortCodeLeft);
-                editor.insertText(reng.index + sopilerShortCodeLeft.length + reng.length, sopilerShortCodeRight, Quill.sources.USER);
-                editor.setSelection(reng.index + sopilerShortCodeLeft.length + reng.length + sopilerShortCodeRight.length, Quill.sources.USER);
+                editor.insertText(reng.index, spoilerShortCodeLeft);
+                editor.insertText(reng.index + spoilerShortCodeLeft.length + reng.length, spoilerShortCodeRight, Quill.sources.USER);
+                editor.setSelection(reng.index + spoilerShortCodeLeft.length + reng.length + spoilerShortCodeRight.length, Quill.sources.USER);
             }
         });
     }

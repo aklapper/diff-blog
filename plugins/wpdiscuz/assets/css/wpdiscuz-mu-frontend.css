@@ -2,7 +2,6 @@
 #wpdcom{height:auto; padding:5px 1px;}
 #wpdcom .wmu-hide{display:none!important;}
 #wpdcom .wmu-show{display:inline-block!important;}
-#wpdcom .wmu-upload-wrap{float: right;}
 #wpdcom .wmu-add{cursor: pointer; margin:0px 2px; color:#aaaaaa; cursor:pointer; display:inline;}
 #wpdcom .wmu-add i{color:#444;}
 #wpdcom .wmu-add input[type="file"]{visibility:hidden;display:none;}

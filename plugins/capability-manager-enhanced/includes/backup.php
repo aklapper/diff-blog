@@ -36,16 +36,16 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
 
 <div class="wrap publishpress-caps-manage publishpress-caps-backup pressshack-admin-wrapper">
     <div id="icon-capsman-admin" class="icon32"></div>
-    <h2><?php printf(__('Backup Tool for %1$sPublishPress Capabilities%2$s', 'capsman-enhanced'), '<a href="admin.php?page=capsman">', '</a>'); ?></h2>
+    <h2><?php printf(__('Backup Tool for %1$sPublishPress Capabilities%2$s', 'capsman-enhanced'), '<a href="admin.php?page=pp-capabilities">', '</a>'); ?></h2>
 
 
-    <form method="post" action="admin.php?page=<?php echo $this->ID ?>-tool">
-        <?php wp_nonce_field('capsman-backup-tool'); ?>
+    <form method="post" action="admin.php?page=pp-capabilities-backup">
+        <?php wp_nonce_field('pp-capabilities-backup'); ?>
 
         <ul id="publishpress-capability-backup-tabs" class="nav-tab-wrapper">
-            <li class="nav-tab nav-tab-active"><a href="#ppcb-tab-restore">Restore</a></li>
-            <li class="nav-tab"><a href="#ppcb-tab-backup">Backup</a></li>
-            <li class="nav-tab"><a href="#ppcb-tab-reset">Reset Roles</a></li>
+            <li class="nav-tab nav-tab-active"><a href="#ppcb-tab-restore"><?php _e('Restore', 'capsman-enhanced');?></a></li>
+            <li class="nav-tab"><a href="#ppcb-tab-backup"><?php _e('Backup', 'capsman-enhanced');?></a></li>
+            <li class="nav-tab"><a href="#ppcb-tab-reset"><?php _e('Reset Roles', 'capsman-enhanced');?></a></li>
         </ul>
 
         <fieldset>
@@ -67,7 +67,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                 <?php _e('A backup created on this screen replaces any previous manual backups, but is never automatically replaced.', 'capsman-enhanced');?>
                                 </p>
 
-                                <div style="margin-top:5px">
+                                <div class="pp-caps-backup-button">
                                     <input type="submit" name="save_backup"
                                             value="<?php _e('Manual Backup', 'capsman-enhanced') ?>"
                                             class="button-primary"/>
@@ -132,7 +132,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                                 if ($initial = get_option('capsman_backup_initial')):?>
                                                     <li>
                                                     <input type="radio" name="select_restore" value="restore_initial" id="cme_restore_initial">
-                                                    <label for="cme_restore_manual"><?php _e('Initial backup of all roles', 'capsman-enhanced'); ?></label>
+                                                    <label for="cme_restore_initial"><?php _e('Initial backup of all roles', 'capsman-enhanced'); ?></label>
                                                     </li>
                                                 <?php endif; ?>
                                             <!-- </select> --> 
@@ -143,7 +143,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                             <input type="submit" name="restore_backup"
                                                    value="<?php _e('Restore Selected Roles', 'capsman-enhanced') ?>"
                                                    class="button-primary"/>
-                                            
+
                                             <div class="cme-selected-backup-caption">
                                             <span class="cme-selected-backup-caption cme-subtext"></span>
                                             </div>
@@ -152,7 +152,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
 
                                         <td class="cme-backup-info">
                                             <div class="cme_backup_info_changes_only" style="display:none">
-                                            <input type="checkbox" class="cme_backup_info_changes_only" autocomplete="off" checked="checked"><?php _e('Show changes from current roles only', 'capsman-enhanced');?>
+                                            <input type="checkbox" class="cme_backup_info_changes_only" autocomplete="off" checked="checked"> <?php _e('Show changes from current roles only', 'capsman-enhanced');?>
                                             </div>
 
                                         <?php
@@ -164,7 +164,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                                 'capsman_backup_initial' => $initial_caption,
                                             );
 
-                                            if (!$capsman_backup) {
+                                            if (empty($capsman_backup)) {
                                                 $backups['capsman_backup'] = $last_caption;
                                             }
 
@@ -182,7 +182,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
 
                                             foreach ($backups as $name => $caption) {
                                                 if ($backup_data = get_option($name)) :?>
-                                                    <div id="cme_display_<?php echo $name; ?>" style="display:none;padding-left:20px;"
+                                                    <div id="cme_display_<?php echo $name; ?>" style="display:none;"
                                                         class="cme-show-backup">
                                                         <h3><?php printf(__("%s (%s roles)", 'capsman-enhanded'), $caption, count($backup_data)); ?></h3>
 
@@ -199,9 +199,9 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                                         ?>
 
                                                         <?php foreach ($backup_data as $role => $props) : 
-                                                            if (!empty($wp_roles->role_objects[$role]->capabilities)) {
+                                                            if (isset($wp_roles->role_objects[$role]->capabilities)) {
                                                                 $props['capabilities'] = array_merge(
-                                                                    array_fill_keys(array_keys($wp_roles->role_objects[$role]->capabilities), false),
+                                                                    array_fill_keys(array_keys($wp_roles->role_objects[$role]->capabilities), 0),
                                                                     $props['capabilities']
                                                                 );
                                                             }
@@ -222,27 +222,49 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                                             ?>
 
                                                             <h4<?php echo $role_class;?>><?php printf(__('%s (level %s)', 'capsman-enhanced'), translate_user_role($role_caption), $level); ?></h4>
-                                                            <ul style="list-style:disc;padding-left:30px">
+                                                            
+                                                            <?php
+                                                            $items = [];
+                                                            $any_changes = false;
 
-                                                                <?php
-                                                                ksort($props['capabilities']);
-                                                                foreach ($props['capabilities'] as $cap_name => $val) :
-                                                                    if (0 === strpos($cap_name, 'level_')) continue;
-                                                                    ?>
-                                                                    <?php 
-                                                                    if ($val && (empty($wp_roles->role_objects[$role]) || empty($wp_roles->role_objects[$role]->capabilities[$cap_name]))) {
-                                                                        $class = ' class="cme-change cme-plus"';
-                                                                    } elseif (!$val) {
-                                                                        $class = ' class="cme-change cme-minus"';
-                                                                        $cap_name = "&nbsp;&nbsp;$cap_name&nbsp;&nbsp;";
-                                                                    } else {
-                                                                        $class = '';
-                                                                    }
-                                                                    ?>
+                                                            ksort($props['capabilities']);
+                                                            foreach ($props['capabilities'] as $cap_name => $val) :
+                                                                if (0 === strpos($cap_name, 'level_')) continue;
+                                                                ?>
+                                                                <?php 
+                                                                if ($val && (empty($wp_roles->role_objects[$role]) || empty($wp_roles->role_objects[$role]->capabilities[$cap_name]))) {
+                                                                    $class = ' class="cme-change cme-plus"';
+
+                                                                } elseif ((false === $props['capabilities'][$cap_name]) && (!isset($wp_roles->role_objects[$role]->capabilities[$cap_name]) || false !== $wp_roles->role_objects[$role]->capabilities[$cap_name])) {
+                                                                    $class = ' class="cme-change cme-negate"';
+
+                                                                } elseif (!$val && !empty($wp_roles->role_objects[$role]->capabilities[$cap_name])) {
+                                                                    $class = ' class="cme-change cme-minus"';
+                                                                    $cap_name = "&nbsp;&nbsp;$cap_name&nbsp;&nbsp;";
+                                                                } else {
+                                                                    $class = '';
+                                                                }
+
+                                                                $items[$cap_name] = $class;
+
+                                                                $any_changes = $any_changes || $class;
+                                                                ?>
+                                                            <?php endforeach; ?>
+
+                                                            <?php if ($items) :?>
+                                                                <ul class="pp-restore-caps">
+                                                                <?php foreach($items as $cap_name => $class) :?>
                                                                     <li<?php echo $class;?>><?php echo $cap_name;?></li>
                                                                 <?php endforeach; ?>
+                                                                </ul>
+                                                            <?php endif;?>
 
-                                                            </ul>
+                                                            <?php if (!$any_changes):?>
+                                                                <span class="pp-restore-caps-no-change">
+                                                                <?php _e('No changes', 'capsman-enhanced');?>
+                                                                </span>
+                                                            <?php endif;?>
+
                                                         <?php endforeach; ?>
                                                     </div>
                                                 <?php endif;
@@ -256,20 +278,19 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
 
 
                         <dl id="ppcb-tab-reset" style="display:none;">
-                            <dt><?php if (defined('WPLANG') && WPLANG && ('en_EN' != WPLANG)) _e('Reset WordPress Defaults', 'capsman-enhanced'); else echo 'Reset Roles to WordPress Defaults'; ?></dt>
+                            <dt><?php if (!in_array(get_locale(), ['en_EN', 'en_US'])) _e('Reset WordPress Defaults', 'capsman-enhanced'); else echo 'Reset Roles to WordPress Defaults'; ?></dt>
                             <dd>
-                                <p style="text-align:center;"><strong><span
-                                                style="color:red;"><?php _e('WARNING:', 'capsman-enhanced'); ?></span> <?php if (defined('WPLANG') && WPLANG && ('en_EN' != WPLANG)) _e('Reseting default Roles and Capabilities will set them to the WordPress install defaults.', 'capsman-enhanced'); else echo 'This will delete and/or modify stored role definitions.'; ?>
+                                <p><strong><span class="pp-caps-warning"><?php _e('WARNING:', 'capsman-enhanced'); ?></span> <?php if (!in_array(get_locale(), ['en_EN', 'en_US'])) _e('Reseting default Roles and Capabilities will set them to the WordPress install defaults.', 'capsman-enhanced'); else echo 'This will delete and/or modify stored role definitions.'; ?>
                                     </strong><br/>
                                     <br/>
                                     <?php
                                     _e('If you have installed any plugin that adds new roles or capabilities, these will be lost.', 'capsman-enhanced') ?>
                                     <br/>
-                                    <strong><?php if (defined('WPLANG') && WPLANG && ('en_EN' != WPLANG)) _e('It is recommended to use this only as a last resource!'); else echo('It is recommended to use this only as a last resort!'); ?></strong>
+                                    <strong><?php if (!in_array(get_locale(), ['en_EN', 'en_US'])) _e('It is recommended to use this only as a last resource!', 'capsman-enhanced'); else echo('It is recommended to use this only as a last resort!'); ?></strong>
                                 </p>
-                                <p style="text-align:center;"><a class="ak-delete button-primary"
+                                <p><a class="ak-delete button-primary"
                                                                  title="<?php echo esc_attr(__('Reset Roles and Capabilities to WordPress defaults', 'capsman-enhanced')) ?>"
-                                                                 href="<?php echo wp_nonce_url("admin.php?page={$this->ID}-tool&amp;action=reset-defaults", 'capsman-reset-defaults'); ?>"
+                                                                 href="<?php echo wp_nonce_url("admin.php?page=pp-capabilities-backup&amp;action=reset-defaults", 'capsman-reset-defaults'); ?>"
                                                                  onclick="if ( confirm('<?php echo esc_js(__("You are about to reset Roles and Capabilities to WordPress defaults.\n 'Cancel' to stop, 'OK' to reset.", 'capsman-enhanced')); ?>') ) { return true;}return false;"><?php _e('Reset to WordPress defaults', 'capsman-enhanced') ?></a>
 
                             </dd>
@@ -313,6 +334,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
             $('input.cme_backup_info_changes_only').click(function() {
                 $(this).attr('disabled', true);
                 $('td.cme-backup-info div.current-display li:not(.cme-change)').toggle(!$(this).prop('checked'));
+                $('span.pp-restore-caps-no-change').toggle($(this).prop('checked'));
                 $(this).removeAttr('disabled');
             });
 

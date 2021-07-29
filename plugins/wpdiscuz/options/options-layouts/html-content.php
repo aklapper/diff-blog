@@ -32,6 +32,22 @@ if (!defined("ABSPATH")) {
 <!-- Option end -->
 
 <!-- Option start -->
+<div class="wpd-opt-row" data-wpd-opt="replyTextLength">
+    <div class="wpd-opt-name">
+        <label for="replyTextLength"><?php echo esc_html($setting["options"]["replyTextLength"]["label"]); ?></label>
+        <p class="wpd-desc"><?php echo $setting["options"]["replyTextLength"]["description"] ?></p>
+    </div>
+    <div class="wpd-opt-input">
+        <span for="replyTextMinLength"><input type="number" value="<?php echo esc_attr($this->content["replyTextMinLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[replyTextMinLength]" id="replyTextMinLength" style="width:70px;"> <?php esc_html_e("Min", "wpdiscuz") ?> </span>
+        <span for="replyTextMaxLength">&nbsp; <input type="number" placeholder="&infin;" value="<?php echo esc_attr($this->content["replyTextMaxLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[replyTextMaxLength]" id="replyTextMaxLength" style="width:70px;"> <?php esc_html_e("Max", "wpdiscuz") ?></span>
+    </div>
+    <div class="wpd-opt-doc">
+        <?php $this->printDocLink($setting["options"]["replyTextLength"]["docurl"]) ?>
+    </div>
+</div>
+<!-- Option end -->
+
+<!-- Option start -->
 <div class="wpd-opt-row" data-wpd-opt="enableImageConversion">
     <div class="wpd-opt-name">
         <label for="enableImageConversion"><?php echo esc_html($setting["options"]["enableImageConversion"]["label"]); ?></label>

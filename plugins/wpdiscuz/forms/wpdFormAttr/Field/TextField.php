@@ -63,7 +63,7 @@ class TextField extends Field {
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $html .= "<div class='wpdiscuz-item'>";
-        $required = $data["required"] ? "required='required'" : "";
+        $required = $data["required"] ? "required='required' aria-required='true'" : "";
         $html .= "<input $required class='wpd-field wpd-field-text' type='text' id='" . esc_attr($key) . "' value='" . esc_attr($value) . "' name='" . esc_attr($key) . "'>";
         $html .= "</div>";
         $html .= "</td></tr >";
@@ -81,7 +81,7 @@ class TextField extends Field {
             <?php if ($hasIcon) { ?>
                 <div class="wpd-field-icon"><i style="opacity: 0.8;" class="<?php echo strpos(trim($args["icon"]), " ") ? esc_attr($args["icon"]) : "fas " . esc_attr($args["icon"]); ?>"></i></div>
             <?php } ?>
-            <?php $required = $args["required"] ? "required='required'" : ""; ?>
+            <?php $required = $args["required"] ? "required='required' aria-required='true'" : ""; ?>
             <input id="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" <?php echo $required; ?> class="<?php echo esc_attr($name); ?> wpd-field wpd-field-text" type="text" name="<?php echo esc_attr($name); ?>" value="" placeholder="<?php echo esc_attr__($args["name"], "wpdiscuz") . (!empty($args["required"]) ? "*" : ""); ?>">
             <label for="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" class="wpdlb"><?php echo esc_attr($args["name"]) . (!empty($args["required"]) ? "*" : ""); ?></label>
             <?php if ($args["desc"]) { ?>

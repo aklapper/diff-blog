@@ -63,7 +63,7 @@ class DateField extends Field {
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $html .= "<div class='wpdiscuz-item'>";
-        $required = $data["required"] ? "required='required'" : "";
+        $required = $data["required"] ? "required='required' aria-required='true'" : "";
         $html .= "<input " . $required . " class='wpd-field wpd-field-date' type='date' id='" . esc_attr($key) . "' value='" . esc_attr($value) . "'  name='" . esc_attr($key) . "' pattern='^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$' title='03/28/2016'>";
         $html .= "</div>";
         $html .= "</td></tr>";
@@ -84,7 +84,7 @@ class DateField extends Field {
             <?php if ($hasIcon) { ?>
                 <div class="wpd-field-icon"><i style="opacity: 0.8;" class="<?php echo strpos(trim($args["icon"]), " ") ? esc_attr($args["icon"]) : "fas " . esc_attr($args["icon"]); ?>"></i></div>
             <?php } ?>
-            <?php $required = $args["required"] ? "required='required'" : ""; ?>
+            <?php $required = $args["required"] ? "required='required' aria-required='true'" : ""; ?>
             <input id="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" <?php echo $required; ?> class="<?php echo esc_attr($name); ?> wpd-field wpd-field-date" type="date" name="<?php echo esc_attr($name); ?>" value="" placeholder="03/28/2016<?php echo!empty($args["required"]) ? "*" : "" ?>"  pattern="^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$" title="03/28/2016">
             <label for="<?php echo esc_attr($name) . "-" . $uniqueId; ?>" class="wpdlb"><?php echo esc_attr($args["name"]) . (!empty($args["required"]) ? "*" : ""); ?></label>
             <?php if ($args["desc"]) { ?>

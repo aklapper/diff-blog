@@ -492,7 +492,7 @@ $settings = $this->settingsArray();
                                 $resetAllTabs = admin_url("admin.php?page=" . WpdiscuzCore::PAGE_SETTINGS . "&wpd_tab=all&wpdiscuz_reset_options=1");
                                 $resetAllTabs = wp_nonce_url($resetAllTabs, "wpdiscuz_reset_options_nonce-all");
                                 ?>
-                                <div class="wpd-opt-row" data-wpd-opt="commentTextLength">
+                                <div class="wpd-opt-row">
                                     <input type="hidden" name="wpd_tab" value="<?php echo esc_attr($tab); ?>" />                                
                                     <div>
                                         <a id="wpdiscuz-reset-options" style="text-decoration:none;" class="button button-secondary" href="<?php echo esc_url_raw($resetOptionsUrl); ?>"><?php esc_html_e("Reset Tab Options", "wpdiscuz"); ?></a> 

@@ -27,7 +27,7 @@
     blocks.registerBlockType('wpdiscuz/feedback-shortcode', {
         title: 'Feedback Shortcode',
         icon: wpdIcon,
-        category: 'common',
+        category: 'text',
         attributes: {
             content: {
                 type: 'html',

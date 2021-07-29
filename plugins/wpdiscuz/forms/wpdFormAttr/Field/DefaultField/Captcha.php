@@ -64,7 +64,7 @@ class Captcha extends Field {
             ?>
             <div class="wpd-field-captcha wpdiscuz-item">
                 <div class="wpdiscuz-recaptcha" id='wpdiscuz-recaptcha-<?php echo esc_attr($uniqueId); ?>'></div>
-                <input id='wpdiscuz-recaptcha-field-<?php echo esc_attr($uniqueId); ?>' type='hidden' name='wc_captcha' value="" required="required" class="wpdiscuz_reset"/>
+                <input id='wpdiscuz-recaptcha-field-<?php echo esc_attr($uniqueId); ?>' type='hidden' name='wc_captcha' value="" required="required" aria-required='true' class="wpdiscuz_reset"/>
                 <div class="clearfix"></div>
             </div>
             <?php
@@ -124,7 +124,7 @@ class Captcha extends Field {
                 ?>
                 <div class="wpd-field-captcha wpdiscuz-item">
                     <div class="wpdiscuz-recaptcha" id='wpdiscuz-recaptcha-subscribe-form'></div>
-                    <input id='wpdiscuz-recaptcha-field-subscribe-form' type='hidden' name='wpdiscuz_recaptcha_subscribe_form' value="" required="required" class="wpdiscuz_reset"/>
+                    <input id='wpdiscuz-recaptcha-field-subscribe-form' type='hidden' name='wpdiscuz_recaptcha_subscribe_form' value="" required="required" aria-required='true' class="wpdiscuz_reset"/>
                     <div class="clearfix"></div>
                 </div>
                 <?php

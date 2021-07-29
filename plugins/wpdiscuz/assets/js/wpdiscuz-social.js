@@ -1,5 +1,5 @@
 //============================== FACEBOOK API INIT  ========================== //
-if ((wpdiscuzAjaxObj.enableFbLogin || wpdiscuzAjaxObj.enableFbShare) && wpdiscuzAjaxObj.facebookAppID) {
+if (((!parseInt(wpdiscuzAjaxObj.fbUseOAuth2) && parseInt(wpdiscuzAjaxObj.enableFbLogin)) || parseInt(wpdiscuzAjaxObj.enableFbShare)) && wpdiscuzAjaxObj.facebookAppID) {
     (function (d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {
@@ -39,7 +39,7 @@ jQuery(document).ready(function ($) {
             scrollTop: $('#comments').offset().top - 32
         }, 1000);
     }
-    $(document).delegate('.wpd-comment-share .fa-facebook-f', 'click', function () {
+    $(document).on('click', '.wpd-comment-share .fa-facebook-f', function () {
         if (wpdiscuzAjaxObj.enableFbShare != 1) {
             return;
         }
@@ -54,13 +54,13 @@ jQuery(document).ready(function ($) {
     });
 
     var socialLoginProvider = '';
-    $(document).delegate('#wpdcom .wpd-social-login .wpdiscuz-login-button', 'click', function () {
+    $(document).on('click', '#wpdcom .wpd-social-login .wpdiscuz-login-button', function () {
         var socialLoginContainer = $(this).parents('.wpd-social-login');
         socialLoginProvider = wpdInitProvider($(this));
         wpdSocialLoginIsConfirmAgreement(socialLoginProvider, socialLoginContainer);
     });
 
-    $(document).delegate('#wpdcom .wpd-agreement-buttons-right .wpd-agreement-button', 'click', function () {
+    $(document).on('click', '#wpdcom .wpd-agreement-buttons-right .wpd-agreement-button', function () {
         var socialLoginContainer = $(this).parents('.wpd-form-wrap, .wpd-form').find('.wpd-social-login-agreement').slideUp(700);
         if ($(this).hasClass('wpd-agreement-button-agree')) {
             if (wpdiscuzAjaxObj.isCookiesEnabled) {

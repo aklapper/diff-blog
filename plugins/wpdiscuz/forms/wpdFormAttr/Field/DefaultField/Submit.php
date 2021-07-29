@@ -34,7 +34,7 @@ class Submit extends Field {
             do_action("wpdiscuz_before_submit_button_in_wrapper", $currentUser, $uniqueId, $isMainForm);
             if ($isMainForm && (current_user_can("moderate_comments") || ($post && isset($post->post_author) && $post->post_author == $currentUser->ID))) {
                 ?>
-                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->phrases["wc_stick_comment_btn_title"]); ?>">
+                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_stick_comment_btn_title")); ?>">
                     <input id="wc_sticky_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_sticky_comment"/>
                     <span class="wpd_label__text">
                         <span class="wpd_label__check">
@@ -43,7 +43,7 @@ class Submit extends Field {
                         </span>
                     </span>
                 </label>
-                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->phrases["wc_close_comment_btn_title"]); ?>">
+                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_close_comment_btn_title")); ?>">
                     <input id="wc_closed_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_closed_comment"/>
                     <span class="wpd_label__text">
                         <span class="wpd_label__check">
@@ -71,7 +71,7 @@ class Submit extends Field {
                     <?php
                     if (class_exists("Prompt_Comment_Form_Handling") && $options->subscription["usePostmaticForCommentNotification"]) {
                         ?>
-                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->phrases["wc_postmatic_subscription_label"]); ?>">
+                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_postmatic_subscription_label")); ?>">
                             <input id="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?>" class="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?> wpd_label__checkbox" value="post" type="checkbox" name="wpdiscuz_notification_type" <?php echo $isReplyDefaultChecked; ?>/>
                             <span class="wpd_label__text">
                                 <span class="wpd_label__check">
@@ -83,7 +83,7 @@ class Submit extends Field {
                         <?php
                     } else {
                         ?>
-                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->phrases["wc_notify_on_new_reply"]); ?>">
+                        <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_notify_on_new_reply", ["unique_id" => $uniqueId])); ?>">
                             <input id="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?>" class="wc_notification_new_comment-<?php echo esc_attr($uniqueId); ?> wpd_label__checkbox" value="comment" type="checkbox" name="wpdiscuz_notification_type" <?php echo $isReplyDefaultChecked; ?>/>
                             <span class="wpd_label__text">
                                 <span class="wpd_label__check">

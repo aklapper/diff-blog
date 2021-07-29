@@ -1,29 +1,30 @@
 jQuery(document).ready(function ($) {
 
-    $(document).delegate('#wmuSelectMimes', 'click', function (e) {
+    $(document).on('click', '#wmuSelectMimes', function (e) {
         $('.wpd-mu-mimes input[type="checkbox"]').each(function (i, v) {
             $(this).prop('checked', true);
         });
     });
 
-    $(document).delegate('#wmuUnselectMimes', 'click', function (e) {
+    $(document).on('click', '#wmuUnselectMimes', function (e) {
         $('.wpd-mu-mimes input[type="checkbox"]').each(function (i, v) {
             $(this).prop('checked', false);
         });
     });
 
-    $(document).delegate('#wmuInvertMimes', 'click', function (e) {
+    $(document).on('click', '#wmuInvertMimes', function (e) {
         $('.wpd-mu-mimes input[type="checkbox"]').each(function (i, v) {
             $(this).prop('checked', !$(this).prop('checked'));
         });
     });
 
-    $(document).delegate('.wmu-attachment-delete', 'click', function (e) {
+    $(document).on('click', '.wmu-attachment-delete', function (e) {
         if (confirm(wpdiscuzMUJsObj.wmuMsgConfirmAttachmentDelete)) {
             var data = new FormData();
             var clicked = $(this);
             var attachmentId = clicked.data('wmu-attachment');
             data.append('action', 'wmuDeleteAttachment');
+            data.append('wmu_nonce', wpdiscuzMUJsObj.wmuSecurity);
             data.append('attachmentId', attachmentId);
             var ajax = wmuGetAjaxObj(data);
             ajax.done(function (r) {
@@ -40,7 +41,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $(document).delegate('.wmu-image-dimension', 'change', function () {
+    $(document).on('change', '.wmu-image-dimension', function () {
         var parent = $(this).parents('.wpd-opt-row');
         var wmuSingleImageW = $('.wmu-image-width', parent);
         var wmuSingleImageH = $('.wmu-image-height', parent);
@@ -50,29 +51,29 @@ jQuery(document).ready(function ($) {
         if ($(this).hasClass('wmu-image-width')) {
             if (!isNaN(wmuImageW)) {
                 wmuImageH = "auto";
-                wmuSingleImageH.val("auto");
+                wmuSingleImageH.val('auto');
             } else if (!isNaN(wmuImageW)) {
-                wmuSingleImageH.val("auto");
+                wmuSingleImageH.val('auto');
             }
         } else {
             if (!isNaN(wmuImageH)) {
-                wmuImageW = "auto";
-                wmuSingleImageW.val("auto");
+                wmuImageW = 'auto';
+                wmuSingleImageW.val('auto');
             } else if (!isNaN(wmuImageW)) {
-                wmuSingleImageH.val("auto");
+                wmuSingleImageH.val('auto');
             }
         }
     });
 
-    $(document).delegate('.wmu-image-dimension', 'keyup', function () {
+    $(document).on('keyup', '.wmu-image-dimension', function () {
         var value = $(this).val();
         $(this).val(value.replace('-', ''));
     });
 
-    $(".wmu-lightbox").colorbox({
-        maxHeight: "95%",
-        maxWidth: "95%",
-        rel: "wmu-lightbox",
+    $('.wmu-lightbox').colorbox({
+        maxHeight: '95%',
+        maxWidth: '95%',
+        rel: 'wmu-lightbox',
         fixed: true
     });
 
@@ -82,7 +83,7 @@ jQuery(document).ready(function ($) {
             url: ajaxurl,
             data: data,
             contentType: false,
-            processData: false,
+            processData: false
         });
     }
 
