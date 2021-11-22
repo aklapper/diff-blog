@@ -2,8 +2,8 @@
 Contributors: wikimediafoundation
 Donate link: https://donate.wikimedia.org/wiki/Ways_to_Give
 Tags: wikipedia, facts, popup, card, wiki
-Stable tag: 1.0.4
-Tested up to: 5.7
+Stable tag: 1.2.0
+Tested up to: 5.8
 License: MIT
 License URI: https://github.com/wikimedia/wikipedia-preview/blob/main/LICENSE
 
@@ -26,15 +26,21 @@ Wikipedia Preview is an official plugin developed and supported by the [Wikimedi
 * Handles any link to a Wikipedia article regardless of language, lead image presence or length.
 * Works for Right-to-Left (RTL) and Left-To-Right (LTR) languages.
 * A built-in gallery to dive into article images.
+* Can be disabled for any page using the post metadata sidebar. Look for the Wikipedia Preview section.
+* Gutenburg editor custom tool to search for Wikipedia articles and visualize Wikipedia Preview for readers.
 
 **How to use**
 
-After you [download and install](https://wordpress.org/support/article/managing-plugins/#finding-and-installing-plugins) the Wikipedia Preview plugin, simply [add a link](https://wordpress.com/support/links/) in your site content to any Wikipedia article URL and it will be turned into a preview.
+After you [download and install](https://wordpress.org/support/article/managing-plugins/#finding-and-installing-plugins) the Wikipedia Preview plugin, simply [add a link](https://wordpress.org/support/article/paragraph-block/#insert-hyperlinks) in your site content to any Wikipedia article URL and it will be turned into a preview.
 
 == Screenshots ==
 
-1. Desktop view on hover
-2. Mobile view on touch
+1. Mobile view on touch
+2. Mobile view expanded
+3. Fullscreen image gallery
+4. Desktop view on hover
+5. Search for Wikipedia articles
+6. Visualization of Wikipedia Preview for readers
 
 == Frequently Asked Questions ==
 
@@ -48,7 +54,7 @@ The Wikipedia Preview works with any word or phrase that has an article on Wikip
 
 = What is the flow for implementing the Wikipedia Preview links in a post? =
 
-When writing articles, decide which words show a Wikipedia popup on a particular post. The process of enabling the Wikipedia popup on a specific word is identical to [adding a hyperlink](https://wordpress.com/support/links/#add-links-to-posts-pages-and-widgets).
+When writing articles, decide which words show a Wikipedia popup on a particular post. The process of enabling the Wikipedia popup on a specific word is identical to [adding a hyperlink](https://wordpress.org/support/article/paragraph-block/#insert-hyperlinks).
 
 = After the implementation of Wikipedia Preview will there be any impact on the size of the page? Will it get laggy? =
 

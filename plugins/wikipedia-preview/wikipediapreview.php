@@ -3,8 +3,9 @@
  * Plugin Name: Wikipedia Preview
  * Plugin URI: https://github.com/wikimedia/wikipedia-preview
  * Description: Wikipedia Preview allows you to show a popup card with a short summary from Wikipedia when a reader clicks or hovers over a link
- * Version: 1.0.4
- * Requires at least: 4.2
+ * Text Domain: wikipedia-preview
+ * Version: 1.2.0
+ * Requires at least: 4.6
  * Requires PHP: 5.6.39
  * Author: Wikimedia Foundation
  * Author URI: https://wikimediafoundation.org/
@@ -12,40 +13,106 @@
  * License URI: https://github.com/wikimedia/wikipedia-preview/blob/main/LICENSE
  */
 
-DEFINE( 'WIKIPEDIA_PREVIEW_PLUGIN_VERSION', '1.0.4' );
+DEFINE( 'WIKIPEDIA_PREVIEW_PLUGIN_VERSION', '1.2.0' );
 
 function wikipediapreview_enqueue_scripts() {
-	$assets_dir = plugin_dir_url( __FILE__ ) . 'assets/';
+	$build_dir       = plugin_dir_url( __FILE__ ) . 'build/';
+	$libs_dir        = plugin_dir_url( __FILE__ ) . 'libs/';
+	$media_type_all  = 'all';
+	$no_dependencies = array();
+	$in_footer       = true;
 
 	wp_enqueue_script(
 		'wikipedia-preview',
-		$assets_dir . 'js/wikipedia-preview.production.js',
-		array(),
+		$libs_dir . 'wikipedia-preview.production.js',
+		$no_dependencies,
 		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
-		true
+		$in_footer
 	);
 
 	wp_enqueue_script(
 		'wikipedia-preview-init',
-		$assets_dir . 'js/init.js',
-		array(),
+		$build_dir . 'init.js',
+		$no_dependencies,
 		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
-		true
+		$in_footer
 	);
-}
 
-/**
- * Record the option of detect links feature enabled in this version,
- * detect links feature may be disabled by default in the next version.
- */
-function wikipediapreview_detect_true() {
-	add_option( 'wikipediapreview_options_detect_links', true );
+	global $post;
+	if ( isset( $post->ID ) ) {
+		$options = array(
+			'detectLinks' => get_post_meta( $post->ID, 'wikipediapreview_detectlinks', true ),
+		);
+		wp_localize_script( 'wikipedia-preview-init', 'wikipediapreview_init_options', $options );
+	}
+
+	wp_enqueue_style(
+		'wikipedia-preview-link-style',
+		$libs_dir . 'wikipedia-preview-link.css',
+		$no_dependencies,
+		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
+		$media_type_all
+	);
 }
 
 function wikipediapreview_detect_deletion() {
 	delete_option( 'wikipediapreview_options_detect_links' );
 }
 
-register_activation_hook( __FILE__, 'wikipediapreview_detect_true' );
+function wikipediapreview_guten_enqueue() {
+	if ( ! in_array( get_post_type(), array( 'post', 'page' ), true ) ) {
+		return;
+	}
+	$build_dir       = plugin_dir_url( __FILE__ ) . 'build/';
+	$libs_dir        = plugin_dir_url( __FILE__ ) . 'libs/';
+	$media_type_all  = 'all';
+	$no_dependencies = array();
+	$in_footer       = true;
+
+	wp_enqueue_script(
+		'wikipedia-preview-edit-link',
+		$build_dir . 'index.js',
+		$no_dependencies,
+		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
+		$in_footer
+	);
+
+	wp_enqueue_style(
+		'wikipedia-preview-style',
+		$build_dir . 'style-index.css',
+		$no_dependencies,
+		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
+		$media_type_all
+	);
+
+	wp_enqueue_style(
+		'wikipedia-preview-link-style',
+		$libs_dir . 'wikipedia-preview-link.css',
+		$no_dependencies,
+		WIKIPEDIA_PREVIEW_PLUGIN_VERSION,
+		$media_type_all
+	);
+}
+
+function myguten_set_script_translations() {
+	wp_set_script_translations( 'wikipedia-preview-localization', 'wikipedia-preview' );
+}
+
+function register_detectlinks_postmeta() {
+	$all_post_types = '';
+	$meta_name      = 'wikipediapreview_detectlinks';
+	$options        = array(
+		'show_in_rest'  => true,
+		'auth_callback' => true,
+		'single'        => true,
+		'type'          => 'boolean',
+		'default'       => true, // it could default to false when the gutenburg support is released
+	);
+	register_post_meta( $all_post_types, $meta_name, $options );
+}
+
 register_deactivation_hook( __FILE__, 'wikipediapreview_detect_deletion' );
 add_action( 'wp_enqueue_scripts', 'wikipediapreview_enqueue_scripts' );
+add_action( 'enqueue_block_editor_assets', 'wikipediapreview_guten_enqueue' );
+add_action( 'init', 'myguten_set_script_translations' );
+add_action( 'init', 'register_detectlinks_postmeta' );
