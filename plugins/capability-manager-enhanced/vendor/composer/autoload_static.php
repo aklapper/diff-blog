@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit32a3d3886cf8ef146352508e41da4ee9
 {
+    public static $files = array (
+        '41c664bd04a95c2d6a2f2a3e00f06593' => __DIR__ . '/..' . '/publishpress/wordpress-reviews/ReviewsController.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'P' => 
         array (

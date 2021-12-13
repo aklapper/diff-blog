@@ -3,7 +3,18 @@ $ce_elements = PP_Capabilities_Post_Features::elementsLayoutClassic();
 
 $ce_post_disabled = [];
 
-$def_post_types = apply_filters('pp_capabilities_feature_post_types', ['post', 'page']);
+$def_post_types = array_unique(apply_filters('pp_capabilities_feature_post_types', ['post', 'page']));
+
+asort($def_post_types);
+
+if (count($def_post_types) > 6) {
+    ?>
+    <style type="text/css">
+    .pp-columns-wrapper.pp-enable-sidebar .pp-column-left {width: 100% !important;}
+    .pp-columns-wrapper.pp-enable-sidebar .pp-column-left, .pp-columns-wrapper.pp-enable-sidebar .pp-column-right {float: none !important;}
+    </style>
+    <?php
+}
 
 foreach($def_post_types as $post_type) {
     $_disabled = get_option("capsman_feature_restrict_classic_{$post_type}", []);
@@ -15,7 +26,7 @@ foreach($def_post_types as $post_type) {
     <?php foreach(['thead', 'tfoot'] as $tag):?>
     <<?php echo $tag;?>>
     <tr>
-        <th class="menu-column"><?php _e('Classic Editor Screen', 'capsman-enhanced') ?></th>
+        <th class="menu-column"><?php if ('thead' == $tag || !defined('PUBLISHPRESS_CAPS_PRO_VERSION')) {_e('Classic Editor Screen', 'capsman-enhanced');}?></th>
 
         <?php foreach($def_post_types as $post_type) :
             $type_obj = get_post_type_object($post_type);    
@@ -31,10 +42,23 @@ foreach($def_post_types as $post_type) {
     <tbody>
     <?php
     foreach ($ce_elements as $section_title => $arr) {
+        $section_slug = strtolower(ppc_remove_non_alphanumeric_space_characters($section_title));
         ?>
         <tr class="ppc-menu-row parent-menu">
             <td colspan="<?php echo (count($def_post_types) + 1);?>">
             <h4 class="ppc-menu-row-section"><?php echo $section_title;?></h4>
+            <?php
+            /**
+	         * Add support for section description
+             *
+	         * @param array     $def_post_types          Post type.
+	         * @param array     $ce_elements      All classic editor elements.
+	         * @param array     $ce_post_disabled All classic editor disabled post type element.
+             *
+	         * @since 2.1.1
+	         */
+	        do_action( "pp_capabilities_feature_classic_{$section_slug}_section", $def_post_types, $ce_elements, $ce_post_disabled );
+            ?>
             </td>
         </tr>
         
@@ -63,7 +87,12 @@ foreach($def_post_types as $post_type) {
             <?php
         }
     }
+
+    do_action('pp_capabilities_features_classic_after_table_tr');
     ?>
 
     </tbody>
 </table>
+
+<?php
+do_action('pp_capabilities_features_classic_after_table');
