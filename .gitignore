@@ -14,7 +14,7 @@
 /plugins/vaultpress/
 
 # Related to PHP Code Sniffer
-/vendor/*
+**/vendor/*
 composer.json
 composer.lock
 
