@@ -2,7 +2,7 @@
 /**
  * Manages all the Account Connection to Zoom
  *
- * @since   TBD
+ * @since   1.5.0
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
@@ -17,7 +17,7 @@ use Tribe__Events__Main as TEC;
 /**
  * Class Account_API
  *
- * @since   TBD
+ * @since   1.5.0
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
@@ -27,7 +27,7 @@ abstract class Account_API {
 	/**
 	 * Whether a Zoom account has been loaded for the API to use.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var boolean
 	 */
@@ -36,7 +36,7 @@ abstract class Account_API {
 	/**
 	 * Whether a Zoom account supports webinars.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var boolean
 	 */
@@ -45,7 +45,7 @@ abstract class Account_API {
 	/**
 	 * The name of the loaded account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -54,7 +54,7 @@ abstract class Account_API {
 	/**
 	 * The key to get the option with a list of all Zoom accounts.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -63,7 +63,7 @@ abstract class Account_API {
 	/**
 	 * The prefix to save all single accounts with.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -72,7 +72,7 @@ abstract class Account_API {
 	/**
 	 * The current Zoom Account API access token.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -81,7 +81,7 @@ abstract class Account_API {
 	/**
 	 * The current Zoom Account API refresh token.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -90,7 +90,7 @@ abstract class Account_API {
 	/**
 	 * An array of fields to encrypt, using names from Zoom API.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var array<string|boolean> An array of field names and whether the field is an array.
 	 */
@@ -104,7 +104,7 @@ abstract class Account_API {
 	/**
 	 * The meta field name to save the account id to for single posts.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -113,7 +113,7 @@ abstract class Account_API {
 	/**
 	 * The name of the action used to get an account setup to generate a Zoom meeting or webinar.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -124,7 +124,7 @@ abstract class Account_API {
 	 *
 	 * If not available, then a new token will be fetched.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $id
 	 * @param string $refresh_token The API refresh token for the account.
@@ -136,7 +136,7 @@ abstract class Account_API {
 	/**
 	 * Get a User's information or settings.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string  $user_id      A Zoom user id.
 	 * @param boolean $settings     Whether to fetch the users settings.
@@ -149,7 +149,7 @@ abstract class Account_API {
 	/**
 	 * Checks whether the current Zoom API is ready to use.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return bool Whether the current Zoom API has a loaded account.
 	 */
@@ -160,7 +160,7 @@ abstract class Account_API {
 	/**
 	 * Checks whether the current Zoom account supports webinars.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return bool Whether the current Zoom account supports webinars.
 	 */
@@ -171,7 +171,7 @@ abstract class Account_API {
 	/**
 	 * Load a specific account into the API.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account A Zoom account with the fields to access the API.
 	 *
@@ -233,7 +233,7 @@ abstract class Account_API {
 	/**
 	 * Get the Zoom account id in the WordPress admin.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param int $post_id The optional post id
 	 *
@@ -289,7 +289,7 @@ abstract class Account_API {
 	/**
 	 * Load a specific account by the id.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The Zoom account id to get and load for use with the API.
 	 *
@@ -316,7 +316,7 @@ abstract class Account_API {
 	 *
 	 * It will attempt to refresh the access token if it has expired.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account A Zoom account with the fields to access the API.
 	 *
@@ -345,7 +345,7 @@ abstract class Account_API {
 	/**
 	 * Initialize an Account to use for the API.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account A Zoom account with the fields to access the API.
 	 */
@@ -361,7 +361,7 @@ abstract class Account_API {
 	/**
 	 * Get the listing of Zoom Accounts.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param boolean $all_data Whether to return all account data, default is only name and status.
 	 *
@@ -391,7 +391,7 @@ abstract class Account_API {
 	/**
 	 * Get list of accounts formatted for options dropdown.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param boolean $all_data Whether to return only active accounts or not.
 	 *
@@ -430,7 +430,7 @@ abstract class Account_API {
 	/**
 	 * Update the list of accounts with provided account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account_data The array of data for an account to add to the list.
 	 */
@@ -452,7 +452,7 @@ abstract class Account_API {
 	/**
 	 * Delete from the list of accounts the provided account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The id of the single account to save.
 	 */
@@ -466,7 +466,7 @@ abstract class Account_API {
 	/**
 	 * Get a Single Zoom Account by id.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The id of the single account.
 	 *
@@ -489,7 +489,7 @@ abstract class Account_API {
 	/**
 	 * Set an Account with the provided id.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account_data A specific Zoom account data to save.
 	 */
@@ -502,7 +502,7 @@ abstract class Account_API {
 	/**
 	 * Delete a Zoom account by ID.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The id of the single account.
 	 *
@@ -525,7 +525,7 @@ abstract class Account_API {
 	/**
 	 * Revoke the Zoom accounts access token.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The id of the single account.
 	 *
@@ -587,7 +587,7 @@ abstract class Account_API {
 	/**
 	 * Save the account id to the post|event.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param int $post_id The id to save the meta field too.
 	 * @param string $account_id The id of the single account to save.
@@ -601,7 +601,7 @@ abstract class Account_API {
 	/**
 	 * Set an Account Access Data with the provided id.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id    The id of the single account to save.
 	 * @param string $access_token  The Zoom Account API access token.
@@ -620,7 +620,7 @@ abstract class Account_API {
 	/**
 	 * Save a Zoom Account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string,array> $response An array representing the access token request response, in the format
 	 *                                      returned by WordPress `wp_remote_` functions.
@@ -676,7 +676,7 @@ abstract class Account_API {
 	/**
 	 * Save a Zoom Access Token and Expiration information for an Account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string,array> $response An array representing the access token request response, in the format
 	 *                                      returned by WordPress `wp_remote_` functions.
@@ -711,7 +711,7 @@ abstract class Account_API {
 	/**
 	 * Prepare a single Zoom's account data to save.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $user          The user information from Zoom.
 	 * @param string               $access_token  The Zoom Account API access token.
@@ -738,7 +738,7 @@ abstract class Account_API {
 	/**
 	 * Returns the access token based authorization header to send requests to the Zoom API.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string|boolean The authorization header, to be used in the `headers` section of a request to Zoom API or false if not available.
 	 */
@@ -757,7 +757,7 @@ abstract class Account_API {
 	/**
 	 * Get the expiration time stamp.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string The amount of time in seconds until the access token expires.
 	 *
@@ -772,7 +772,7 @@ abstract class Account_API {
 	/**
 	 * Get the refresh token.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The refresh token.
 	 */
@@ -783,7 +783,7 @@ abstract class Account_API {
 	/**
 	 * Maybe refresh the access token or use the saved one.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param array<string|string> $account A Zoom account with the fields to access the API.
 	 *
@@ -810,7 +810,7 @@ abstract class Account_API {
 	/**
 	 * Handles the request to select a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
@@ -868,7 +868,7 @@ abstract class Account_API {
 	/**
 	 * Check if a nonce is valid from a list of actions.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $nonce  The nonce to check.
 	 *
@@ -878,7 +878,7 @@ abstract class Account_API {
 		/**
 		 * Filters a list of Zoom ajax nonce actions.
 		 *
-		 * @since TBD
+		 * @since 1.5.0
 		 *
 		 * @param array<string,callable> A map from the nonce actions to the corresponding handlers.
 		 */
@@ -896,7 +896,7 @@ abstract class Account_API {
 	/**
 	 * Update the Zoom account on existing events before Multiple Account Support.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Post $event The event post object.
 	 *

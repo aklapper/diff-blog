@@ -28,6 +28,7 @@ class Event {
 	 *
 	 * @since 1.0.0
 	 * @since 1.4.0 Add hybrid field.
+	 * @since 1.6.0 Add video source.
 	 *
 	 * @param WP_Post $event The event post object.
 	 *
@@ -36,6 +37,7 @@ class Event {
 	public function add_properties( WP_Post $event ) {
 		$event->virtual_event_type         = $this->get_virtual_event_type( $event );
 		$event->virtual                    = self::is_virtual( $event );
+		$event->virtual_video_source       = $this->get_video_source( $event );
 		$event->virtual_url                = $this->get_virtual_url( $event );
 		$event->virtual_embed_video        = $this->get_virtual_embed_video( $event );
 		$event->virtual_linked_button      = $this->get_virtual_linked_button( $event );
@@ -121,6 +123,23 @@ class Event {
 		}
 
 		return Event_Meta::$value_virtual_event_type;
+	}
+
+	/**
+	 * Retrieves an event's virtual video source.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param WP_Post $event Event post object.
+	 *
+	 * @return string The event's video source or empty string if not a virtual event.
+	 */
+	protected static function get_video_source( WP_Post $event ) {
+		if ( ! self::is_virtual( $event ) ) {
+			return '';
+		}
+
+		return get_post_meta( $event->ID, Event_Meta::$key_video_source, true );
 	}
 
 	/**
@@ -353,8 +372,9 @@ class Event {
 		}
 
 		$meta_virtual = [
-			'is_virtual'  => $event->virtual,
-			'virtual_url' => $event->virtual_url,
+			'is_virtual'           => $event->virtual,
+			'virtual_url'          => $event->virtual_url,
+			'virtual_video_source' => $event->virtual_video_source,
 		];
 
 		return $meta_virtual;

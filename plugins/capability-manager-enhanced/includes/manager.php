@@ -168,16 +168,16 @@ class CapabilityManager
      */
     function adminStyles()
     {
-		if ( empty( $_REQUEST['page'] ) || ! in_array( $_REQUEST['page'], array( 'pp-capabilities', 'pp-capabilities-roles', 'pp-capabilities-admin-menus', 'pp-capabilities-nav-menus', 'pp-capabilities-backup', 'pp-capabilities-settings' ) ) )
+		if ( empty( $_REQUEST['page'] ) || ! in_array( $_REQUEST['page'], array( 'pp-capabilities', 'pp-capabilities-roles', 'pp-capabilities-admin-menus', 'pp-capabilities-nav-menus', 'pp-capabilities-editor-features', 'pp-capabilities-backup', 'pp-capabilities-settings' ) ) )
 			return;
 
 		wp_enqueue_style('cme-admin-common', $this->mod_url . '/common/css/pressshack-admin.css', [], PUBLISHPRESS_CAPS_VERSION);
 
 		wp_register_style( $this->ID . 'framework_admin', $this->mod_url . '/framework/styles/admin.css', false, PUBLISHPRESS_CAPS_VERSION);
-   		wp_enqueue_style( $this->ID . 'framework_admin');
+		wp_enqueue_style( $this->ID . 'framework_admin');
 
-   		wp_register_style( $this->ID . '_admin', $this->mod_url . '/common/css/admin.css', false, PUBLISHPRESS_CAPS_VERSION);
-   		wp_enqueue_style( $this->ID . '_admin');
+		wp_register_style( $this->ID . '_admin', $this->mod_url . '/common/css/admin.css', false, PUBLISHPRESS_CAPS_VERSION);
+		wp_enqueue_style( $this->ID . '_admin');
 
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '.dev' : '';
 		$url = $this->mod_url . "/common/js/admin{$suffix}.js";
@@ -331,7 +331,9 @@ class CapabilityManager
                 }
             );
 		}
-        
+
+		add_submenu_page('pp-capabilities',  __('Editor Features', 'capsman-enhanced'), __('Editor Features', 'capsman-enhanced'), $cap_name, 'pp-capabilities-editor-features', [$this, 'ManageEditorFeatures']);
+
 		do_action('pp-capabilities-admin-submenus');
 
 		add_submenu_page('pp-capabilities',  __('Backup', 'capsman-enhanced'), __('Backup', 'capsman-enhanced'), $cap_name, 'pp-capabilities-backup', array($this, 'backupTool'));
@@ -360,8 +362,8 @@ class CapabilityManager
 
                 function($arr) {
                     return [
-						'cb' => '<input type="checkbox"/>', 
-						'name' => __('Name', 'capsman-enhanced'),
+                        'cb' => '<input type="checkbox"/>',
+                        'name' => __('Name', 'capsman-enhanced'),
                         'role' => __('Role', 'capsman-enhanced'),
                         'count' => __('Users', 'capsman-enhanced'),
                     ];
@@ -403,6 +405,57 @@ class CapabilityManager
 
         require_once ( dirname(CME_FILE) . '/includes/roles/roles.php' );
 	}
+
+	public function ManageEditorFeatures() {
+		if ((!is_multisite() || !is_super_admin()) && !current_user_can('administrator') && !current_user_can('manage_capabilities')) {
+            // TODO: Implement exceptions.
+		    wp_die('<strong>' .__('You do not have permission to manage editor features.', 'capabilities-pro') . '</strong>');
+		}
+
+		$this->generateNames();
+		$roles = array_keys($this->roles);
+
+		if (!isset($this->current)) {
+			if (empty($_POST) && !empty($_REQUEST['role'])) {
+				$this->current = $_REQUEST['role'];
+			}
+		}
+
+		if (!isset($this->current) || !get_role($this->current)) {
+			$this->current = get_option('default_role');
+		}
+
+		if (!in_array($this->current, $roles)) {
+			$this->current = array_shift($roles);
+		}
+
+		if ('POST' == $_SERVER['REQUEST_METHOD'] && isset($_POST['ppc-editor-features-role'])) {
+            $this->current = $_POST['ppc-editor-features-role'];
+
+            $classic_editor = pp_capabilities_is_classic_editor_available();
+
+            //$def_post_types = apply_filters('pp_capabilities_feature_post_types', get_post_types(['public' => true]));
+            $def_post_types = apply_filters('pp_capabilities_feature_post_types', ['post', 'page']);
+
+            foreach ($def_post_types as $post_type) {
+                if ($classic_editor) {
+                    $posted_settings = (isset($_POST["capsman_feature_restrict_classic_{$post_type}"])) ? $_POST["capsman_feature_restrict_classic_{$post_type}"] : [];
+                    $post_features_option = get_option("capsman_feature_restrict_classic_{$post_type}", []);
+                    $post_features_option[$_POST['ppc-editor-features-role']] = $posted_settings;
+                    update_option("capsman_feature_restrict_classic_{$post_type}", $post_features_option, false);
+                }
+
+                $posted_settings = (isset($_POST["capsman_feature_restrict_{$post_type}"])) ? $_POST["capsman_feature_restrict_{$post_type}"] : [];
+                $post_features_option = get_option("capsman_feature_restrict_{$post_type}", []);
+                $post_features_option[$_POST['ppc-editor-features-role']] = $posted_settings;
+                update_option("capsman_feature_restrict_{$post_type}", $post_features_option, false);
+            }
+
+            ak_admin_notify(__('Settings updated.', 'capabilities-pro'));
+		}
+
+        include(dirname(CME_FILE) . '/includes/features/editor-features.php');
+    }
 
 	/**
 	 * Sets the 'manage_capabilities' cap to the administrator role.

@@ -2,7 +2,7 @@
 /**
  * Provides methods to check ajax requests.
  *
- * @since   TBD
+ * @since   1.5.0
  *
  * @package Tribe\Events\Virtual\Traits
  */
@@ -12,7 +12,7 @@ namespace Tribe\Events\Virtual\Traits;
 /**
  * Trait With_AJAX
  *
- * @since   TBD
+ * @since   1.5.0
  *
  * @package Tribe\Events\Virtual\Traits
  */
@@ -24,7 +24,7 @@ trait With_AJAX {
 	 * In a normal flow, where the AJAX response is not intercepted by an handler, the method will echo an error data
 	 * and `die`.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string      $action The action to check the AJAX referer and the nonce against.
 	 * @param string|null $nonce  The nonce to check, the `null` value is allowed and will always fail.
@@ -57,7 +57,7 @@ trait With_AJAX {
 	 * While the method will return a boolean value, in the normal flow, where AJAX requests are not intercepted by
 	 * handlers, the method will return the failure JSON response and `die`.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param int|null $post_id The post ID of the post to check or `null` to use the one from the request variable.
 	 *

@@ -388,6 +388,7 @@ tribe.filterBar.filters = {};
 	 * @return {void}
 	 */
 	obj.submitRequest = function( $container, url ) {
+		url = decodeURIComponent( url );
 		$container.trigger( 'beforeFilterBarSubmitRequest.tribeEvents' );
 
 		var nonce = $container.data( 'view-rest-nonce' );

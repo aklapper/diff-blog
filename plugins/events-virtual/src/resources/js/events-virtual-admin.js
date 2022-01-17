@@ -50,6 +50,10 @@ tribe.events.virtualAdmin = tribe.events.virtualAdmin || {};
 		setupCheckbox: '#tribe-events-virtual-setup',
 		showOptions: '.tribe-events-virtual-show input',
 		showAll: '#tribe-events-virtual-show-to-all',
+		videoSource: '#tribe-events-virtual-video-source',
+		videoSourcesWrap: '.tribe-events-virtual-video-sources-wrap',
+		videoSourceDetails: '.tribe-events-virtual-video-sources',
+		videoSourcesFloat: '.tribe-events-virtual-video-sources--float',
 		virtualContainer: '#tribe-virtual-events',
 		virtualUrl: '.tribe-events-virtual-video-source__virtual-url-input',
 	};
@@ -83,8 +87,14 @@ tribe.events.virtualAdmin = tribe.events.virtualAdmin || {};
 	 * Checks the virtual URL for embeddability.
 	 *
 	 * @since 1.0.0
+	 * @since 1.6.0 - Video source dropdown support.
 	 */
 	obj.testEmbed = function() {
+		var $videoSource = $( obj.selectors.videoSource );
+		if ( 'video' !== $videoSource.val() ) {
+			return;
+		}
+
 		const $input = $( obj.selectors.virtualUrl );
 		const url = $input.val();
 		const nonce = $input.attr( 'data-nonce' );
@@ -178,6 +188,29 @@ tribe.events.virtualAdmin = tribe.events.virtualAdmin || {};
 	};
 
 	/**
+	 * Handles the classes for the video source details.
+	 *
+	 * @since 1.6.0
+	 */
+	obj.handleVideoSourceClasses = function() {
+		var $sourceDetails = $( obj.selectors.videoSourceDetails );
+		if ( ! $sourceDetails.length ) {
+			return;
+		}
+
+		var $sourceDropdownField = $( obj.selectors.videoSourcesWrap );
+		var content = $sourceDropdownField.parent();
+		var isWide = content.width() >=
+			$sourceDetails.outerWidth( true ) + $sourceDropdownField.outerWidth( true );
+
+		if ( isWide ) {
+			$sourceDetails.addClass( obj.selectors.videoSourcesFloat.className() );
+		} else {
+			$sourceDetails.removeClass( obj.selectors.videoSourcesFloat.className() );
+		}
+	};
+
+	/**
 	 * Bind events for virtual events admin
 	 *
 	 * @since 1.0.0
@@ -191,18 +224,32 @@ tribe.events.virtualAdmin = tribe.events.virtualAdmin || {};
 			.on( 'blur', obj.selectors.virtualUrl, obj.testEmbed )
 			.on( 'click', obj.selectors.displayOptionCheckbox, obj.handleShowOptionEnablement )
 			.on( 'change', obj.selectors.showOptions, obj.handleShowOptionInteractivity );
+		$( window ).on( 'resize', obj.handleVideoSourceClasses );
+
+		// When video source is changed, run on a delay the source class method.
+		$( obj.selectors.videoSource ).on( 'change', function() {
+			setTimeout( obj.handleVideoSourceClasses, 100 );
+		} );
 	};
 
 	/**
 	 * Handles the initialization of the admin when Document is ready
 	 *
 	 * @since 1.0.0
+	 * @since 1.6.0 - Support for video sources dropdown.
 	 *
 	 * @return {void}
 	 */
 	obj.ready = function() {
 		obj.bindEvents();
 		obj.testEmbed();
+		obj.handleVideoSourceClasses();
+
+		// Trigger tribe dependency for video source fields to display.
+		// Set on a delay or it does not correctly load the selected video source fields.
+		setTimeout( function() {
+			$( obj.selectors.videoSource ).trigger( 'verify.dependency' );
+		}, 0 );
 	};
 
 	// Configure on document ready

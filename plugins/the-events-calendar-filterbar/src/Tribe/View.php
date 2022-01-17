@@ -46,7 +46,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 */
 		protected static $defaultMuFilters;
 
-		const VERSION = '5.1.2';
+		const VERSION = '5.1.4';
 
 		/**
 		 * The Events Calendar Required Version
@@ -55,7 +55,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * @deprecated 4.6
 		 *
 		 */
-		const REQUIRED_TEC_VERSION = '5.3.1';
+		const REQUIRED_TEC_VERSION = '5.7.0';
 
 		/**
 		 * Where in the themes we will look for templates

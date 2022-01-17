@@ -21,6 +21,7 @@
 
 namespace Tribe\Events\Virtual;
 
+use Tribe\Events\Virtual\Meetings\YouTube_Provider;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
 use Tribe\Events\Virtual\Views\V2\Widgets\Widget;
 use Tribe__Context as Context;
@@ -404,6 +405,28 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			'tribe_events_pro_shortcode_month_widget_remove_hooks',
 			[ $this, 'action_pro_shortcode_month_widget_remove_hooks' ]
 		);
+
+		// Metabox.
+		add_action(
+			'tribe_template_entry_point:events-virtual/admin-views/virtual-metabox/container/video-source:video_sources',
+			[ $this, 'render_classic_meeting_video_source_ui' ],
+			10,
+			3
+		);
+	}
+
+	/**
+	 * Renders the video input fields.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string           $file        The path to the template file, unused.
+	 * @param string           $entry_point The name of the template entry point, unused.
+	 * @param \Tribe__Template $template    The current template instance.
+	 */
+	public function render_classic_meeting_video_source_ui( $file, $entry_point, \Tribe__Template $template ) {
+		$this->container->make( Metabox::class )
+		                ->classic_meeting_video_source_ui( $template->get( 'post' ) );
 	}
 
 	/**
@@ -429,6 +452,9 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		// Add the plugin locations to the Context.
 		add_filter( 'tribe_context_locations', [ $this, 'filter_context_locations' ] );
+
+		// Add Video Source.
+		add_filter( 'tribe_events_virtual_video_sources', [ $this, 'add_video_source' ], 10, 2 );
 	}
 
 	/**
@@ -441,6 +467,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			return;
 		}
 
+		$this->container->register( YouTube_Provider::class );
 		$this->container->register( Zoom_Provider::class );
 	}
 
@@ -724,6 +751,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * Include the control markers for the single pages.
 	 *
 	 * @since 1.0.0
+	 * @since 1.6.0 - Always return notice html back to the filter.
 	 *
 	 * @param string $notices_html Previously set HTML.
 	 *
@@ -733,11 +761,11 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		$event = tribe_get_event( get_the_ID() );
 
 		if ( ! $event instanceof \WP_Post) {
-			return;
+			return $notices_html;
 		}
 
 		if ( ! $event->virtual ) {
-			return;
+			return $notices_html;
 		}
 
 		$template_modifications = $this->container->make( Template_Modifications::class );
@@ -749,6 +777,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * Include the hybrid control markers for the single pages.
 	 *
 	 * @since 1.4.0
+	 * @since 1.6.0 - Always return notice html back to the filter.
 	 *
 	 * @param string $notices_html Previously set HTML.
 	 *
@@ -758,11 +787,11 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		$event = tribe_get_event( get_the_ID() );
 
 		if ( ! $event instanceof \WP_Post ) {
-			return;
+			return $notices_html;
 		}
 
 		if ( ! $event->virtual ) {
-			return;
+			return $notices_html;
 		}
 
 		$template_modifications = $this->container->make( Template_Modifications::class );
@@ -981,7 +1010,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	/**
 	 * Run Updates on Plugin Upgrades.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 */
 	public function run_updates() {
 		if ( ! class_exists( 'Tribe__Events__Updater' ) ) {
@@ -992,5 +1021,27 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		if ( $updater->update_required() ) {
 			$updater->do_updates();
 		}
+	}
+
+	/**
+	 * Add the Video Source.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param array<string|string> An array of video sources.
+	 * @param \WP_Post $post       The current event post object, as decorated by the `tribe_get_event` function.
+	 *
+	 * @return array<string|string> An array of video sources.
+	 */
+	public function add_video_source( $video_sources, $post ) {
+
+		$video_sources[] = [
+			'text'     => _x( 'Video URL', 'The name of the video source.', 'events-virtual' ),
+			'id'       => 'video',
+			'value'    => 'video',
+			'selected' => 'video' === $post->virtual_video_source ? true : false,
+		];
+
+		return $video_sources;
 	}
 }

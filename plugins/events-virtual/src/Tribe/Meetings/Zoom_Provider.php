@@ -11,7 +11,6 @@ namespace Tribe\Events\Virtual\Meetings;
 
 use Tribe\Events\Virtual\Meetings\Zoom\Migration_Notice;
 use Tribe\Events\Virtual\Meetings\Zoom\Settings;
-use Tribe\Events\Virtual\Meetings\Zoom\Users;
 use Tribe\Events\Virtual\Event_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom\Api;
@@ -74,7 +73,17 @@ class Zoom_Provider extends Meeting_Provider {
 
 		$this->hook_templates();
 		$this->enqueue_assets();
-		$this->route_admin_by_nonce( $this->admin_routes(), 'manage_options' );
+
+		/**
+		 * Allows filtering of the capability required to use the Zoom integration ajax features.
+		 *
+		 * @since 1.6.0
+		 *
+		 * @param string $ajax_capability The capability required to use the ajax features, default manage_options.
+		 */
+		$ajax_capability = apply_filters( 'tribe_events_virtual_zoom_link_placeholder_text', 'manage_options' );
+
+		$this->route_admin_by_nonce( $this->admin_routes(), $ajax_capability );
 	}
 
 	/**
@@ -161,7 +170,7 @@ class Zoom_Provider extends Meeting_Provider {
 	/**
 	 * Check Zoom Meeting Account in the admin on every event for compatibility with multiple accounts.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Post $event The event post object.
 	 *
@@ -220,7 +229,7 @@ class Zoom_Provider extends Meeting_Provider {
 	protected function hook_templates() {
 		// Metabox.
 		add_action(
-			'tribe_template_entry_point:events-virtual/admin-views/virtual-metabox/container/video-source:before_li_close',
+			'tribe_template_entry_point:events-virtual/admin-views/virtual-metabox/container/video-source:video_sources',
 			[ $this, 'render_classic_meeting_link_ui' ],
 			10,
 			3
@@ -488,7 +497,7 @@ class Zoom_Provider extends Meeting_Provider {
 	/**
 	 * Get the confirmation text for removing a Zoom connection.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The confirmation text.
 	 */
@@ -503,7 +512,7 @@ class Zoom_Provider extends Meeting_Provider {
 	/**
 	 * Get the confirmation text for refreshing a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The confirmation text.
 	 */
@@ -518,7 +527,7 @@ class Zoom_Provider extends Meeting_Provider {
 	/**
 	 * Get the confirmation text for deleting a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The confirmation text.
 	 */
@@ -576,7 +585,7 @@ class Zoom_Provider extends Meeting_Provider {
 	/**
 	 * Get the list of Zoom ajax nonce actions.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return array<string,callable> A map from the nonce actions to the corresponding handlers.
 	 */
@@ -608,6 +617,28 @@ class Zoom_Provider extends Meeting_Provider {
 			Settings::$status_action         => $this->container->callback( Settings::class, 'ajax_status' ),
 			Settings::$delete_action         => $this->container->callback( Settings::class, 'ajax_delete' ),
 		];
+	}
+
+	/**
+	 * Add the Zoom Video Source.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param array<string|string> An array of video sources.
+	 * @param \WP_Post $post       The current event post object, as decorated by the `tribe_get_event` function.
+	 *
+	 * @return array<string|mixed> An array of video sources.
+	 */
+	public function add_video_source( $video_sources, $post ) {
+
+		$video_sources[] = [
+			'text'     => _x( 'Zoom', 'The name of the video source.', 'events-virtual' ),
+			'id'       => 'zoom',
+			'value'    => 'zoom',
+			'selected' => 'zoom' === $post->virtual_video_source ? true : false,
+		];
+
+		return $video_sources;
 	}
 
 	/**
@@ -655,6 +686,7 @@ class Zoom_Provider extends Meeting_Provider {
 			'tribe_events_virtual_meetings_zoom_ajax_actions',
 			[ $this, 'filter_virtual_meetings_zoom_ajax_actions' ]
 		);
+		add_filter( 'tribe_events_virtual_video_sources', [ $this, 'add_video_source' ], 20, 2 );
 	}
 
 	/**
@@ -670,10 +702,6 @@ class Zoom_Provider extends Meeting_Provider {
 		add_action( 'wp', [ $this, 'check_zoom_meeting' ], 50 );
 		add_action( 'tribe_events_virtual_metabox_save', [ $this, 'on_metabox_save' ], 10, 2 );
 		add_action( 'save_post_tribe_events', [ $this, 'on_post_save' ], 100, 3 );
-		add_action(
-			'wp_ajax_events_virtual_meetings_zoom_autosave_client_keys',
-			[ Zoom\OAuth::class, 'ajax_credentials_save' ]
-		);
 		add_action( 'admin_init', [ $this, 'render_migration_notice' ] );
 	}
 }

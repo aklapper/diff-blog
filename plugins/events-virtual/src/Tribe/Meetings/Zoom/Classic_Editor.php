@@ -66,7 +66,7 @@ class Classic_Editor {
 	/**
 	 * Renders, echoing to the page, the Zoom API initial setup options.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param null|\WP_Post|int $post            The post object or ID of the event to generate the controls for, or `null` to use
 	 *                                           the global post object.
@@ -104,7 +104,7 @@ class Classic_Editor {
 	 *
 	 * @since 1.0.0
 	 * @since 1.4.0 - Add ability to force the meeting and webinar generator.
-	 * @since TBD - Support for multiple accounts.
+	 * @since 1.5.0 - Support for multiple accounts.
 	 *
 	 * @param null|\WP_Post|int $post            The post object or ID of the event to generate the controls for, or `null` to use
 	 *                                           the global post object.
@@ -222,7 +222,7 @@ class Classic_Editor {
 			return '';
 		}
 
-		$is_authorized = $this->api->is_authorized();
+		$is_authorized = $this->api->is_ready();
 
 		$link_url   = $is_authorized
 			? $this->url->to_generate_meeting_link( $event )
@@ -257,7 +257,7 @@ class Classic_Editor {
 	/**
 	 * Render the account disabled template.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param bool $is_loaded    Whether the account is loaded or not.
 	 * @param bool $only_details Whether to echo only the details of the disabled template.
@@ -330,7 +330,7 @@ class Classic_Editor {
 	/**
 	 * Render no hosts found template.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param bool $echo Whether to echo the template to the page or not.
 	 *
@@ -402,7 +402,7 @@ class Classic_Editor {
 	/**
 	 * Returns the remove link.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param int|\WP_Post $event      The event ID or object.
 	 *
@@ -417,7 +417,7 @@ class Classic_Editor {
 	/**
 	 * Returns the remove link label.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The remove link label, unescaped.
 	 */
@@ -432,7 +432,7 @@ class Classic_Editor {
 	/**
 	 * Renders the dropdown to choose a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Post             $post             The post object of the Event context of the link generation.
 	 * @param array<string|string> $list_of_accounts An array of Zoom Accounts formatted for options dropdown.
@@ -444,7 +444,7 @@ class Classic_Editor {
 		/**
 		 * Filters the account list to use to generate Zoom Meetings and Webinars.
 		 *
-		 * @since TBD
+		 * @since 1.5.0
 		 *
 		 * @param array<string,mixed>  An array of Zoom Accounts formatted for options dropdown.
 		 */
@@ -496,7 +496,7 @@ class Classic_Editor {
 	/**
 	 * Returns the account link selection URL.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param \WP_Post $post                  The post object of the Event context of the link generation.
 	 * @param bool     $include_generate_text Whether to include the "Generate" text in the labels or not.
@@ -510,7 +510,7 @@ class Classic_Editor {
 		/**
 		 * Allows filtering the account selection link URL.
 		 *
-		 * @since TBD
+		 * @since 1.5.0
 		 *
 		 * @param string The url used to setup the account selection.
 		 * @param \WP_Post $post              The post object of the Event context of the link generation.
@@ -529,7 +529,7 @@ class Classic_Editor {
 	 *
 	 * @since 1.1.1
 	 * @since 1.4.0 - Add support to choose a host before meeting or webinar creation.
-	 * @since TBD - Add support for multiple accounts.
+	 * @since 1.5.0 - Add support for multiple accounts.
 	 *
 	 * @param \WP_Post    $post           The post object of the Event context of the link generation.
 	 * @param bool        $echo           Whether to print the rendered HTML to the page or not.
@@ -693,7 +693,7 @@ class Classic_Editor {
 	 * Renders an existing Meeting details.
 	 *
 	 * @since 1.1.1
-	 * @since TBD - Add multiple accounts support.
+	 * @since 1.5.0 - Add multiple accounts support.
 	 *
 	 * @param \WP_Post    $post           The post object of the Event context of the link generation.
 	 * @param bool        $echo           Whether to print the rendered HTML to the page or not.
@@ -820,12 +820,6 @@ class Classic_Editor {
 			'virtual-metabox/zoom/controls',
 			[
 				'event'               => $post,
-				'is_authorized'       => false,
-				'offer_or_label'      => _x(
-					'or',
-					'The lowercase "or" label used to offer the creation of a Zoom Meetings API link.',
-					'events-virtual'
-				),
 				'generate_link_label' => $this->get_connect_to_zoom_label(),
 				'generate_link_url'   => Settings::admin_url(),
 			],
@@ -843,7 +837,7 @@ class Classic_Editor {
 	 * @since 1.1.1
 	 * @deprecated 1.4.0 Use render_multiple_links_generator()
 	 *
-	 * @param string   $type The type of Zoom Meeting to render teh link generator HTML for.
+	 * @param string   $type The type of Zoom Meeting to render the link generator HTML for.
 	 * @param \WP_Post $post The post object of the Event context of the link generation.
 	 * @param bool     $echo Whether to print the rendered HTML to the page or not.
 	 *

@@ -11,7 +11,7 @@ namespace Tribe\Events\Virtual\Meetings\Zoom;
 
 use Tribe\Events\Virtual\Admin_Template;
 use Tribe\Events\Virtual\Encryption;
-use Tribe__Utils__Array as Arr;
+use Tribe__Main as Common;
 use Tribe\Events\Virtual\Traits\With_AJAX;
 
 /**
@@ -36,7 +36,7 @@ class Settings {
 	/**
 	 * The name of the action used to change the status of an account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -45,7 +45,7 @@ class Settings {
 	/**
 	 * The name of the action used to delete an account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -139,9 +139,11 @@ class Settings {
 		$zoom_fields = apply_filters( 'tribe_events_virtual_meetings_zoom_settings_fields', $zoom_fields, $this );
 
 		// Insert the link after the other APIs and before the Google Maps API ones.
-		$gmaps_fields = array_splice( $fields, array_search( 'gmaps-js-api-start', array_keys( $fields ) ) );
-
-		$fields = array_merge( $fields, $zoom_fields, $gmaps_fields );
+		$fields = Common::array_insert_before_key(
+			'gmaps-js-api-start',
+			$fields,
+			$zoom_fields
+		);
 
 		return $fields;
 	}
@@ -193,7 +195,7 @@ class Settings {
 	/**
 	 * The message template to display on user account changes.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $message The message to display.
 	 * @param string $type    The type of message, either standard or error.
@@ -207,7 +209,7 @@ class Settings {
 	/**
 	 * Handles the request to change the status of a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
@@ -285,7 +287,7 @@ class Settings {
 	/**
 	 * Handles the request to delete a Zoom account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
@@ -347,12 +349,12 @@ class Settings {
 	 * If not available, then a new token should be fetched by the API.
 	 *
 	 * @since 1.0.1
-	 * @deprecated TBD - Remove for Multiple Account Support.
+	 * @deprecated 1.5.0 - Remove for Multiple Account Support.
 	 *
 	 * @return string|boolean The API access token, or false if the token cannot be fetched (error).
 	 */
 	public static function get_refresh_token() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Removed for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Removed for multiple account support with no replacement.' );
 		return tribe( Encryption::class )->decrypt( tribe_get_option( static::$option_prefix . 'refresh_token', false ) );
 	}
 }

@@ -36,10 +36,15 @@ $hybrid_label = tribe_get_hybrid_event_label_singular();
 <div class="tribe-events-hybrid-single-marker">
 	<em
 		class="tribe-events-hybrid-single-marker__icon"
-		aria-label="<?php echo esc_attr( $hybrid_label ); ?>"
 		title="<?php echo esc_attr( $hybrid_label ); ?>"
 	>
-		<?php $this->template( 'components/icons/hybrid', [ 'classes' => [ 'tribe-events-hybrid-single-marker__icon-svg' ] ] ); ?>
+		<?php $this->template(
+			'v2/components/icons/hybrid',
+			[
+				'classes'    => [ 'tribe-events-hybrid-single-marker__icon-svg' ],
+				'icon_label' => $hybrid_label,
+			]
+		); ?>
 	</em>
 	<?php echo esc_html( $hybrid_label ); ?>
 </div>

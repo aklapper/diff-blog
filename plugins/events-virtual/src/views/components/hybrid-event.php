@@ -34,10 +34,15 @@ $hybrid_event_label = tribe_get_hybrid_event_label_singular();
 <div class="tribe-common-b2 tribe-common-b2--bold tribe-events-virtual-hybrid-event">
 	<em
 		class="tribe-events-virtual-hybrid-event__icon"
-		aria-label="<?php echo esc_attr( $hybrid_label ); ?>"
 		title="<?php echo esc_attr( $hybrid_label ); ?>"
 	>
-		<?php $this->template( 'components/icons/hybrid', [ 'classes' => [ 'tribe-events-virtual-hybrid-event__icon-svg' ] ] ); ?>
+		<?php $this->template(
+			'v2/components/icons/hybrid',
+			[
+				'classes' => [ 'tribe-events-virtual-hybrid-event__icon-svg' ],
+				'icon_label' => $hybrid_label
+			]
+		); ?>
 	</em>
 	<span class="tribe-events-virtual-virtual-event__text">
 		<?php echo esc_html( $hybrid_event_label ); ?>

@@ -38,7 +38,7 @@ class Users {
 	 * Get list of users from Zoom.
 	 *
 	 * @since 1.4.0
-	 * @since TBD - Add support for multiple accounts.
+	 * @since 1.5.0 - Add support for multiple accounts.
 	 *
 	 * @param null|string $account_id The account id to use to get the users with.
 	 *
@@ -84,7 +84,7 @@ class Users {
 	 * Get list of hosts formatted for options dropdown.
 	 *
 	 * @since 1.4.0
-	 * @since TBD - Add support for multiple accounts.
+	 * @since 1.5.0 - Add support for multiple accounts.
 	 *
 	 * @param null|string $account_id The account id to use to get the users with.
 	 *

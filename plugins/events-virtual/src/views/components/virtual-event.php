@@ -40,10 +40,15 @@ $virtual_event_label = tribe_get_virtual_event_label_singular();
 <div class="tribe-common-b2 tribe-common-b2--bold tribe-events-virtual-virtual-event">
 	<em
 		class="tribe-events-virtual-virtual-event__icon"
-		aria-label="<?php echo esc_attr( $virtual_label ); ?>"
 		title="<?php echo esc_attr( $virtual_label ); ?>"
 	>
-		<?php $this->template( 'components/icons/virtual', [ 'classes' => [ 'tribe-events-virtual-virtual-event__icon-svg' ] ] ); ?>
+		<?php $this->template(
+			'components/icons/virtual',
+			[
+				'classes'    => [ 'tribe-events-virtual-virtual-event__icon-svg' ],
+				'icon_title' =>  esc_attr( $virtual_event_label ),
+			]
+		); ?>
 	</em>
 	<span class="tribe-events-virtual-virtual-event__text">
 		<?php echo esc_html( $virtual_event_label ); ?>

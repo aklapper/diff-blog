@@ -7,14 +7,14 @@
  *
  * See more documentation about our views templating system.
  *
- * @since   TBD
+ * @since   1.5.0
+ * @since   1.6.0 - remove $offer_or_label.
  *
- * @version TBD
+ * @version 1.5.0
  *
  * @link    http://m.tri.be/1aiy
  *
  * @var \WP_Post             $event             The event post object, as decorated by the `tribe_get_event` function.
- * @var string               $offer_or_label    The localized "or" string.
  * @var string               $select_url        The URL to select the Zoom account.
  * @var string               $select_label      The label used to designate the next step after selecting a Zoom Account.
  * @var array<string,string> $accounts          An array of users to be able to select as a host, that are formatted to use as options.
@@ -29,37 +29,13 @@ $metabox_id = 'tribe-events-virtual';
 
 <div
 	id="tribe-events-virtual-meetings-zoom"
-	class="tribe-events-virtual-meetings-zoom-details"
+	class="tribe-dependent tribe-events-virtual-meetings-zoom-details"
+	data-depends="#tribe-events-virtual-video-source"
+	data-condition="zoom"
 >
-	<span class="tribe-events-virtual-meetings-zoom-details__or-label">
-		<?php echo esc_html( $offer_or_label ); ?>
-	</span>
 
-	<button
-		class="tribe-dependent tribe-events-virtual-meetings-zoom-details__generate-zoom-button button"
-		type="button"
-		data-depends="#<?php echo esc_attr( "{$metabox_id}-zoom-link-generate" ); ?>"
-		data-condition-not-checked
-	>
-		<?php echo esc_html( _x( 'Generate Zoom Meeting', 'The button to open the Zoom Generate Settings', 'events-virtual' ) ); ?>
-	</button>
-	<div class="screen-reader-text">
-		<label for="<?php echo esc_attr( "{$metabox_id}-zoom-link-generate" ); ?>">
-			<input
-				id="<?php echo esc_attr( "{$metabox_id}-zoom-link-generate" ); ?>"
-				name="<?php echo esc_attr( "{$metabox_id}[virtual_zoom]" ); ?>"
-				type="checkbox"
-				value="yes"
-			/>
-			<?php
-			echo esc_html( sprintf( /* Translators: single event term. */ _x( 'Open the Zoom Generate Settings %1$s', 'Setup settings for Zoom link checkbox label', 'events-virtual' ), tribe_get_event_label_singular_lowercase() ) );
-			?>
-		</label>
-	</div>
 	<div
-		class="tribe-dependent tribe-events-virtual-meetings-zoom-details__inner tribe-events-virtual-meetings-zoom-details__inner-accounts"
-		data-depends="#tribe-events-virtual-zoom-link-generate"
-		data-condition-checked
+		class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner tribe-events-virtual-meetings-zoom-details__inner-accounts"
 	>
 		<a
 			class="tribe-events-virtual-meetings-zoom-details__remove-link"

@@ -2,7 +2,7 @@
 /**
  * Handles Plugin Updates
  *
- * @since   TBD
+ * @since   1.5.0
  *
  * @package Tribe\Events\Virtual
  */
@@ -17,7 +17,7 @@ use Tribe__Events__Updater;
 /**
  * Class Updater.
  *
- * @since TBD
+ * @since 1.5.0
  *
  * @package Tribe\Events\Virtual
  */
@@ -25,7 +25,7 @@ class Updater extends Tribe__Events__Updater {
 	/**
 	 * Virtual Events reset version.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -34,7 +34,7 @@ class Updater extends Tribe__Events__Updater {
 	/**
 	 * Virtual Events Schema Key.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @var string
 	 */
@@ -46,20 +46,21 @@ class Updater extends Tribe__Events__Updater {
 	 * and lower than $this->current_version will have its
 	 * callback called.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return array<string|callback> The version number and callback to use.
 	 */
 	public function get_update_callbacks() {
 		return [
 			'1.5' => [ $this, 'multiple_account_migration_setup' ],
+			'1.6' => [ $this, 'video_source_migration' ],
 		];
 	}
 
 	/**
 	 * Setup multiple account migration.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return boolean whether the migration to multiple accounts is complete.
 	 */
@@ -80,7 +81,7 @@ class Updater extends Tribe__Events__Updater {
 	/**
 	 * Migrate the Zoom Account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param Api    $api           An instance of the API class.
 	 * @param string $refresh_token The refresh token from the connection before multiple accounts.
@@ -138,10 +139,59 @@ class Updater extends Tribe__Events__Updater {
 	}
 
 	/**
+	 * Migration to the video source dropdown.
+	 *
+	 * @since 1.6.0
+	 */
+	public function video_source_migration() {
+		$args = [
+			'posts_per_page' => 500,
+			'meta_query' => [
+				[
+					'relation' => 'OR',
+					[
+						'key' =>  Event_Meta::$key_virtual,
+						'value' => true,
+					],
+					[
+						'key' =>  Event_Meta::$key_virtual,
+						'value' => 'yes',
+					]
+				],
+				[
+					'key' =>  Event_Meta::$key_video_source,
+					'compare' => 'NOT EXISTS',
+				]
+			],
+		];
+
+		$virtual_events = tribe_events()->by_args( $args )->get_ids();
+
+		foreach ( $virtual_events as $event_id ) {
+			$event = tribe_get_event( $event_id );
+
+			// Safety check.
+			if ( $event->virtual_video_source ) {
+				continue;
+			}
+
+			// If a virtual event has zoom as the meeting provider
+			if ( 'zoom' === $event->virtual_meeting_provider ) {
+				update_post_meta( $event_id, Event_Meta::$key_video_source, 'zoom' );
+
+				continue;
+			}
+
+			// Default to video as the video source.
+			update_post_meta( $event_id, Event_Meta::$key_video_source, 'video' );
+		}
+	}
+
+	/**
 	 * Force upgrade script to run even without an existing version number
 	 * The version was not previously stored for Virtual Events.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return bool
 	 */

@@ -256,6 +256,7 @@ class Metabox {
 	 * Update Virtual Event Meta Fields
 	 *
 	 * @since 1.0.0
+	 * @since 1.6.0 - Add video source support.
 	 *
 	 * @param int   $post_id Which post ID we are dealing with when saving.
 	 * @param array $data    An array of meta field values.
@@ -263,6 +264,7 @@ class Metabox {
 	public function update_fields( $post_id, $data ) {
 		update_post_meta( $post_id, Event_Meta::$key_type, Arr::get( $data, 'event-type', false ) );
 		update_post_meta( $post_id, Event_Meta::$key_virtual, Arr::get( $data, 'virtual', false ) );
+		update_post_meta( $post_id, Event_Meta::$key_video_source, Arr::get( $data, 'video-source', false ) );
 		update_post_meta( $post_id, Event_Meta::$key_virtual_url, Arr::get( $data, 'virtual-url', false ) );
 		update_post_meta( $post_id, Event_Meta::$key_linked_button_text, Arr::get( $data, 'virtual-button-text', false ) );
 		update_post_meta( $post_id, Event_Meta::$key_linked_button, Arr::get( $data, 'linked-button', false ) );
@@ -284,8 +286,12 @@ class Metabox {
 		// These need some logic around them.
 		$embed_video = Arr::get( $data, 'embed-video', false );
 		$virtual_url = Arr::get( $data, 'virtual-url', false );
+		$video_source = Arr::get( $data, 'video-source', '' );
 		// If the link is not embeddable, uncheck key_embed_video.
-		if ( tribe( OEmbed::class )->is_embeddable( $virtual_url ) ) {
+		if (
+			'video' !== $video_source
+			|| tribe( OEmbed::class )->is_embeddable( $virtual_url )
+		) {
 			update_post_meta( $post_id, Event_Meta::$key_embed_video, $embed_video );
 		} else {
 			delete_post_meta( $post_id, Event_Meta::$key_embed_video );
@@ -308,5 +314,33 @@ class Metabox {
 				$key
 			);
 		}
+	}
+
+	/**
+	 * Renders the video input fields.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param null|\WP_Post|int $post            The post object or ID of the event to generate the controls for, or `null` to use
+	 *                                           the global post object.
+	 * @param bool              $echo            Whether to echo the template contents to the page (default) or to return it.
+	 *
+	 * @return string The template contents, if not rendered to the page or empty string if no post object.
+	 */
+	public function classic_meeting_video_source_ui( $post = null, $echo = true ) {
+		$post = tribe_get_event( get_post( $post ) );
+
+		if ( ! $post instanceof \WP_Post ) {
+			return '';
+		}
+
+		return $this->template->template(
+			'virtual-metabox/video/input',
+			[
+				'event'      => $post,
+				'metabox_id' => Metabox::$id,
+			],
+			$echo
+		);
 	}
 }

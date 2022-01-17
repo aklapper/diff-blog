@@ -7,9 +7,9 @@
  *
  * See more documentation about our views templating system.
  *
- * @since   TBD
+ * @since   1.5.0
  *
- * @version TBD
+ * @version 1.5.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -45,14 +45,16 @@ if ( empty( $accounts ) ) {
 			</div>
 			<div class="tribe-settings-zoom-account-details__account-status">
 				<?php
-				$this->template( 'zoom/api/components/switch', [
-					'id'      => 'account-status-' . $account_id,
-					'label'   => _x( 'Toggle to Change Account Status', 'Disables the Zoom Account for the Website.', 'events-virtual' ),
-					'classes'   => [ 'account-status' ],
-					'name'    => 'account-status',
-					'value'   => 1,
-					'checked' => $account['status'],
-					'attrs'       => [
+				$this->template( 'components/switch', [
+					'id'            => 'account-status-' . $account_id,
+					'label'         => _x( 'Toggle to Change Account Status', 'Disables the Zoom Account for the Website.', 'events-virtual' ),
+					'classes_wrap'  => [ 'tribe-events-virtual-meetings-zoom-control', 'tribe-events-virtual-meetings-zoom-control--switch' ],
+					'classes_input' => [ 'account-status', 'tribe-events-virtual-meetings-zoom-settings-switch__input' ],
+					'classes_label' => [ 'tribe-events-virtual-meetings-zoom-settings-switch__label' ],
+					'name'          => 'account-status',
+					'value'         => 1,
+					'checked'       => $account['status'],
+					'attrs'         => [
 						'data-ajax-status-url' => $url->to_change_account_status_link( $account_id ),
 					],
 				] );

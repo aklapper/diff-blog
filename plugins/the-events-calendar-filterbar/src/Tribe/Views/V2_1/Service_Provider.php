@@ -21,6 +21,7 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 
 		$this->container->singleton( Filters::class, Filters::class );
 		$this->container->singleton( Configuration::class, Configuration::class );
+		tribe_register_provider( Customizer\Service_Provider::class );
 
 		$this->register_hooks();
 		$this->register_assets();

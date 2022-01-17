@@ -8,8 +8,9 @@
  * See more documentation about our views templating system.
  *
  * @since   1.4.0
+ * @since 1.6.0 - Move the trash button for virtual events to this templat from video-source.php.
  *
- * @version 1.4.0
+ * @version 1.6.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -25,6 +26,16 @@ use Tribe\Events\Virtual\Event_Meta;
 <tr class="tribe-events-virtual-type-of-event">
 	<td class='tribe-table-field-label'><?php esc_html_e( 'Type of Event:', 'events-virtual' ); ?></td>
 	<td>
+		<button
+			class="dashicons dashicons-trash tribe-remove-virtual-event tribe-dependent"
+			type="button"
+			data-depends="#<?php echo esc_attr( "{$metabox_id}-setup" ); ?>"
+			data-condition-checked
+		>
+			<span class="screen-reader-text">
+				<?php echo esc_html_x( 'Remove Virtual Settings', 'Resets the virtual settings', 'events-virtual' ); ?>
+			</span>
+		</button>
 		<ul>
 			<li>
 				<label for="<?php echo esc_attr( "{$metabox_id}-type-virtual" ); ?>">

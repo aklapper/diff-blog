@@ -9,9 +9,9 @@
  *
  * @since   1.0.0
  * @since   1.4.0 - Add display of host and choice of alternative hosts
- * @since   TBD - Add support for multiple accounts.
+ * @since   1.5.0 - Add support for multiple accounts.
  *
- * @version TBD
+ * @version 1.5.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -47,10 +47,13 @@ $short_zoom_url = implode(
 
 <div
 	id="tribe-events-virtual-meetings-zoom"
-	class="tribe-events-virtual-meetings-zoom-details"
+	class="tribe-dependent tribe-events-virtual-meetings-zoom-details"
 	<?php tribe_attributes( $attrs ) ?>
+
+	data-depends="#tribe-events-virtual-video-source"
+	data-condition="zoom"
 >
-	<div class="tribe-events-virtual-meetings-zoom-details__inner">
+	<div class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
 		<a
 			class="tribe-events-virtual-meetings-zoom-details__remove-link"
 			href="<?php echo esc_url( $remove_link_url ); ?>"

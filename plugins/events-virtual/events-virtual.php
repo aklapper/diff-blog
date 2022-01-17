@@ -2,8 +2,8 @@
 /*
 Plugin Name: The Events Calendar: Virtual Events
 Description: Virtual Events is an add-on to The Events Calendar suite of products that optimizes your calendar, tickets, and email notifications for virtual events.
-Version: 1.5.0
-Author: The Events calendar
+Version: 1.6.0
+Author: The Events Calendar
 Author URI: http://evnt.is/20
 Text Domain: events-virtual
 License: GPLv2 or later

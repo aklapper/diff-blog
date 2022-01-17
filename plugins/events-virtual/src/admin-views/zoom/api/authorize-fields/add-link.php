@@ -7,9 +7,9 @@
  *
  * See more documentation about our views templating system.
  *
- * @since   TBD
+ * @since   1.5.0
  *
- * @version TBD
+ * @version 1.5.0
  *
  * @link    http://evnt.is/1aiy
  *

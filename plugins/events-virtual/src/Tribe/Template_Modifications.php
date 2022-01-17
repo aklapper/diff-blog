@@ -352,6 +352,7 @@ class Template_Modifications {
 	 *
 	 * @since 1.0.0
 	 * @since 1.0.4 Added possible login requirement.
+	 * @since 1.6.0 - Add video source support.
 	 */
 	public function add_event_single_video_embed() {
 		// don't show on password protected posts.
@@ -362,6 +363,11 @@ class Template_Modifications {
 		$event = tribe_get_event( get_the_ID() );
 
 		if ( ! $event instanceof \WP_Post) {
+			return;
+		}
+
+		// Only embed when the source is video.
+		if ( 'video' !== $event->virtual_video_source ) {
 			return;
 		}
 

@@ -282,7 +282,7 @@ class Url {
 	/**
 	 * Returns the URL that should be used to change an account status.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The Zoom Account ID to change the status.
 	 *
@@ -302,7 +302,7 @@ class Url {
 	/**
 	 * Returns the URL that should be used to delete an account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param string $account_id The Zoom Account ID to change the status.
 	 *

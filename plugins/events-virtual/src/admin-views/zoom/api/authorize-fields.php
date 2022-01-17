@@ -8,9 +8,10 @@
  * See more documentation about our views templating system.
  *
  * @since   1.0.0
- * @since   TBD - Add $message variable.
+ * @since   1.5.0 - Add $message variable.
+ * @since   1.6.0 - Use a common message component.
  *
- * @version TBD
+ * @version 1.6.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -25,7 +26,7 @@ $accounts = $api->get_list_of_accounts( true );
 	<legend class="tribe-field-label"><?php esc_html_e( 'Connected Accounts', 'events-virtual' ); ?></legend>
 	<div class="tec-zoom-accounts-messages">
 		<?php
-		$this->template( 'zoom/api/components/message', [
+		$this->template( 'components/message', [
 			'message' => $message,
 			'type'    => 'standard',
 		] );

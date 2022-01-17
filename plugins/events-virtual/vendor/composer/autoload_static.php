@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita745a72032592ab037609412c3339c48
+class ComposerStaticInitb77f7e7ac0d9e44c5d28cb91079fb3cc
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -65,6 +65,14 @@ class ComposerStaticInita745a72032592ab037609412c3339c48
         'Tribe\\Events\\Virtual\\JSON_LD' => __DIR__ . '/../..' . '/src/Tribe/JSON_LD.php',
         'Tribe\\Events\\Virtual\\Meetings\\Api_Response' => __DIR__ . '/../..' . '/src/Tribe/Meetings/Api_Response.php',
         'Tribe\\Events\\Virtual\\Meetings\\Meeting_Provider' => __DIR__ . '/../..' . '/src/Tribe/Meetings/Meeting_Provider.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Classic_Editor' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Classic_Editor.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Connection' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Connection.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Embeds' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Embeds.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Event_Meta' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Event_Meta.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Settings' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Settings.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Template_Modifications' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Template_Modifications.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube\\Url' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube/Url.php',
+        'Tribe\\Events\\Virtual\\Meetings\\YouTube_Provider' => __DIR__ . '/../..' . '/src/Tribe/Meetings/YouTube_Provider.php',
         'Tribe\\Events\\Virtual\\Meetings\\Zoom\\Abstract_Meetings' => __DIR__ . '/../..' . '/src/Tribe/Meetings/Zoom/Abstract_Meetings.php',
         'Tribe\\Events\\Virtual\\Meetings\\Zoom\\Account_API' => __DIR__ . '/../..' . '/src/Tribe/Meetings/Zoom/Account_API.php',
         'Tribe\\Events\\Virtual\\Meetings\\Zoom\\Api' => __DIR__ . '/../..' . '/src/Tribe/Meetings/Zoom/Api.php',
@@ -107,9 +115,9 @@ class ComposerStaticInita745a72032592ab037609412c3339c48
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita745a72032592ab037609412c3339c48::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita745a72032592ab037609412c3339c48::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita745a72032592ab037609412c3339c48::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitb77f7e7ac0d9e44c5d28cb91079fb3cc::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitb77f7e7ac0d9e44c5d28cb91079fb3cc::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitb77f7e7ac0d9e44c5d28cb91079fb3cc::$classMap;
 
         }, null, ClassLoader::class);
     }

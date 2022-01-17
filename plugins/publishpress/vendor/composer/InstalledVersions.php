@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '6e1fdd15b3f34291d4a0510465716f2ac79320bb',
+    'reference' => '6c30d6753f707c56297a1f8a6b51301f089dea03',
     'name' => 'publishpress/publishpress',
   ),
   'versions' => 
@@ -59,16 +59,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '6e1fdd15b3f34291d4a0510465716f2ac79320bb',
+      'reference' => '6c30d6753f707c56297a1f8a6b51301f089dea03',
     ),
     'publishpress/wordpress-version-notices' => 
     array (
-      'pretty_version' => '1.1.2',
-      'version' => '1.1.2.0',
+      'pretty_version' => '1.1.3',
+      'version' => '1.1.3.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'b710c9d4ddf15384546d2f2209554bfdb10c5339',
+      'reference' => '57e7cbb3e9b9ac366ddd3fd0a80c2e2eabf75ea3',
     ),
     'sabre/vobject' => 
     array (

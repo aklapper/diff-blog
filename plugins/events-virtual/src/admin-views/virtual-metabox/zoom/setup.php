@@ -8,14 +8,14 @@
  * See more documentation about our views templating system.
  *
  * @since   1.4.0
- * @since   TBD - Add support for multiple accounts.
+ * @since   1.5.0 - Add support for multiple accounts.
+ * @since   1.6.0 - remove $offer_or_label.
  *
- * @version TBD
+ * @version 1.6.0
  *
  * @link    http://m.tri.be/1aiy
  *
  * @var \WP_Post             $event                   The event post object, as decorated by the `tribe_get_event` function.
- * @var string               $offer_or_label          The localized "or" string.
  * @var array<string,string> $attrs                   Associative array of attributes of the zoom account.
  * @var string               $account_label           The label used to designate the account of a Zoom Meeting or Webinar.
  * @var string               $account_name            The api account name of a Zoom Meeting or Webinar.
@@ -39,11 +39,8 @@ $metabox_id = 'tribe-events-virtual';
 	class="tribe-events-virtual-meetings-zoom-details"
 	<?php tribe_attributes( $attrs ) ?>
 >
-	<span class="tribe-events-virtual-meetings-zoom-details__or-label">
-		<?php echo esc_html( $offer_or_label ); ?>
-	</span>
 
-	<div class="tribe-events-virtual-meetings-zoom-details__inner">
+	<div class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
 		<a
 			class="tribe-events-virtual-meetings-zoom-details__remove-link"
 			href="<?php echo esc_url( $remove_link_url ); ?>"

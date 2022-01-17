@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://evnt.is/29
 Requires at least: 4.9.16
 Tested up to: 5.7.2
-Stable tag: 5.1.2
+Stable tag: 5.1.4
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -194,6 +194,17 @@ Our Premium Plugins:
 * <a href="http://evnt.is/18h9" target="_blank">The Events Calendar: iCal Importer</a>
 
 == Changelog ==
+
+= [5.1.4] 2021-07-01 =
+
+* Feature - Add new Events bar section to the Customizer for control of the Events Bar styles. [TEC-3672]
+* Language - 0 new strings added, 0 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.1.3] 2021-06-23 =
+
+* Fix - Resolved issue where special characters of field values were not rendering appropriately. [FBAR-245]
+* Fix - Ensure checkbox-based custom fields properly filter values when used as a multiselect. [FBAR-95]
+* Language - 0 new strings added, 4 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.1.2] 2021-05-27 =
 

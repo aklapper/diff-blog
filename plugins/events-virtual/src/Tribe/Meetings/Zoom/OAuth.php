@@ -270,12 +270,12 @@ class OAuth {
 	 * This method should be used when first connecting to the Zoom API or when a refresh token is not available.
 	 *
 	 * @since 1.0.0
-	 * @deprecated TBD - Replaced with Multiple Account Support, see Account_API class.
+	 * @deprecated 1.5.0 - Replaced with Multiple Account Support, see Account_API class.
 	 *
 	 * @param string $code The token access code as returned from Zoom API callback.
 	 */
 	public function fetch_access_token( $code ) {
-		_deprecated_function( __FUNCTION__, 'TBD', '' );
+		_deprecated_function( __FUNCTION__, '1.5.0', '' );
 		$this->api->post(
 			static::$legacy_token_request_url,
 			[

@@ -31,16 +31,21 @@ if ( Event_Meta::$value_virtual_event_type !== $event->virtual_event_type ) {
 	return;
 }
 
-$virtual_label = tribe_get_virtual_event_label_singular();
+$virtual_event_label = tribe_get_virtual_event_label_singular();
 
 ?>
 <div class="tribe-events-virtual-single-marker">
 	<em
 		class="tribe-events-virtual-single-marker__icon"
-		aria-label="<?php echo esc_attr( $virtual_label ); ?>"
-		title="<?php echo esc_attr( $virtual_label ); ?>"
+		title="<?php echo esc_attr( $virtual_event_label ); ?>"
 	>
-		<?php $this->template( 'v2/components/icons/virtual', [ 'classes' => [ 'tribe-events-virtual-single-marker__icon-svg' ] ] ); ?>
+		<?php $this->template(
+			'v2/components/icons/virtual',
+			[
+				'classes' => [ 'tribe-events-virtual-single-marker__icon-svg' ],
+				'icon_title' =>  esc_attr( $virtual_event_label ),
+			]
+		); ?>
 	</em>
-	<?php echo esc_html( $virtual_label ); ?>
+	<?php echo esc_html( $virtual_event_label ); ?>
 </div>

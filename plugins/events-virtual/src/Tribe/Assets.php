@@ -86,7 +86,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 			$plugin,
 			'tribe-events-virtual-admin-js',
 			'events-virtual-admin.js',
-			[ 'jquery', 'tribe-tooltip-js' ],
+			[ 'jquery', 'tribe-tooltip-js', 'tribe-events-views-v2-accordion' ],
 			'admin_enqueue_scripts',
 			[
 				'localize' => [
@@ -390,7 +390,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 	/**
 	 * Get the confirmation text for deleting a virtual settings.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @return string The confirmation text.
 	 */

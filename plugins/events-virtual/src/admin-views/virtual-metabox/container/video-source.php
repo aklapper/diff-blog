@@ -8,8 +8,9 @@
  * See more documentation about our views templating system.
  *
  * @since   1.0.0
+ * @since   1.6.0 - Add support for video source dropdown and remove trash icon and move to head.php.
  *
- * @version 1.0.0
+ * @version 1.6.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -19,65 +20,54 @@
  * @see tribe_get_event() For the format of the event object.
  */
 
-use Tribe\Events\Virtual\OEmbed;
-use Tribe\Events\Virtual\Event_Meta;
-
-$oembed           = new OEmbed();
-$placeholder_text = Event_Meta::get_video_source_text( $post );
-
-$virtual_url          = apply_filters( 'tribe_events_virtual_video_source_virtual_url', $post->virtual_url, $post );
-$virtual_url_disabled = apply_filters( 'tribe_events_virtual_video_source_virtual_url_disabled', false, $post );
-
-$embed_notice_classes = [
-	'tribe-events-virtual-video-source__not-embeddable-notice',
-	'tribe-events-virtual-video-source__not-embeddable-notice--show' => ! empty( $virtual_url ) && ! $oembed->is_embeddable( $virtual_url ),
-];
 ?>
 <tr class="tribe-events-virtual-video-source">
 	<td class="tribe-table-field-label tribe-events-virtual-video-source__label">
 		<?php esc_html_e( 'Add Video Source:', 'events-virtual' ); ?>
 	</td>
 	<td class="tribe-events-virtual-video-source__content">
-		<button
-			class="dashicons dashicons-trash tribe-remove-virtual-event tribe-dependent"
-			type="button"
-			data-depends="#<?php echo esc_attr( "{$metabox_id}-setup" ); ?>"
-			data-condition-checked
+		<div
+			class="tribe-events-virtual-video-sources-wrap"
 		>
-			<span class="screen-reader-text">
-				<?php echo esc_html_x( 'Remove Virtual Settings', 'Resets the virtual settings', 'events-virtual' ); ?>
-			</span>
-		</button>
-		<ul>
-			<li class="tribe-events-virtual-video-source__virtual-url">
-				<label
-					for="<?php echo esc_attr( "{$metabox_id}-virtual-url" ); ?>"
-					class="screen-reader-text tribe-events-virtual-video-source__virtual-url-input-label"
-				>
-					<?php echo esc_html_x( 'Live Stream URL', 'Label for live stream URL field', 'events-virtual' ); ?>
-				</label>
-				<input
-					id="<?php echo esc_attr( "{$metabox_id}-virtual-url" ); ?>"
-					name="<?php echo esc_attr( "{$metabox_id}[virtual-url]" ); ?>"
-					value="<?php echo esc_url( $virtual_url ); ?>"
-					type="url"
-					class="components-text-control__input tribe-events-virtual-video-source__virtual-url-input"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'tribe-check-embed' ) ); ?>"
-					data-oembed-test="true"
-					placeholder="<?php echo esc_attr( $placeholder_text ); ?>"
-					data-dependency-manual-control
-					<?php disabled( $virtual_url_disabled ); ?>
-				/>
-				<?php $this->do_entry_point( 'before_li_close' ); ?>
-			</li>
-			<li
-				<?php tribe_classes( $embed_notice_classes ); ?>
-				role="alert"
-			>
-				<p class="tribe-events-virtual-video-source__not-embeddable-text event-helper-text">
-					<?php echo esc_html( $oembed->get_unembeddable_message( $virtual_url ) ); ?>
-				</p>
-			</li>
-		</ul>
+			<?php
+				/**
+				 * Allow filtering of the virtual event video sources.
+				 *
+				 * @since 1.6.0
+				 *
+				 * @param array<string|string> An array of video sources.
+				 * @param \WP_Post $post       The current event post object, as decorated by the `tribe_get_event` function.
+				 */
+				$video_sources =  (array) apply_filters( 'tribe_events_virtual_video_sources', [], $post );
+
+				$source_args = [
+					'label'       => _x(
+						'Choose Video Source',
+						'The label to choose the video source.',
+						'events-virtual'
+					),
+					'id'          => "{$metabox_id}-video-source",
+					'class'       => 'tribe-events-virtual-meetings-video-source-dropdown',
+					'name'        => "{$metabox_id}[video-source]",
+					'selected'    =>  $post->virtual_video_source,
+					'attrs'       => [
+						'placeholder' 	   => _x(
+							'Choose Video Source',
+							'The placeholder for the dropdown to choose the virtual video source.',
+							'events-virtual'
+						),
+						'data-selected'    => $post->virtual_video_source,
+						'data-hide-search' => '1',
+						'data-options'     => json_encode( $video_sources ),
+					],
+				];
+				$this->template( 'components/dropdown', $source_args );
+			 ?>
+		</div>
+		<div
+			class="tribe-events-virtual-video-sources"
+		>
+			<?php $this->do_entry_point( 'video_sources' ); ?>
+		</div>
 	</td>
 </tr>

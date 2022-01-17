@@ -43,7 +43,7 @@ $metabox_id = Metabox::$id;
 	</tr>
 <?php endif; ?>
 	<tr>
-		<td>
+		<td class="tribe-configure-virtual-button__container">
 			<div>
 				<button
 					class="tribe-configure-virtual-button button"

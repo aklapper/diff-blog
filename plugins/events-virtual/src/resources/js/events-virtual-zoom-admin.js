@@ -155,7 +155,7 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 * Handles the click on a link to remove a meeting.
 	 *
 	 * @since 1.4.0
-	 * @since TBD - Add confirmation check and move ajax call to it's own method.
+	 * @since 1.5.0 - Add confirmation check and move ajax call to it's own method.
 	 *
 	 * @param {Event} ev The click event.
 	 */
@@ -195,6 +195,7 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 * Handles the successful response from the backend to a meeting-related request.
 	 *
 	 * @since 1.0.0
+	 * @since 1.6.0 - Support for video sources dropdown.
 	 *
 	 * @param {string} html The HTML that should replace the current meeting controls HTML.
 	 */
@@ -202,9 +203,9 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		$( obj.selectors.zoomMeetingsContainer ).replaceWith( html );
 		obj.setupControls();
 		obj.checkButtons();
-		obj.handleMeetingDetailsClasses();
+		virtualAdmin.handleVideoSourceClasses();
 		obj.initTribeDropdowns();
-		$( obj.selectors.setupZoomCheckbox ).trigger( 'setup.dependency' );
+		$( virtualAdmin.selectors.videoSource ).trigger( 'verify.dependency' );
 
 		if (
 			virtualAdmin.handleShowOptionInteractivity &&
@@ -218,47 +219,24 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 * Wait for Virtual Events to become visible to correctly setup fields.
 	 *
 	 * @since 1.4.0
+	 * @since 1.6.0 - Support for video sources dropdown.
 	 */
 	obj.waitForVirtualEventsToLoad = function() {
 		var counter = 10;
 		var checkExist = setInterval( function() {
 			counter--;
 			if ( $( obj.selectors.meetingDetails ).length || counter === 0 ) {
-				obj.handleMeetingDetailsClasses();
+				virtualAdmin.handleVideoSourceClasses();
 				clearInterval( checkExist );
 			}
 		}, 200 );
 	};
 
 	/**
-	 * Handles the classes for the meeting details.
-	 *
-	 * @since 1.0.0
-	 */
-	obj.handleMeetingDetailsClasses = function() {
-		var $meetingDetails = $( obj.selectors.meetingDetails );
-
-		if ( ! $meetingDetails.length ) {
-			return;
-		}
-
-		var $urlField = $( obj.selectors.urlField );
-		var content = $urlField.parent();
-		var isWide = content.width() >=
-			$meetingDetails.outerWidth( true ) + $urlField.outerWidth( true );
-
-		if ( isWide ) {
-			$meetingDetails.addClass( obj.selectors.meetingDetailsFloat.className() );
-		} else {
-			$meetingDetails.removeClass( obj.selectors.meetingDetailsFloat.className() );
-		}
-	};
-
-	/**
 	 * Ensures that when we delete the virtual meta, we also delete the Meeting meta/details.
 	 *
 	 * @since 1.0.0
-	 * @since TBD - modify to call ajax remove method directly to bypass new confirmation.
+	 * @since 1.5.0 - modify to call ajax remove method directly to bypass new confirmation.
 	 *
 	 */
 	obj.handleLinkedMetaRemove = function() {
@@ -284,7 +262,6 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 			.on( 'click', obj.selectors.accountSelect, obj.handleAccountSelection )
 			.on( 'click', obj.selectors.meetingCreate, obj.handleMeetingRequest )
 			.on( 'click', obj.selectors.meetingRemove, obj.handleRemoveRequest );
-		$( window ).on( 'resize', obj.handleMeetingDetailsClasses );
 		$document.on( 'virtual.delete', obj.handleLinkedMetaRemove );
 	};
 
@@ -384,7 +361,7 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	};
 
 	/**
-	 * @deprecated TBD - Accordions are no longer part of the UI.
+	 * @deprecated 1.5.0 - Accordions are no longer part of the UI.
 	 */
 	obj.initMultipleControlsAccordion = function() {
 		console.info( 'Method deprecated with no replacement.' ); // eslint-disable-line no-console
@@ -399,6 +376,34 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	};
 
 	/**
+	 * Handles the classes for the meeting details.
+	 *
+	 * @deprecated 1.6.0 - Support for video source dropdown.
+	 *
+	 * @since 1.0.0
+	 */
+	obj.handleMeetingDetailsClasses = function() {
+		console.info( 'Method deprecated and replaced with virtualAdmin.handleVideoSourceClasses.' ); // eslint-disable-line no-console, max-len
+
+		var $meetingDetails = $( obj.selectors.meetingDetails );
+
+		if ( ! $meetingDetails.length ) {
+			return;
+		}
+
+		var $urlField = $( obj.selectors.urlField );
+		var content = $urlField.parent();
+		var isWide = content.width() >=
+			$meetingDetails.outerWidth( true ) + $urlField.outerWidth( true );
+
+		if ( isWide ) {
+			$meetingDetails.addClass( obj.selectors.meetingDetailsFloat.className() );
+		} else {
+			$meetingDetails.removeClass( obj.selectors.meetingDetailsFloat.className() );
+		}
+	};
+
+	/**
 	 * Handles the initialization of the admin when Document is ready
 	 *
 	 * @since 1.0.0
@@ -407,7 +412,6 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 */
 	obj.ready = function() {
 		obj.bindEvents();
-		obj.handleMeetingDetailsClasses();
 	};
 
 	// Configure on document ready

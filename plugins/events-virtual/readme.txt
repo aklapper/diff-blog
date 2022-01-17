@@ -4,8 +4,8 @@ Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, 
 Tags: virtual events, events, calendar, event, venue, organizer, dates, date, schema, conference, online events, concert, meeting, seminar, summit, class, the events calendar, tec, zoom, livestream
 Donate link: https://evnt.is/29
 Requires at least: 4.9.16
-Tested up to: 5.7.2
-Stable tag: 1.5.0
+Tested up to: 5.8.0
+Stable tag: 1.6.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -120,6 +120,15 @@ Our premium products:
 * <a href="https://evnt.is/1ako" target="_blank">Image Widget Plus</a>
 
 == Changelog ==
+
+= [1.6.0] 2021-07-26 =
+
+* Feature - Change the video source to a dropdown and migrate existing virtual events to the new field. [VE-356]
+* Feature - Add support for YouTube Channels as a video source with automatic detection when a streaming video is live. [VE-357]
+* Tweak - Remove incorrect aria-label from icons, pass label to icon where needed. [TEC-3396]
+* Tweak - Added filters: `tribe_events_virtual_youtube_regex_status`, `tribe_events_virtual_youtube_regex_embed_allowed`, `tribe_events_virtual_youtube_regex_video_id`, `tribe_events_virtual_youtube_regex_video_url`, `tribe_events_virtual_meetings_youtube_settings_event_fields`, `tribe_events_virtual_meetings_youtube_settings_fields`, `tribe_events_virtual_youtube_link_placeholder_text`, `tribe_events_virtual_zoom_link_placeholder_text`, `tribe_events_virtual_video_sources`
+* Tweak - Changed views: `components/hybrid-event`, `components/icons/hybrid`, `components/virtual-event`, `single/hybrid-marker-mobile`, `single/hybrid-marker`, `single/video-embed`, `single/virtual-marker-mobile`, `single/virtual-marker`, `youtube/single/youtube-embed-offline`, `youtube/single/youtube-embed`
+* Language - 31 new strings added, 23 updated, 0 fuzzied, and 4 obsoleted
 
 = [1.5.0] 2021-06-10 =
 

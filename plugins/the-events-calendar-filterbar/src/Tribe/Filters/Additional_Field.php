@@ -1,5 +1,6 @@
 <?php
 use Tribe__Utils__Array as Arr;
+use Tribe__Cache as Cache;
 
 /**
  * Represents an additional field filter: can be used for all the standard
@@ -172,7 +173,10 @@ class Tribe__Events__Filterbar__Filters__Additional_Field extends Tribe__Events_
 		$new_rules      = array();
 		$existing_rules = (array) $query->get( 'meta_query' );
 		$values         = (array) $this->currentValue;
-		$meta_key       = 'checkbox' === $this->type ? '_' . $this->meta_key : $this->meta_key;
+
+		$custom_fields  = $this->get_custom_fields();
+
+		$meta_key       = 'checkbox' === $custom_fields[ $this->meta_key ]['type'] ? '_' . $this->meta_key : $this->meta_key;
 
 		// AND logic: match posts where all of the supplied values have been applied
 		if ( 'and' === $this->logic ) {
@@ -231,5 +235,32 @@ class Tribe__Events__Filterbar__Filters__Additional_Field extends Tribe__Events_
 
 		// Apply our new meta query rules
 		$query->set( 'meta_query', $meta_query );
+	}
+
+	/**
+	 * Gets the custom fields declared in Event Settings.
+	 *
+	 * @since 5.1.3
+	 *
+	 * @return array
+	 */
+	protected function get_custom_fields() {
+		/** @var Cache $cache */
+		$cache         = tribe( 'cache' );
+		$cache_key     = 'filterbar_custom_fields';
+		$custom_fields = $cache->get( $cache_key );
+
+		if ( ! $custom_fields ) {
+			$custom_fields = [];
+			$fields        = (array) tribe_get_option( 'custom-fields', [] );
+
+			foreach ( $fields as $field ) {
+				$custom_fields[ $field['name'] ] = $field;
+			}
+
+			$cache->set( $cache_key, $custom_fields, Cache::NON_PERSISTENT );
+		}
+
+		return $custom_fields;
 	}
 }

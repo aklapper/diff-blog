@@ -8,15 +8,13 @@
  * See more documentation about our views templating system.
  *
  * @since   1.1.1
- * @deprecated 1.4.0 Use setup.php
+ * @since   1.6.0 - Modify for use with new video source dropdown.
  *
- * @version 1.4.0
+ * @version 1.6.0
  *
  * @link    http://evnt.is/1aiy
  *
  * @var \WP_Post $event               The event post object, as decorated by the `tribe_get_event` function.
- * @var bool     $is_authorized       Whether the user authorized the Zoom integration to create meeting links or not.
- * @var string   $offer_or_label      The localized "or" string.
  * @var string   $generate_link_url   The URL to generate a Zoom Meeting link.
  * @var string   $generate_link_label The label of the button to generate a Zoom Meeting link.
  *
@@ -24,25 +22,14 @@
  */
 ?>
 
-<span
+<div
 	id="tribe-events-virtual-meetings-zoom"
-	class="tribe-events-virtual-meetings-zoom tribe-events-virtual-meetings-zoom-controls"
+	class="tribe-dependent tribe-events-virtual-meetings-zoom-controls"
+	data-depends="#tribe-events-virtual-video-source"
+	data-condition="zoom"
 >
 
-	<span class="tribe-events-virtual-meetings-zoom__or-label">
-		<?php echo esc_html( $offer_or_label ); ?>
-	</span>
-
-	<?php if ( $is_authorized ) : ?>
-
-		<a
-			class="button tribe-events-virtual-meetings-zoom__create-link"
-			href="<?php echo esc_url( $generate_link_url ); ?>"
-		>
-			<?php echo esc_html( $generate_link_label ); ?>
-		</a>
-
-	<?php else : ?>
+	<div class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
 
 		<a
 			class="tribe-events-virtual-meetings-zoom__connect-link"
@@ -51,6 +38,5 @@
 			<?php echo esc_html( $generate_link_label ); ?>
 		</a>
 
-	<?php endif; ?>
-
-</span>
+	</div>
+</div>

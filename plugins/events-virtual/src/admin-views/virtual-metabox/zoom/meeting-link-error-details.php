@@ -31,7 +31,7 @@ $remove_link_label = _x(
 
 <div
 	id="tribe-events-virtual-meetings-zoom"
-	class="tribe-events-virtual-meetings-zoom-error"
+	class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-error"
 >
 
 	<a

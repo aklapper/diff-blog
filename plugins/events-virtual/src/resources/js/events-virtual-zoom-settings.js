@@ -87,7 +87,7 @@ tribe.events.zoomSettingsAdmin = tribe.events.zoomSettingsAdmin || {};
 	/**
 	 * Handles the click to refresh an account
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param {Event} ev The click event.
 	 */
@@ -106,7 +106,7 @@ tribe.events.zoomSettingsAdmin = tribe.events.zoomSettingsAdmin || {};
 	/**
 	 * Handles the click to change the account status.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 */
 	obj.handleAccountStatus = function() {
 		var $this = $( this );
@@ -128,7 +128,7 @@ tribe.events.zoomSettingsAdmin = tribe.events.zoomSettingsAdmin || {};
 	/**
 	 * Handles the successful response from the backend to account status request.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param {string} html The HTML that adds a message on the settings page.
 	 */
@@ -151,7 +151,7 @@ tribe.events.zoomSettingsAdmin = tribe.events.zoomSettingsAdmin || {};
 	/**
 	 * Handles the click to delete an account.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param {Event} ev The click event.
 	 */
@@ -178,14 +178,21 @@ tribe.events.zoomSettingsAdmin = tribe.events.zoomSettingsAdmin || {};
 	/**
 	 * Handles the successful response from the backend to delete account request.
 	 *
-	 * @since TBD
+	 * @since 1.5.0
 	 *
 	 * @param {string} html The HTML that adds a message on the settings page.
 	 */
 	obj.onAccountDeleteSuccess = function( html ) {
+		$( obj.selectors.accountMessageContainer ).html( html );
+
+		// Check if this is an error message.
+		var $error = $( '.error', $( obj.selectors.accountMessageContainer ) );
+		if ( $error.length > 0 ) {
+			return;
+		}
+
 		// Remove the account from the list.
 		$( this ).remove();
-		$( obj.selectors.accountMessageContainer ).html( html );
 	};
 
 	/**

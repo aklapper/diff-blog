@@ -16,7 +16,7 @@ use Tribe\Events\Virtual\Meetings\Api_Response;
  * Class Api
  *
  * @since   1.0.0
- * @since  TBD - Extends Account_API Class to support multiple accounts.
+ * @since  1.5.0 - Extends Account_API Class to support multiple accounts.
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
@@ -111,7 +111,7 @@ class Api extends Account_API {
 	 *
 	 * @since 1.0.0
 	 * @since 1.4.0  - Add encryption handler.
-	 * @since TBD - Add Account_API to support multiple accounts.
+	 * @since 1.5.0 - Add Account_API to support multiple accounts.
 	 *
 	 * @param Encryption $encryption An instance of the Encryption handler.
 	 */
@@ -526,12 +526,12 @@ class Api extends Account_API {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.1 Changed the method to use the new OAuth flow that is not handled by the plugin.
-	 * @deprecated TBD - OAuth supports multiple accounts, see refresh_access_token().
+	 * @deprecated 1.5.0 - OAuth supports multiple accounts, see refresh_access_token().
 	 *
 	 * @return string The API access token, or an empty string if the token cannot be fetched.
 	 */
 	public function refresh_token( $refresh_token ) {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support, see refresh_access_token()' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support, see refresh_access_token()' );
 		$token = $this->encryption->decrypt( get_transient( Settings::$option_prefix . 'access_token' ) );
 
 		if ( empty( $token ) ) {
@@ -574,12 +574,12 @@ class Api extends Account_API {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.1 Changed the method to use the new OAuth flow that is not handled by the plugin.
-	 * @deprecated TBD - OAuth supports multiple accounts, see refresh_access_token().
+	 * @deprecated 1.5.0 - OAuth supports multiple accounts, see refresh_access_token().
 	 *
 	 * @return string The API access token, or an empty string if the token cannot be fetched.
 	 */
 	protected function get_access_token() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support, see refresh_access_token()' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support, see refresh_access_token()' );
 		$token = get_transient( Settings::$option_prefix . 'access_token' );
 
 		if ( empty( $token ) ) {
@@ -616,12 +616,12 @@ class Api extends Account_API {
 	 * Returns the access token based authorization header to send requests to the Zoom API.
 	 *
 	 * @since 1.0.0
-	 * @deprecated TBD OAuth supports multiple accounts, see Account_API class.
+	 * @deprecated 1.5.0 OAuth supports multiple accounts, see Account_API class.
 	 *
 	 * @return string The authorization header, to be used in the `headers` section of a request to Zoom API.
 	 */
 	public function token_authorization_header() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		return 'Bearer ' . $this->get_access_token();
 	}
 
@@ -634,7 +634,7 @@ class Api extends Account_API {
 	 * @return string The Zoom Application Client ID provided by the user.
 	 */
 	public function client_id() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated with no replacement.' );
 		return $this->client_id;
 	}
 
@@ -647,7 +647,7 @@ class Api extends Account_API {
 	 * @return string The current Client Secret used to communicate with the Zoom API.
 	 */
 	public function client_secret() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated with no replacement.' );
 		return $this->client_secret;
 	}
 
@@ -660,7 +660,7 @@ class Api extends Account_API {
 	 * @return string The authorization header, to be used in the `headers` section of a request to Zoom API.
 	 */
 	public function authorization_header() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated with no replacement.' );
 		return 'Basic ' . base64_encode( $this->client_id() . ':' . $this->client_secret() );
 	}
 
@@ -673,7 +673,7 @@ class Api extends Account_API {
 	 * @return bool Whether all fields required to interact with the Zoom API are correctly set or not.
 	 */
 	public function has_required_fields() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		foreach ( $this->required_fields() as $required_field ) {
 			if ( empty( tribe_get_option( Settings::$option_prefix . $required_field ) ) ) {
 				return false;
@@ -693,7 +693,7 @@ class Api extends Account_API {
 	 *                       integration to work.
 	 */
 	public function required_fields() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		return [];
 	}
 
@@ -701,7 +701,7 @@ class Api extends Account_API {
 	 * Validates and saves the access token to the database if all the required data is provided.
 	 *
 	 * @since 1.0.0
-	 * @deprecated TBD OAuth supports multiple accounts, see Account_API class.
+	 * @deprecated 1.5.0 OAuth supports multiple accounts, see Account_API class.
 	 *
 	 * @param array<string,array> $response An array representing the access token request response, in the format
 	 *                                      returned by WordPress `wp_remote_` functions.
@@ -709,7 +709,7 @@ class Api extends Account_API {
 	 * @return bool Whether the access token data was saved or not.
 	 */
 	public function save_access_token( array $response ) {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		if ( ! (
 			isset( $response['body'] )
 			&& ( false !== $d = json_decode( $response['body'], true ) )
@@ -756,12 +756,12 @@ class Api extends Account_API {
 	 * of Webinars or not; the check is done at connection time.
 	 *
 	 * @since 1.1.1
-	 * @deprecated TBD - Webinar check is done per account with no global option.
+	 * @deprecated 1.5.0 - Webinar check is done per account with no global option.
 	 *
 	 * @return bool Whether the generation and management of the Zoom Webinars is allowed at the API level or not.
 	 */
 	public function allow_webinars() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		$allowed = tribe_is_truthy( tribe_get_option( Settings::$option_prefix . 'allow_webinars' ) );
 
 		/**
@@ -782,12 +782,12 @@ class Api extends Account_API {
 	 *
 	 * @since 1.1.1
 	 * @since 1.4.0 - Modify to check for alternative hosts as users that support alt hosts can generate webinars.
-	 * @deprecated TBD - Accounts_API queries the user settings directly to determine webinar support.
+	 * @deprecated 1.5.0 - Accounts_API queries the user settings directly to determine webinar support.
 	 *
 	 * @see Api::allow_webinars() to get the value set by this method.
 	 */
 	public function check_webinar_cap() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		$alternative_hosts = tribe( Users::class )->get_alternative_users();
 		$option_value  = 'no';
 
@@ -802,12 +802,12 @@ class Api extends Account_API {
 	 * Resets the Webinar API capability by setting the related option to a null/empty value.
 	 *
 	 * @since 1.1.1
-	 * @deprecated TBD - Webinar check is done per account with no global option.
+	 * @deprecated 1.5.0 - Webinar check is done per account with no global option.
 	 *
-	 * @return bool Whether teh Webinar capability was correctly reset or not.
+	 * @return bool Whether the Webinar capability was correctly reset or not.
 	 */
 	public function reset_webinar_cap() {
-		_deprecated_function( __FUNCTION__, 'TBD', 'Deprecated for multiple account support with no replacement.' );
+		_deprecated_function( __FUNCTION__, '1.5.0', 'Deprecated for multiple account support with no replacement.' );
 		return tribe_update_option( Settings::$option_prefix . 'allow_webinars', '' );
 	}
 }

@@ -68,7 +68,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 			$this->settings();
 			$this->priority = $this->get_priority();
 			$this->isActiveFilter = $this->is_active();
-			$this->currentValue = $this->get_submitted_value();
+			$this->currentValue = array_map( 'urldecode', (array) $this->get_submitted_value() );
 
 			$this->setup_query_filters();
 			$this->addHooks();
@@ -241,7 +241,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 				$options[] = array(
 					'text'  => $dropdown ? $depth . $value['name'] :  $value['name'],
 					'id'    => str_replace( ',', '-', $value['value'] ),
-					'value' => $value['value'],
+					'value' => urldecode( $value['value'] ),
 				);
 
 			}
@@ -940,7 +940,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 
 			return [
 				'type'    => 'select' === $this->type ? 'dropdown' : $this->type,
-				'value'   => is_array( $this->currentValue ) ? implode( ',', $this->currentValue ) : $this->currentValue,
+				'value'   => urldecode( is_array( $this->currentValue ) ? implode( ',', $this->currentValue ) : $this->currentValue ),
 				'id'      => $this->get_formatted_id_from_name( $this->slug ),
 				'name'    => $this->get_name_field(),
 				'options' => $options,
@@ -988,7 +988,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 			return [
 				'type'  => $this->type,
 				'label' => $label,
-				'value' => $selected,
+				'value' => urldecode( $selected ),
 				'id'    => $this->get_formatted_id_from_name( $this->slug ),
 				'name'  => $this->get_name_field(),
 				'min'   => $this->values['min'],
@@ -1137,7 +1137,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 		 * @return string The value in string format.
 		 */
 		protected function stringify_value( $value ) {
-			return str_replace( ',', '-', Arr::to_list( array_values( (array) $value ) ) );
+			return urldecode( str_replace( ',', '-', Arr::to_list( array_values( (array) $value ) ) ) );
 		}
 
 		/**
