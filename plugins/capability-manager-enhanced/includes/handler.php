@@ -1,11 +1,4 @@
 <?php
-/*
- * PublishPress Capabilities [Free]
- * 
- * Process update operations from the Capabilities screen
- * 
- */
-
 class CapsmanHandler
 {
 	var $cm;
@@ -33,7 +26,7 @@ class CapsmanHandler
 		if ( ! empty($post['CreateRole']) ) {
 			if ( $newrole = $this->createRole($post['create-name']) ) {
 				ak_admin_notify(__('New role created.', 'capsman-enhanced'));
-				$this->cm->set_current_role($newrole);
+				$this->cm->current = $newrole;
 			} else {
 				if ( empty($post['create-name']) && in_array(get_locale(), ['en_EN', 'en_US']) )
 					ak_admin_error( 'Error: No role name specified.', 'capsman-enhanced' );
@@ -52,14 +45,14 @@ class CapsmanHandler
 				update_option($wp_roles->role_key, $wp_roles->roles);
 
 				ak_admin_notify(sprintf(__('Role "%s" (id %s) renamed to "%s"', 'capsman-enhanced'), $old_title, strtolower($current->name), $new_title));
-				$this->cm->set_current_role($current->name);
+				$this->cm->current = $current->name;
 			}
 		// Copy current role to a new one.
 		} elseif ( ! empty($post['CopyRole']) ) {
 			$current = get_role($post['current']);
 			if ( $newrole = $this->createRole($post['copy-name'], $current->capabilities) ) {
 				ak_admin_notify(__('New role created.', 'capsman-enhanced'));
-				$this->cm->set_current_role($newrole);
+				$this->cm->current = $newrole;
 			} else {
 				if ( empty($post['copy-name']) && in_array(get_locale(), ['en_EN', 'en_US']) )
 					ak_admin_error( 'Error: No role name specified.', 'capsman-enhanced' );
@@ -357,17 +350,12 @@ class CapsmanHandler
 							
 							// Add new capabilities to role
 							foreach ( $add_caps as $cap => $grant ) {
-								$wp_roles->roles[$role_name]['capabilities'][$cap] = $grant;
-
+								$blog_role->add_cap( $cap, $grant );
 							}
 
 							// Remove capabilities from role
 							foreach ( $del_caps as $cap => $grant) {
-								unset($wp_roles->roles[$role_name]['capabilities'][$cap]);
-							}
-
-							if ($wp_roles->use_db) {
-								update_option($wp_roles->role_key, $wp_roles->roles);
+								$blog_role->remove_cap($cap);
 							}
 						} else {
 							$wp_roles->add_role( $role_name, $role_caption, $new_caps );
