@@ -3,7 +3,18 @@ $gutenberg_elements = PP_Capabilities_Post_Features::elementsLayout();
 
 $gutenberg_post_disabled = [];
 
-$def_post_types = apply_filters('pp_capabilities_feature_post_types', ['post', 'page']);
+$def_post_types = array_unique(apply_filters('pp_capabilities_feature_post_types', ['post', 'page']));
+
+asort($def_post_types);
+
+if (count($def_post_types) > 6) {
+    ?>
+    <style type="text/css">
+    .pp-columns-wrapper.pp-enable-sidebar .pp-column-left {width: 100% !important;}
+    .pp-columns-wrapper.pp-enable-sidebar .pp-column-left, .pp-columns-wrapper.pp-enable-sidebar .pp-column-right {float: none !important;}
+    </style>
+    <?php
+}
 
 foreach($def_post_types as $post_type) {
     $_disabled = get_option("capsman_feature_restrict_{$post_type}", []);
@@ -15,10 +26,10 @@ foreach($def_post_types as $post_type) {
     <?php foreach(['thead', 'tfoot'] as $tag):?>
     <<?php echo $tag;?>>
     <tr>
-        <th class="menu-column"><?php _e('Gutenberg Screen', 'capsman-enhanced') ?></th>
+        <th class="menu-column"><?php if ('thead' == $tag) {_e('Gutenberg Screen', 'capsman-enhanced');}?></th>
 
         <?php foreach($def_post_types as $post_type) :
-            $type_obj = get_post_type_object($post_type);    
+            $type_obj = get_post_type_object($post_type);
         ?>
             <th class="restrict-column ppc-menu-row"><?php printf(__('%s Restrict', 'capsman-enhanced'), $type_obj->labels->singular_name);?><br />
             <input class="check-item gutenberg check-all-menu-item" type="checkbox" title="<?php _e('Toggle all', 'capsman-enhanced');?>" data-pp_type="<?php echo $post_type;?>" />
@@ -31,13 +42,26 @@ foreach($def_post_types as $post_type) {
     <tbody>
     <?php
     foreach ($gutenberg_elements as $section_title => $arr) {
+        $section_slug = strtolower(ppc_remove_non_alphanumeric_space_characters($section_title));
         ?>
         <tr class="ppc-menu-row parent-menu">
             <td colspan="<?php echo (count($def_post_types) + 1);?>">
             <h4 class="ppc-menu-row-section"><?php echo $section_title;?></h4>
+            <?php
+            /**
+	         * Add support for section description
+             *
+	         * @param array     $def_post_types          Post type.
+	         * @param array     $gutenberg_elements      All gutenberg elements.
+	         * @param array     $gutenberg_post_disabled All gutenberg disabled post type element.
+             *
+	         * @since 2.1.1
+	         */
+	        do_action( "pp_capabilities_feature_gutenberg_{$section_slug}_section", $def_post_types, $gutenberg_elements, $gutenberg_post_disabled );
+            ?>
             </td>
         </tr>
-        
+
         <?php
         foreach ($arr as $feature_slug => $arr_feature) {
         ?>
@@ -60,7 +84,12 @@ foreach($def_post_types as $post_type) {
         <?php
         }
     }
+
+    do_action('pp_capabilities_features_gutenberg_after_table_tr');
     ?>
 
     </tbody>
 </table>
+
+<?php
+do_action('pp_capabilities_features_gutenberg_after_table');

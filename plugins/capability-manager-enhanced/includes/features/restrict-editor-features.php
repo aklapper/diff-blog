@@ -104,7 +104,7 @@ class PP_Capabilities_Post_Features {
 
         $post_type_supports = [];
 
-        $def_post_types = apply_filters('pp_capabilities_feature_post_types', ['post', 'page']);
+        $def_post_types = array_unique(apply_filters('pp_capabilities_feature_post_types', ['post', 'page']));
 
         foreach($def_post_types as $post_type) {
             $post_type_supports = array_merge($post_type_supports, get_all_post_type_supports($post_type));
@@ -302,7 +302,7 @@ class PP_Capabilities_Post_Features {
                 'undo' =>      ['label' => __('Undo', 'capsman-enhanced'),      'elements' => '.edit-post-header-toolbar .editor-history__undo'],
                 'redo' =>      ['label' => __('Redo', 'capsman-enhanced'),      'elements' => '.edit-post-header-toolbar .editor-history__redo'],
                 'details' =>   ['label' => __('Details', 'capsman-enhanced'),   'elements' => '.edit-post-header__toolbar .table-of-contents'],
-                'outline' =>   ['label' => __('Outline', 'capsman-enhanced'),   'elements' => '.edit-post-header__toolbar .block-editor-block-navigation'],
+                'outline' =>   ['label' => __('Outline', 'capsman-enhanced'),   'elements' => '.edit-post-header__toolbar .edit-post-header-toolbar__list-view-toggle'],
             ],
 
             __('Top Bar - Right', 'capabilities-pro') => [
