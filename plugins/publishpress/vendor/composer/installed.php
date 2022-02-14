@@ -1,78 +1,86 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => 'b2f7d4e6d04ac0df08acad16c781c4bcbaf38400',
+        'name' => 'publishpress/publishpress',
+        'dev' => false,
     ),
-    'reference' => '6c30d6753f707c56297a1f8a6b51301f089dea03',
-    'name' => 'publishpress/publishpress',
-  ),
-  'versions' => 
-  array (
-    'pimple/pimple' => 
-    array (
-      'pretty_version' => 'v3.2.3',
-      'version' => '3.2.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '9e403941ef9d65d20cba7d54e29fe906db42cf32',
+    'versions' => array(
+        'pimple/pimple' => array(
+            'pretty_version' => 'v3.2.3',
+            'version' => '3.2.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../pimple/pimple',
+            'aliases' => array(),
+            'reference' => '9e403941ef9d65d20cba7d54e29fe906db42cf32',
+            'dev_requirement' => false,
+        ),
+        'psr/container' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/container',
+            'aliases' => array(),
+            'reference' => 'b7ce3b176482dbbc1245ebf52b181af44c2cf55f',
+            'dev_requirement' => false,
+        ),
+        'publishpress/publishpress' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => 'b2f7d4e6d04ac0df08acad16c781c4bcbaf38400',
+            'dev_requirement' => false,
+        ),
+        'publishpress/wordpress-reviews' => array(
+            'pretty_version' => 'v1.1.18',
+            'version' => '1.1.18.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../publishpress/wordpress-reviews',
+            'aliases' => array(),
+            'reference' => '0020705b8f6a7177fc393c6c42c82171bf9e2fbd',
+            'dev_requirement' => false,
+        ),
+        'publishpress/wordpress-version-notices' => array(
+            'pretty_version' => '1.1.3',
+            'version' => '1.1.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../publishpress/wordpress-version-notices',
+            'aliases' => array(),
+            'reference' => '57e7cbb3e9b9ac366ddd3fd0a80c2e2eabf75ea3',
+            'dev_requirement' => false,
+        ),
+        'sabre/vobject' => array(
+            'pretty_version' => '3.5.3',
+            'version' => '3.5.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sabre/vobject',
+            'aliases' => array(),
+            'reference' => '129d80533a9ec0d9cacfb50b51180c34edb6874c',
+            'dev_requirement' => false,
+        ),
+        'symfony/polyfill-ctype' => array(
+            'pretty_version' => 'v1.19.0',
+            'version' => '1.19.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/polyfill-ctype',
+            'aliases' => array(),
+            'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
+            'dev_requirement' => false,
+        ),
+        'twig/twig' => array(
+            'pretty_version' => 'v1.42.5',
+            'version' => '1.42.5.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twig/twig',
+            'aliases' => array(),
+            'reference' => '87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e',
+            'dev_requirement' => false,
+        ),
     ),
-    'psr/container' => 
-    array (
-      'pretty_version' => '1.0.0',
-      'version' => '1.0.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b7ce3b176482dbbc1245ebf52b181af44c2cf55f',
-    ),
-    'publishpress/publishpress' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '6c30d6753f707c56297a1f8a6b51301f089dea03',
-    ),
-    'publishpress/wordpress-version-notices' => 
-    array (
-      'pretty_version' => '1.1.3',
-      'version' => '1.1.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '57e7cbb3e9b9ac366ddd3fd0a80c2e2eabf75ea3',
-    ),
-    'sabre/vobject' => 
-    array (
-      'pretty_version' => '3.5.3',
-      'version' => '3.5.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '129d80533a9ec0d9cacfb50b51180c34edb6874c',
-    ),
-    'symfony/polyfill-ctype' => 
-    array (
-      'pretty_version' => 'v1.19.0',
-      'version' => '1.19.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'aed596913b70fae57be53d86faa2e9ef85a2297b',
-    ),
-    'twig/twig' => 
-    array (
-      'pretty_version' => 'v1.42.5',
-      'version' => '1.42.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '87b2ea9d8f6fd014d0621ca089bb1b3769ea3f8e',
-    ),
-  ),
 );

@@ -2,7 +2,7 @@
 
 defined('ABSPATH') or die('No direct script access allowed.');
 
-if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
+if (! class_exists('Editorial_Metadata_Input_Number_Handler')) {
     require_once 'editorial-metadata-input-text-handler.php';
 
     class Editorial_Metadata_Input_Number_Handler extends Editorial_Metadata_Input_Text_Handler
@@ -33,13 +33,15 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
             if (mb_strlen((string)$value) > 0) {
                 self::renderInput($inputOptions, $value);
             } else {
-                $input_label       = isset($inputOptions['label']) ? $inputOptions['label'] : '';
+                $input_label = isset($inputOptions['label']) ? $inputOptions['label'] : '';
                 $input_description = isset($inputOptions['description']) ? $inputOptions['description'] : '';
 
                 self::renderLabel(
-                    $input_label . self::generateDescriptionHtml($input_description),
+                    $input_label,
                     $input_name
                 );
+
+                echo self::generateDescriptionHtml($input_description);
 
                 self::renderValuePlaceholder();
             }
@@ -51,8 +53,8 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
                     name="%1$s"
                     value="%2$s"
                 />',
-                $input_name,
-                $value
+                esc_attr($input_name),
+                esc_attr($value)
             );
         }
 
@@ -68,7 +70,7 @@ if (!class_exists('Editorial_Metadata_Input_Number_Handler')) {
          */
         public static function getMetaValueHtml($value = null)
         {
-            return !empty($value)
+            return ! empty($value)
                 ? esc_html($value)
                 : '';
         }

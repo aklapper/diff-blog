@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.8
-Stable tag: 3.4.1
+Tested up to: 5.9
+Stable tag: 3.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,6 +17,11 @@ PublishPress has all the tools you need to manage WordPress content, including a
 [PublishPress](https://publishpress.com/publishpress/) has all the tools you need to manage WordPress content, including an editorial calendar to plan content. You can create custom status and notifications for content updates.
 
 PublishPress is ideal for WordPress sites that publish high-quality content. With PublishPress, you can collaborate much more effectively. This makes PublishPress a great solution for any site with multiple users. PublishPress is often used by companies and non-profits, universities and schools, plus by magazines, newspapers and blogs.
+
+## PublishPress Pro ##
+
+> <strong>Upgrade to PublishPress Pro</strong><br />
+> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -56,12 +61,6 @@ Metadata enables you to keep track of important requirements for your content. T
 
 [Click here to read about the Editorial Metadata](https://publishpress.com/knowledge-base/editorial-metadata/).
 
-= User Roles =
-
-For larger organizations with many people involved in the publishing process, user roles help keep your team organized. PublishPress allows you to send custom notifications to each user role.
-
-[Click here to read about the User Roles](https://publishpress.com/knowledge-base/user-groups/).
-
 = Slack Notifications =
 
 This PublishPress Pro feature integrates your notifications with Slack. You can send notifications directly to a Slack channel and even reply without logging into WordPress.
@@ -74,27 +73,22 @@ This PublishPress Pro feature allows you to send notifications either before or 
 
 [Click here to read about the Reminder Notifications](https://publishpress.com/knowledge-base/reminders/).
 
-= Importing from Edit Flow =
-
-PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
-
-[Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
-
-= Join PublishPress and you’ll get access to Pro plugins and support =
+## Join PublishPress and get the Pro plugins ##
 
 The Pro versions of the PublishPress plugins are well worth your investment. The Pro versions have extra features and faster support. [Click here to join PublishPress](https://publishpress.com/pricing/).
 
-Join PublishPress and you’ll get access to these 6 Pro plugins:
+Join PublishPress and you'll get access to these Pro plugins:
 
 * [PublishPress Authors Pro](https://publishpress.com/authors) allows you to add multiple authors and guest authors to WordPress posts.
+* [PublishPress Blocks Pro](https://publishpress.com/blocks) has everything you need to build professional websites with the WordPress block editor.
 * [PublishPress Capabilities Pro](https://publishpress.com/capabilities) is the plugin to manage your WordPress user roles, permissions, and capabilities.
 * [PublishPress Checklists Pro](https://publishpress.com/checklists) enables you to define tasks that must be completed before content is published.
-* [PublishPress Permissions Pro](https://publishpress.com/presspermit) is the plugin for advanced WordPress permissions.
+* [PublishPress Permissions Pro](https://publishpress.com/permissions)  is the plugin for advanced WordPress permissions.
 * [PublishPress Pro](https://publishpress.com/publishpress) is the plugin for managing and scheduling WordPress content.
 * [PublishPress Revisions Pro](https://publishpress.com/revisions) allows you to update your published pages with teamwork and precision.
-* [Advanced Gutenberg](https://publishpress.com/advanced-gutenberg) has everything you need to build professional websites with the Gutenberg editor.
+* [PublishPress Series Pro](https://publishpress.com/series) enables you to group content together into a series 
 
-Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more … then you should try PublishPress.
+Together, these plugins are a suite of powerful publishing tools for WordPress. If you need to create a professional workflow in WordPress, with moderation, revisions, permissions and more... then you should try PublishPress.
 
 = Bug Reports =
 
@@ -106,19 +100,101 @@ Follow PublishPress on [Facebook](https://www.facebook.com/publishpress), [Twitt
 
 == Screenshots ==
 
-1. Editorial Calendar
-2. Notifications
-3. Content Overview
-4. Custom Statuses
-5. Editorial Comments
-6. User Roles
-7. Slack Notifications - available in the Pro version
-8. Reminder Notifications - available in the Pro version
+1. Editorial Calendar: Using the PublishPress Calendar, you’re able to see when content is planned, and when it is published.
+2. Notifications: PublishPress Notifications keeps you and your team up to date on changes to important content.
+3. Content Overview: The Content Overview screen allows you to drill down and see content organized by status, categories, or users.
+4. Custom Statuses: PublishPress enables you to create custom post statuses such as “In Progress” or “Pending Review”. 
+5. Editorial Comments: PublishPress allows you to leave comments under each post you write.
+6. Reminder Notifications: The PublishPress Pro feature allows you to send notifications either before or after the publishing date for content.
+7.  Slack Notifications: This PublishPress Pro feature integrates your notifications with Slack. 
+
+== Frequently Asked Questions ==
+
+= How do I import from Edit Flow? =
+
+PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to import your data and settings.
+
+[Click here to read about the Edit Flow import](https://publishpress.com/knowledge-base/migrate/).
 
 == Changelog ==
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.7.0] - 02 fev 2022 =
+
+* Fixed: Fix the admin menu Debug Log that was not being displayed, #992;
+* Fixed: Fix the fatal error while exporting the calendar as ICS file, #994;
+* Fixed: Fix the post type filter in the calendar, #995;
+* Fixed: Fix fatal error: [Unknown column 'following_users' in 'where clause'], #982;
+* Fixed: Fix drag and drop of custom statuses for reordering, #986;
+* Fixed: Fix the time displayed in the calendar items on Safari, #1001;
+* Fixed: Fix moving items and date navigation on the calendar in Safari, #1002;
+* Fixed: Fix input sanitization in all the modules, HTML and SQL scaping in all the plugin;
+* Fixed: Fix an unopened script HTML tag in the editorial metadata module;
+* Fixed: Fix metadata in the notifications body for new posts, #574;
+* Fixed: Added better feedback on errors while ordering statuses in the admin;
+* Fixed: Fix the debug button to only display it for those who has permissions. The debug info were still safe, but the button was displayed, #993;
+* Fixed: Improved capability check on diverse functions and modules;
+* Fixed: Only load admin assets and the admin menu action if the user has permission for seeing that;
+* Fixed: Added nonce check for missed places;
+* Fixed: Added cache to the user, author and category searchs in the content_overview module;
+* Fixed: Fix the capability check for the configure button on editorial metadata metabox. It was only looking for the capability manage_options, which is customizable;
+* Fixed: Added a missed capability check before showing search results in the notifications log filters;
+* Fixed: Fixed PHP warning about function not defined: esc_array_of_options;
+* Fixed: Only look for default capabilitys on the calendar module if in the admin;
+* Fixed: Only add admin hooks if in the admin;
+* Fixed: Fix the delete action for notification log items;
+* Added: Add the value of the global constant DISABLE_WP_CRON to the debug info, #987;
+* Added: Add the value of the global debug constants WP_DEBUG_DISPLAY, WP_DEBUG_LOGv, and WP_DEBUG to the debug info, #998;
+* Changed: Removed not used and deprecated methods in the calendar module: save_post_notify_users, save_post_notify_roles, add_role_to_notify, handle_ajax_drag_and_drop;
+* Changed: Improved error handling on Ajax requests on the notifications log;
+* Changed: WP version updated to 5.9;
+* Changed: Removed not used method remove_object_terms of the calendar module class;
+
+= [3.6.3] - 18 Nov 2021 =
+
+* Fixed: Fix notifications page that tuns the WordPress admin area purple, #966;
+* Fixed: Fix "save draft" button has gone, #967;
+* Changed: Show the reviews banner on all admin pages;
+
+= [3.6.2] - 25 Oct 2021 =
+
+* Fixed: Can't edit the post status in the classic editor when WP to Twitter is activated, #958;
+* Fixed: Can't edit the post status in the block editor when Block Editor Colors is activated, #959;
+* Fixed: Block editor crashing if we resize the window to a mobile device dimension, #960;
+* Added: Add a review request banner, #949;
+
+= [3.6.1] - 04 Oct 2021 =
+
+* Fixed: Add constants to customize priority of main actions: action_init, action_init_after and action_ini_for_admin, #953;
+* Fixed: Fix notification body on events triggered by Elementor pages, #951;
+* Fixed: Refactor the settings GET var for fixing a compatibility issue with 3rd party plugin;
+
+= [3.6.0] - 02 Sep 2021 =
+
+* Added: Add support for notifications when post is trashed/untrashed posts, #939;
+* Added: Add support for notifications when post is updated/saved, #483;
+* Added: Add support on Notifications content for different data types in the meta fields, including support to ACF relationship fields for posts, link, taxonomy and user, #924;
+* Removed: Remove the deprecated module "Roles". Please, use PublishPress Capabilities or other plugin for handling user roles, #925;
+* Removed: Remove the deprecated module "User Groups", #926;
+* Fixed: Stop creating unused user roles on install, #926;
+* Fixed: Fixed spacing between fields in the calendar popup, #920;
+* Fixed: Fixed PHP warning about not set configuration: duplicated_notification_threshold;
+
+= [3.5.1] - 30 Aug 2021 =
+
+* Fixed: Fix undefined property stdClass::$author, #931;
+* Fixed: Notifications don't trigger for posts created in the frontend, #936;
+* Fixed: PHP warnings about not set configuration;
+* Fixed: Fix the order and orderby filter in the content overview;
+* Added: Add Japanese translation files, #934;
+
+= [3.5.0] - 5 Aug 2021 =
+
+* Added: Add the option to edit and delete editorial comments, #277;
+* Added: Add new capabilities to control who can edit or delete editorial comments: pp_delete_editorial_comment, pp_delete_others_editorial_comment, pp_edit_editorial_comment, pp_edit_others_editorial_comment, #277;
+* Fixed: Fix long text on the posts attributes in the calendar popup, #917;
 
 = [3.4.1] - 19 Jul 2021 =
 
