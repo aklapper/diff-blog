@@ -28,6 +28,8 @@
  * along with PublishPress.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use PublishPress\Core\Ajax;
+use PublishPress\Core\Error;
 use PublishPress\Notifications\Traits\Dependency_Injector;
 
 /**
@@ -130,24 +132,24 @@ class PP_Content_Overview extends PP_Module
 
         // Register the module with PublishPress
         $args = [
-            'title'                => __('Content Overview', 'publishpress'),
-            'short_description'    => false,
+            'title' => esc_html__('Content Overview', 'publishpress'),
+            'short_description' => false,
             'extended_description' => false,
-            'module_url'           => $this->module_url,
-            'icon_class'           => 'dashicons dashicons-list-view',
-            'slug'                 => 'content-overview',
-            'default_options'      => [
-                'enabled'    => 'on',
+            'module_url' => $this->module_url,
+            'icon_class' => 'dashicons dashicons-list-view',
+            'slug' => 'content-overview',
+            'default_options' => [
+                'enabled' => 'on',
                 'post_types' => [
                     'post' => 'on',
                     'page' => 'off',
                 ],
             ],
-            'general_options'      => true,
-            'options_page'         => false,
-            'autoload'             => false,
-            'add_menu'             => true,
-            'page_link'            => admin_url('admin.php?page=content-overview'),
+            'general_options' => true,
+            'options_page' => false,
+            'autoload' => false,
+            'add_menu' => true,
+            'page_link' => admin_url('admin.php?page=content-overview'),
         ];
 
         $this->module = PublishPress()->register_module('content_overview', $args);
@@ -158,14 +160,17 @@ class PP_Content_Overview extends PP_Module
      */
     public function init()
     {
-        $this->setDefaultCapabilities();
-
-        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
-        if (!current_user_can($view_content_overview_cap)) {
+        if (false === is_admin()) {
             return;
         }
 
-        $this->num_columns     = $this->get_num_columns();
+        $this->setDefaultCapabilities();
+
+        if (! $this->currentUserCanViewContentOverview()) {
+            return;
+        }
+
+        $this->num_columns = $this->get_num_columns();
         $this->max_num_columns = apply_filters('PP_Content_Overview_max_num_columns', 3);
 
         // Filter to allow users to pick a taxonomy other than 'category' for sorting their posts
@@ -180,8 +185,8 @@ class PP_Content_Overview extends PP_Module
 
         add_action('admin_init', [$this, 'register_columns']);
 
-        add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'searchAuthors']);
-        add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'searchCategories']);
+        add_action('wp_ajax_publishpress_content_overview_search_authors', [$this, 'sendJsonSearchAuthors']);
+        add_action('wp_ajax_publishpress_content_overview_search_categories', [$this, 'sendJsonSearchCategories']);
 
         // Menu
         add_filter('publishpress_admin_menu_slug', [$this, 'filter_admin_menu_slug'], 20);
@@ -193,14 +198,23 @@ class PP_Content_Overview extends PP_Module
         add_action('admin_enqueue_scripts', [$this, 'action_enqueue_admin_styles']);
     }
 
+    private function getViewCapability()
+    {
+        return apply_filters('pp_view_content_overview_cap', 'pp_view_content_overview');
+    }
+
+    private function currentUserCanViewContentOverview()
+    {
+        return current_user_can($this->getViewCapability());
+    }
+
     public function setDefaultCapabilities()
     {
         $role = get_role('administrator');
 
-        $view_content_overview_cap = 'pp_view_content_overview';
-        $view_content_overview_cap = apply_filters('pp_view_content_overview_cap', $view_content_overview_cap);
+        $view_content_overview_cap = $this->getViewCapability();
 
-        if (!$role->has_cap($view_content_overview_cap)) {
+        if (! $role->has_cap($view_content_overview_cap)) {
             $role->add_cap($view_content_overview_cap);
         }
     }
@@ -211,7 +225,7 @@ class PP_Content_Overview extends PP_Module
     public function get_num_columns()
     {
         if (empty($this->num_columns)) {
-            $current_user      = wp_get_current_user();
+            $current_user = wp_get_current_user();
             $this->num_columns = $this->get_user_meta(
                 $current_user->ID,
                 self::USERMETA_KEY_PREFIX . 'screen_columns',
@@ -232,7 +246,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function save_column_prefs($posted_fields)
     {
-        $key               = self::USERMETA_KEY_PREFIX . 'screen_columns';
+        $key = self::USERMETA_KEY_PREFIX . 'screen_columns';
         $this->num_columns = (int)$posted_fields[$key];
 
         $current_user = wp_get_current_user();
@@ -246,7 +260,7 @@ class PP_Content_Overview extends PP_Module
         if (function_exists('add_screen_options_panel')) {
             add_screen_options_panel(
                 self::USERMETA_KEY_PREFIX . 'screen_columns',
-                __('Screen Layout', 'publishpress'),
+                esc_html__('Screen Layout', 'publishpress'),
                 [$this, 'print_column_prefs'],
                 self::SCREEN_ID,
                 [$this, 'save_column_prefs'],
@@ -273,7 +287,7 @@ class PP_Content_Overview extends PP_Module
 
         add_settings_field(
             'post_types',
-            __('Add to these post types:', 'publishpress'),
+            esc_html__('Add to these post types:', 'publishpress'),
             [$this, 'settings_post_types_option'],
             $this->module->options_group_name,
             $this->module->options_group_name . '_general'
@@ -317,7 +331,7 @@ class PP_Content_Overview extends PP_Module
     public function settings_validate($new_options)
     {
         // Whitelist validation for the post type options
-        if (!isset($new_options['post_types'])) {
+        if (! isset($new_options['post_types'])) {
             $new_options['post_types'] = [];
         }
         $new_options['post_types'] = $this->clean_post_type_options(
@@ -437,7 +451,7 @@ class PP_Content_Overview extends PP_Module
         global $pagenow;
 
         // Only load calendar styles on the calendar page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             $num_columns = $this->get_num_columns();
             echo '<script type="text/javascript"> var PP_Content_Overview_number_of_columns="' . esc_js(
                     $this->num_columns
@@ -477,7 +491,7 @@ class PP_Content_Overview extends PP_Module
         global $pagenow;
 
         // Only load calendar styles on the calendar page
-        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') {
+        if ('admin.php' === $pagenow && isset($_GET['page']) && $_GET['page'] === 'pp-content-overview') { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             wp_enqueue_style(
                 'pp-admin-css',
                 PUBLISHPRESS_URL . 'common/css/publishpress-admin.css',
@@ -519,18 +533,18 @@ class PP_Content_Overview extends PP_Module
     public function register_columns()
     {
         $columns = [
-            'post_title'         => __('Title', 'publishpress'),
-            'post_status'        => __('Status', 'publishpress'),
-            'post_author'        => __('Author', 'publishpress'),
-            'post_date'     => __('Post Date', 'publishpress'),
-            'post_modified' => __('Last Modified', 'publishpress'),
+            'post_title' => esc_html__('Title', 'publishpress'),
+            'post_status' => esc_html__('Status', 'publishpress'),
+            'post_author' => esc_html__('Author', 'publishpress'),
+            'post_date' => esc_html__('Post Date', 'publishpress'),
+            'post_modified' => esc_html__('Last Modified', 'publishpress'),
         ];
 
         /**
          * @param array $columns
          *
-         * @deprecated Use publishpress_content_overview_columns
          * @return array
+         * @deprecated Use publishpress_content_overview_columns
          */
         $columns = apply_filters('PP_Content_Overview_term_columns', $columns);
 
@@ -544,24 +558,24 @@ class PP_Content_Overview extends PP_Module
         if (class_exists('PP_Editorial_Metadata')) {
             $additional_terms = get_terms(
                 [
-                    'taxonomy'   => PP_Editorial_Metadata::metadata_taxonomy,
-                    'orderby'    => 'name',
-                    'order'      => 'asc',
+                    'taxonomy' => PP_Editorial_Metadata::metadata_taxonomy,
+                    'orderby' => 'name',
+                    'order' => 'asc',
                     'hide_empty' => 0,
-                    'parent'     => 0,
-                    'fields'     => 'all',
+                    'parent' => 0,
+                    'fields' => 'all',
                 ]
             );
 
             $additional_terms = apply_filters('PP_Content_Overview_filter_terms', $additional_terms);
             foreach ($additional_terms as $term) {
-                if (!is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
+                if (! is_object($term) || $term->taxonomy !== PP_Editorial_Metadata::metadata_taxonomy) {
                     continue;
                 }
 
                 $term_options = $this->get_unencoded_description($term->description);
 
-                if (!isset($term_options['viewable']) ||
+                if (! isset($term_options['viewable']) ||
                     (bool)$term_options['viewable'] === false ||
                     isset($columns[$term->slug])) {
                     continue;
@@ -584,21 +598,22 @@ class PP_Content_Overview extends PP_Module
     public function handle_form_date_range_change()
     {
         if (
-            !isset(
+            ! isset(
                 $_POST['pp-content-overview-number-days'],
                 $_POST['pp-content-overview-start-date_hidden'],
-                $_POST['pp-content-overview-range-use-today']
+                $_POST['pp-content-overview-range-use-today'],
+                $_POST['nonce']
             )
             || (
-                !isset($_POST['pp-content-overview-range-submit'])
+                ! isset($_POST['pp-content-overview-range-submit'])
                 && $_POST['pp-content-overview-range-use-today'] == '0'
             )
         ) {
             return;
         }
 
-        if (!wp_verify_nonce($_POST['nonce'], 'change-date')) {
-            wp_die($this->module->messages['nonce-failed']);
+        if (! wp_verify_nonce(sanitize_key($_POST['nonce']), 'change-date')) {
+            wp_die(esc_html($this->module->messages['nonce-failed']));
         }
 
         $current_user = wp_get_current_user();
@@ -610,10 +625,10 @@ class PP_Content_Overview extends PP_Module
 
         $use_today_as_start_date = (bool)$_POST['pp-content-overview-range-use-today'];
 
-        $start_date_format          = 'Y-m-d';
+        $start_date_format = 'Y-m-d';
         $user_filters['start_date'] = $use_today_as_start_date
             ? current_time($start_date_format)
-            : date($start_date_format, strtotime($_POST['pp-content-overview-start-date_hidden']));
+            : date($start_date_format, strtotime(sanitize_text_field($_POST['pp-content-overview-start-date_hidden']))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
 
         $user_filters['number_days'] = (int)$_POST['pp-content-overview-number-days'];
 
@@ -632,7 +647,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_column_prefs()
     {
-        $return_val = __('Number of Columns: ', 'publishpress');
+        $return_val = esc_html__('Number of Columns: ', 'publishpress');
 
         for ($i = 1; $i <= $this->max_num_columns; ++$i) {
             $return_val .= "<label><input type='radio' name='" . esc_attr(
@@ -654,21 +669,22 @@ class PP_Content_Overview extends PP_Module
      */
     public function render_admin_page()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         global $publishpress;
 
         // Update the current user's filters with the variables set in $_GET
         $this->user_filters = $this->update_user_filters();
 
-        if (!empty($this->user_filters['cat'])) {
-            $terms   = [];
+        if (! empty($this->user_filters['cat'])) {
+            $terms = [];
             $terms[] = get_term($this->user_filters['cat'], $this->taxonomy_used);
         } else {
             // Get all of the terms from the taxonomy, regardless whether there are published posts
-            $args  = [
-                'orderby'    => 'name',
-                'order'      => 'asc',
+            $args = [
+                'orderby' => 'name',
+                'order' => 'asc',
                 'hide_empty' => 0,
-                'parent'     => 0,
+                'parent' => 0,
             ];
             $terms = get_terms($this->taxonomy_used, $args);
         }
@@ -699,12 +715,14 @@ class PP_Content_Overview extends PP_Module
         );
         $publishpress->settings->print_default_header($publishpress->modules->content_overview, $description); ?>
         <div class="wrap" id="pp-content-overview-wrap">
-            <?php $this->print_messages(); ?>
-            <?php $this->table_navigation(); ?>
+            <?php
+            $this->print_messages(); ?>
+            <?php
+            $this->table_navigation(); ?>
 
             <div class="metabox-holder">
                 <?php
-                if (isset($_GET['ptype']) && !empty($_GET['ptype'])) {
+                if (isset($_GET['ptype']) && ! empty($_GET['ptype'])) {
                     $selectedPostTypes = [sanitize_text_field($_GET['ptype'])];
                 } else {
                     $selectedPostTypes = $this->get_selected_post_types();
@@ -722,6 +740,7 @@ class PP_Content_Overview extends PP_Module
         <?php
 
         $publishpress->settings->print_default_footer($publishpress->modules->content_overview);
+        // phpcs:enable
     }
 
     public function get_selected_post_types()
@@ -731,7 +750,7 @@ class PP_Content_Overview extends PP_Module
         $enabledPostTypes = [];
         foreach ($postTypesOption as $postType => $status) {
             if ('on' === $status
-                && !in_array($postType, $enabledPostTypes)) {
+                && ! in_array($postType, $enabledPostTypes)) {
                 $enabledPostTypes[] = $postType;
             }
         }
@@ -749,11 +768,11 @@ class PP_Content_Overview extends PP_Module
 
         $user_filters = [
             'post_status' => $this->filter_get_param('post_status'),
-            'cat'         => $this->filter_get_param('cat'),
-            'author'      => $this->filter_get_param('author'),
-            'start_date'  => $this->filter_get_param('start_date'),
+            'cat' => $this->filter_get_param('cat'),
+            'author' => $this->filter_get_param('author'),
+            'start_date' => $this->filter_get_param('start_date'),
             'number_days' => $this->filter_get_param('number_days'),
-            'ptype'       => $this->filter_get_param('ptype'),
+            'ptype' => $this->filter_get_param('ptype'),
         ];
 
         $current_user_filters = [];
@@ -761,16 +780,16 @@ class PP_Content_Overview extends PP_Module
 
         // If any of the $_GET vars are missing, then use the current user filter
         foreach ($user_filters as $key => $value) {
-            if (is_null($value) && !empty($current_user_filters[$key])) {
+            if (is_null($value) && ! empty($current_user_filters[$key])) {
                 $user_filters[$key] = $current_user_filters[$key];
             }
         }
 
-        if (!$user_filters['start_date']) {
-            $user_filters['start_date'] = date('Y-m-d');
+        if (! $user_filters['start_date']) {
+            $user_filters['start_date'] = date('Y-m-d'); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
         }
 
-        if (!$user_filters['number_days']) {
+        if (! $user_filters['number_days']) {
             $user_filters['number_days'] = 10;
         }
 
@@ -791,13 +810,13 @@ class PP_Content_Overview extends PP_Module
     public function filter_get_param($param)
     {
         // Sure, this could be done in one line. But we're cooler than that: let's make it more readable!
-        if (!isset($_GET[$param])) {
+        if (! isset($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             return null;
-        } elseif (empty($_GET[$param])) {
+        } elseif (empty($_GET[$param])) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
             return '';
         }
 
-        return sanitize_key($_GET[$param]);
+        return sanitize_key($_GET[$param]); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     }
 
     /**
@@ -807,7 +826,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function content_overview_time_range()
     {
-        $filtered_start_date           = $this->user_filters['start_date'];
+        $filtered_start_date = $this->user_filters['start_date'];
         $filtered_start_date_timestamp = strtotime($filtered_start_date);
 
         $output = '<form method="POST" action="' . menu_page_url('pp-content-overview', false) . '">';
@@ -844,14 +863,14 @@ class PP_Content_Overview extends PP_Module
         );
         $output .= '&nbsp;&nbsp;<span class="change-date-buttons">';
         $output .= '<input id="pp-content-overview-range-submit" name="pp-content-overview-range-submit" type="submit"';
-        $output .= ' class="button button-primary hidden" value="' . __('Change', 'publishpress') . '" />';
+        $output .= ' class="button button-primary hidden" value="' . esc_html__('Change', 'publishpress') . '" />';
         $output .= '&nbsp;';
         $output .= '<input id="pp-content-overview-range-today-btn" name="pp-content-overview-range-today-btn" type="submit"';
-        $output .= ' class="button button-secondary hidden" value="' . __('Reset', 'publishpress') . '" />';
+        $output .= ' class="button button-secondary hidden" value="' . esc_html__('Reset', 'publishpress') . '" />';
         $output .= '<input id="pp-content-overview-range-use-today" name="pp-content-overview-range-use-today" value="0" type="hidden" />';
         $output .= '&nbsp;';
-        $output .= '<a class="change-date-cancel hidden" href="#">' . __('Cancel', 'publishpress') . '</a>';
-        $output .= '<a class="change-date" href="#">' . __('Change', 'publishpress') . '</a>';
+        $output .= '<a class="change-date-cancel hidden" href="#">' . esc_html__('Cancel', 'publishpress') . '</a>';
+        $output .= '<a class="change-date" href="#">' . esc_html__('Change', 'publishpress') . '</a>';
         $output .= wp_nonce_field('change-date', 'nonce', 'change-date-nonce', false);
         $output .= '</span></form>';
 
@@ -863,40 +882,39 @@ class PP_Content_Overview extends PP_Module
      */
     public function print_messages()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         if (isset($_GET['trashed']) || isset($_GET['untrashed'])) {
             echo '<div id="trashed-message" class="updated"><p>';
 
             // Following mostly stolen from edit.php
-
             if (isset($_GET['trashed']) && (int)$_GET['trashed']) {
-                printf(
-                    _n('Item moved to the trash.', '%d items moved to the trash.', (int)$_GET['trashed']),
-                    number_format_i18n($_GET['trashed'])
-                );
-                $ids = isset($_GET['ids']) ? $_GET['ids'] : 0;
+                $count = (int)$_GET['trashed'];
+
+                echo esc_html(_n('Item moved to the trash.', '%d items moved to the trash.', $count));
+                $ids = isset($_GET['ids']) ? sanitize_text_field($_GET['ids']) : 0;
                 echo ' <a href="' . esc_url(
                         wp_nonce_url(
                             "edit.php?post_type=post&doaction=undo&action=untrash&ids=$ids",
                             "bulk-posts"
                         )
-                    ) . '">' . __('Undo', 'publishpress') . '</a><br />';
+                    ) . '">' . esc_html__('Undo', 'publishpress') . '</a><br />';
                 unset($_GET['trashed']);
             }
 
             if (isset($_GET['untrashed']) && (int)$_GET['untrashed']) {
-                printf(
-                    _n(
-                        'Item restored from the Trash.',
-                        '%d items restored from the Trash.',
-                        (int)$_GET['untrashed']
-                    ),
-                    number_format_i18n($_GET['untrashed'])
-                );
+                $count = (int)$_GET['untrashed'];
+
+                echo esc_html(_n(
+                    'Item restored from the Trash.',
+                    '%d items restored from the Trash.',
+                    $count
+                ));
                 unset($_GET['undeleted']);
             }
 
             echo '</p></div>';
         }
+        // phpcs:enable
     }
 
     /**
@@ -904,6 +922,7 @@ class PP_Content_Overview extends PP_Module
      */
     public function table_navigation()
     {
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
         ?>
         <div class="tablenav" id="pp-content-overview-tablenav">
             <div class="alignleft actions">
@@ -911,7 +930,7 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="page" value="pp-content-overview"/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
-                        echo $this->content_overview_filter_options($select_id, $select_name, $this->user_filters);
+                        $this->content_overview_filter_options($select_id, $select_name, $this->user_filters); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     } ?>
                 </form>
 
@@ -920,25 +939,31 @@ class PP_Content_Overview extends PP_Module
                     <input type="hidden" name="post_status" value=""/>
                     <input type="hidden" name="cat" value=""/>
                     <input type="hidden" name="author" value=""/>
-                    <input type="hidden" name="orderby" value="<?php echo (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date'; ?>"/>
-                    <input type="hidden" name="order" value="<?php echo (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'ASC'; ?>"/>
+                    <input type="hidden" name="orderby" value="<?php
+                    echo (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ?
+                        esc_attr(sanitize_key($_GET['orderby'])) : 'post_date'; ?>"/>
+                    <input type="hidden" name="order" value="<?php
+                    echo (isset($_GET['order']) && ! empty($_GET['order'])) ? esc_attr(sanitize_key($_GET['order'])) : 'ASC'; ?>"/>
                     <?php
                     foreach ($this->content_overview_filters() as $select_id => $select_name) {
                         echo '<input type="hidden" name="' . esc_attr($select_name) . '" value="" />';
                     } ?>
-                    <input type="submit" id="post-query-clear" value="<?php esc_attr(_e('Reset', 'publishpress')); ?>"
+                    <input type="submit" id="post-query-clear" value="<?php
+                    echo esc_attr(__('Reset', 'publishpress')); ?>"
                            class="button-secondary button"/>
                 </form>
             </div><!-- /alignleft actions -->
 
             <div class="print-box" style="float:right; margin-right: 30px;"><!-- Print link -->
                 <a href="#" id="print_link"><span
-                        class="pp-icon pp-icon-print"></span>&nbsp;<?php esc_attr(_e('Print', 'publishpress')); ?>
+                            class="pp-icon pp-icon-print"></span>&nbsp;<?php
+                    echo esc_attr(__('Print', 'publishpress')); ?>
                 </a>
             </div>
             <div class="clear"></div>
         </div><!-- /tablenav -->
         <?php
+        // phpcs:enable
     }
 
     public function content_overview_filters()
@@ -953,7 +978,7 @@ class PP_Content_Overview extends PP_Module
         }
 
         $select_filter_names['author'] = 'author';
-        $select_filter_names['ptype']  = 'ptype';
+        $select_filter_names['ptype'] = 'ptype';
 
         return apply_filters('PP_Content_Overview_filter_names', $select_filter_names);
     }
@@ -965,7 +990,8 @@ class PP_Content_Overview extends PP_Module
                 $post_statuses = $this->get_post_statuses();
                 ?>
                 <select id="post_status" name="post_status"><!-- Status selectors -->
-                    <option value=""><?php _e('View all statuses', 'publishpress'); ?></option>
+                    <option value=""><?php
+                        _e('View all statuses', 'publishpress'); ?></option>
                     <?php
                     foreach ($post_statuses as $post_status) {
                         echo "<option value='" . esc_attr($post_status->slug) . "' " . selected(
@@ -982,12 +1008,15 @@ class PP_Content_Overview extends PP_Module
                 $categoryId = isset($filters['cat']) ? (int)$filters['cat'] : 0;
                 ?>
                 <select id="filter_category" name="cat">
-                    <option value=""><?php _e('View all categories', 'publishpress'); ?></option>
+                    <option value=""><?php
+                        _e('View all categories', 'publishpress'); ?></option>
                     <?php
-                    if (!empty($categoryId)) {
+                    if (! empty($categoryId)) {
                         $category = get_term($categoryId, 'category');
 
-                        echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html($category->name) . "</option>";
+                        echo "<option value='" . esc_attr($categoryId) . "' selected='selected'>" . esc_html(
+                                $category->name
+                            ) . "</option>";
                     }
                     ?>
                 </select>
@@ -999,21 +1028,24 @@ class PP_Content_Overview extends PP_Module
                 $selectedOptionAll = empty($authorId) ? 'selected="selected"' : '';
                 ?>
                 <select id="filter_author" name="author">
+                    <?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
                     <option value="" <?php echo $selectedOptionAll; ?>>
-                        <?php _e('All authors', 'publishpress'); ?>
+                        <?php esc_html_e('All authors', 'publishpress'); ?>
                     </option>
                     <?php
-                    if (!empty($authorId)) {
+                    if (! empty($authorId)) {
                         $author = get_user_by('id', $authorId);
                         $option = '';
 
-                        if (!empty($author)) {
-                            $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html($author->display_name) . '</option>';
+                        if (! empty($author)) {
+                            $option = '<option value="' . esc_attr($authorId) . '" selected="selected">' . esc_html(
+                                    $author->display_name
+                                ) . '</option>';
                         }
 
                         $option = apply_filters('publishpress_author_filter_selected_option', $option, $authorId);
 
-                        echo $option;
+                        echo $option; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                     }
                     ?>
                 </select>
@@ -1024,12 +1056,16 @@ class PP_Content_Overview extends PP_Module
                 $selectedPostType = isset($filters['ptype']) ? sanitize_text_field($filters['ptype']) : '';
                 ?>
                 <select id="filter_post_type" name="ptype">
-                    <option value=""><?php _e('View all post types', 'publishpress'); ?></option>
+                    <option value=""><?php
+                        _e('View all post types', 'publishpress'); ?></option>
                     <?php
                     $postTypes = $this->get_selected_post_types();
                     foreach ($postTypes as $postType) {
                         $postTypeObject = get_post_type_object($postType);
-                        echo '<option value="' . esc_attr($postType) . '" ' . selected($selectedPostType, $postType) . '>' . esc_html($postTypeObject->label) . '</option>';
+                        echo '<option value="' . esc_attr($postType) . '" ' . selected(
+                                $selectedPostType,
+                                $postType
+                            ) . '>' . esc_html($postTypeObject->label) . '</option>';
                     }
                     ?>
                 </select>
@@ -1050,54 +1086,70 @@ class PP_Content_Overview extends PP_Module
      */
     public function printPostForPostType($term, $postType)
     {
-        $order           = (isset($_GET['order']) && !empty($_GET['order'])) ? $_GET['order'] : 'ASC';
-        $orderBy         = (isset($_GET['orderby']) && !empty($_GET['orderby'])) ? $_GET['orderby'] : 'post_date';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended
+        $order = (isset($_GET['order']) && ! empty($_GET['order'])) ? sanitize_key($_GET['order']) : 'ASC';
+        $orderBy = (isset($_GET['orderby']) && ! empty($_GET['orderby'])) ? sanitize_key($_GET['orderby']) : 'post_date';
 
-        $this->user_filters['orderby'] = sanitize_key($orderBy);
-        $this->user_filters['order']   = sanitize_key($order);
+        $this->user_filters['orderby'] = $orderBy;
+        $this->user_filters['order'] = $order;
 
-        $posts           = $this->getPostsForPostType($term, $postType, $this->user_filters);
-        $postTypeObject  = get_post_type_object($postType);
+        $posts = $this->getPostsForPostType($term, $postType, $this->user_filters);
+        $postTypeObject = get_post_type_object($postType);
         $sortableColumns = $this->getSortableColumns();
 
-        if (!empty($posts)) {
+        if (! empty($posts)) {
             // Don't display the message for $no_matching_posts
             $this->no_matching_posts = false;
         } ?>
 
-        <div class="postbox<?php echo (!empty($posts)) ? ' postbox-has-posts' : ''; ?>">
-            <div class="handlediv" title="<?php esc_attr(_e('Click to toggle', 'publishpress')); ?>">
+        <div class="postbox<?php
+        echo (! empty($posts)) ? ' postbox-has-posts' : ''; ?>">
+            <div class="handlediv" title="<?php echo esc_attr(__('Click to toggle', 'publishpress')); ?>">
                 <br/></div>
-            <h3 class=\'hndle\'><span><?php echo $postTypeObject->label; ?></span></h3>
+            <h3 class=\'hndle\'><span><?php echo esc_html($postTypeObject->label); ?></span></h3>
             <div class="inside">
-                <?php if (!empty($posts)) : ?>
+                <?php
+                if (! empty($posts)) : ?>
                     <table class="widefat post fixed content-overview striped" cellspacing="0">
                         <thead>
                         <tr>
-                            <?php foreach ((array)$this->columns as $key => $name): ?>
+                            <?php
+                            foreach ((array)$this->columns as $key => $name): ?>
                                 <?php
+                                $key = sanitize_key($key);
+
                                 $newOrder = 'ASC';
                                 if ($key === $orderBy) :
                                     $newOrder = ($order === 'ASC') ? 'DESC' : 'ASC';
                                 endif;
                                 ?>
-                                <th scope="col" id="<?php echo esc_attr(sanitize_key($key)); ?>"
-                                    class="manage-column column-<?php echo esc_attr(
-                                        sanitize_key($key)
-                                    ); ?>">
-                                    <?php if (in_array($key, $sortableColumns)) : ?>
-                                        <a href="<?php echo add_query_arg(['orderby' => esc_attr(sanitize_key($key)), 'order' => esc_attr($newOrder)]); ?>">
-                                            <?php echo esc_html($name); ?>
-                                            <?php if ($orderBy === $key) : ?>
-                                                <?php $orderIconClass = $order === 'DESC' ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2'; ?>
+                                <th scope="col" id="<?php echo esc_attr($key); ?>"
+                                    class="manage-column column-<?php echo esc_attr($key); ?>">
+                                    <?php
+                                    if (in_array($key, $sortableColumns)) : ?>
+                                        <a href="<?php
+                                        echo esc_url(add_query_arg(
+                                            ['orderby' => $key, 'order' => $newOrder]
+                                        )); ?>">
+                                            <?php
+                                            echo esc_html($name); ?>
+                                            <?php
+                                            if ($orderBy === $key) : ?>
+                                                <?php
+                                                $orderIconClass = $order === 'DESC' ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2'; ?>
                                                 <i class="dashicons <?php echo esc_attr($orderIconClass); ?>"></i>
-                                            <?php endif; ?>
+                                            <?php
+                                            endif; ?>
                                         </a>
-                                    <?php else: ?>
-                                        <?php echo esc_html($name); ?>
-                                    <?php endif; ?>
+                                    <?php
+                                    else: ?>
+                                        <?php
+                                        echo esc_html($name); ?>
+                                    <?php
+                                    endif; ?>
                                 </th>
-                            <?php endforeach; ?>
+                            <?php
+                            endforeach; ?>
                         </tr>
                         </thead>
                         <tfoot></tfoot>
@@ -1108,17 +1160,21 @@ class PP_Content_Overview extends PP_Module
                         } ?>
                         </tbody>
                     </table>
-                <?php else: ?>
+                <?php
+                else: ?>
                     <div class="message info">
-                        <p><?php _e(
+                        <p><?php
+                            esc_html_e(
                                 'There are no posts in the range or filter specified.',
                                 'publishpress'
                             ); ?></p>
                     </div>
-                <?php endif; ?>
+                <?php
+                endif; ?>
             </div>
         </div>
         <?php
+        // phpcs:enable
     }
 
     private function getSortableColumns()
@@ -1144,14 +1200,14 @@ class PP_Content_Overview extends PP_Module
     public function getPostsForPostType($term, $postType, $args = null)
     {
         $defaults = [
-            'post_status'    => null,
-            'author'         => null,
-            'posts_per_page' => apply_filters('PP_Content_Overview_max_query', 200),
+            'post_status' => null,
+            'author' => null,
+            'posts_per_page' => (int)apply_filters('PP_Content_Overview_max_query', 200),
         ];
 
         $args = array_merge($defaults, $args);
 
-        if ($postType === 'post' && !empty($term)) {
+        if ($postType === 'post' && ! empty($term)) {
             // Filter to the term and any children if it's hierarchical
             $arg_terms = [
                 $term->term_id,
@@ -1161,11 +1217,12 @@ class PP_Content_Overview extends PP_Module
                 $arg_terms = array_merge($arg_terms, get_term_children($term->term_id, $this->taxonomy_used));
             }
 
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
             $args['tax_query'] = [
                 [
                     'taxonomy' => $this->taxonomy_used,
-                    'field'    => 'id',
-                    'terms'    => $arg_terms,
+                    'field' => 'id',
+                    'terms' => $arg_terms,
                     'operator' => 'IN',
                 ],
             ];
@@ -1176,10 +1233,10 @@ class PP_Content_Overview extends PP_Module
         // Unpublished as a status is just an array of everything but 'publish'
         if ($args['post_status'] == 'unpublish') {
             $args['post_status'] = '';
-            $post_statuses       = $this->get_post_statuses();
+            $post_statuses = $this->get_post_statuses();
 
             foreach ($post_statuses as $post_status) {
-                $args['post_status'] .= $post_status->slug . ', ';
+                $args['post_status'] .= sanitize_key($post_status->slug) . ', ';
             }
 
             $args['post_status'] = rtrim($args['post_status'], ', ');
@@ -1196,9 +1253,9 @@ class PP_Content_Overview extends PP_Module
         }
 
         // Order the post list by publishing date.
-        if (!isset($args['orderby'])) {
+        if (! isset($args['orderby'])) {
             $args['orderby'] = 'post_date';
-            $args['order']   = 'ASC';
+            $args['order'] = 'ASC';
         }
 
         // Filter for an end user to implement any of their own query args
@@ -1218,7 +1275,6 @@ class PP_Content_Overview extends PP_Module
         }
 
 
-
         return $term_posts;
     }
 
@@ -1231,14 +1287,16 @@ class PP_Content_Overview extends PP_Module
     public function print_post($post, $parent_term)
     {
         ?>
-        <tr id='post-<?php echo esc_attr($post->ID); ?>' valign="top">
-            <?php foreach ((array)$this->columns as $key => $name) {
+        <tr id='post-<?php
+        echo esc_attr($post->ID); ?>' valign="top">
+            <?php
+            foreach ((array)$this->columns as $key => $name) {
                 echo '<td>';
                 if (method_exists($this, 'column_' . $key)) {
                     $method = 'column_' . $key;
-                    echo $this->$method($post, $parent_term);
+                    echo $this->$method($post, $parent_term); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 } else {
-                    echo $this->column_default($post, $key, $parent_term);
+                    echo $this->column_default($post, $key, $parent_term); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
                 }
 
                 echo '</td>';
@@ -1277,7 +1335,7 @@ class PP_Content_Overview extends PP_Module
          */
         $column_value = apply_filters('publishpress_content_overview_column_value', $column_name, $post);
 
-        if (!is_null($column_value) && $column_value != $column_name) {
+        if (! is_null($column_value) && $column_value != $column_name) {
             return $column_value;
         }
 
@@ -1285,7 +1343,7 @@ class PP_Content_Overview extends PP_Module
             $column_value = get_post_meta($post->ID, $column_name, true);
 
             if (empty($column_value)) {
-                return '<span>' . __('None', 'publishpress') . '</span>';
+                return '<span>' . esc_html__('None', 'publishpress') . '</span>';
             }
 
             return $column_value;
@@ -1329,7 +1387,7 @@ class PP_Content_Overview extends PP_Module
             return '';
         }
 
-        $column_type  = $meta_options['type'];
+        $column_type = $meta_options['type'];
         $column_value = get_post_meta($post->ID, "_pp_editorial_meta_{$column_type}_{$column_name}", true);
 
         return apply_filters("pp_editorial_metadata_{$column_type}_render_value_html", $column_value);
@@ -1346,10 +1404,10 @@ class PP_Content_Overview extends PP_Module
     {
         global $wpdb;
 
-        $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date']));
-        $end_day        = $this->user_filters['number_days'];
-        $ending_date    = date("Y-m-d", strtotime("+" . $end_day . " days", strtotime($beginning_date)));
-        $where          = $where . $wpdb->prepare(
+        $beginning_date = date('Y-m-d', strtotime($this->user_filters['start_date'])); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $end_day = $this->user_filters['number_days'];
+        $ending_date = date("Y-m-d", strtotime("+" . $end_day . " days", strtotime($beginning_date))); // phpcs:ignore WordPress.DateTime.RestrictedFunctions.date_date
+        $where = $where . $wpdb->prepare(
                 " AND ($wpdb->posts.post_date >= %s AND $wpdb->posts.post_date < %s)",
                 $beginning_date,
                 $ending_date
@@ -1368,7 +1426,7 @@ class PP_Content_Overview extends PP_Module
         $post_title = _draft_or_post_title($post->ID);
 
         $post_type_object = get_post_type_object($post->post_type);
-        $can_edit_post    = current_user_can($post_type_object->cap->edit_post, $post->ID);
+        $can_edit_post = current_user_can($post_type_object->cap->edit_post, $post->ID);
         if ($can_edit_post) {
             $output = '<strong><a href="' . esc_url(get_edit_post_link($post->ID)) . '">' . esc_html(
                     $post_title
@@ -1378,12 +1436,12 @@ class PP_Content_Overview extends PP_Module
         }
 
         // Edit or Trash or View
-        $output       .= '<div class="row-actions">';
+        $output .= '<div class="row-actions">';
         $item_actions = [];
 
         if ($can_edit_post) {
             $item_actions['edit'] = '<a title="' . esc_attr(
-                    __(
+                    esc_html__(
                         'Edit this post',
                         'publishpress'
                     )
@@ -1395,7 +1453,7 @@ class PP_Content_Overview extends PP_Module
 
         if (EMPTY_TRASH_DAYS > 0 && current_user_can($post_type_object->cap->delete_post, $post->ID)) {
             $item_actions['trash'] = '<a class="submitdelete" title="' . esc_attr(
-                    __(
+                    esc_html__(
                         'Move this item to the Trash',
                         'publishpress'
                     )
@@ -1415,7 +1473,7 @@ class PP_Content_Overview extends PP_Module
                         ),
                         $post_title
                     )
-                ) . '" rel="permalink">' . __('View', 'publishpress') . '</a>';
+                ) . '" rel="permalink">' . esc_html__('View', 'publishpress') . '</a>';
         } elseif ($can_edit_post) {
             $item_actions['previewpost'] = '<a href="' . esc_url(
                     apply_filters(
@@ -1428,13 +1486,13 @@ class PP_Content_Overview extends PP_Module
                         __('Preview &#8220;%s&#8221;', 'publishpress'),
                         $post_title
                     )
-                ) . '" rel="permalink">' . __('Preview', 'publishpress') . '</a>';
+                ) . '" rel="permalink">' . esc_html__('Preview', 'publishpress') . '</a>';
         }
 
         $item_actions = apply_filters('PP_Content_Overview_item_actions', $item_actions, $post->ID);
         if (count($item_actions)) {
             $output .= '<div class="row-actions">';
-            $html   = '';
+            $html = '';
             foreach ($item_actions as $class => $item_action) {
                 $html .= '<span class="' . esc_attr($class) . '">' . $item_action . '</span> | ';
             }
@@ -1465,12 +1523,19 @@ class PP_Content_Overview extends PP_Module
         return $user_filters;
     }
 
-    public function searchAuthors()
+    public function sendJsonSearchAuthors()
     {
-        header('Content-type: application/json;');
+        $ajax = Ajax::getInstance();
 
-        if (!wp_verify_nonce($_GET['nonce'], 'content_overview_filter_nonce')) {
-            return '[]';
+        if (
+            (! isset($_GET['nonce']))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
+        ) {
+            $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
+        }
+
+        if (! $this->currentUserCanViewContentOverview()) {
+            $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
@@ -1481,53 +1546,80 @@ class PP_Content_Overview extends PP_Module
          */
         $results = apply_filters('publishpress_search_authors_results_pre_search', [], $queryText);
 
-        if (!empty($results)) {
-            echo wp_json_encode($results);
-            exit;
+        if (! empty($results)) {
+            $ajax->sendJson($results);
         }
 
         global $wpdb;
 
-        $queryResult = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
+        $cacheKey = 'search_authors_result_' . md5($queryText);
+        $cacheGroup = 'content_overview';
+
+        $queryResult = wp_cache_get($cacheKey, $cacheGroup);
+
+        if (false === $queryResult) {
+            // phpcs:disable WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__users
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT u.ID as 'id', u.display_name as 'text'
                 FROM {$wpdb->posts} as p
                 INNER JOIN {$wpdb->users} as u ON p.post_author = u.ID
                 WHERE u.display_name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                '%' . $wpdb->esc_like($queryText) . '%'
-            )
-        );
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
+            // phpcs:enable
 
-        echo json_encode($queryResult);
-        exit;
+            wp_cache_set($cacheKey, $queryResult, $cacheGroup);
+        }
+
+        $ajax->sendJson($queryResult);
     }
 
-    public function searchCategories()
+    public function sendJsonSearchCategories()
     {
-        header('Content-type: application/json;');
+        $ajax = Ajax::getInstance();
 
-        if (!wp_verify_nonce($_GET['nonce'], 'content_overview_filter_nonce')) {
-            return '[]';
+        if (
+            (! isset($_GET['nonce']))
+            || (! wp_verify_nonce(sanitize_key($_GET['nonce']), 'content_overview_filter_nonce'))
+        ) {
+            $ajax->sendJsonError(Error::ERROR_CODE_INVALID_NONCE);
+        }
+
+        if (! $this->currentUserCanViewContentOverview()) {
+            $ajax->sendJsonError(Error::ERROR_CODE_ACCESS_DENIED);
         }
 
         $queryText = isset($_GET['q']) ? sanitize_text_field($_GET['q']) : '';
-        global $wpdb;
 
-        $queryResult = $wpdb->get_results(
-            $wpdb->prepare(
-                "SELECT DISTINCT t.term_id AS id, t.name AS text
+        $cacheKey = 'search_categories_result_' . md5($queryText);
+        $cacheGroup = 'content_overview';
+
+        $queryResult = wp_cache_get($cacheKey, $cacheGroup);
+
+        if (false === $queryResult) {
+            global $wpdb;
+
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery
+            $queryResult = $wpdb->get_results(
+                $wpdb->prepare(
+                    "SELECT DISTINCT t.term_id AS id, t.name AS text
                 FROM {$wpdb->term_taxonomy} as tt
                 INNER JOIN {$wpdb->terms} as t ON (tt.term_id = t.term_id)
                 WHERE taxonomy = 'category' AND t.name LIKE %s
                 ORDER BY 2
                 LIMIT 20",
-                '%' . $wpdb->esc_like($queryText) . '%'
-            )
-        );
+                    '%' . $wpdb->esc_like($queryText) . '%'
+                )
+            );
 
-        echo json_encode($queryResult);
-        exit;
+            wp_cache_set($cacheKey, $queryResult, $cacheGroup);
+        }
+
+        $ajax->sendJson($queryResult);
     }
 }

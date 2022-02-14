@@ -24,7 +24,9 @@
 namespace PublishPress\AsyncNotifications;
 
 use Exception;
+use PublishPress\Notifications\Helper;
 use PublishPress\Notifications\Traits\Dependency_Injector;
+use PublishPress\Notifications\Workflow\Step\Action\Notification;
 
 /**
  * Class DBAdapter
@@ -49,18 +51,34 @@ class WPCronAdapter implements SchedulerInterface
     {
         $data = [
             'workflow_id' => $workflowPostId,
-            'event_args'  => $eventArgs,
+            'event_args' => $eventArgs,
         ];
+
+        $delay = apply_filters(
+            'publishpress_notifications_schedule_delay_in_seconds',
+            Notification::DEFAULT_DELAY_FOR_SENDING_NOTIFICATION_IN_SECONDS
+        );
+        $roundFactor = apply_filters(
+            'publishpress_notifications_schedule_round_factor_in_seconds',
+            Notification::DEFAULT_ROUND_FACTOR_FOR_NOTIFICATION_IN_SECONDS
+        );
+
+        // We use a round factor for stopping multiple notifications with the same content
+        $time = time() + $delay;
+        $time -= $time % $roundFactor;
+
+        if (Helper::isDuplicatedNotificationSchedule($time, $data)) {
+            return;
+        }
 
         /**
          * @param array $data
          */
-        $data  = apply_filters('publishpress_notifications_scheduled_data', $data);
-        $delay = apply_filters('publishpress_notifications_schedule_delay_in_seconds', 5);
+        $data = apply_filters('publishpress_notifications_scheduled_data', $data);
 
         $timestamp = apply_filters(
             'publishpress_notifications_scheduled_time_for_notification',
-            time() + $delay,
+            $time,
             $workflowPostId,
             $eventArgs['params']['post_id']
         );

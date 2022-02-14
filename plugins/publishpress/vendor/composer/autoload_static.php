@@ -4,10 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit05e4e8a837759534ac4de6aa2699e510
+class ComposerStaticInitc13179303e020c361bb5c1ea13fff437
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '41c664bd04a95c2d6a2f2a3e00f06593' => __DIR__ . '/..' . '/publishpress/wordpress-reviews/ReviewsController.php',
         '562b8a589a76743f9366d365f8f27f19' => __DIR__ . '/../..' . '/defines-free-plugin-path.php',
     );
 
@@ -546,10 +547,10 @@ class ComposerStaticInit05e4e8a837759534ac4de6aa2699e510
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit05e4e8a837759534ac4de6aa2699e510::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit05e4e8a837759534ac4de6aa2699e510::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit05e4e8a837759534ac4de6aa2699e510::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit05e4e8a837759534ac4de6aa2699e510::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitc13179303e020c361bb5c1ea13fff437::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitc13179303e020c361bb5c1ea13fff437::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitc13179303e020c361bb5c1ea13fff437::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitc13179303e020c361bb5c1ea13fff437::$classMap;
 
         }, null, ClassLoader::class);
     }
