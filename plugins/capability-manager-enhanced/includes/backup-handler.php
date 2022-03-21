@@ -1,10 +1,4 @@
 <?php
-/*
- * PublishPress Capabilities [Free]
- * 
- * Process update operations from Backup screen
- * 
- */
 
 class Capsman_BackupHandler
 {

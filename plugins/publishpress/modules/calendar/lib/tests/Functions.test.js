@@ -2,9 +2,10 @@ import {
     calculateWeeksInMilliseconds,
     getBeginDateOfWeekByDate,
     getBeginDateOfWeekByWeekNumber,
-    getDateAsStringInWpFormat, getDateWithNoTimezoneOffset,
+    getDateAsStringInWpFormat,
+    getDateWithNoTimezoneOffset,
     getHourStringOnFormat,
-    getMonthNameByMonthIndex, getPostLinksElement,
+    getMonthNameByMonthIndex,
     getWeekNumberByDate
 } from "../async-calendar/js/Functions";
 
@@ -392,6 +393,17 @@ test('getMonthNameByMonthIndex, for Dec', () => {
  */
 test('getDateWithNoTimezoneOffset', () => {
     const date = getDateWithNoTimezoneOffset('2021-06-03');
+
+    expect(date.getFullYear()).toStrictEqual(2021);
+    expect(date.getMonth()).toStrictEqual(5);
+    expect(date.getDate()).toStrictEqual(3);
+    expect(date.getHours()).toStrictEqual(0);
+    expect(date.getMinutes()).toStrictEqual(0);
+    expect(date.getSeconds()).toStrictEqual(0);
+})
+
+test('getDateInstanceFromString', () => {
+    const date = getDateInstanceFromString('2021-06-03');
 
     expect(date.getFullYear()).toStrictEqual(2021);
     expect(date.getMonth()).toStrictEqual(5);

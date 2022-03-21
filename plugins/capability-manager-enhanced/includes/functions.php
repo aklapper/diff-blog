@@ -1,13 +1,4 @@
 <?php
-/*
- * PublishPress Capabilities [Free]
- * 
- * Functions available for any URL, which are not contained within a class
- * 
- * For performance and code separation, do not include functions that are only needed for wp-admin requests
- * 
- */
-
 function pp_capabilities_is_editable_role($role_name, $args = []) {
     static $editable_roles;
 
@@ -186,79 +177,5 @@ function pp_capabilities_is_classic_editor_available()
     return class_exists('Classic_Editor')
         || function_exists( 'the_gutenberg_project' )
         || class_exists('Gutenberg_Ramp')
-        || version_compare($wp_version, '5.0', '<')
-        || class_exists('WooCommerce')
-        || (defined('PP_CAPABILITIES_CONFIGURE_CLASSIC_EDITOR') && PP_CAPABILITIES_CONFIGURE_CLASSIC_EDITOR)
-        || (function_exists('et_get_option') && 'on' === et_get_option('et_enable_classic_editor', 'off'));
-}
-
-/**
- * Get admin bar node and set as global for our usage.
- * Due to admin toolbar, this function need to run in frontend as well
- *
- * @return array||object $wp_admin_bar nodes.
- */
-function ppc_features_get_admin_bar_nodes($wp_admin_bar){
-
-    $adminBarNode = is_object($wp_admin_bar) ? $wp_admin_bar->get_nodes() : '';
-    $ppcAdminBar = [];
-
-    if (is_array($adminBarNode) || is_object($adminBarNode)) {
-        foreach ($adminBarNode as $adminBarnode) {
-            $id = $adminBarnode->id;
-            $title = $adminBarnode->title;
-            $parent = $adminBarnode->parent;
-            $ppcAdminBar[$id] = array('id' => $id, 'title' => $title, 'parent' => $parent);
-        }
-    }
-
-    $GLOBALS['ppcAdminBar'] = $ppcAdminBar;
-}
-add_action('admin_bar_menu', 'ppc_features_get_admin_bar_nodes', 999);
-
-/**
- * Implement admin features restriction.
- * Due to admin toolbar, this function need to run in frontend as well
- *
- */
-function ppc_admin_feature_restrictions() {
-    require_once ( dirname(CME_FILE) . '/includes/features/restrict-admin-features.php' );    
-    PP_Capabilities_Admin_Features::adminFeaturedRestriction();
-}
-add_action('plugins_loaded', 'ppc_admin_feature_restrictions');
-
-/**
- * List of capabilities admin pages
- *
- */
-function pp_capabilities_admin_pages(){
-
-    $pp_capabilities_pages = [
-        'pp-capabilities', 
-        'pp-capabilities-roles', 
-        'pp-capabilities-admin-menus', 
-        'pp-capabilities-nav-menus', 
-        'pp-capabilities-editor-features', 
-        'pp-capabilities-backup', 
-        'pp-capabilities-settings', 
-        'pp-capabilities-admin-features'
-    ];
-
-   return apply_filters('pp_capabilities_admin_pages', $pp_capabilities_pages);
-}
-
-/**
- * Check if user is in capabilities admin page
- *
- */
-function is_pp_capabilities_admin_page(){
-    
-    $pp_capabilities_pages = pp_capabilities_admin_pages();
-
-    $is_pp_capabilities_page = false;
-	if ( isset( $_GET['page'] ) && in_array( $_GET['page'], $pp_capabilities_pages )) {
-        $is_pp_capabilities_page = true;
-    }
-
-    return apply_filters('is_pp_capabilities_admin_page', $is_pp_capabilities_page);
+        || version_compare($wp_version, '5.0', '<');
 }
