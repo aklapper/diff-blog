@@ -1197,7 +1197,7 @@ class CoAuthors_Plus {
 			die();
 		}
 
-		if ( empty( $_REQUEST['q'] ) ) {
+		if ( empty( $_REQUEST['q'] ) || empty( $_REQUEST['existing_authors'] ) ) {
 			die();
 		}
 
