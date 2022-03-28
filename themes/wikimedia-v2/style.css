@@ -2534,3 +2534,63 @@ input[type='submit'],
 		transform: translateX( -20px );
 	}
 }
+
+/* additional css  - ticket #313 */
+
+.page-template-page-report-landing .header-default .ungrid .bg-img {
+	background-size: cover;
+}
+
+/*Override for color bug in reports, e.g. transparency report*/
+.header-blue + #content .toc.header-pink .toc-link-item.active>a {
+	background-color: #eeeaff !important;
+}
+
+/* Custom CSS */
+section.photo-attribution {
+	display: none;
+}
+
+.wp-block-spacer {
+	margin: 0 !important;
+}
+
+/* Social Profiles */
+.wp-block-columns.social-icons-area {
+	margin-top: 30px;
+}
+
+.wp-block-columns.social-icons-area img {
+	height: auto;
+}
+
+.wp-block-columns.social-icons-area .wp-block-column:not(:first-child) {
+	margin-left: 10px !important;
+}
+
+/* Responsive Spacer */
+@media screen and (max-width: 600px) {
+	.wp-block-columns.reverse-direction-on-mobile {
+		flex-direction: column-reverse;
+	}
+	
+	.wp-block-spacer {
+		height: 30px !important;
+	}
+	
+	.wp-block-columns.social-icons-area .wp-block-column {
+		flex-basis: 10% !important;
+		margin: 0 !important;
+		max-width: 30px;
+	}
+}
+
+/* unseen css styles */
+.blue mark {
+	color: #277FD6 !important;
+	font-size: 50px;
+}
+
+.blue-artist-title {
+	color: #277FD6 !important;
+}
