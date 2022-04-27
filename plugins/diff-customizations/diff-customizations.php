@@ -266,3 +266,7 @@ if ( $media ) {
 }
 }
 add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 3 );
+
+//Increase export of calendar events to 100
+
+add_filter( 'tribe_ical_feed_posts_per_page', function() { return 100; } );
