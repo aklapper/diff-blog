@@ -12,7 +12,7 @@ function bootstrap() {
 }
 
 /**
- * Enqueue block editor only JavaScript and CSS.
+ * Enqueue block editor-only JavaScript and CSS.
  */
 function enqueue_block_editor_assets() {
 
