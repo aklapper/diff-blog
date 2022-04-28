@@ -11,12 +11,21 @@
  * @since 1.2
  */
 class PLL_Choose_Lang_Url extends PLL_Choose_Lang {
-	protected $index = 'index.php'; // Need this before $wp_rewrite is created, also hardcoded in wp-includes/rewrite.php
+	/**
+	 * The name of the index file which is the entry point to all requests.
+	 * We need this before the global $wp_rewrite is created.
+	 * Also hardcoded in WP_Rewrite.
+	 *
+	 * @var string
+	 */
+	protected $index = 'index.php';
 
 	/**
 	 * Sets the language
 	 *
 	 * @since 1.8
+	 *
+	 * @return void
 	 */
 	public function init() {
 		parent::init();
@@ -32,6 +41,8 @@ class PLL_Choose_Lang_Url extends PLL_Choose_Lang {
 	 * Finds the language according to information found in the url
 	 *
 	 * @since 1.2
+	 *
+	 * @return void
 	 */
 	public function set_language_from_url() {
 		$host      = str_replace( 'www.', '', wp_parse_url( $this->links_model->home, PHP_URL_HOST ) ); // Remove www. for the comparison
@@ -39,7 +50,7 @@ class PLL_Choose_Lang_Url extends PLL_Choose_Lang {
 
 		$requested_url   = pll_get_requested_url();
 		$requested_host  = str_replace( 'www.', '', wp_parse_url( $requested_url, PHP_URL_HOST ) ); // Remove www. for the comparison
-		$requested_path  = rtrim( str_replace( $this->index, '', wp_parse_url( $requested_url, PHP_URL_PATH ) ), '/' ); // Some PHP setups turn requests for / into /index.php in REQUEST_URI
+		$requested_path  = rtrim( str_replace( $this->index, '', (string) wp_parse_url( $requested_url, PHP_URL_PATH ) ), '/' ); // Some PHP setups turn requests for / into /index.php in REQUEST_URI
 		$requested_query = wp_parse_url( $requested_url, PHP_URL_QUERY );
 
 		// Home is requested
