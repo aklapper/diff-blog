@@ -15,7 +15,6 @@
 
 # Related to PHP Code Sniffer
 **/vendor/*
-/themes/interconnection/composer.json
 /themes/interconnection/composer.lock
 
 # Node Modules
