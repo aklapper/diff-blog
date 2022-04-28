@@ -35,9 +35,17 @@ class JSON_LD {
 	const MIXED_EVENT_ATTENDANCE_MODE= 'https://schema.org/MixedEventAttendanceMode';
 
 	/**
+	 * The reference schema URL for a moved online event status mode.
+	 *
+	 * @since 1.7.3
+	 */
+	const MOVEDONLINE_SCHEMA = 'https://schema.org/EventMovedOnline';
+
+	/**
 	 * Modifiers to the JSON LD event object for virtual attendance events.
 	 *
 	 * @since 1.0.0
+	 * @since 1.7.3 - Add support for eventStatus MOVEDONLINE_SCHEMA.
 	 *
 	 * @param object  $data The JSON-LD object.
 	 * @param array   $args The arguments used to get data.
@@ -78,6 +86,11 @@ class JSON_LD {
 		$data->eventAttendanceMode = static::ONLINE_EVENT_ATTENDANCE_MODE;
 		if ( Event_Meta::$value_hybrid_event_type === $event->virtual_event_type ) {
 			$data->eventAttendanceMode = static::MIXED_EVENT_ATTENDANCE_MODE;
+		}
+
+		// Update event status schema.
+		if ( 'moved-online' === $event->event_status ) {
+			$data->eventStatus = static::MOVEDONLINE_SCHEMA;
 		}
 
 		if (

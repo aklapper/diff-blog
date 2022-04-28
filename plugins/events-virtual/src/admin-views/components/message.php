@@ -22,7 +22,7 @@ if ( empty( $message ) ) {
 	return;
 }
 
-$message_classes = [ 'tribe-events-virtual-settings-message__wrap' ];
+$message_classes = [ 'tec-events-virtual-settings-message__wrap' ];
 if ( ! empty( $add_classes ) ) {
 	array_push( $message_classes, $add_classes );
 }
@@ -36,5 +36,5 @@ if ( ! empty( $message_classes ) ) {
 	id="tribe-events-virtual-settings-message"
 	<?php tribe_classes( $message_classes ); ?>
 >
-	<?php esc_html_e( $message ); ?>
+	<?php echo wp_kses_post( $message ); ?>
 </div>

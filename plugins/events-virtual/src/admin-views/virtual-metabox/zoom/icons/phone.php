@@ -9,6 +9,8 @@
  *
  * @link http://evnt.is/1aiy
  *
+ * @deprecated 1.9.0 Use src/admin-views/icons/phone.php.
+ *
  * @version 1.0.0
  *
  * @var array $classes Additional classes to add to the svg icon.

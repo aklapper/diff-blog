@@ -9,6 +9,8 @@
  *
  * @link    http://evnt.is/1aiy
  *
+ * @deprecated 1.9.0 - Replaced with src/admin-views/components/icons/refresh.php.
+ *
  * @var array<string> $classes Additional classes to add to the svg icon.
  *
  * @version 1.5.0

@@ -43,6 +43,7 @@ class Url {
 	 * The base URL that should was previously used to deauthorize the Zoom App.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.9.0
 	 *
 	 * @var string
 	 */
@@ -289,12 +290,30 @@ class Url {
 	 * @return string The URL to change an account status.
 	 */
 	public function to_change_account_status_link( $account_id ) {
-		$nonce = wp_create_nonce( Settings::$status_action );
+		$nonce = wp_create_nonce( API::$status_action );
 
 		return add_query_arg( [
 			'action'              => 'ev_zoom_settings_account_status',
 			Plugin::$request_slug => $nonce,
-			'zoom_account_id'     => $account_id,
+			'account_id'     => $account_id,
+			'_ajax_nonce'         => $nonce,
+		], admin_url( 'admin-ajax.php' ) );
+	}
+
+	/**
+	 * Returns the URL that should be used to check a Zoom users account type.
+	 *
+	 * @since 1.8.2
+	 *
+	 * @return string The URL to validate the Zoom user type.
+	 */
+	public function to_validate_user_type( \WP_Post $post ) {
+		$nonce = wp_create_nonce( Users::$validate_user_action );
+
+		return add_query_arg( [
+			'action'              => 'ev_zoom_validate_user_type',
+			Plugin::$request_slug => $nonce,
+			'post_id'             => $post->ID,
 			'_ajax_nonce'         => $nonce,
 		], admin_url( 'admin-ajax.php' ) );
 	}
@@ -309,12 +328,12 @@ class Url {
 	 * @return string The URL to delete an account.
 	 */
 	public function to_delete_account_link( $account_id ) {
-		$nonce = wp_create_nonce( Settings::$delete_action );
+		$nonce = wp_create_nonce( API::$delete_action );
 
 		return add_query_arg( [
 			'action'              => 'ev_zoom_settings_delete_account',
 			Plugin::$request_slug => $nonce,
-			'zoom_account_id'     => $account_id,
+			'account_id'     => $account_id,
 			'_ajax_nonce'         => $nonce,
 		], admin_url( 'admin-ajax.php' ) );
 	}

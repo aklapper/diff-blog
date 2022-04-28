@@ -89,10 +89,11 @@ class OAuth {
 	 * The method will `wp_die` if the nonce is not valid.
 	 *
 	 * @since 1.0.0
+	 * @since 1.9.0 - Remove legacy support.
 	 *
 	 * @param string|null $nonce The nonce string to authorize the authorization request.
 	 *
-	 * @return bool Whether the authorization request is valid and was handled or not.
+	 * @return boolean Whether the authorization request was handled.
 	 */
 	public function handle_auth_request( $nonce = null ) {
 		if ( ! wp_verify_nonce( $nonce, self::$authorize_nonce_action ) ) {
@@ -102,31 +103,15 @@ class OAuth {
 					'events-virtual'
 				)
 			);
-
-			return false;
 		}
 
-		// This is the legacy response from Zoom directly.
-		$legacy_code = tribe_get_request_var( 'code', false );
-		// This is response from our OAuth proxy service.
-		$service_response_body = tribe_get_request_var( 'response_body', false );
-		// By default, mark the request as not handled.
 		$handled = false;
 
-		if ( $legacy_code ) {
-			tribe_update_option( Settings::$option_prefix . 'auth_code', $legacy_code );
-
-			// This will, implicitly, set the refresh token too.
-			$this->fetch_access_token( $legacy_code );
-			$handled = true;
-		} elseif ( $service_response_body ) {
+		// This is response from our OAuth proxy service.
+		$service_response_body = tribe_get_request_var( 'response_body', false );
+		if ( $service_response_body ) {
 			$this->api->save_account( [ 'body' => base64_decode( $service_response_body ) ] );
 
-			// Check if there were legacy settings, if so, clear the old config.
-			$legacy_auth_code = tribe_get_option( Settings::$option_prefix . 'auth_code' );
-			if ( $legacy_auth_code ) {
-				$this->clear_legacy_config();
-			}
 			$handled = true;
 		}
 
@@ -158,12 +143,15 @@ class OAuth {
 	 * Handles the API disconnection (token de-authorization) request.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.9.0 - Replaced with Multiple Account Support, see Account_API class.
 	 *
 	 * @param null|string $nonce The nonce to validate the request.
 	 *
 	 * @return bool Whether the request was successfully handled or not.
 	 */
 	public function handle_deauth_request( $nonce = null ) {
+		_deprecated_function( __METHOD__, '1.9.0', 'No replacement, functionality moved to whodat server.' );
+
 		if ( ! wp_verify_nonce( $nonce, self::$deauthorize_nonce_action ) ) {
 			return false;
 		}
@@ -220,8 +208,11 @@ class OAuth {
 	 * service.
 	 *
 	 * @since 1.1.1
+	 * @deprecated 1.9.0 - Replaced with Multiple Account Support, see Account_API class.
 	 */
 	public function clear_legacy_config() {
+		_deprecated_function( __METHOD__, '1.9.0', 'No replacement, functionality moved to whodat server.' );
+
 		tribe_update_option( Settings::$option_prefix . 'auth_code', '' );
 		tribe_update_option( Settings::$option_prefix . 'client_id', '' );
 		tribe_update_option( Settings::$option_prefix . 'client_secret', '' );
@@ -231,11 +222,13 @@ class OAuth {
 	 * Handler for the ajax button-swap on the Events->Settings->Api tab.
 	 *
 	 * @since 1.0.1
-	 * @deprecated
+	 * @deprecated 1.9.0 - Replaced with Multiple Account Support, see Account_API class.
 	 *
 	 * @return boolean Whether the credentials were correctly saved or not.
 	 */
 	public static function ajax_credentials_save() {
+		_deprecated_function( __METHOD__, '1.9.0', 'No replacement, functionality moved to whodat server.' );
+
 		if ( ! check_ajax_referer( self::$client_keys_autosave_nonce_action, 'security', false ) ) {
 			echo tribe( Settings::class )->get_disabled_button();
 
@@ -262,33 +255,5 @@ class OAuth {
 
 		wp_die();
 		return true;
-	}
-
-	/**
-	 * Fetches the access token from Zoom API.
-	 *
-	 * This method should be used when first connecting to the Zoom API or when a refresh token is not available.
-	 *
-	 * @since 1.0.0
-	 * @deprecated 1.5.0 - Replaced with Multiple Account Support, see Account_API class.
-	 *
-	 * @param string $code The token access code as returned from Zoom API callback.
-	 */
-	public function fetch_access_token( $code ) {
-		_deprecated_function( __FUNCTION__, '1.5.0', '' );
-		$this->api->post(
-			static::$legacy_token_request_url,
-			[
-				'headers' => [
-					'Authorization' => $this->api->authorization_header(),
-				],
-				'body'    => [
-					'grant_type'   => 'authorization_code',
-					'code'         => $code,
-					'redirect_uri' => $this->authorize_url(),
-				],
-			],
-			Api::OAUTH_POST_RESPONSE_CODE
-		)->then( [ $this->api, 'save_access_token' ] );
 	}
 }

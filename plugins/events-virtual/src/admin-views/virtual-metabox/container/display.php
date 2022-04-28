@@ -30,7 +30,7 @@
 $is_hidden = apply_filters( 'tribe_events_virtual_display_embed_video_hidden', false, $post );
 
 $embed_video_classes = [
-	'tribe-events-virtual-display__list-item',
+	'tec-events-virtual-display__list-item',
 	'tribe-events-virtual-hidden' => $is_hidden,
 ];
 ?>
@@ -58,7 +58,7 @@ $embed_video_classes = [
 					?>
 				</label>
 			</li>
-			<li class="tribe-events-virtual-display__list-item tribe-events-virtual-display__list-item--linked-button">
+			<li class="tec-events-virtual-display__list-item tec-events-virtual-display__list-item--linked-button">
 				<label
 					for="<?php echo esc_attr( "{$metabox_id}-linked-button" ); ?>"
 					class="tribe-events-virtual-display__linked-button-label"

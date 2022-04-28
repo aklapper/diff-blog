@@ -82,8 +82,19 @@ class Email {
 			return;
 		}
 
+		/**
+		 * Allows filtering the url used in ticket and rsvp emails.
+		 *
+		 * @since 1.7.2
+		 *
+		 * @param string  $virtual_url The virtual url for the ticket and rsvp emails.
+		 * @param WP_Post $event       The event post object with properties added by the `tribe_get_event` function.
+		 */
+		$virtual_url = apply_filters( 'tribe_events_virtual_ticket_email_url', $event_obj->virtual_url, $event_obj );
+
 		$args = [
-			'event' => $event_obj,
+			'event'       => $event_obj,
+			'virtual_url' => $virtual_url,
 		];
 
 		/**

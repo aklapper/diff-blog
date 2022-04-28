@@ -8,8 +8,9 @@
  * See more documentation about our views templating system.
  *
  * @since   1.5.0
+ * @since 1.9.0 - Add support using shared classes between APIs.
  *
- * @version 1.5.0
+ * @version 1.9.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -24,33 +25,34 @@ if ( empty( $accounts ) ) {
 ?>
 <ul>
 	<?php foreach ( $accounts as $account_id => $account ) : ?>
-		<li class="tribe-settings-zoom-account-details tribe-common"
+		<li class="tec-settings-api-account-details tribe-settings-zoom-account-details tribe-common"
 			data-account-id="<?php echo esc_attr( $account_id ); ?>"
 		>
-			<div class="tribe-settings-zoom-account-details__account-name">
+			<div class="tec-settings-api-account-details__account-name tribe-settings-zoom-account-details__account-name">
 				<?php echo esc_html( $account['name'] ); ?>
 			</div>
-			<div class="tribe-settings-zoom-account-details__refresh-account">
+			<div class="tec-settings-api-account-details__refresh-account tribe-settings-zoom-account-details__refresh-account">
 				<button
-					class="tribe-settings-zoom-account-details__account-refresh"
+					class="tec-settings-api-account-details__account-refresh tribe-settings-zoom-account-details__account-refresh"
 					type="button"
-					data-zoom-refresh="<?php echo $url->to_authorize(); ?>"
+					data-api-refresh="<?php echo $url->to_authorize(); ?>"
+					data-confirmation="<?php echo $api->get_confirmation_to_refresh_account(); ?>"
 					<?php echo tribe_is_truthy( $account['status'] ) ? '' : 'disabled'; ?>
 				>
-					<?php $this->template( 'zoom/api/components/icons/refresh', [ 'classes' => [ 'tribe-events-virtual-virtual-event__icon-svg' ] ] ); ?>
+					<?php $this->template( 'components/icons/refresh', [ 'classes' => [ 'tribe-events-virtual-virtual-event__icon-svg' ] ] ); ?>
 					<span class="screen-reader-text">
 						<?php echo esc_html_x( 'Refresh Zoom Account', 'Refreshes a Zoom account from the website.', 'events-virtual' ); ?>
 					</span>
 				</button>
 			</div>
-			<div class="tribe-settings-zoom-account-details__account-status">
+			<div class="tec-settings-api-account-details__account-status tribe-settings-zoom-account-details__account-status">
 				<?php
 				$this->template( 'components/switch', [
 					'id'            => 'account-status-' . $account_id,
 					'label'         => _x( 'Toggle to Change Account Status', 'Disables the Zoom Account for the Website.', 'events-virtual' ),
-					'classes_wrap'  => [ 'tribe-events-virtual-meetings-zoom-control', 'tribe-events-virtual-meetings-zoom-control--switch' ],
-					'classes_input' => [ 'account-status', 'tribe-events-virtual-meetings-zoom-settings-switch__input' ],
-					'classes_label' => [ 'tribe-events-virtual-meetings-zoom-settings-switch__label' ],
+					'classes_wrap'  => [ 'tec-events-virtual-meetings-api-control', 'tribe-events-virtual-meetings-zoom-control', 'tec-events-virtual-meetings-api-control--switch', 'tribe-events-virtual-meetings-zoom-control--switch' ],
+					'classes_input' => [ 'account-status', 'tec-events-virtual-meetings-api-settings-switch__input', 'tribe-events-virtual-meetings-zoom-settings-switch__input' ],
+					'classes_label' => [ 'tec-events-virtual-meetings-api-settings-switch__label', 'tribe-events-virtual-meetings-zoom-settings-switch__label' ],
 					'name'          => 'account-status',
 					'value'         => 1,
 					'checked'       => $account['status'],
@@ -60,11 +62,12 @@ if ( empty( $accounts ) ) {
 				] );
 				?>
 			</div>
-			<div class="tribe-settings-zoom-account-details__account-delete">
+			<div class="tec-settings-api-account-details__account-delete tribe-settings-zoom-account-details__account-delete">
 				<button
-					class="dashicons dashicons-trash tribe-settings-zoom-account-details__delete-account"
+					class="dashicons dashicons-trash tec-settings-api-account-details__delete-account tribe-settings-zoom-account-details__delete-account"
 					type="button"
 					data-ajax-delete-url="<?php echo $url->to_delete_account_link( $account_id ); ?>"
+					data-confirmation="<?php echo $api->get_confirmation_to_delete_account(); ?>"
 					<?php echo tribe_is_truthy( $account['status'] ) ? '' : 'disabled'; ?>
 				>
 					<span class="screen-reader-text">

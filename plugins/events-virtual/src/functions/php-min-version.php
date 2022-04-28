@@ -100,8 +100,6 @@ if ( ! function_exists( 'tribe_get_php_min_version' ) ) :
 	 * Echoes out the error for the PHP min version as a WordPress admin Notice.
 	 *
 	 * @since  1.0.0
-	 *
-	 * @return void Only echos the notice HTML, no return.
 	 */
 	function tribe_not_php_version_notice() {
 		echo '<div id="message" class="error"><p>' . wp_kses_post( tribe_not_php_version_message() ) . '</p></div>';
@@ -114,8 +112,6 @@ if ( ! function_exists( 'tribe_get_php_min_version' ) ) :
 	 *
 	 * @param string $domain Which domain we will try to translate to.
 	 * @param string $file   Where to look for the lang folder.
-	 *
-	 * @return void No return for loading text domain.
 	 */
 	function tribe_not_php_version_textdomain( $domain, $file ) {
 		load_plugin_textdomain(

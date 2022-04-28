@@ -8,8 +8,9 @@
  * See more documentation about our views templating system.
  *
  * @since   1.5.0
+ * @since 1.9.0 - Add support using shared classes between APIs.
  *
- * @version 1.5.0
+ * @version 1.9.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -22,6 +23,7 @@ $connect_label       = _x( 'Add Zoom Account', 'Label to connect an account to t
 
 $classes = [
 	'button'                                                         => true,
+	'tec-events-virtual-meetings-api-settings_add-account-button'    => true,
 	'tribe-events-virtual-meetings-zoom-settings_add-account-button' => true,
 ];
 ?>
@@ -32,7 +34,7 @@ $classes = [
 	<span class="dashicons dashicons-plus"></span>
 	<?php echo esc_html( $connect_label ); ?>
 </a>
-<div class="tribe-events-virtual-meetings-zoom-settings_add-account-button-helper-text">
+<div class="tec-events-virtual-meetings-api-settings_add-account-button-helper-text tribe-events-virtual-meetings-zoom-settings_add-account-button-helper-text">
 	<?php
 	$url = 'https://evnt.is/1ap5';
 	echo sprintf(

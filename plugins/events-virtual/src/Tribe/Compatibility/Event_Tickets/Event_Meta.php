@@ -79,7 +79,6 @@ class Event_Meta {
 	 *
 	 * @param int                 $post_id The post ID of the post the date is being saved for.
 	 * @param array<string,mixed> $data    The data to save, directly from the metabox.
-	 * @return void
 	 */
 	public function update_post_meta( $post_id, $data ) {
 		update_post_meta( $post_id, self::$key_rsvp_email_link, Arr::get( $data, 'rsvp-email-link', false ) );
@@ -176,13 +175,16 @@ class Event_Meta {
 	 * Determine if the current user has a ticket for the event.
 	 *
 	 * @since 1.0.4
+	 * @since 1.9.0 - Only use tribe_get_event if an integer.
 	 *
 	 * @param WP_Post|int $event The post object or ID of the viewed event.
 	 * @param int         $user_id ID of the current user.
 	 * @return boolean
 	 */
 	public function user_is_ticket_attendee( $event, $user_id = 0 ) {
-		$event = tribe_get_event($event);
+		if ( is_integer( $event ) ) {
+			$event = tribe_get_event( $event );
+		}
 
 		if ( ! $event instanceof \WP_Post ) {
 			return false;
@@ -201,13 +203,16 @@ class Event_Meta {
 	 *
 	 * @since 1.0.4
 	 * @since 1.1.2 Simplify attendee check.
+	 * @since 1.9.0 - Only use tribe_get_event if an integer.
 	 *
 	 * @param WP_Post|int $event The post object or ID of the viewed event.
 	 * @param int         $user_id ID of the current user.
 	 * @return boolean
 	 */
 	public function user_is_rsvp_attendee( $event, $user_id = 0 ) {
-		$event = tribe_get_event($event);
+		if ( is_integer( $event ) ) {
+			$event = tribe_get_event( $event );
+		}
 
 		if ( ! $event instanceof \WP_Post ) {
 			return false;

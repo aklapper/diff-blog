@@ -3,7 +3,7 @@
  * Marker for a virtual event.
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-virtual/components/virtual-event.php
+ * [your-theme]/tribe/events-virtual/v2/components/virtual-event.php
  *
  * See more documentation about our views templating system.
  *
