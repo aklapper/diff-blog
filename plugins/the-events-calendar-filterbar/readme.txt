@@ -1,11 +1,11 @@
 === The Events Calendar: Filter Bar ===
 
-Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, patriciahillebrandt, paulskim, vicskf, zbtirrell, juanfra
-Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro, filters, categories, sort, tags, taxonomy, find, search
+Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
+Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro, filters, categories, sort, tags, taxonomy, find, search
 Donate link: http://evnt.is/29
-Requires at least: 4.9.16
-Tested up to: 5.7.2
-Stable tag: 5.1.4
+Requires at least: 4.9.18
+Tested up to: 5.8.1
+Stable tag: 5.2.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -122,7 +122,6 @@ The plugin is produced by <a href="http://evnt.is/45">The Events Calendar</a>.
 = Current Contributors =
 
 <a href="https://profiles.wordpress.org/brianjessee">Brian Jessee</a>
-<a href="https://profiles.wordpress.org/mitogh">Crisoforo Gaspar</a>
 <a href="https://profiles.wordpress.org/geoffgraham">Geoff Graham</a>
 <a href="https://profiles.wordpress.org/bordoni">Gustavo Bordoni</a>
 <a href="https://profiles.wordpress.org/leahkoerper">Leah Koerper</a>
@@ -136,11 +135,12 @@ The plugin is produced by <a href="http://evnt.is/45">The Events Calendar</a>.
 
 = Past Contributors =
 
+<a href="https://profiles.wordpress.org/mitogh">Crisoforo Gaspar</a>
 <a href="https://profiles.wordpress.org/peterchester">Peter Chester</a>
 <a href="https://profiles.wordpress.org/roblagatta">Rob La Gatta</a>
 <a href="https://profiles.wordpress.org/reid.peifer">Reid Peifer</a>
 <a href="https://profiles.wordpress.org/shane.pearlman">Shane Pearlman</a>
-<a href="https://profiles.wordpress.org/nicosantos”>Nico Santo</a>
+<a href="https://profiles.wordpress.org/nicosantos">Nico Santo</a>
 <a href="https://profiles.wordpress.org/thatdudebutch">Wayne Stratton</a>
 <a href="https://profiles.wordpress.org/mastromktg">Nick Mastromattei</a>
 <a href="https://profiles.wordpress.org/jazbek">Jessica Yazbek</a>
@@ -168,7 +168,7 @@ The plugin is produced by <a href="http://evnt.is/45">The Events Calendar</a>.
 
 = Translations =
 
-The Events Calendar’s premium plugins are translated by volunteers at <a href=“http://evnt.is/194h”>translations.theeventscalendar.com</a>. There you can find a list of available languages, download translation files, or help update the translations. Thank you to everyone who helps to maintain our translations!
+The Events Calendar’s premium plugins are translated by volunteers at <a href="http://evnt.is/194h">translations.theeventscalendar.com</a>. There you can find a list of available languages, download translation files, or help update the translations. Thank you to everyone who helps to maintain our translations!
 
 == Add-Ons ==
 
@@ -194,6 +194,18 @@ Our Premium Plugins:
 * <a href="http://evnt.is/18h9" target="_blank">The Events Calendar: iCal Importer</a>
 
 == Changelog ==
+
+= [5.2.1] 2021-09-14 =
+
+* Fix - Don't urldecode the filter labels - it breaks special characters. [FBAR-238]
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.2.0] 2021-08-24 =
+
+* Version - Filter Bar 5.2.0 is only compatible with The Events Calendar 5.9.0 and higher
+* Feature - Stop compiling CSS custom props and leave them exposed and accessible to the Customizer and third parties. [TEC-3011]
+* Feature - Update hooked Customizer styles to account for surfaced CSS custom properties and for new TEC Customizer font controls. [TEC-3897]
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.1.4] 2021-07-01 =
 
