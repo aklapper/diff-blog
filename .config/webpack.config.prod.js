@@ -2,7 +2,7 @@
  * .config/webpack.config.prod.js :
  * This file defines the production build configuration
  */
-const { helpers, externals, presets } = require( '@humanmade/webpack-helpers' );
+const { helpers, externals, plugins, presets } = require( '@humanmade/webpack-helpers' );
 const { filePath } = helpers;
 
 module.exports = presets.production( {
@@ -14,4 +14,9 @@ module.exports = presets.production( {
 	output: {
 		path: filePath( 'plugins/interconnection-blocks/dist' ),
 	},
+	plugins: [
+		plugins.miniCssExtract( {
+			filename: '[name].css',
+		} ),
+	],
 } );
