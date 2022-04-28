@@ -36,12 +36,6 @@ if ( ! function_exists( 'tribe_get_ical_link' ) ) {
 
 		/**
 		 * Filters the "Export Events" iCal link.
-		 *
-		 * Please note that tribe-events.js dynamically sets the iCal link in most contexts. To
-		 * override this behavior so that a custom link from the tribe_get_ical_link filter is the
-		 * one that's always used, please also use the tribe_events_force_filtered_ical_link filter.
-		 *
-		 * @see tribe_events_force_filtered_ical_link
 		 * @param string $output The "Export Events" iCal link URL.
 		 */
 		return apply_filters( 'tribe_get_ical_link', $output );
@@ -60,7 +54,7 @@ if ( ! function_exists( 'tribe_get_gcal_link' ) ) {
 	 */
 	function tribe_get_gcal_link( $postId = null ) {
 		$postId = Tribe__Events__Main::postIdHelper( $postId );
-		$output = Tribe__Events__Main::instance()->googleCalendarLink( $postId );
+		$output = tribe( \Tribe\Events\Views\V2\iCalendar\Links\Google_Calendar::class)->generate_single_url( $postId );
 
 		/**
 		 * Filters the Google Calendar link

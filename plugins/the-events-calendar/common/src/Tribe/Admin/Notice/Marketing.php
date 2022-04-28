@@ -1,5 +1,5 @@
 <?php
-_deprecated_file(__FILE__, 'TBD', 'Deprecated to a more granular approach.' );
+_deprecated_file(__FILE__, '4.14.2', 'Deprecated to a more granular approach.' );
 /**
  * Various Marketing notices, e.g. Black Friday sales or special coupon initiatives.
  *
@@ -121,7 +121,7 @@ class Tribe__Admin__Notice__Marketing {
 	 */
 	public function black_friday_should_display() {
 		// If upsells have been manually hidden, respect that.
-		if ( defined( 'TRIBE_HIDE_UPSELL' ) && TRIBE_HIDE_UPSELL ) {
+		if ( tec_should_hide_upsell() ) {
 			return false;
 		}
 

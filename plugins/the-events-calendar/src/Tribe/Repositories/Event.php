@@ -120,32 +120,6 @@ class Tribe__Events__Repositories__Event extends Tribe__Repository {
 				'timezone'           => '_EventTimezone',
 				'venue'              => '_EventVenueID',
 				'organizer'          => '_EventOrganizerID',
-				'category'           => Tribe__Events__Main::TAXONOMY,
-				'cost'               => '_EventCost',
-				'currency_symbol'    => '_EventCurrencySymbol',
-				'currency_position'  => '_EventCurrencyPosition',
-				'show_map'           => '_EventShowMap',
-				'show_map_link'      => '_EventShowMapLink',
-				'url'                => '_EventURL',
-				'hide_from_upcoming' => '_EventHideFromUpcoming',
-				// Where is "sticky"? It's handled in the meta filtering by setting `menu_order`.
-				'featured'           => '_tribe_featured',
-			]
-		);
-
-
-		$this->update_fields_aliases = array_merge(
-			$this->update_fields_aliases,
-			[
-				'start_date'         => '_EventStartDate',
-				'end_date'           => '_EventEndDate',
-				'start_date_utc'     => '_EventStartDateUTC',
-				'end_date_utc'       => '_EventEndDateUTC',
-				'duration'           => '_EventDuration',
-				'all_day'            => '_EventAllDay',
-				'timezone'           => '_EventTimezone',
-				'venue'              => '_EventVenueID',
-				'organizer'          => '_EventOrganizerID',
 				'category'           => $tribe_events_category,
 				'cost'               => '_EventCost',
 				'currency_symbol'    => '_EventCurrencySymbol',
@@ -1564,11 +1538,20 @@ class Tribe__Events__Repositories__Event extends Tribe__Repository {
 				default:
 					$after = $after || 1 === $loop;
 					if ( empty( $this->query_args['orderby'] ) ) {
-						$this->query_args['orderby'] = [ $order_by => $order ];
+						// In some versions of WP, [ $order_by, $order ] doesn't work as expected. Using explict value setting instead.
+						$this->query_args['orderby'] = $order_by;
+						$this->query_args['order']   = $order;
 					} else {
 						$add = [ $order_by => $order ];
 						// Make sure all `orderby` clauses have the shape `<orderby> => <order>`.
 						$normalized = [];
+
+						if ( ! is_array( $this->query_args['orderby'] ) ) {
+							$this->query_args['orderby'] = [
+								$this->query_args['orderby'] => $this->query_args['order']
+							];
+						}
+
 						foreach ( $this->query_args['orderby'] as $k => $v ) {
 							$the_order_by                = is_numeric( $k ) ? $v : $k;
 							$the_order                   = is_numeric( $k ) ? $default_order : $v;

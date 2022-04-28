@@ -14,6 +14,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
+
+if ( tec_events_views_v1_should_display_deprecated_notice() ) {
+	_deprecated_file( __FILE__, '5.13.0', null, 'On version 6.0.0 this file will be removed. Please refer to <a href="https://evnt.is/v1-removal">https://evnt.is/v1-removal</a> for template customization assistance.' );
+}
+
 /**
  * Allows filtering the classes for the main element.
  *
@@ -23,8 +28,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $classes = apply_filters( 'tribe_default_events_template_classes', [ 'tribe-events-pg-template' ] );
 
-get_header();
+/**
+ * Set this to an empty string in case it is not defined.
+ * Specifically for the two hooks below.
+ *
+ * @since 5.9.0
+ */
+$eventDisplay = isset( $eventDisplay ) ? $eventDisplay : '';
 
+
+get_header();
 /**
  * Provides an action that allows for the injection of HTML at the top of the template after the header.
  *
