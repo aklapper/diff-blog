@@ -2,7 +2,5 @@
   "editor.js": "http://localhost:8080/plugins/interconnection-blocks/dist/editor.js",
   "frontend.js": "http://localhost:8080/plugins/interconnection-blocks/dist/frontend.js",
   "editor.js.map": "http://localhost:8080/plugins/interconnection-blocks/dist/editor.js.map",
-  "frontend.js.map": "http://localhost:8080/plugins/interconnection-blocks/dist/frontend.js.map",
-  "editor.hot-update.js.map": "http://localhost:8080/plugins/interconnection-blocks/dist/editor.0206c12d6c7b82366597.hot-update.js.map",
-  "frontend.hot-update.js.map": "http://localhost:8080/plugins/interconnection-blocks/dist/frontend.0206c12d6c7b82366597.hot-update.js.map"
+  "frontend.js.map": "http://localhost:8080/plugins/interconnection-blocks/dist/frontend.js.map"
 }

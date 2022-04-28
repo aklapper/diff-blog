@@ -1,0 +1,7 @@
+.wp-block-interconnection-image-wrapper {
+  padding: 10px;
+}
+.wp-block-interconnection-image-wrapper,
+.wp-block-interconnection-image-wrapper .block-editor-inner-blocks {
+  border: 1px solid var(--light-grey);
+}
