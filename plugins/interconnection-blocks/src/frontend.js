@@ -1,7 +1,8 @@
 const cache = {};
 
-const importAll = context => context.keys().forEach(
-	key => cache[ key ] = context( key ) );
+const importAll = ( context ) => context.keys().forEach( ( key ) => {
+	cache[ key ] = context( key );
+} );
 
 /**
  * Import all frontend files for blocks.
