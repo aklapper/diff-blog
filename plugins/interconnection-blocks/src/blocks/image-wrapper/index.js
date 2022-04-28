@@ -8,7 +8,6 @@
 import { InnerBlocks } from '@wordpress/block-editor';
 import { WPElement } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import { image as icon } from '@wordpress/icons';
 
 import './style.scss';
 
@@ -27,7 +26,7 @@ export const options = {
 
 	category: 'common',
 
-	icon,
+	icon: 'carrot',
 
 	/**
 	 * @param {object} props Block properties.
