@@ -45,8 +45,8 @@ function enqueue_frontend_assets() {
 		return;
 	}
 
-	$frontend_js  = plugin_dir_url( __FILE__ ) . 'dist/frontend.js';
-	$frontend_css = plugin_dir_url( __FILE__ ) . 'dist/frontend.css';
+	$frontend_js  = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/frontend.js';
+	$frontend_css = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/frontend.css';
 
 	wp_enqueue_script(
 		'interconnection-blocks-frontend',
@@ -56,11 +56,14 @@ function enqueue_frontend_assets() {
 		true
 	);
 
-	wp_enqueue_style(
-		'interconnection-blocks-frontend',
-		$frontend_css,
-		[],
-		filemtime( $frontend_css ),
-		'all'
-	);
+	$css_updated_time = filemtime( $frontend_css );
+	if ( $css_updated_time ) {
+		wp_enqueue_style(
+			'interconnection-blocks-frontend',
+			$frontend_css,
+			[],
+			$css_updated_time,
+			'all'
+		);
+	}
 }
