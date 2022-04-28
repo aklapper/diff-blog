@@ -15,10 +15,11 @@
 
 # Related to PHP Code Sniffer
 **/vendor/*
-composer.json
-composer.lock
+/themes/interconnection/composer.json
+/themes/interconnection/composer.lock
 
 # Node Modules
+/node_modules/
 */*/node_modules/
 
 # Uploads directory
