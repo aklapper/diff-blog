@@ -14,20 +14,58 @@ class Pp_Roles_Manager
     /**
      * Returns an array of all the available roles.
      * This method is used to show the roles list table.
+     * 
+     * @param $view string
+     * @param $capabilities bool whether to add capabilities to result or not
      *
      * @return array[]
      */
-    public function get_roles_for_list_table()
+    public function get_roles_for_list_table($view = 'all', $capabilities = false)
     {
-        $roles = wp_roles()->roles; // get_editable_roles();
+        global $wp_roles;
+
+        $roles = wp_roles()->roles;
+        $current_user = wp_get_current_user();
+        $editable = function_exists('get_editable_roles') ? 
+                        array_keys(get_editable_roles()) : 
+                        array_keys(apply_filters('editable_roles', $roles));
         $count = count_users();
         $res = [];
+
         foreach ($roles as $role => $detail) {
+
+            //mine role filter
+            if ($view === 'mine' && !in_array($role, $current_user->roles)) {
+                continue;
+                //active role filter
+            } elseif ($view === 'active'
+                && (!isset($count['avail_roles'][$role])
+                || (isset($count['avail_roles'][$role]) && (int)$count['avail_roles'][$role] === 0))
+            ) {
+                continue;
+                //inactive role filter
+            } elseif ($view === 'inactive'
+                && (isset($count['avail_roles'][$role])
+                && (isset($count['avail_roles'][$role]) && (int)$count['avail_roles'][$role] > 0))
+            ) {
+                continue;
+                //editable role filter
+            } elseif ($view === 'editable' && !in_array($role, $editable)) {
+                continue;
+                //uneditable role filter
+            } elseif ($view === 'uneditable' && in_array($role, $editable)) {
+                continue;
+                //system role filter
+            } elseif ($view === 'system' && !$this->is_system_role($role)) {
+                continue;
+            }
+
             $res[] = [
                 'role' => $role,
                 'name' => $detail['name'],
                 'count' => isset($count['avail_roles'][$role]) ? $count['avail_roles'][$role] : 0,
-                'is_system' => $this->is_system_role($role)
+                'is_system' => $this->is_system_role($role),
+                'capabilities' => ($capabilities) ? $detail['capabilities'] : [],
             ];
         }
 
@@ -147,11 +185,14 @@ class Pp_Roles_Manager
 
 		$like = '%' . $wpdb->esc_like( $role ) . '%';
 
-		$query = $wpdb->prepare( "SELECT ID FROM {$wpdb->usermeta} INNER JOIN {$wpdb->users} "
-			. "ON {$wpdb->usermeta}.user_id = {$wpdb->users}.ID "
-			. "WHERE meta_key='{$wpdb->prefix}capabilities' AND meta_value LIKE %s", $like );
+		$users = $wpdb->get_results($wpdb->prepare( 
+                "SELECT ID FROM $wpdb->usermeta INNER JOIN $wpdb->users "
+                . "ON $wpdb->usermeta.user_id = $wpdb->users.ID "
+                . "WHERE meta_key='{$wpdb->prefix}capabilities' AND meta_value LIKE %s", 
 
-		$users = $wpdb->get_results($query);
+                $like
+            )
+        );
 
 		// Array of all roles except the one being deleted, for use below
 		$role_names = array_diff_key( $wp_roles->role_names, [$role => true] );

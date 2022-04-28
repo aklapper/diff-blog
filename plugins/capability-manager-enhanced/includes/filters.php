@@ -55,18 +55,9 @@ add_filter('plugin_action_links_' . plugin_basename(CME_FILE), '_cme_fltPluginAc
 
 add_action('plugins_loaded', '_cme_migrate_pp_options');
 
-add_filter('cme_filterable_post_types', '_cme_filterable_post_types');
-
-function _cme_filterable_post_types($post_type_objects) {
-	if ($advgb_profiles = get_post_type_object('advgb_profiles')) {
-		$post_type_objects['advgb_profiles'] = $advgb_profiles;
-	}
-
-	return $post_type_objects;
-}
 
 function _cme_publishpress_roles_js() {
-	if (defined('PUBLISHPRESS_VERSION') && ((strpos($_SERVER['REQUEST_URI'], 'page=pp-manage-roles')))) {
+	if (defined('PUBLISHPRESS_VERSION') && !empty($_SERVER['REQUEST_URI']) && strpos(sanitize_text_field($_SERVER['REQUEST_URI']), 'page=pp-manage-roles')) {
 		require_once(dirname(__FILE__) . '/publishpress-roles.php');
 		CME_PublishPressRoles::scripts();  // @todo: .js
 	}
@@ -260,7 +251,7 @@ function _cme_fltPluginActionLinks($links, $file)
 {
 	if ($file == plugin_basename(CME_FILE)) {
 		if (!is_network_admin()) {
-			$links[] = "<a href='" . admin_url("admin.php?page=pp-capabilities") . "'>" . __('Edit Roles', 'capsman-enhanced') . "</a>";
+			$links[] = "<a href='" . admin_url("admin.php?page=pp-capabilities") . "'>" . esc_html__('Edit Roles', 'capsman-enhanced') . "</a>";
 		}
 	}
 
