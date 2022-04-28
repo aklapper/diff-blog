@@ -21,9 +21,4 @@ defined( 'ABSPATH' ) || exit;
 require_once __DIR__ . '/inc/namespace.php';
 
 // Kick off.
-add_action(
-	'plugins_loaded',
-	function () {
-		bootstrap();
-	}
-);
+bootstrap();
