@@ -6,7 +6,6 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     private $usersVoted;
     private $phrases;
     private $emailNotification;
-    private $avatarsCache;
     private $followUsers;
     private $feedbackForms;
     private $usersRated;
@@ -21,7 +20,6 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $this->usersVoted = $this->db->prefix . "wc_users_voted";
         $this->phrases = $this->db->prefix . "wc_phrases";
         $this->emailNotification = $this->db->prefix . "wc_comments_subscription";
-        $this->avatarsCache = $this->db->prefix . "wc_avatars_cache";
         $this->followUsers = $this->db->prefix . "wc_follow_users";
         $this->feedbackForms = $this->db->prefix . "wc_feedback_forms";
         $this->usersRated = $this->db->prefix . "wc_users_rated";
@@ -43,25 +41,22 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $this->initDB();
         require_once(ABSPATH . "wp-admin/includes/upgrade.php");
         $charset_collate = $this->db->get_charset_collate();
-        $sql = "CREATE TABLE `{$this->usersVoted}`(`id` INT(11) NOT NULL AUTO_INCREMENT,`user_id` VARCHAR(32) NOT NULL, `comment_id` INT(11) NOT NULL, `vote_type` INT(11) DEFAULT NULL, `is_guest` TINYINT(1) DEFAULT 0, `post_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `date` INT(11) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`id`), KEY `user_id` (`user_id`), KEY `comment_id` (`comment_id`),  KEY `vote_type` (`vote_type`), KEY `is_guest` (`is_guest`), KEY `post_id` (`post_id`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->usersVoted}`(`id` INT(11) NOT NULL AUTO_INCREMENT,`user_id` VARCHAR(32) NOT NULL, `comment_id` INT(11) NOT NULL, `vote_type` INT(11) DEFAULT NULL, `is_guest` TINYINT(1) DEFAULT 0, `post_id` BIGINT(20) UNSIGNED NOT NULL DEFAULT 0, `date` INT(11) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`id`), KEY `user_id` (`user_id`), KEY `comment_id` (`comment_id`),  KEY `vote_type` (`vote_type`), KEY `is_guest` (`is_guest`), KEY `post_id` (`post_id`)) {$charset_collate};";
         maybe_create_table($this->usersVoted, $sql);
 
-        $sql = "CREATE TABLE `{$this->phrases}`(`id` INT(11) NOT NULL AUTO_INCREMENT, `phrase_key` VARCHAR(100) NOT NULL, `phrase_value` TEXT NOT NULL, PRIMARY KEY (`id`), KEY `phrase_key` (`phrase_key`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->phrases}`(`id` INT(11) NOT NULL AUTO_INCREMENT, `phrase_key` VARCHAR(100) NOT NULL, `phrase_value` TEXT NOT NULL, PRIMARY KEY (`id`), KEY `phrase_key` (`phrase_key`)) {$charset_collate};";
         maybe_create_table($this->phrases, $sql);
 
-        $sql = "CREATE TABLE `{$this->emailNotification}`(`id` INT(11) NOT NULL AUTO_INCREMENT, `email` VARCHAR(100) NOT NULL, `subscribtion_id` INT(11) NOT NULL, `post_id` INT(11) NOT NULL, `subscribtion_type` VARCHAR(20) NOT NULL, `activation_key` VARCHAR(32) NOT NULL, `confirm` TINYINT DEFAULT 0, `subscription_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, `imported_from` VARCHAR(25) NOT NULL DEFAULT '', PRIMARY KEY (`id`), KEY `subscribtion_id` (`subscribtion_id`), KEY `post_id` (`post_id`), KEY `confirm`(`confirm`), UNIQUE KEY `subscribe_unique_index` (`subscribtion_id`,`email`,`post_id`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->emailNotification}`(`id` INT(11) NOT NULL AUTO_INCREMENT, `email` VARCHAR(100) NOT NULL, `subscribtion_id` INT(11) NOT NULL, `post_id` INT(11) NOT NULL, `subscribtion_type` VARCHAR(20) NOT NULL, `activation_key` VARCHAR(32) NOT NULL, `confirm` TINYINT DEFAULT 0, `subscription_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, `imported_from` VARCHAR(25) NOT NULL DEFAULT '', PRIMARY KEY (`id`), KEY `subscribtion_id` (`subscribtion_id`), KEY `post_id` (`post_id`), KEY `confirm`(`confirm`), UNIQUE KEY `subscribe_unique_index` (`subscribtion_id`,`email`,`post_id`)) {$charset_collate};";
         maybe_create_table($this->emailNotification, $sql);
 
-        $sql = "CREATE TABLE `{$this->avatarsCache}`(`id` INT(11) NOT NULL AUTO_INCREMENT, `user_id` int(11) NOT NULL DEFAULT 0, `user_email` VARCHAR(100) NOT NULL, `url` VARCHAR(255) NOT NULL, `hash` VARCHAR(32) NOT NULL, `maketime` INT(11) NOT NULL DEFAULT 0, `cached` TINYINT(1) NOT NULL DEFAULT 0, PRIMARY KEY (`id`), KEY `user_id` (`user_id`), UNIQUE KEY `user_email` (`user_email`), KEY `maketime` (`maketime`), KEY `cached` (`cached`)) {$charset_collate};";
-        maybe_create_table($this->avatarsCache, $sql);
-
-        $sql = "CREATE TABLE `{$this->followUsers}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT '0', `user_id` int(11) NOT NULL DEFAULT '0', `user_email` varchar(100) NOT NULL, `user_name` varchar(255) NOT NULL, `follower_id` int(11) NOT NULL DEFAULT '0', `follower_email` varchar(100) NOT NULL, `follower_name` varchar(255) NOT NULL, `activation_key` varchar(32) NOT NULL, `confirm` tinyint(1) NOT NULL DEFAULT '0', `follow_timestamp` int(11) NOT NULL, `follow_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), KEY `post_id` (`post_id`), KEY `user_id` (`user_id`), KEY `user_email` (`user_email`), KEY `follower_id` (`follower_id`), KEY `follower_email` (`follower_email`), KEY `confirm` (`confirm`), KEY `follow_timestamp` (`follow_timestamp`), UNIQUE KEY `follow_unique_key` (`user_email`, `follower_email`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->followUsers}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT '0', `user_id` int(11) NOT NULL DEFAULT '0', `user_email` varchar(100) NOT NULL, `user_name` varchar(255) NOT NULL, `follower_id` int(11) NOT NULL DEFAULT '0', `follower_email` varchar(100) NOT NULL, `follower_name` varchar(255) NOT NULL, `activation_key` varchar(32) NOT NULL, `confirm` tinyint(1) NOT NULL DEFAULT '0', `follow_timestamp` int(11) NOT NULL, `follow_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), KEY `post_id` (`post_id`), KEY `user_id` (`user_id`), KEY `user_email` (`user_email`), KEY `follower_id` (`follower_id`), KEY `follower_email` (`follower_email`), KEY `confirm` (`confirm`), KEY `follow_timestamp` (`follow_timestamp`), UNIQUE KEY `follow_unique_key` (`user_email`, `follower_email`)) {$charset_collate};";
         maybe_create_table($this->followUsers, $sql);
 
-        $sql = "CREATE TABLE `{$this->feedbackForms}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT 0, `unique_id` VARCHAR(15) NOT NULL, `question` varchar(255) NOT NULL, `opened` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0, `content` LONGTEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `unique_id` (`unique_id`), KEY `post_id` (`post_id`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->feedbackForms}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT 0, `unique_id` VARCHAR(15) NOT NULL, `question` varchar(255) NOT NULL, `opened` TINYINT(4) UNSIGNED NOT NULL DEFAULT 0, `content` LONGTEXT NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `unique_id` (`unique_id`), KEY `post_id` (`post_id`)) {$charset_collate};";
         maybe_create_table($this->feedbackForms, $sql);
 
-        $sql = "CREATE TABLE `{$this->usersRated}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT 0, `user_id` int(11) NOT NULL DEFAULT 0, `user_ip` VARCHAR(32) NOT NULL DEFAULT '', `rating` int(11) NOT NULL, `date` INT(11) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`id`), KEY `post_id` (`post_id`), KEY `user_id` (`user_id`)) {$charset_collate};";
+        $sql = "CREATE TABLE IF NOT EXISTS `{$this->usersRated}` (`id` int(11) NOT NULL AUTO_INCREMENT, `post_id` int(11) NOT NULL DEFAULT 0, `user_id` int(11) NOT NULL DEFAULT 0, `user_ip` VARCHAR(32) NOT NULL DEFAULT '', `rating` int(11) NOT NULL, `date` INT(11) UNSIGNED NOT NULL DEFAULT 0, PRIMARY KEY (`id`), KEY `post_id` (`post_id`), KEY `user_id` (`user_id`)) {$charset_collate};";
         maybe_create_table($this->usersRated, $sql);
     }
 
@@ -151,9 +146,9 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
             } else {
                 $approved = " AND `c`.`comment_approved` = '1'";
             }
-            $sql = $this->db->prepare("SELECT MAX(`c`.`comment_ID`) FROM `{$this->db->comments}` AS `c`$inlineType WHERE `c`.`comment_post_ID` = %d" . $approved . ";", $args["post_id"]);
+            $sql = $this->db->prepare("SELECT `c`.`comment_ID` FROM `{$this->db->comments}` AS `c`$inlineType WHERE `c`.`comment_post_ID` = %d" . $approved . " ORDER BY `comment_ID` DESC LIMIT 1;", $args["post_id"]);
         } else {
-            $sql = "SELECT MAX(`c`.`comment_ID`) FROM `{$this->db->comments}` AS `c`$inlineType;";
+            $sql = "SELECT `c`.`comment_ID` FROM `{$this->db->comments}` AS `c`$inlineType ORDER BY `comment_ID` DESC LIMIT 1;";
         }
         return intval($this->db->get_var($sql));
     }
@@ -176,29 +171,28 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         return $this->db->get_col($sqlCommentIds);
     }
 
-	/**
-	 * check comment availability
-	 */
-	public function commentIDsToRemove($args, $visibleCommentIds) {
-		if ($args["status"] === "all") {
-			$approved = " AND `comment_approved` IN('1','0')";
-		} else {
-			$approved = " AND `comment_approved` = '1'";
-		}
-		$sqlCommentIds = "SELECT `comment_ID` FROM `{$this->db->comments}` WHERE `comment_ID` IN(" . $visibleCommentIds . ")" . $approved . ";";
-		$notRemovedCommentIDs = $this->db->get_col($sqlCommentIds);
-		return array_values(array_diff(explode(",", $visibleCommentIds), $notRemovedCommentIDs));
-	}
+    /**
+     * check comment availability
+     */
+    public function commentIDsToRemove($args, $visibleCommentIds) {
+        if ($args["status"] === "all") {
+            $approved = " AND `comment_approved` IN('1','0')";
+        } else {
+            $approved = " AND `comment_approved` = '1'";
+        }
+        $sqlCommentIds = "SELECT `comment_ID` FROM `{$this->db->comments}` WHERE `comment_ID` IN(" . $visibleCommentIds . ")" . $approved . ";";
+        $notRemovedCommentIDs = $this->db->get_col($sqlCommentIds);
+        return array_values(array_diff(explode(",", $visibleCommentIds), $notRemovedCommentIDs));
+    }
 
-	public function getUserByNickname($nickname) {
-		$sql = $this->db->prepare("SELECT `u`.`ID`, `u`.`user_email`, `u`.`display_name` FROM `{$this->db->users}` AS `u` INNER JOIN `{$this->db->usermeta}` AS `um` ON `u`.`ID` = `um`.`user_id` AND `um`.`meta_key` = 'nickname' WHERE `um`.`meta_value` = %s LIMIT 1", $nickname);
-		return $this->db->get_row($sql);
-	}
-
-	public function getUserByNicknameOrNicename($nickname) {
-		$sql = $this->db->prepare("SELECT `u`.`ID`, `u`.`user_email`, `u`.`display_name` FROM `{$this->db->users}` AS `u` INNER JOIN `{$this->db->usermeta}` AS `um` ON `u`.`ID` = `um`.`user_id` AND `um`.`meta_key` = 'nickname' WHERE `um`.`meta_value` = %s OR `u`.`user_nicename` = %s LIMIT 1", $nickname, $nickname);
-		return $this->db->get_row($sql);
-	}
+    public function getUserByNicename($nicename) {
+        $caps = "";
+        if (is_multisite()) {
+            $caps = " INNER JOIN `{$this->db->usermeta}` AS `um` ON `u`.`ID` = `um`.`user_id` AND `um`.`meta_key` = '{$this->db->prefix}capabilities'";
+        }
+        $sql = $this->db->prepare("SELECT `u`.`ID`, `u`.`user_email`, `u`.`display_name` FROM `{$this->db->users}` AS `u` $caps WHERE `u`.`user_nicename` = %s LIMIT 1", $nicename);
+        return $this->db->get_row($sql);
+    }
 
     /**
      * @param type $visibleCommentIds comment ids which is visible at the moment on front end
@@ -239,7 +233,14 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $activationKey = md5($email . uniqid() . time());
         $sql = $this->db->prepare("INSERT INTO `{$this->emailNotification}` (`email`, `subscribtion_id`, `post_id`, `subscribtion_type`, `activation_key`,`confirm`) VALUES(%s, %d, %d, %s, %s, %d);", $email, $subsriptionId, $postId, $subscriptionType, $activationKey, $confirm);
         $this->db->query($sql);
-        return $this->db->insert_id ? ["id" => $this->db->insert_id, "activation_key" => $activationKey] : false;
+        if ($this->db->insert_id) {
+            $result = ["id" => $this->db->insert_id, "activation_key" => $activationKey];
+            do_action("wpdiscuz_add_email_notification_success", $subsriptionId, $postId, $email, $subscriptionType, $confirm);
+        } else {
+            $result = false;
+            do_action("wpdiscuz_add_email_notification_fail", $subsriptionId, $postId, $email, $subscriptionType, $confirm);
+        }
+        return $result;
     }
 
     public function getPostNewCommentNotification($post_id, $email) {
@@ -358,7 +359,7 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         if (($postsAuthors = get_transient(self::TRS_POSTS_AUTHORS)) === false) {
             $sql = "SELECT `post_author` FROM `{$this->db->posts}` WHERE `post_type` = 'post' AND `post_status` IN ('publish', 'private') GROUP BY `post_author`;";
             $postsAuthors = $this->db->get_col($sql);
-            set_transient(self::TRS_POSTS_AUTHORS, $postsAuthors, 6 * HOUR_IN_SECONDS);
+            set_transient(self::TRS_POSTS_AUTHORS, $postsAuthors, 12 * HOUR_IN_SECONDS);
         }
         return $postsAuthors;
     }
@@ -389,9 +390,9 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $this->db->query("DROP TABLE IF EXISTS `{$this->emailNotification}`");
         $this->db->query("DROP TABLE IF EXISTS `{$this->phrases}`");
         $this->db->query("DROP TABLE IF EXISTS `{$this->usersVoted}`");
-        $this->db->query("DROP TABLE IF EXISTS `{$this->avatarsCache}`");
         $this->db->query("DROP TABLE IF EXISTS `{$this->followUsers}`");
         $this->db->query("DROP TABLE IF EXISTS `{$this->feedbackForms}`");
+        $this->db->query("DROP TABLE IF EXISTS `{$this->usersRated}`");
     }
 
     public function deleteSubscriptions($commnetId) {
@@ -401,10 +402,10 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         }
     }
 
-	public function deleteSubscriptionsByEmail($email) {
-		$sql = $this->db->prepare("DELETE FROM `{$this->emailNotification}` WHERE `email` = %s;", trim($email));
-		$this->db->query($sql);
-	}
+    public function deleteSubscriptionsByEmail($email) {
+        $sql = $this->db->prepare("DELETE FROM `{$this->emailNotification}` WHERE `email` = %s;", trim($email));
+        $this->db->query($sql);
+    }
 
     public function deleteVotes($commnetId) {
         if ($cId = intval($commnetId)) {
@@ -420,64 +421,8 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
 
     /* === GRAVATARS CACHE === */
 
-    public function addGravatars($gravatarsData) {
-        if ($gravatarsData && is_array($gravatarsData)) {
-            $sql = "INSERT INTO `{$this->avatarsCache}`(`user_id`, `user_email`, `url`, `hash`, `maketime`, `cached`) VALUES";
-            $sqlValues = "";
-            $makeTime = current_time("timestamp");
-            foreach ($gravatarsData as $k => $gravatarData) {
-                $userId = intval($gravatarData["user_id"]);
-                $userEmail = str_rot13(trim($gravatarData["user_email"]));
-                $url = trim($gravatarData["url"]);
-                $hash = trim($gravatarData["hash"]);
-                $cached = intval($gravatarData["cached"]);
-                $sqlValues .= "($userId, '$userEmail', '$url', '$hash', '$makeTime', $cached),";
-            }
-            $sql .= rtrim($sqlValues, ",");
-            $sql .= "ON DUPLICATE KEY UPDATE `user_id` = `user_id`, `user_email` = `user_email`, `url` = `url`, `hash` = `hash`, `maketime` = `maketime`, `cached` = `cached`;";
-            $this->db->query($sql);
-        }
-    }
-
-    public function getGravatars($limit = 10) {
-        $data = [];
-        $limit = apply_filters("wpdiscuz_gravatars_cache_limit", $limit);
-        if ($l = intval($limit)) {
-            $sql = $this->db->prepare("SELECT * FROM `{$this->avatarsCache}` WHERE `cached` = 0 LIMIT %d;", $l);
-            $data = $this->db->get_results($sql, ARRAY_A);
-        }
-        return $data;
-    }
-
-    public function getExpiredGravatars($timeFrame) {
-        $data = [];
-        if ($timeFrame) {
-            $currentTime = current_time("timestamp");
-            $sql = $this->db->prepare("SELECT CONCAT(`hash`, '.gif') FROM `{$this->avatarsCache}` WHERE `maketime` + %d < %d", $timeFrame, $currentTime);
-            $data = $this->db->get_col($sql);
-        }
-        return $data;
-    }
-
-    public function deleteExpiredGravatars($timeFrame) {
-        if ($timeFrame) {
-            $currentTime = current_time("timestamp");
-            $sql = $this->db->prepare("DELETE FROM `{$this->avatarsCache}` WHERE `maketime` + %d < %d;", $timeFrame, $currentTime);
-            $this->db->query($sql);
-        }
-    }
-
-    public function deleteGravatars() {
-        $this->db->query("TRUNCATE `{$this->avatarsCache}`;");
-    }
-
-    public function updateGravatarsStatus($cachedIds) {
-        if ($cachedIds) {
-            $makeTime = current_time("timestamp");
-            $ids = implode(",", $cachedIds);
-            $sql = "UPDATE `{$this->avatarsCache}` SET `maketime` = $makeTime, `cached` = 1 WHERE `id` IN ($ids);";
-            $this->db->query($sql);
-        }
+    public function deleteGravatarsTable() {
+        $this->db->query("DROP TABLE IF EXISTS `" . $this->db->prefix . "wc_avatars_cache`");
     }
 
     /* === GRAVATARS CACHE === */
@@ -583,7 +528,20 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     /* === STATISTICS === */
 
     public function getCommentsCount() {
-        $sql = "SELECT COUNT(*) FROM `{$this->db->comments}` WHERE `comment_approved` = '1';";
+        $default_types = ["order_note"];
+        $excludeTypes = apply_filters('wpdiscuz_statistics_comments_count_exclude', $default_types);
+        $sql = "SELECT COUNT(*) FROM `{$this->db->comments}` WHERE `comment_approved` = '1'";
+        $notIn = "";
+        if ($excludeTypes && is_array($excludeTypes)) {
+            foreach ($excludeTypes as $excludeType) {
+                $notIn .= "'" . trim(esc_sql(sanitize_text_field($excludeType))) . "',";
+            }
+            $notIn = rtrim($notIn, ",");
+        }
+
+        if ($notIn) {
+            $sql .= " AND `comment_type` NOT IN($notIn)";
+        }
         return number_format(intval($this->db->get_var($sql)));
     }
 
@@ -744,6 +702,69 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     /* === STATISTICS === */
 
     /* === MODAL === */
+
+    public function getAllSubscriptions($args) {
+
+        $defaults = ["confirm" => 1, "orderby" => "id", "order" => "desc"];
+
+        $args = wp_parse_args($args, $defaults);
+
+        $sql = "SELECT * FROM `{$this->emailNotification}` WHERE 1";
+
+        if (!empty($args["id"])) {
+            $sql .= " AND `id` = " . (int) $args["id"];
+        }
+
+        if (!empty($args["email"])) {
+            $sql .= " AND `email` = " . esc_sql($args["email"]);
+        }
+
+        if (!empty($args["subscribtion_id"])) {
+            $sql .= " AND `subscribtion_id` = " . (int) $args["subscribtion_id"];
+        }
+
+        if (!empty($args["post_id"])) {
+            $sql .= " AND `post_id` = " . (int) $args["post_id"];
+        }
+
+        if (!empty($args["subscribtion_type"])) {
+            $sql .= " AND `subscribtion_type` = '" . esc_sql($args["subscribtion_type"]) . "'";
+        }
+
+        if (!empty($args["activation_key"])) {
+            $sql .= " AND `activation_key` = " . esc_sql($args["activation_key"]);
+        }
+
+        if (!empty($args["confirm"])) {
+            $sql .= " AND `confirm` = " . (int) $args["confirm"];
+        }
+
+        if (!empty($args["subscription_date"])) {
+            $sql .= " AND `subscription_date` = " . esc_sql($args["subscription_date"]);
+        }
+
+        if (!empty($args["imported_from"])) {
+            $sql .= " AND `imported_from` = " . esc_sql($args["imported_from"]);
+        }
+
+        if (!empty($args["orderby"])) {
+            $sql .= " ORDER BY " . esc_sql($args["orderby"]);
+        }
+
+        if (!empty($args["order"])) {
+            $sql .= " " . esc_sql($args["order"]);
+        }
+
+        if (!empty($args["limit"])) {
+            $sql .= " LIMIT " . (int) $args["limit"];
+        }
+
+        if (!empty($args["offset"])) {
+            $sql .= " OFFSET " . (int) $args["offset"];
+        }
+
+        return $this->db->get_results($sql, ARRAY_A);
+    }
 
     public function getSubscriptionsCount($userEmail) {
         $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->emailNotification}` WHERE `email` = %s;", trim($userEmail));
@@ -1023,8 +1044,8 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
 
     public function showRatingRebuildMsg() {
         $sql = $this->db->prepare("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` = %s", self::POSTMETA_RATING_COUNT);
-		$ratingCount = intval($this->db->get_var($sql));
-		$separateCount = intval($this->db->get_var("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` LIKE '" . self::POSTMETA_RATING_SEPARATE_AVG . "%'"));
+        $ratingCount = intval($this->db->get_var($sql));
+        $separateCount = intval($this->db->get_var("SELECT COUNT(*) FROM `{$this->db->postmeta}` WHERE `meta_key` LIKE '" . self::POSTMETA_RATING_SEPARATE_AVG . "%'"));
         return $ratingCount > 0 && $separateCount === 0;
     }
 
@@ -1040,7 +1061,7 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
 
     public function rebuildRatings($data) {
         foreach ($data as $key => $value) {
-            $val = unserialize($value["meta_value"]);
+            $val = maybe_unserialize($value["meta_value"]);
             if ($val) {
                 $newValues = [];
                 foreach ($val as $k => $v) {
@@ -1053,8 +1074,8 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
                         $avg += $newData["meta_value"] * $newData["count"];
                         $c += $newData["count"];
                     }
-                	update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_AVG . $k, round($avg / $c, 1));
-                	update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_COUNT . $k, $c);
+                    update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_AVG . $k, round($avg / $c, 1));
+                    update_post_meta($value["post_id"], self::POSTMETA_RATING_SEPARATE_COUNT . $k, $c);
                 }
                 update_post_meta($value["post_id"], self::POSTMETA_RATING_COUNT, $newValues, $val);
             }
@@ -1102,10 +1123,10 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         return $this->db->get_col($sql);
     }
 
-	public function deleteFeedbackFormsForPost($post_id) {
-		$sql = $this->db->prepare("DELETE FROM `{$this->feedbackForms}` WHERE `post_id` = %d", $post_id);
-		$this->db->query($sql);
-	}
+    public function deleteFeedbackFormsForPost($post_id) {
+        $sql = $this->db->prepare("DELETE FROM `{$this->feedbackForms}` WHERE `post_id` = %d", $post_id);
+        $this->db->query($sql);
+    }
 
     /* === /Feedback Comments === */
     /* === User Votes === */
@@ -1167,26 +1188,31 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
     }
 
     /* === /Remove Comment Meta === */
+
+    public function deletePostMeta($metaKey) {
+        $sql = $this->db->prepare("DELETE FROM `{$this->db->postmeta}` WHERE `meta_key` = %s;", $metaKey);
+        $this->db->query($sql);
+    }
+
+    public function deleteUserMeta($metaKey) {
+        $sql = $this->db->prepare("DELETE FROM `{$this->db->usermeta}` WHERE `meta_key` = %s;", $metaKey);
+        $this->db->query($sql);
+    }
+
+    public function deleteFieldsRatingsPostMeta() {
+        $this->db->get_var("DELETE FROM `{$this->db->postmeta}` WHERE `meta_key` LIKE '" . self::POSTMETA_RATING_COUNT . "%'");
+        $this->db->get_var("DELETE FROM `{$this->db->postmeta}` WHERE `meta_key` LIKE '" . self::POSTMETA_RATING_SEPARATE_AVG . "%'");
+    }
+
+    public function makeStickyCommentsRegular() {
+        $sql = $this->db->prepare("UPDATE {$this->db->comments} SET `comment_type` = 'comment' WHERE `comment_type` = %s", self::WPDISCUZ_STICKY_COMMENT);
+        $this->db->query($sql);
+    }
+
     /* === Fix Tables === */
 
     public function fixTables() {
         $this->dbCreateTables();
-        $sql = "SHOW INDEX FROM `{$this->avatarsCache}` WHERE Key_name = 'url'";
-        if ($this->db->get_results($sql)) {
-            $sql = "ALTER TABLE `{$this->avatarsCache}` DROP INDEX `url`;";
-            $this->db->query($sql);
-        }
-        $sql = "SHOW INDEX FROM `{$this->avatarsCache}` WHERE Key_name = 'hash'";
-        if ($this->db->get_results($sql)) {
-            $sql = "ALTER TABLE `{$this->avatarsCache}` DROP INDEX `hash`;";
-            $this->db->query($sql);
-        }
-        $sql_alter = "ALTER TABLE `{$this->avatarsCache}` DROP INDEX `user_email`;";
-        $this->db->query($sql_alter);
-        $sql_alter = "ALTER TABLE `{$this->avatarsCache}` MODIFY `user_email` VARCHAR(100) NOT NULL, MODIFY `hash` VARCHAR(32) NOT NULL;";
-        $this->db->query($sql_alter);
-        $sql_alter = "ALTER TABLE `{$this->avatarsCache}` ADD UNIQUE KEY `user_email` (`user_email`);";
-        $this->db->query($sql_alter);
         $sql_alter = "ALTER TABLE `{$this->emailNotification}` DROP INDEX `subscribe_unique_index`;";
         $this->db->query($sql_alter);
         $sql_alter = "ALTER TABLE `{$this->emailNotification}` MODIFY `email` VARCHAR(100) NOT NULL, MODIFY `subscribtion_type` VARCHAR(20) NOT NULL, MODIFY `activation_key` VARCHAR(32) NOT NULL;";
@@ -1215,8 +1241,6 @@ class WpdiscuzDBManager implements WpDiscuzConstants {
         $this->db->query($sql_alter);
         if (!empty($this->db->charset)) {
             $sql_alter = "ALTER TABLE `{$this->feedbackForms}` CONVERT TO CHARACTER SET {$this->db->charset}" . ($this->db->collate ? " COLLATE {$this->db->collate}" : "") . ";";
-            $this->db->query($sql_alter);
-            $sql_alter = "ALTER TABLE `{$this->avatarsCache}` CONVERT TO CHARACTER SET {$this->db->charset}" . ($this->db->collate ? " COLLATE {$this->db->collate}" : "") . ";";
             $this->db->query($sql_alter);
             $sql_alter = "ALTER TABLE `{$this->emailNotification}` CONVERT TO CHARACTER SET {$this->db->charset}" . ($this->db->collate ? " COLLATE {$this->db->collate}" : "") . ";";
             $this->db->query($sql_alter);

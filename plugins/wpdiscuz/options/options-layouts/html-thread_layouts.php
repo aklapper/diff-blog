@@ -43,7 +43,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showAvatars">
     <div class="wpd-opt-name">
         <label for="showAvatars"><?php echo esc_html($setting["options"]["showAvatars"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showAvatars"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showAvatars"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -61,7 +61,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="defaultAvatarUrlForUser">
     <div class="wpd-opt-name">
         <label for="defaultAvatarUrlForUser"><?php echo esc_html($setting["options"]["defaultAvatarUrlForUser"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["defaultAvatarUrlForUser"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["defaultAvatarUrlForUser"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="url" value="<?php echo esc_attr($this->thread_layouts["defaultAvatarUrlForUser"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_THREAD_LAYOUTS); ?>[defaultAvatarUrlForUser]" id="defaultAvatarUrlForUser" />
@@ -76,7 +76,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="defaultAvatarUrlForGuest">
     <div class="wpd-opt-name">
         <label for="defaultAvatarUrlForGuest"><?php echo esc_html($setting["options"]["defaultAvatarUrlForGuest"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["defaultAvatarUrlForGuest"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["defaultAvatarUrlForGuest"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="url" value="<?php echo esc_attr($this->thread_layouts["defaultAvatarUrlForGuest"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_THREAD_LAYOUTS); ?>[defaultAvatarUrlForGuest]" id="defaultAvatarUrlForGuest" />
@@ -91,7 +91,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="changeAvatarsEverywhere">
     <div class="wpd-opt-name">
         <label for="changeAvatarsEverywhere"><?php echo esc_html($setting["options"]["changeAvatarsEverywhere"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["changeAvatarsEverywhere"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["changeAvatarsEverywhere"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -113,7 +113,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showVotingButtons">
     <div class="wpd-opt-name">
         <label for="showVotingButtons"><?php echo esc_html($setting["options"]["showVotingButtons"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showVotingButtons"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showVotingButtons"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -131,7 +131,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="votingButtonsIcon">
     <div class="wpd-opt-name">
         <label for="votingButtonsIcon"><?php echo esc_html($setting["options"]["votingButtonsIcon"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["votingButtonsIcon"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["votingButtonsIcon"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field" style="min-width: 220px;">
@@ -155,7 +155,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="votingButtonsStyle">
     <div class="wpd-opt-name">
         <label for="votingButtonsStyle"><?php echo esc_html($setting["options"]["votingButtonsStyle"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["votingButtonsStyle"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["votingButtonsStyle"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -173,7 +173,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableDislikeButton">
     <div class="wpd-opt-name">
         <label for="enableDislikeButton"><?php echo esc_html($setting["options"]["enableDislikeButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableDislikeButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableDislikeButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -191,7 +191,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isGuestCanVote">
     <div class="wpd-opt-name">
         <label for="isGuestCanVote"><?php echo esc_html($setting["options"]["isGuestCanVote"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isGuestCanVote"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isGuestCanVote"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -209,7 +209,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="highlightVotingButtons">
     <div class="wpd-opt-name">
         <label for="highlightVotingButtons"><?php echo esc_html($setting["options"]["highlightVotingButtons"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["highlightVotingButtons"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["highlightVotingButtons"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -232,7 +232,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showCommentLink">
     <div class="wpd-opt-name">
         <label for="showCommentLink"><?php echo esc_html($setting["options"]["showCommentLink"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showCommentLink"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showCommentLink"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -250,7 +250,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showCommentDate">
     <div class="wpd-opt-name">
         <label for="showCommentDate"><?php echo esc_html($setting["options"]["showCommentDate"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showCommentDate"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showCommentDate"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">

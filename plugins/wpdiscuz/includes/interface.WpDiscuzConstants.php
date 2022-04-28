@@ -58,13 +58,10 @@ interface WpDiscuzConstants {
     /* === COOKIES === */
     const COOKIE_HIDE_BUBBLE_HINT                     = "wpdiscuz_hide_bubble_hint";
     /* === CACHE === */
-    const GRAVATARS_CACHE_DIR                         = "/wpdiscuz/cache/gravatars/";
-    const GRAVATARS_CACHE_ADD_RECURRENCE              = 3;
-    const GRAVATARS_CACHE_ADD_KEY_RECURRENCE          = "wpdiscuz_cache_add_every_3h";
-    const GRAVATARS_CACHE_ADD_ACTION                  = "wpdiscuz_gravatars_cache_add";    
-    const GRAVATARS_CACHE_DELETE_RECURRENCE           = 48;
-    const GRAVATARS_CACHE_DELETE_KEY_RECURRENCE       = "wpdiscuz_cache_delete_every_48h";
-    const GRAVATARS_CACHE_DELETE_ACTION               = "wpdiscuz_gravatars_cache_delete";
+    const WPDISCUZ_CACHE_DIR                          = "/wpdiscuz/cache/";
+    const COMMENTS_CACHE_DIR                          = "/wpdiscuz/cache/comments/";
+    const USERS_CACHE_DIR                             = "/wpdiscuz/cache/users/";
+    const EXTRA_CACHE_DIR                             = "extra/";
     /* === STICKY COMMENTS === */
     const WPDISCUZ_STICKY_COMMENT                     = "wpdiscuz_sticky";
     /* === PRIVATE COMMENTS === */
@@ -77,8 +74,8 @@ interface WpDiscuzConstants {
     const POSTMETA_STATISTICS                         = "_wpdiscuz_statistics";
     const POSTMETA_REACTED                            = "reacted";
     const POSTMETA_RATING_COUNT                       = "wpdiscuz_rating_count";
-	const POSTMETA_RATING_SEPARATE_AVG                = "wpdiscuz_post_rating_";
-	const POSTMETA_RATING_SEPARATE_COUNT              = "wpdiscuz_post_rating_count_";
+    const POSTMETA_RATING_SEPARATE_AVG                = "wpdiscuz_post_rating_";
+    const POSTMETA_RATING_SEPARATE_COUNT              = "wpdiscuz_post_rating_count_";
     /* === USER CONTENT === */
     const TRS_USER_HASH                               = "wpdiscuz_user_hash_";
     /* === SOCIAL LOGIN */
@@ -94,10 +91,13 @@ interface WpDiscuzConstants {
     const METAKEY_ATTACHMENTS                         = "wmu_attachments";
     const KEY_IMAGES                                  = "images";
     const INPUT_NAME                                  = "wmu_files";
-	const DELETE_UNATTACHED_FILES_ACTION              = "wpdiscuz_delete_unattached_images";
-	const DELETE_UNATTACHED_FILES_KEY_RECURRENCE      = "wpdiscuz_delete_unattached_images_every_48h";
-	const DELETE_UNATTACHED_FILES_RECURRENCE          = 48;
+    const DELETE_UNATTACHED_FILES_ACTION              = "wpdiscuz_delete_unattached_images";
+    const DELETE_UNATTACHED_FILES_KEY_RECURRENCE      = "wpdiscuz_delete_unattached_images_every_48h";
+    const DELETE_UNATTACHED_FILES_RECURRENCE          = 48;
     /* === POST RATING */
     const POSTMETA_POST_RATING                        = "wpdiscuz_post_rating";
     const POSTMETA_POST_RATING_COUNT                  = "wpdiscuz_post_rating_count";
+    
+    /* === NONCE */
+    const GLOBAL_NONCE_NAME                           = "wpdiscuz_nonce";
 }

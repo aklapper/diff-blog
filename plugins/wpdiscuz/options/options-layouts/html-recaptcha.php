@@ -24,7 +24,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="requestMethod">
     <div class="wpd-opt-name">
         <label for="requestMethod"><?php echo esc_html($setting["options"]["requestMethod"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["requestMethod"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["requestMethod"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <select id="requestMethod" name="<?php echo esc_attr(WpdiscuzCore::TAB_RECAPTCHA); ?>[requestMethod]">
@@ -44,7 +44,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showForGuests">
     <div class="wpd-opt-name">
         <label for="showForGuests"><?php echo esc_html($setting["options"]["showForGuests"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showForGuests"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showForGuests"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -62,7 +62,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showForUsers">
     <div class="wpd-opt-name">
         <label for="showForUsers"><?php echo esc_html($setting["options"]["showForUsers"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showForUsers"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showForUsers"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -80,7 +80,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isShowOnSubscribeForm">
     <div class="wpd-opt-name">
         <label for="isShowOnSubscribeForm"><?php echo esc_html($setting["options"]["isShowOnSubscribeForm"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isShowOnSubscribeForm"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isShowOnSubscribeForm"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -102,7 +102,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="siteKey">
     <div class="wpd-opt-name">
         <label for="siteKey"><?php echo esc_html($setting["options"]["siteKey"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["siteKey"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["siteKey"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input id="siteKey" type="text" name="<?php echo esc_attr(WpdiscuzCore::TAB_RECAPTCHA); ?>[siteKey]" placeholder="<?php esc_html_e("reCAPTCHA V2 Site Key", "wpdiscuz"); ?>" value="<?php echo esc_attr($this->recaptcha["siteKey"]); ?>" style="margin:1px;padding:3px 5px; width:90%;"/>
@@ -117,7 +117,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="secretKey">
     <div class="wpd-opt-name">
         <label for="secretKey"><?php echo esc_html($setting["options"]["secretKey"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["secretKey"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["secretKey"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input id="secretKey" type="text" name="<?php echo esc_attr(WpdiscuzCore::TAB_RECAPTCHA); ?>[secretKey]" placeholder="<?php esc_html_e("reCAPTCHA V2 Secret Key", "wpdiscuz"); ?>" value="<?php echo esc_attr($this->recaptcha["secretKey"]); ?>" style="margin: 1px;padding:3px 5px; width:90%;"/>
@@ -132,7 +132,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="theme">
     <div class="wpd-opt-name">
         <label for="theme"><?php echo esc_html($setting["options"]["theme"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["theme"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["theme"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <select id="theme" name="<?php echo esc_attr(WpdiscuzCore::TAB_RECAPTCHA); ?>[theme]">
@@ -150,7 +150,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="lang">
     <div class="wpd-opt-name">
         <label for="lang"><?php echo esc_html($setting["options"]["lang"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["lang"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["lang"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input id="lang" type="text" name="<?php echo esc_attr(WpdiscuzCore::TAB_RECAPTCHA); ?>[lang]" value="<?php echo esc_attr($this->recaptcha["lang"]); ?>" placeholder="<?php esc_attr_e("Example en", "wpdiscuz"); ?>" style="margin: 1px;padding:3px 5px; width:120px;"/><br />

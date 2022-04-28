@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableUserMentioning">
     <div class="wpd-opt-name">
         <label for="enableUserMentioning"><?php echo esc_html($setting["options"]["enableUserMentioning"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableUserMentioning"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableUserMentioning"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -37,7 +37,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="sendMailToMentionedUsers">
     <div class="wpd-opt-name">
         <label for="sendMailToMentionedUsers"><?php echo esc_html($setting["options"]["sendMailToMentionedUsers"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["sendMailToMentionedUsers"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["sendMailToMentionedUsers"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -55,7 +55,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isNotifyOnCommentApprove">
     <div class="wpd-opt-name">
         <label for="isNotifyOnCommentApprove"><?php echo esc_html($setting["options"]["isNotifyOnCommentApprove"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isNotifyOnCommentApprove"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isNotifyOnCommentApprove"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -73,7 +73,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableMemberConfirm">
     <div class="wpd-opt-name">
         <label for="enableMemberConfirm"><?php echo esc_html($setting["options"]["enableMemberConfirm"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableMemberConfirm"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableMemberConfirm"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -91,7 +91,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableGuestsConfirm">
     <div class="wpd-opt-name">
         <label for="enableGuestsConfirm"><?php echo esc_html($setting["options"]["enableGuestsConfirm"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableGuestsConfirm"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableGuestsConfirm"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -109,7 +109,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="subscriptionType">
     <div class="wpd-opt-name">
         <label for="subscriptionType"><?php echo esc_html($setting["options"]["subscriptionType"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["subscriptionType"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["subscriptionType"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-radio">
@@ -138,7 +138,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showReplyCheckbox">
     <div class="wpd-opt-name">
         <label for="showReplyCheckbox"><?php echo esc_html($setting["options"]["showReplyCheckbox"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showReplyCheckbox"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showReplyCheckbox"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -156,7 +156,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isReplyDefaultChecked">
     <div class="wpd-opt-name">
         <label for="isReplyDefaultChecked"><?php echo esc_html($setting["options"]["isReplyDefaultChecked"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isReplyDefaultChecked"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isReplyDefaultChecked"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -175,7 +175,7 @@ if (!defined("ABSPATH")) {
     <div class="wpd-opt-row" data-wpd-opt="usePostmaticForCommentNotification">
         <div class="wpd-opt-name">
             <label for="usePostmaticForCommentNotification"><?php echo esc_html($setting["options"]["usePostmaticForCommentNotification"]["label"]) ?></label>
-            <p class="wpd-desc"><?php echo $setting["options"]["usePostmaticForCommentNotification"]["description"] ?></p>
+            <p class="wpd-desc"><?php echo esc_html($setting["options"]["usePostmaticForCommentNotification"]["description"]) ?></p>
         </div>
         <div class="wpd-opt-input">
             <div class="wpd-switcher">
@@ -194,7 +194,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isFollowActive">
     <div class="wpd-opt-name">
         <label for="isFollowActive"><?php echo esc_html($setting["options"]["isFollowActive"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isFollowActive"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isFollowActive"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -212,7 +212,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="disableFollowConfirmForUsers">
     <div class="wpd-opt-name">
         <label for="disableFollowConfirmForUsers"><?php echo esc_html($setting["options"]["disableFollowConfirmForUsers"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["disableFollowConfirmForUsers"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["disableFollowConfirmForUsers"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">

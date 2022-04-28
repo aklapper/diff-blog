@@ -24,15 +24,15 @@ class WpdiscuzHelperEmail implements WpDiscuzConstants {
     public function addSubscription() {
         $success = 0;
         $currentUser = WpdiscuzHelper::getCurrentUser();
-        $subscribeFormNonce = filter_input(INPUT_POST, "wpdiscuz_subscribe_form_nonce");
-        $subscriptionType = filter_input(INPUT_POST, "wpdiscuzSubscriptionType");
-        $postId = filter_input(INPUT_POST, "postId");
-        $showSubscriptionBarAgreement = filter_input(INPUT_POST, "show_subscription_agreement", FILTER_SANITIZE_NUMBER_INT);
+        $subscribeFormNonce = WpdiscuzHelper::sanitize(INPUT_POST, "wpdiscuz_subscribe_form_nonce","FILTER_SANITIZE_STRING");
+        $subscriptionType = WpdiscuzHelper::sanitize(INPUT_POST, "wpdiscuzSubscriptionType", "FILTER_SANITIZE_STRING");
+        $postId = WpdiscuzHelper::sanitize(INPUT_POST, "postId", FILTER_SANITIZE_NUMBER_INT);
+        $showSubscriptionBarAgreement = WpdiscuzHelper::sanitize(INPUT_POST, "show_subscription_agreement", FILTER_SANITIZE_NUMBER_INT);
         $form = wpDiscuz()->wpdiscuzForm->getForm($postId);
         if ($currentUser && $currentUser->ID) {
             $email = $currentUser->user_email;
         } else {
-            $email = filter_input(INPUT_POST, "wpdiscuzSubscriptionEmail");
+            $email = WpdiscuzHelper::sanitize(INPUT_POST, "wpdiscuzSubscriptionEmail", "FILTER_SANITIZE_STRING");
         }
         if (!$currentUser->exists() && $form->isShowSubscriptionBarAgreement() && !$showSubscriptionBarAgreement && ($subscriptionType === WpdiscuzCore::SUBSCRIPTION_POST || $subscriptionType === WpdiscuzCore::SUBSCRIPTION_ALL_COMMENT)) {
             $email = "";
@@ -123,7 +123,7 @@ class WpdiscuzHelperEmail implements WpDiscuzConstants {
         $postAuthor = get_userdata($post->post_author);
 
         $sendMail = apply_filters("wpdiscuz_email_notification", true, $emailData, $comment);
-        if ($emailData["email"] == $postAuthor->user_email && ((get_option("moderation_notify") && $comment->comment_approved !== "1") || (get_option("comments_notify") && $comment->comment_approved === "1"))) {
+        if ($emailData["email"] === $postAuthor->user_email && ((get_option("moderation_notify") && $comment->comment_approved !== "1") || (get_option("comments_notify") && $comment->comment_approved === "1"))) {
             return;
         }
         if ($sendMail) {
@@ -172,10 +172,10 @@ class WpdiscuzHelperEmail implements WpDiscuzConstants {
      * Check notification type and send email to post new comments subscribers
      */
     public function checkNotificationType() {
-        $postId = isset($_POST["postId"]) ? intval($_POST["postId"]) : 0;
-        $commentId = isset($_POST["comment_id"]) ? intval($_POST["comment_id"]) : 0;
-        $email = isset($_POST["email"]) ? trim($_POST["email"]) : "";
-        $isParent = isset($_POST["isParent"]) ? intval($_POST["isParent"]) : "";
+        $postId = WpdiscuzHelper::sanitize(INPUT_POST, "postId", FILTER_SANITIZE_NUMBER_INT, 0);;
+        $commentId = WpdiscuzHelper::sanitize(INPUT_POST, "comment_id", FILTER_SANITIZE_NUMBER_INT, 0);
+        $email = isset($_POST["email"]) ? sanitize_email(trim($_POST["email"])) : "";
+        $isParent = WpdiscuzHelper::sanitize(INPUT_POST, "isParent", "FILTER_SANITIZE_STRING");
         $currentUser = WpdiscuzHelper::getCurrentUser();
         if ($currentUser && $currentUser->user_email) {
             $email = $currentUser->user_email;
@@ -415,8 +415,8 @@ class WpdiscuzHelperEmail implements WpDiscuzConstants {
                 return;
             }
             $subject = str_replace(["[COMMENT_AUTHOR]"], [$followerData["user_name"]], $this->options->getPhrase("wc_follow_email_subject"));
-            $message = str_replace(["[COMMENT_AUTHOR]", "[FOLLOWER_NAME]"], [$followerData["user_name"], $followerData["follower_name"]], $message);
-            $this->emailToFollower($followerData, $comment, $subject, $message, $cancelLink, $data);
+            $body = str_replace(["[COMMENT_AUTHOR]", "[FOLLOWER_NAME]"], [$followerData["user_name"], $followerData["follower_name"]], $message);
+            $this->emailToFollower($followerData, $comment, $subject, $body, $cancelLink, $data);
             do_action("wpdiscuz_notify_followers", $comment, $followerData);
         }
     }
