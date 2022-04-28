@@ -36,7 +36,7 @@ export const filters = [
 						],
 					},
 
-				}
+				};
 			}
 
 			return settings;
@@ -49,7 +49,7 @@ export const filters = [
 	{
 		hook: 'blocks.registerBlockType',
 		namespace: 'interconnection/add-anchor-support',
-		callback: settings => ( {
+		callback: ( settings ) => ( {
 			...settings,
 			supports: {
 				...settings.supports,

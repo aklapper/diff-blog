@@ -31,7 +31,7 @@ autoloadBlocks(
 	reloadOnHMRUpdate
 );
 
-autoloadBlocks(
+autoloadPlugins(
 	{
 		/**
 		 * Load in all files matching ./filters/{folder name}/index.js

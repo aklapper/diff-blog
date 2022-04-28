@@ -1,0 +1,13 @@
+{
+	"extends": "@humanmade/eslint-config",
+	"env": {
+		"browser": true
+	},
+	"rules": {
+		"arrow-parens": [ "error", "always" ],
+		"react/react-in-jsx-scope": "off"
+	},
+	"settings": {
+		"import/ignore": [ "@wordpress/*" ]
+	}
+}
