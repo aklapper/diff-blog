@@ -16,8 +16,8 @@ function bootstrap() {
  */
 function enqueue_block_editor_assets() {
 
-	$editor_js  = plugin_dir_url( __FILE__ ) . 'dist/editor.js';
-	$editor_css = plugin_dir_url( __FILE__ ) . 'dist/editor.css';
+	$editor_js  = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/editor.js';
+	$editor_css = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/editor.css';
 
 	wp_enqueue_script(
 		'interconnection-blocks-editor',
