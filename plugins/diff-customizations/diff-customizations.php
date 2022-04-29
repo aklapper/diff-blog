@@ -116,78 +116,81 @@ function diff_disable_jetpack_sso( $modules ) {
     return $modules;
 }
 
-//disable languages columns from list views by default
-// need to add for page, categories, and tags view
+add_filter( 'hidden_columns', 'diff_hide_language_columns' );
+/**
+ * Hide the Polylang plugin admin language columns.
+ *
+ * @param string[] $hidden_columns Array of hidden columns.
+ *
+ * @return string[] $hidden_columns Modified array of hidden columns.
+ */
+function diff_hide_language_columns( $hidden_columns ) {
+	$hidden_columns = [
+		'language_ak',
+		'language_ar',
+		'language_arg',
+		'language_as',
+		'language_ast',
+		'language_ba',
+		'language_bg',
+		'language_bn',
+		'language_ca',
+		'language_cs',
+		'language_da',
+		'language_de',
+		'language_el',
+		'language_en',
+		'language_eo',
+		'language_es',
+		'language_et',
+		'language_fa',
+		'language_fi',
+		'language_fr',
+		'language_he',
+		'language_hi',
+		'language_hu',
+		'language_hy',
+		'language_id',
+		'language_it',
+		'language_ja',
+		'language_ka',
+		'language_kn',
+		'language_ko',
+		'language_lad',
+		'language_mai',
+		'language_mi',
+		'language_mk',
+		'language_mr',
+		'language_ms',
+		'language_nb',
+		'language_ne',
+		'language_nl',
+		'language_nn',
+		'language_or',
+		'language_pa',
+		'language_pl',
+		'language_pt',
+		'language_pt-br',
+		'language_ro',
+		'language_ru',
+		'language_sq',
+		'language_sr',
+		'language_sv',
+		'language_ta',
+		'language_th',
+		'language_tr',
+		'language_tt',
+		'language_uk',
+		'language_ur',
+		'language_vi',
+		'language_yua',
+		'language_zh',
+		'language_zh-hans',
+		'language_zh-hant',
+	];
 
-add_filter( 'default_hidden_columns', 'diff_hide_list_columns', 10, 2 );
-
-function diff_hide_list_columns( $hidden, $screen ) {
-    if( isset( $screen->id ) && 'edit-post' === $screen->id ){
-			$hidden = array(	'language_de',
-								'language_es',
-								'language_fr',
-								'language_it',
-								'language_ca',
-								'language_pt',
-								'language_tr',
-								'language_ru',
-								'language_mr',
-								'language_hi',
-								'language_bn',
-								'language_ta',
-								'language_kn',
-								'language_zh',
-								'language_ja',
-								'language_en',
-								'language_ar',
-								'language_ak',
-								'language_sq',
-								'language_arg',
-								'language_hy',
-								'language_as',
-								'language_ast',
-								'language_ba',
-								'language_bg',
-								'language_zh-hans',
-								'language_zh-hant',
-								'language_cs',
-								'language_da',
-								'language_nl',
-								'language_eo',
-								'language_et',
-								'language_fa',
-								'language_fi',
-								'language_el',
-								'language_he',
-								'language_hu',
-								'language_id',
-								'language_ko',
-								'language_lad',
-								'language_mk',
-								'language_mai',
-								'language_ms',
-								'language_yua',
-								'language_ne',
-								'language_nb',
-								'language_or',
-								'language_pl',
-								'language_pt-br',
-								'language_pa',
-								'language_ro',
-								'language_sr',
-								'language_sv',
-								'language_tt',
-								'language_uk',
-								'language_ur',
-								'language_vi',
-								'language_nn'
-
-
-			);
-    }
-    return $hidden;
+	return $hidden_columns;
 }
-
 
 //disable full screen editing (it is confusing people)
 
