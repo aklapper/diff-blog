@@ -12,6 +12,7 @@ module.exports = presets.production( {
 		frontend: filePath( 'plugins/interconnection-blocks/src/frontend.js' ),
 	},
 	output: {
+		filename: '[name].js',
 		path: filePath( 'plugins/interconnection-blocks/dist' ),
 	},
 	plugins: [
