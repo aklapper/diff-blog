@@ -45,7 +45,7 @@ class Migration_Notice {
 	 * @return boolean Whether the notice should display.
 	 */
 	public function should_display() {
-		// Bail if the user is not admin or can manage plugins
+		// Bail if the user is not admin or cannot manage plugins
 		return current_user_can( 'activate_plugins' );
 	}
 

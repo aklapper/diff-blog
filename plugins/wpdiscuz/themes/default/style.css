@@ -452,6 +452,7 @@ _:-ms-lang(x), .wpd-social-login [wpd-tooltip]::before{top: -24px;}
 #wpdcom .wpd-thread-filter .wpdf-sorting{font-size:14px; color:#777777; line-height: 18px; text-transform: capitalize; min-width: 100px; font-family: "Arial Hebrew", Arial, sans-serif;}
 #wpdcom .wpd-thread-filter .wpdf-sorting i{font-size: 15px; margin-left: 6px; vertical-align: top; line-height: 14px;}
 #wpdcom .wpd-thread-list .wpd-load-more-submit-wrap{display: flex; flex-direction: row; justify-content: center; padding: 10px;}
+#wpdcom .wpd-comment .wpd-comment-wrap .wpd-comment-author span.wpd-user-nicename{color:#aaaaaa;font-size:13px;font-family: "Courier New", Courier, monospace;}
 
 /* Comment - Default Layout (#1) */
 #wpdcom .wpd-thread-list{ padding: 30px 0;}
@@ -1048,9 +1049,9 @@ _:-ms-lang(x), #wpdcom.wpd-layout-3 .wpd-comment.wpd-reply .wpd-comment-footer .
     #wpdcom {padding: 5px 3%;overflow: hidden;}
     #wpdcom .wpd-form-row div:hover.wpd-field-desc span {margin-left: -187px;}
     #wpdcom .wpd-form-row div.wpd-field-desc span::after { margin-left: 80px;}
-    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{left: -150%;top:-16px}
-    #wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::before{top:-16px}
-    #wpdcom #wpd-threads .wpd-tool-wrap [wpd-tooltip]::after{left: -50%;}
+    /*#wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::after{left: -150%;top:-16px}*/
+    /*#wpdcom #wpd-threads .wpd-comment-link [wpd-tooltip]::before{top:-16px}*/
+    /*#wpdcom #wpd-threads .wpd-tool-wrap [wpd-tooltip]::after{left: -50%;}*/
     /* Inline Commenting */
     .wpd-inline-form-wrapper{left: 0; width: 320px; position:relative; top: 7px; bottom: 15px;}
     .wpd-inline-form-wrapper::before{display: none;}

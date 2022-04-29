@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="theme">
     <div class="wpd-opt-name">
         <label for="theme"><?php echo esc_html($setting["options"]["theme"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["theme"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["theme"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -38,7 +38,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="styleSpecificColors">
     <div class="wpd-opt-input" style="width: calc(100% - 40px);">
         <h2 style="margin-bottom: 0px;font-size: 15px; color: #555;"><?php echo esc_html($setting["options"]["styleSpecificColors"]["label"]) ?></h2>
-        <p class="wpd-desc"><?php echo $setting["options"]["styleSpecificColors"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["styleSpecificColors"]["description"]) ?></p>
         <div class="wpd-default-style-colors" style="float: left; width: 48%;">
             <h4 style="font-size: 14px; color: #0c8d71;"><?php _e("Default Style","wpdiscuz"); ?></h4>
             <div class="wpd-scol-wrap">
@@ -105,7 +105,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="colors">
     <div class="wpd-opt-input" style="width: calc(100% - 40px);">
         <h2 style="margin-bottom: 0px;font-size: 15px; color: #555;"><?php echo esc_html($setting["options"]["colors"]["label"]) ?></h2>
-        <p class="wpd-desc"><?php echo $setting["options"]["colors"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["colors"]["description"]) ?></p>
         <hr />
         <div class="wpd-color-wrap">
             <input type="text" class="wpdiscuz-color-picker regular-text" value="<?php echo esc_attr($this->thread_styles["primaryColor"]); ?>" id="primaryColor" name="<?php echo esc_attr(WpdiscuzCore::TAB_THREAD_STYLES); ?>[primaryColor]" placeholder="<?php esc_attr_e("Example: #00FF00", "wpdiscuz"); ?>"/>
@@ -147,7 +147,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableFontAwesome">
     <div class="wpd-opt-name">
         <label for="enableFontAwesome"><?php echo esc_html($setting["options"]["enableFontAwesome"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableFontAwesome"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableFontAwesome"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -165,7 +165,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="customCss">
     <div class="wpd-opt-name" style="width: 28%;">
         <label for="customCss"><?php echo esc_html($setting["options"]["customCss"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["customCss"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["customCss"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input" style="width: 69%; text-align: right;">
         <textarea class="regular-text" id="customCss" name="<?php echo esc_attr(WpdiscuzCore::TAB_THREAD_STYLES); ?>[customCss]" placeholder="" style="width: 90%; height: 100px; color: #333333; font-family: 'Courier New', Courier, monospace; background: #f5f5f5;direction:ltr;text-align:left;"><?php echo stripslashes($this->thread_styles["customCss"]); ?></textarea>

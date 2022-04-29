@@ -8,6 +8,7 @@
  * See more documentation about our views templating system.
  *
  * @since   1.0.0
+ * @deprecated 1.9.0 - Use src/admin-views/virtual-metabox/api/display.php.
  *
  * @version 1.0.0
  *
@@ -24,7 +25,7 @@ use Tribe\Events\Virtual\Meetings\Zoom_Provider;
 $is_zoom = $event->virtual_meeting && tribe( Zoom_Provider::class )->get_slug() === $event->virtual_meeting_provider;
 
 $classes = [
-	'tribe-events-virtual-display__list-item',
+	'tec-events-virtual-display__list-item',
 	'tribe-events-virtual-hidden' => ! $is_zoom,
 ];
 

@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentEditableTime">
     <div class="wpd-opt-name">
         <label for="commentEditableTime"><?php echo esc_html($setting["options"]["commentEditableTime"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentEditableTime"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentEditableTime"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <select id="commentEditableTime" name="<?php echo esc_attr(WpdiscuzCore::TAB_MODERATION); ?>[commentEditableTime]">
@@ -42,7 +42,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableEditingWhenHaveReplies">
     <div class="wpd-opt-name">
         <label for="enableEditingWhenHaveReplies"><?php echo esc_html($setting["options"]["enableEditingWhenHaveReplies"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableEditingWhenHaveReplies"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableEditingWhenHaveReplies"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -60,7 +60,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="displayEditingInfo">
     <div class="wpd-opt-name">
         <label for="displayEditingInfo"><?php echo esc_html($setting["options"]["displayEditingInfo"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["displayEditingInfo"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["displayEditingInfo"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -78,7 +78,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableStickButton">
     <div class="wpd-opt-name">
         <label for="enableStickButton"><?php echo esc_html($setting["options"]["enableStickButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableStickButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableStickButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -96,7 +96,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableCloseButton">
     <div class="wpd-opt-name">
         <label for="enableCloseButton"><?php echo esc_html($setting["options"]["enableCloseButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableCloseButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableCloseButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -114,7 +114,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="userCommentsLimit">
     <div class="wpd-opt-name">
         <label for="userCommentsLimit"><?php echo esc_html($setting["options"]["userCommentsLimit"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["userCommentsLimit"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["userCommentsLimit"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">

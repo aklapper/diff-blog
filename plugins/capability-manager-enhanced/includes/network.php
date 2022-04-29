@@ -1,4 +1,11 @@
 <?php
+/*
+ * PublishPress Capabilities [Free]
+ * 
+ * Multisite-related functions / filter handlers
+ * 
+ */
+
 add_action( 'wpmu_new_blog', '_cme_new_blog' );
 function _cme_new_blog( $new_blog_id ) {
 	if ( $autocreate_roles = get_site_option( 'cme_autocreate_roles' ) ) {
@@ -17,9 +24,9 @@ function _cme_new_blog( $new_blog_id ) {
 		$admin_role = $wp_roles->get_role('administrator');
 		$main_admin_caps = $admin_role->capabilities;
 		
-		if ( defined('PRESSPERMIT_ACTIVE') )
+		if ( defined('PRESSPERMIT_ACTIVE') ) {
 			$main_pp_only = (array) pp_capabilities_get_permissions_option( 'supplemental_role_defs' );
-			//$pp_only[]= $newrole;
+		}
 	
 		foreach( $autocreate_roles as $role_name ) {
 			if ( $role = get_role( $role_name ) ) {
@@ -67,7 +74,7 @@ function _cme_new_blog( $new_blog_id ) {
 		if ( defined('PRESSPERMIT_ACTIVE') ) {
 			pp_capabilities_update_permissions_option('supplemental_role_defs', $blog_pp_only);
 		}
-		
+
 		restore_current_blog();
 		( method_exists( $wp_roles, 'for_site' ) ) ? $wp_roles->for_site() : $wp_roles->reinit();
 		

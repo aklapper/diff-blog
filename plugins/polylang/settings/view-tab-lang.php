@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</div>
 
 					<div class="form-field"><fieldset>
-						<legend><?php esc_html_e( 'Text direction', 'polylang' ); ?></legend>
+						<legend class="pll-legend"><?php esc_html_e( 'Text direction', 'polylang' ); ?></legend>
 						<?php
 						printf(
 							'<label><input name="rtl" type="radio" value="0" %s /> %s</label>',
@@ -160,7 +160,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						 *
 						 * @since 1.7.10
 						 *
-						 * @param object $lang language being edited.
+						 * @param PLL_Language $lang language being edited.
 						 */
 						do_action( 'pll_language_edit_form_fields', $edit_lang );
 					} else {

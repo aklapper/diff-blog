@@ -4,20 +4,25 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
+class ComposerStaticInit57e007bdf76a1fe336cb43b59389545b
 {
     public static $classMap = array (
         'PLL_AS3CF' => __DIR__ . '/../..' . '/integrations/wp-offload-media/as3cf.php',
+        'PLL_Abstract_Sitemaps' => __DIR__ . '/../..' . '/modules/sitemaps/abstract-sitemaps.php',
+        'PLL_Accept_Language' => __DIR__ . '/../..' . '/frontend/accept-language.php',
+        'PLL_Accept_Languages_Collection' => __DIR__ . '/../..' . '/frontend/accept-languages-collection.php',
         'PLL_Admin' => __DIR__ . '/../..' . '/admin/admin.php',
         'PLL_Admin_Base' => __DIR__ . '/../..' . '/admin/admin-base.php',
         'PLL_Admin_Block_Editor' => __DIR__ . '/../..' . '/admin/admin-block-editor.php',
         'PLL_Admin_Classic_Editor' => __DIR__ . '/../..' . '/admin/admin-classic-editor.php',
+        'PLL_Admin_Default_Term' => __DIR__ . '/../..' . '/admin/admin-default-term.php',
         'PLL_Admin_Filters' => __DIR__ . '/../..' . '/admin/admin-filters.php',
         'PLL_Admin_Filters_Columns' => __DIR__ . '/../..' . '/admin/admin-filters-columns.php',
         'PLL_Admin_Filters_Media' => __DIR__ . '/../..' . '/admin/admin-filters-media.php',
         'PLL_Admin_Filters_Post' => __DIR__ . '/../..' . '/admin/admin-filters-post.php',
         'PLL_Admin_Filters_Post_Base' => __DIR__ . '/../..' . '/admin/admin-filters-post-base.php',
         'PLL_Admin_Filters_Term' => __DIR__ . '/../..' . '/admin/admin-filters-term.php',
+        'PLL_Admin_Filters_Widgets_Options' => __DIR__ . '/../..' . '/admin/admin-filters-widgets-options.php',
         'PLL_Admin_Links' => __DIR__ . '/../..' . '/admin/admin-links.php',
         'PLL_Admin_Model' => __DIR__ . '/../..' . '/admin/admin-model.php',
         'PLL_Admin_Nav_Menu' => __DIR__ . '/../..' . '/admin/admin-nav-menu.php',
@@ -28,6 +33,7 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
         'PLL_Admin_Sync' => __DIR__ . '/../..' . '/modules/sync/admin-sync.php',
         'PLL_Aqua_Resizer' => __DIR__ . '/../..' . '/integrations/aqua-resizer/aqua-resizer.php',
         'PLL_Base' => __DIR__ . '/../..' . '/include/base.php',
+        'PLL_Block_Editor_Filter_Preload_Paths' => __DIR__ . '/../..' . '/admin/block-editor-filter-preload-paths.php',
         'PLL_CRUD_Posts' => __DIR__ . '/../..' . '/include/crud-posts.php',
         'PLL_CRUD_Terms' => __DIR__ . '/../..' . '/include/crud-terms.php',
         'PLL_Cache' => __DIR__ . '/../..' . '/include/cache.php',
@@ -37,16 +43,21 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
         'PLL_Choose_Lang_Content' => __DIR__ . '/../..' . '/frontend/choose-lang-content.php',
         'PLL_Choose_Lang_Domain' => __DIR__ . '/../..' . '/frontend/choose-lang-domain.php',
         'PLL_Choose_Lang_Url' => __DIR__ . '/../..' . '/frontend/choose-lang-url.php',
+        'PLL_Cookie' => __DIR__ . '/../..' . '/include/cookie.php',
+        'PLL_Db_Tools' => __DIR__ . '/../..' . '/include/db-tools.php',
         'PLL_Domain_Mapping' => __DIR__ . '/../..' . '/integrations/domain-mapping/domain-mapping.php',
         'PLL_Duplicate_Post' => __DIR__ . '/../..' . '/integrations/duplicate-post/duplicate-post.php',
         'PLL_Featured_Content' => __DIR__ . '/../..' . '/integrations/jetpack/featured-content.php',
         'PLL_Filters' => __DIR__ . '/../..' . '/include/filters.php',
         'PLL_Filters_Links' => __DIR__ . '/../..' . '/include/filters-links.php',
+        'PLL_Filters_Sanitization' => __DIR__ . '/../..' . '/include/filters-sanitization.php',
+        'PLL_Filters_Widgets_Options' => __DIR__ . '/../..' . '/include/filters-widgets-options.php',
         'PLL_Frontend' => __DIR__ . '/../..' . '/frontend/frontend.php',
         'PLL_Frontend_Auto_Translate' => __DIR__ . '/../..' . '/frontend/frontend-auto-translate.php',
         'PLL_Frontend_Filters' => __DIR__ . '/../..' . '/frontend/frontend-filters.php',
         'PLL_Frontend_Filters_Links' => __DIR__ . '/../..' . '/frontend/frontend-filters-links.php',
         'PLL_Frontend_Filters_Search' => __DIR__ . '/../..' . '/frontend/frontend-filters-search.php',
+        'PLL_Frontend_Filters_Widgets' => __DIR__ . '/../..' . '/frontend/frontend-filters-widgets.php',
         'PLL_Frontend_Links' => __DIR__ . '/../..' . '/frontend/frontend-links.php',
         'PLL_Frontend_Nav_Menu' => __DIR__ . '/../..' . '/frontend/frontend-nav-menu.php',
         'PLL_Frontend_Static_Pages' => __DIR__ . '/../..' . '/frontend/frontend-static-pages.php',
@@ -72,7 +83,6 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
         'PLL_No_Category_Base' => __DIR__ . '/../..' . '/integrations/no-category-base/no-category-base.php',
         'PLL_OLT_Manager' => __DIR__ . '/../..' . '/include/olt-manager.php',
         'PLL_Plugin_Updater' => __DIR__ . '/../..' . '/install/plugin-updater.php',
-        'PLL_Pointer' => __DIR__ . '/../..' . '/include/pointer.php',
         'PLL_Query' => __DIR__ . '/../..' . '/include/query.php',
         'PLL_REST_Request' => __DIR__ . '/../..' . '/include/rest-request.php',
         'PLL_Settings' => __DIR__ . '/../..' . '/settings/settings.php',
@@ -81,12 +91,12 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
         'PLL_Settings_Licenses' => __DIR__ . '/../..' . '/settings/settings-licenses.php',
         'PLL_Settings_Media' => __DIR__ . '/../..' . '/settings/settings-media.php',
         'PLL_Settings_Module' => __DIR__ . '/../..' . '/settings/settings-module.php',
-        'PLL_Settings_Share_Slug' => __DIR__ . '/../..' . '/modules/share-slug/settings-share-slug.php',
+        'PLL_Settings_Preview_Share_Slug' => __DIR__ . '/../..' . '/modules/share-slug/settings-preview-share-slug.php',
+        'PLL_Settings_Preview_Translate_Slugs' => __DIR__ . '/../..' . '/modules/translate-slugs/settings-preview-translate-slugs.php',
         'PLL_Settings_Sync' => __DIR__ . '/../..' . '/modules/sync/settings-sync.php',
-        'PLL_Settings_Translate_Slugs' => __DIR__ . '/../..' . '/modules/translate-slugs/settings-translate-slugs.php',
         'PLL_Settings_Url' => __DIR__ . '/../..' . '/settings/settings-url.php',
-        'PLL_Settings_WPML' => __DIR__ . '/../..' . '/modules/wpml/settings-wpml.php',
         'PLL_Sitemaps' => __DIR__ . '/../..' . '/modules/sitemaps/sitemaps.php',
+        'PLL_Sitemaps_Domain' => __DIR__ . '/../..' . '/modules/sitemaps/sitemaps-domain.php',
         'PLL_Static_Pages' => __DIR__ . '/../..' . '/include/static-pages.php',
         'PLL_Switcher' => __DIR__ . '/../..' . '/include/switcher.php',
         'PLL_Sync' => __DIR__ . '/../..' . '/modules/sync/sync.php',
@@ -98,6 +108,7 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
         'PLL_Table_Languages' => __DIR__ . '/../..' . '/settings/table-languages.php',
         'PLL_Table_Settings' => __DIR__ . '/../..' . '/settings/table-settings.php',
         'PLL_Table_String' => __DIR__ . '/../..' . '/settings/table-string.php',
+        'PLL_Translate_Option' => __DIR__ . '/../..' . '/include/translate-option.php',
         'PLL_Translated_Object' => __DIR__ . '/../..' . '/include/translated-object.php',
         'PLL_Translated_Post' => __DIR__ . '/../..' . '/include/translated-post.php',
         'PLL_Translated_Term' => __DIR__ . '/../..' . '/include/translated-term.php',
@@ -123,7 +134,7 @@ class ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit90bd76dc7672e476bcd63c4a62ea320a::$classMap;
+            $loader->classMap = ComposerStaticInit57e007bdf76a1fe336cb43b59389545b::$classMap;
 
         }, null, ClassLoader::class);
     }

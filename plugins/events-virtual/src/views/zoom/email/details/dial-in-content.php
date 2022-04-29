@@ -29,12 +29,7 @@
 					<?php
 					echo esc_html(
 						sprintf(
-							// translators: %1$s: country, %2$s: Zoom meeting phone number.
-							_x(
-								'(%1$s) %2$s',
-								'The country and phone number for Zoom meeting.',
-								'events-virtual'
-							),
+							'(%1$s) %2$s',
 							$phone_number['country'],
 							$phone_number['visual']
 						)

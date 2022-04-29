@@ -13,6 +13,7 @@ namespace Tribe\Events\Virtual\Meetings;
  * Class Api_Response
  *
  * @since   1.0.0
+ * @deprecated 1.9.0 - Class moved to Tribe\Events\Virtual\Integrations.
  *
  * @package Tribe\Events\Virtual\Meetings
  */
@@ -51,6 +52,8 @@ class Api_Response {
 	 *                                  \WP_Error to indicate a failure.
 	 */
 	public function __construct( $response ) {
+		_deprecated_function( __METHOD__, '1.9.0', 'Class moved to Tribe\Events\Virtual\Integrations.' );
+
 		$this->response     = $response;
 		$this->is_fulfilled = ! $response instanceof \WP_Error;
 		$this->is_rejected  = $response instanceof \WP_Error;

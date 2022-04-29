@@ -9,6 +9,12 @@
  * @since 1.8
  */
 class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
+
+	/**
+	 * @var PLL_Frontend_Links
+	 */
+	public $links;
+
 	/**
 	 * Our internal non persistent cache object
 	 *
@@ -51,7 +57,7 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 		}
 
 		// Meta in the html head section
-		add_action( 'wp_head', array( $this, 'wp_head' ) );
+		add_action( 'wp_head', array( $this, 'wp_head' ), 1 );
 
 		// Modifies the home url
 		if ( ! defined( 'PLL_FILTER_HOME_URL' ) || PLL_FILTER_HOME_URL ) {
@@ -125,13 +131,13 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 
 	/**
 	 * Modifies custom posts links
-	 * and caches the result
+	 * and caches the result.
 	 *
 	 * @since 1.6
 	 *
-	 * @param string $link post link
-	 * @param object $post post object
-	 * @return string modified post link
+	 * @param string  $link Post link.
+	 * @param WP_Post $post Post object.
+	 * @return string Modified post link.
 	 */
 	public function post_type_link( $link, $post ) {
 		$cache_key = "post:{$post->ID}:{$link}";
@@ -144,14 +150,14 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 
 	/**
 	 * Modifies filtered taxonomies ( post format like ) and translated taxonomies links
-	 * and caches the result
+	 * and caches the result.
 	 *
 	 * @since 0.7
 	 *
-	 * @param string $link
-	 * @param object $term term object
-	 * @param string $tax  taxonomy name
-	 * @return string modified link
+	 * @param string  $link Term link.
+	 * @param WP_Term $term Term object.
+	 * @param string  $tax  Taxonomy name.
+	 * @return string Modified link.
 	 */
 	public function term_link( $link, $term, $tax ) {
 		$cache_key = "term:{$term->term_id}:{$link}";
@@ -178,7 +184,7 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 	 *
 	 * @param string $link    Post permalink.
 	 * @param int    $post_id Post id.
-	 * @return Post permalink with the correct domain.
+	 * @return string Post permalink with the correct domain.
 	 */
 	public function shortlink( $link, $post_id ) {
 		$post_type = get_post_type( $post_id );
@@ -189,6 +195,8 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 	 * Outputs references to translated pages ( if exists ) in the html head section
 	 *
 	 * @since 0.1
+	 *
+	 * @return void
 	 */
 	public function wp_head() {
 		// Don't output anything on paged archives: see https://wordpress.org/support/topic/hreflang-on-page2
@@ -283,6 +291,7 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 					array( 'function' => 'wp_nav_menu' ),
 					array( 'function' => 'login_footer' ),
 					array( 'function' => 'get_custom_logo' ),
+					array( 'function' => 'render_block_core_site_title' ),
 				)
 			);
 		}
@@ -345,30 +354,30 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 	}
 
 	/**
-	 * If the language code is not in agreement with the language of the content
-	 * redirects incoming links to the proper URL to avoid duplicate content
+	 * If the language code is not in agreement with the language of the content,
+	 * redirects incoming links to the proper URL to avoid duplicate content.
 	 *
 	 * @since 0.9.6
 	 *
-	 * @param string $requested_url optional
-	 * @param bool   $do_redirect   optional, whether to perform the redirection or not
-	 * @return string if redirect is not performed
+	 * @param string $requested_url Optional, defaults to requested url.
+	 * @param bool   $do_redirect   Optional, whether to perform the redirect or not.
+	 * @return string|void Returns if redirect is not performed.
 	 */
 	public function check_canonical_url( $requested_url = '', $do_redirect = true ) {
-		global $wp_query, $post, $is_IIS;
-
-		// Don't redirect in same cases as WP
-		if ( is_trackback() || is_search() || is_admin() || is_preview() || is_robots() || ( $is_IIS && ! iis7_supports_permalinks() ) ) {
+		// Don't redirect in same cases as WP.
+		if ( is_trackback() || is_search() || is_admin() || is_preview() || is_robots() || ( $GLOBALS['is_IIS'] && ! iis7_supports_permalinks() ) ) {
 			return;
 		}
 
-		// Don't redirect mysite.com/?attachment_id= to mysite.com/en/?attachment_id=
+		// Don't redirect mysite.com/?attachment_id= to mysite.com/en/?attachment_id=.
 		if ( 1 == $this->options['force_lang'] && is_attachment() && isset( $_GET['attachment_id'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
 			return;
 		}
 
-		// If the default language code is not hidden and the static front page url contains the page name
-		// the customizer lands here and the code below would redirect to the list of posts
+		/*
+		 * If the default language code is not hidden and the static front page url contains the page name,
+		 * the customizer lands here and the code below would redirect to the list of posts.
+		 */
 		if ( is_customize_preview() ) {
 			return;
 		}
@@ -378,27 +387,53 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 		}
 
 		if ( is_single() || is_page() ) {
-			if ( isset( $post->ID ) && $this->model->is_translated_post_type( $post->post_type ) ) {
+			$post = get_post();
+			if ( $post instanceof WP_Post && $this->model->is_translated_post_type( $post->post_type ) ) {
 				$language = $this->model->post->get_language( (int) $post->ID );
 			}
 		}
 
 		elseif ( is_category() || is_tag() || is_tax() ) {
-			$obj = $wp_query->get_queried_object();
-			if ( ! empty( $obj ) && $this->model->is_translated_taxonomy( $obj->taxonomy ) ) {
-				$language = $this->model->term->get_language( (int) $obj->term_id );
+			if ( $this->model->is_translated_taxonomy( $this->get_queried_taxonomy( $this->wp_query()->tax_query ) ) ) {
+				if ( $this->links_model->using_permalinks && ( ! empty( $this->wp_query()->query['cat'] ) || ! empty( $this->wp_query()->query['tag'] ) || ! empty( $this->wp_query()->query['category_name'] ) ) ) {
+					// When we receive a plain permalink with a cat or tag query var, we need to redirect to the pretty permalink.
+					$term_id = $this->get_queried_term_id( $this->wp_query()->tax_query );
+					if ( is_feed() ) {
+						$redirect_url = $this->maybe_add_page_to_redirect_url( get_term_feed_link( $term_id, '' ) );
+					} else {
+						$redirect_url = $this->maybe_add_page_to_redirect_url( get_term_link( $term_id ) );
+					}
+					$language = $this->get_queried_term_language();
+				} else {
+					// We need to switch the language when there is no language provided in a pretty permalink.
+					$obj = get_queried_object();
+					if ( ! empty( $obj ) && $this->model->is_translated_taxonomy( $obj->taxonomy ) ) {
+						$language = $this->model->term->get_language( (int) $obj->term_id );
+					}
+				}
+			}
+
+			if ( is_feed() && empty( $obj ) ) {
+				// Allows to replace the language correctly in a category feed query.
+				$language = $this->get_queried_term_language();
 			}
 		}
 
-		elseif ( $wp_query->is_posts_page ) {
-			$obj = $wp_query->get_queried_object();
-			$language = $this->model->post->get_language( (int) $obj->ID );
+		elseif ( is_404() && ! empty( $this->wp_query()->tax_query ) ) {
+			// When a wrong language is passed through a pretty permalink, we just need to switch the language.
+			$language = $this->get_queried_term_language();
 		}
 
-		elseif ( is_404() && ! empty( $wp_query->query['page_id'] ) && $id = get_query_var( 'page_id' ) ) {
-			// Special case for page shortlinks when using subdomains or multiple domains
-			// Needed because redirect_canonical doesn't accept to change the domain name
+		elseif ( $this->links_model->using_permalinks && $this->wp_query()->is_posts_page && ! empty( $this->wp_query()->query['page_id'] ) && $id = get_query_var( 'page_id' ) ) {
 			$language = $this->model->post->get_language( (int) $id );
+			$redirect_url = $this->maybe_add_page_to_redirect_url( get_permalink( $id ) );
+		}
+
+		elseif ( $this->wp_query()->is_posts_page ) {
+			$obj = get_queried_object();
+			if ( $obj instanceof WP_Post ) {
+				$language = $this->model->post->get_language( (int) $obj->ID );
+			}
 		}
 
 		if ( 3 === $this->options['force_lang'] ) {
@@ -428,21 +463,136 @@ class PLL_Frontend_Filters_Links extends PLL_Filters_Links {
 		}
 
 		/**
-		 * Filters the canonical url detected by Polylang
+		 * Filters the canonical url detected by Polylang.
 		 *
 		 * @since 1.6
 		 *
-		 * @param bool|string $redirect_url false or the url to redirect to
-		 * @param object      $language the language detected
+		 * @param string|false $redirect_url False or the url to redirect to.
+		 * @param PLL_Language $language The language detected.
 		 */
 		$redirect_url = apply_filters( 'pll_check_canonical_url', $redirect_url, $language );
 
 		// The language is not correctly set so let's redirect to the correct url for this object
-		if ( $do_redirect && $redirect_url && $requested_url != $redirect_url ) {
-			wp_safe_redirect( $redirect_url, 301, POLYLANG );
-			exit;
+		if ( $do_redirect ) {
+			// Protect against chained redirects.
+			if ( $redirect_url && $requested_url != $redirect_url && $redirect_url === $this->check_canonical_url( $redirect_url, false ) && wp_validate_redirect( $redirect_url ) ) {
+				wp_safe_redirect( $redirect_url, 301, POLYLANG );
+				exit;
+			} else {
+				return;
+			}
 		}
 
 		return $redirect_url;
+	}
+
+	/**
+	 * Returns the link to the paged page if requested.
+	 *
+	 * @since 2.9
+	 *
+	 * @param string $redirect_url The url to redirect to.
+	 * @return string
+	 */
+	protected function maybe_add_page_to_redirect_url( $redirect_url ) {
+		if ( ! empty( $this->wp_query()->query['paged'] ) && $page = get_query_var( 'paged' ) ) {
+			$redirect_url = $this->links_model->add_paged_to_link( $redirect_url, $page );
+		}
+		return $redirect_url;
+	}
+
+	/**
+	 * Returns the term_id of the requested term.
+	 *
+	 * @since 2.9
+	 *
+	 * @param WP_Tax_Query $tax_query An instance of WP_Tax_Query.
+	 * @return int|false
+	 */
+	protected function get_queried_term_id( $tax_query ) {
+		$queried_terms = $tax_query->queried_terms;
+		$taxonomy = $this->get_queried_taxonomy( $tax_query );
+
+		if ( ! is_array( $queried_terms[ $taxonomy ]['terms'] ) ) {
+			return false;
+		}
+		$field = $queried_terms[ $taxonomy ]['field'];
+		$term  = reset( $queried_terms[ $taxonomy ]['terms'] );
+		$lang  = isset( $queried_terms['language']['terms'] ) ? reset( $queried_terms['language']['terms'] ) : '';
+
+		// We can get a term_id when requesting a plain permalink, eg /?cat=1.
+		if ( 'term_id' === $field ) {
+			return $term;
+		}
+
+		// We get a slug when requesting a pretty permalink. Let's query all corresponding terms.
+		$args = array(
+			'lang' => '',
+			'taxonomy' => $taxonomy,
+			$field => $term,
+			'hide_empty' => false,
+			'fields' => 'ids',
+		);
+		$terms = get_terms( $args );
+
+		$filtered_terms_by_lang = array_filter(
+			$terms,
+			function ( $term ) use ( $lang ) {
+				$term_lang = $this->model->term->get_language( $term );
+
+				return ! empty( $term_lang ) && $term_lang->slug === $lang;
+			}
+		);
+
+		$tr_term = reset( $filtered_terms_by_lang );
+
+		if ( ! empty( $tr_term ) ) {
+			// The queried term exists in the desired language.
+			return $tr_term;
+		}
+
+		// The queried term doesn't exist in the desired language, let's return the first one retrieved.
+		return reset( $terms );
+	}
+
+	/**
+	 * Find the taxonomy being queried.
+	 *
+	 * @since 2.9
+	 *
+	 * @param WP_Tax_Query $tax_query An instance of WP_Tax_Query.
+	 * @return string A taxonomy slug
+	 */
+	protected function get_queried_taxonomy( $tax_query ) {
+		$queried_terms = $tax_query->queried_terms;
+		unset( $queried_terms['language'] );
+
+		return key( $queried_terms );
+	}
+
+	/**
+	 * Returns the Global WordPress WP_Query object.
+	 *
+	 * @since 3.0
+	 *
+	 * @return WP_Query
+	 */
+	protected function wp_query() {
+		return $GLOBALS['wp_query'];
+	}
+
+	/**
+	 * Get the language corresponding to the queried term.
+	 *
+	 * @since 3.2
+	 *
+	 * @return PLL_Language|false The language object or false.
+	 */
+	public function get_queried_term_language() {
+		if ( $this->model->is_translated_taxonomy( $this->get_queried_taxonomy( $this->wp_query()->tax_query ) ) ) {
+			$term_id = $this->get_queried_term_id( $this->wp_query()->tax_query );
+			return $this->model->term->get_language( $term_id );
+		}
+		return false;
 	}
 }

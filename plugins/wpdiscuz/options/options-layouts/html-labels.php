@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="blogRoleLabels" style="border-bottom: none;">
     <div class="wpd-opt-input" style="width: calc(100% - 40px);">
         <h2 style="margin-bottom: 0px;font-size: 15px; color: #555;"><?php echo esc_html($setting["options"]["blogRoleLabels"]["label"]) ?></h2>
-        <p class="wpd-desc"><?php echo $setting["options"]["blogRoleLabels"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["blogRoleLabels"]["description"]) ?></p>
         <hr />
         <div class="wpd-multi-check" style="padding-top: 10px; padding-left: 10px;">
             <?php
@@ -45,7 +45,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commenterLabelColors">
     <div class="wpd-opt-input" style="width: calc(100% - 40px);">
         <h2 style="margin-bottom: 0px;font-size: 15px; color: #555;"><?php echo esc_html($setting["options"]["commenterLabelColors"]["label"]) ?></h2>
-        <p class="wpd-desc"><?php echo $setting["options"]["commenterLabelColors"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commenterLabelColors"]["description"]) ?></p>
         <hr />
         <?php
         foreach ($this->labels["blogRoles"] as $roleName => $color) {

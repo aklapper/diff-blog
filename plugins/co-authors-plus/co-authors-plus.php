@@ -3,7 +3,7 @@
 Plugin Name: Co-Authors Plus
 Plugin URI: http://wordpress.org/extend/plugins/co-authors-plus/
 Description: Allows multiple authors to be assigned to a post. This plugin is an extended version of the Co-Authors plugin developed by Weston Ruter.
-Version: 3.4.8
+Version: 3.5.1
 Author: Mohammad Jangda, Daniel Bachhuber, Automattic
 Copyright: 2008-2015 Shared and distributed between Mohammad Jangda, Daniel Bachhuber, Weston Ruter
 
@@ -32,12 +32,13 @@ Co-author - in the context of a single post, a guest author or user assigned to 
 Author - user with the role of author
 */
 
-define( 'COAUTHORS_PLUS_VERSION', '3.4.8' );
+define( 'COAUTHORS_PLUS_VERSION', '3.5.1' );
 
 require_once dirname( __FILE__ ) . '/template-tags.php';
 require_once dirname( __FILE__ ) . '/deprecated.php';
 
 require_once dirname( __FILE__ ) . '/php/class-coauthors-template-filters.php';
+require_once dirname( __FILE__ ) . '/php/class-coauthors-endpoint.php';
 require_once dirname( __FILE__ ) . '/php/integrations/amp.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
@@ -136,6 +137,9 @@ class CoAuthors_Plus {
 
 		// Filter to display author image if exists instead of avatar
 		add_filter( 'pre_get_avatar_data', array( $this, 'filter_pre_get_avatar_data_url' ), 10, 2 );
+
+		// Block editor assets for the sidebar plugin.
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_sidebar_plugin_assets' ) );
 	}
 
 	/**
@@ -165,6 +169,50 @@ class CoAuthors_Plus {
 	}
 
 	/**
+	 * Determine if block editor sidebar integration should be loaded.
+	 *
+	 * @param WP_Post|int|null $post Post ID or object, null to use global.
+	 * @return bool
+	 */
+	public function is_block_editor( $post = null ) {
+		$screen = get_current_screen();
+
+		// Pre-5.0 compatibility
+		if ( method_exists( $screen, 'is_block_editor' ) ) {
+			return $screen->is_block_editor();
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * When filter is set to enable block editor integration, enqueue assets
+	 * for posts and users where Co Authors is enabled
+	 */
+	public function enqueue_sidebar_plugin_assets() {
+		if ( $this->is_post_type_enabled() && $this->current_user_can_set_authors() ) {
+			$asset = require dirname( __FILE__ ) . '/build/index.asset.php';
+
+			wp_register_script(
+				'coauthors-sidebar-js',
+				plugins_url( 'build/index.js', __FILE__ ),
+				$asset['dependencies'],
+				$asset['version']
+			);
+
+			wp_register_style(
+				'coauthors-sidebar-css',
+				plugins_url( 'build/style-index.css', __FILE__ ),
+				'',
+				$asset['version']
+			);
+
+			wp_enqueue_script( 'coauthors-sidebar-js' );
+			wp_enqueue_style( 'coauthors-sidebar-css' );
+		}
+	}
+
+	/**
 	 * Register the 'author' taxonomy and add post type support
 	 */
 	public function action_init_late() {
@@ -178,7 +226,9 @@ class CoAuthors_Plus {
 			'public'       => false,
 			'sort'         => true,
 			'args'         => array( 'orderby' => 'term_order' ),
+			'show_in_rest' => true,
 			'show_ui'      => false,
+			'rest_base'    => 'coauthors',
 		);
 
 		// If we use the nasty SQL query, we need our custom callback. Otherwise, we still need to flush cache.
@@ -276,7 +326,7 @@ class CoAuthors_Plus {
 				if ( ! $user && ( 'login' == $key || 'slug' == $key ) ) {
 					// Re-try lookup without prefixed value if no results found.
 					$value = preg_replace( '#^cap\-#', '', $value );
-					$user = get_user_by( $key, $value );
+					$user  = get_user_by( $key, $value );
 				}
 				if ( ! $user ) {
 					return false;
@@ -333,9 +383,10 @@ class CoAuthors_Plus {
 	 * Adds a custom 'Authors' box
 	 */
 	public function add_coauthors_box() {
-
 		if ( $this->is_post_type_enabled() && $this->current_user_can_set_authors() ) {
-			add_meta_box( $this->coauthors_meta_box_name, apply_filters( 'coauthors_meta_box_title', __( 'Authors', 'co-authors-plus' ) ), array( $this, 'coauthors_meta_box' ), get_post_type(), apply_filters( 'coauthors_meta_box_context', 'normal' ), apply_filters( 'coauthors_meta_box_priority', 'high' ) );
+			if ( false === $this->is_block_editor() ) {
+				add_meta_box( $this->coauthors_meta_box_name, apply_filters( 'coauthors_meta_box_title', __( 'Authors', 'co-authors-plus' ) ), array( $this, 'coauthors_meta_box' ), get_post_type(), apply_filters( 'coauthors_meta_box_context', 'side' ), apply_filters( 'coauthors_meta_box_priority', 'high' ) );
+			}
 		}
 	}
 
@@ -546,8 +597,7 @@ class CoAuthors_Plus {
 		global $wpdb;
 
 		$tt_ids   = implode( ', ', array_map( 'intval', $tt_ids ) );
-		$term_ids = $wpdb->get_results( $wpdb->prepare( "SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN (%s)", $tt_ids ) );
-
+		$term_ids = $wpdb->get_results( "SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN ($tt_ids)" ); // phpcs:ignore
 
 		foreach ( (array) $term_ids as $term_id_result ) {
 			$term = get_term_by( 'id', $term_id_result->term_id, $this->coauthor_taxonomy );
@@ -735,15 +785,17 @@ class CoAuthors_Plus {
 					$id = '\d+';
 				}
 
-				// When WordPress generates query as 'post_author IN (id)'.
-				if ( false !== strpos( $where, "{$wpdb->posts}.post_author IN " ) ) {
+				$maybe_both_query = $maybe_both ? '$0 OR' : '';
 
-					$maybe_both_query = $maybe_both ? '$0 OR' : '';
+				// add the taxonomy terms to the where query
+				$where = preg_replace( '/\(?\b(?:' . $wpdb->posts . '\.)?post_author\s*(?:=|IN)\s*\(?\d+\)?\)?/', ' (' . $maybe_both_query . ' ' . $terms_implode . ')', $where, 1 );
 
-					$where = preg_replace( '/\s\b(?:' . $wpdb->posts . '\.)?post_author\s*IN\s*\(' . $id . '\)/', ' (' . $maybe_both_query . ' ' . $terms_implode . ')', $where, -1 ); // ' . $wpdb->postmeta . '.meta_id IS NOT NULL AND
+				// if there is a duplicate post_author query parameter, remove the duplicate
+				$where = preg_replace( '/AND\s*\((?:' . $wpdb->posts . '\.)?post_author\s*\=\s*\d+\)/', ' ', $where, 1 );
 
-				} else {
-					$where = preg_replace( '/(\b(?:' . $wpdb->posts . '\.)?post_author\s*=\s*(' . $id . '))/', '(' . $maybe_both_query . ' ' . $terms_implode . ')', $where, -1 ); // ' . $wpdb->postmeta . '.meta_id IS NOT NULL AND
+				// When WordPress generates query as 'post_author IN (id)', and there is a numeric $id, replace the often errant $id with the correct one - related to https://core.trac.wordpress.org/ticket/54268
+				if ( '\d+' !== $id ) {
+					$where = preg_replace( '/\b(?:' . $wpdb->posts . '\.)?post_author\s*IN\s*\(\d+\)/', ' (' . $wpdb->posts . '.post_author = ' . $id . ')', $where, 1 );
 				}
 
 				// the block targets the private posts clause (if it exists)
@@ -759,7 +811,7 @@ class CoAuthors_Plus {
 						$current_user_query  = $wpdb->term_taxonomy . '.taxonomy = \'' . $this->coauthor_taxonomy . '\' AND ' . $wpdb->term_taxonomy . '.term_id = \'' . $current_coauthor_term->term_id . '\'';
 						$this->having_terms .= ' ' . $wpdb->term_taxonomy . '.term_id = \'' . $current_coauthor_term->term_id . '\' OR ';
 
-						$where = preg_replace( '/(\b(?:' . $wpdb->posts . '\.)?post_author\s*=\s*(' . get_current_user_id() . ') )/', $current_user_query . ' ', $where, -1 ); // ' . $wpdb->postmeta . '.meta_id IS NOT NULL AND}
+						$where = preg_replace( '/(\b(?:' . $wpdb->posts . '\.)?post_author\s*=\s*(' . get_current_user_id() . ') )/', $current_user_query . ' ', $where, 1 ); // ' . $wpdb->postmeta . '.meta_id IS NOT NULL AND}
 					}
 				}
 
@@ -917,7 +969,8 @@ class CoAuthors_Plus {
 		$coauthors        = array_unique( array_merge( $existing_coauthors, $coauthors ) );
 		$coauthor_objects = array();
 		foreach ( $coauthors as &$author_name ) {
-			$field              = apply_filters( 'coauthors_post_get_coauthor_by_field', $query_type, $author_name );
+			$field = apply_filters( 'coauthors_post_get_coauthor_by_field', $query_type, $author_name );
+
 			$author             = $this->get_coauthor_by( $field, $author_name );
 			$coauthor_objects[] = $author;
 			$term               = $this->update_author_term( $author );
@@ -1003,6 +1056,7 @@ class CoAuthors_Plus {
 	 * Restrict WordPress from blowing away co-author order when bulk editing terms
 	 *
 	 * @since 2.6
+	 * @props kingkool68, http://wordpress.org/support/topic/plugin-co-authors-plus-making-authors-sortable
 	 * @props kingkool68, http://wordpress.org/support/topic/plugin-co-authors-plus-making-authors-sortable
 	 */
 	function filter_wp_get_object_terms( $terms, $object_ids, $taxonomies, $args ) {
@@ -1133,6 +1187,12 @@ class CoAuthors_Plus {
 	 */
 	public function fix_author_page( $selection ) {
 
+		global $wp_query, $authordata;
+
+		if ( ! isset( $wp_query ) ) {
+			return;
+		}
+
 		if ( ! is_author() ) {
 			return;
 		}
@@ -1143,9 +1203,6 @@ class CoAuthors_Plus {
 		}
 
 		$author = $this->get_coauthor_by( 'user_nicename', $author_name );
-
-		global $wp_query, $authordata;
-
 		if ( is_object( $author ) ) {
 			$authordata = $author; //phpcs:ignore
 			$term       = $this->get_author_term( $authordata );
@@ -1197,7 +1254,7 @@ class CoAuthors_Plus {
 			die();
 		}
 
-		if ( empty( $_REQUEST['q'] ) || empty( $_REQUEST['existing_authors'] ) ) {
+		if ( empty( $_REQUEST['q'] ) ) {
 			die();
 		}
 
@@ -1791,7 +1848,8 @@ class CoAuthors_Plus {
 }
 
 global $coauthors_plus;
-$coauthors_plus = new CoAuthors_Plus();
+$coauthors_plus     = new CoAuthors_Plus();
+$coauthors_endpoint = new CoAuthors\API\Endpoints( $coauthors_plus );
 
 if ( ! function_exists( 'wp_notify_postauthor' ) ) :
 	/**

@@ -133,7 +133,7 @@ class Tribe__Events__Filterbar__Filters__Additional_Field extends Tribe__Events_
 		// When a checkbox, multiselect, or select is used it can also have multiple values stored in a single post.
 		if ( 'checkbox' === $this->type || 'multiselect' === $this->type || 'select' === $this->type ) {
 			$values = array_map( static function( $value ) use ( $delimiter ) {
-				return (array) Arr::list_to_array( $value, $delimiter );
+				return (array) explode( $delimiter, $value );
 			}, $values );
 
 			// Flatten the array of values.

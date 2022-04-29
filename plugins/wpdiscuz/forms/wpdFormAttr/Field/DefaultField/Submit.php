@@ -34,24 +34,28 @@ class Submit extends Field {
             do_action("wpdiscuz_before_submit_button_in_wrapper", $currentUser, $uniqueId, $isMainForm);
             if ($isMainForm && (current_user_can("moderate_comments") || ($post && isset($post->post_author) && $post->post_author == $currentUser->ID))) {
                 ?>
-                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_stick_comment_btn_title")); ?>">
-                    <input id="wc_sticky_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_sticky_comment"/>
-                    <span class="wpd_label__text">
-                        <span class="wpd_label__check">
-                            <i class="fas fa-thumbtack wpdicon wpdicon-on"></i>
-                            <i class="fas fa-thumbtack wpdicon wpdicon-off"></i>
+                <?php if ($options->moderation['enableStickButton']) { ?>
+                    <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_stick_comment_btn_title")); ?>">
+                        <input id="wc_sticky_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_sticky_comment"/>
+                        <span class="wpd_label__text">
+                            <span class="wpd_label__check">
+                                <i class="fas fa-thumbtack wpdicon wpdicon-on"></i>
+                                <i class="fas fa-thumbtack wpdicon wpdicon-off"></i>
+                            </span>
                         </span>
-                    </span>
-                </label>
-                <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_close_comment_btn_title")); ?>">
-                    <input id="wc_closed_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_closed_comment"/>
-                    <span class="wpd_label__text">
-                        <span class="wpd_label__check">
-                            <i class="fas fa-lock wpdicon wpdicon-on"></i>
-                            <i class="fas fa-unlock-alt wpdicon wpdicon-off"></i>
+                    </label>
+                <?php } ?>
+                <?php if ($options->moderation['enableCloseButton']) { ?>
+                    <label class="wpd_label" wpd-tooltip="<?php echo esc_attr($options->getPhrase("wc_close_comment_btn_title")); ?>">
+                        <input id="wc_closed_comment" class="wpd_label__checkbox" value="1" type="checkbox" name="wc_closed_comment"/>
+                        <span class="wpd_label__text">
+                            <span class="wpd_label__check">
+                                <i class="fas fa-lock wpdicon wpdicon-on"></i>
+                                <i class="fas fa-unlock-alt wpdicon wpdicon-off"></i>
+                            </span>
                         </span>
-                    </span>
-                </label>
+                    </label>
+                <?php } ?>
                 <?php
             }
             ?>

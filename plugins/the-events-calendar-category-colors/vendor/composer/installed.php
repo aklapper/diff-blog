@@ -1,24 +1,23 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'type' => 'wordpress-plugin',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => '97bbd24b60cd1acb6c8c9b3c6970637d76e3c754',
+        'name' => 'afragen/the-events-calendar-category-colors',
+        'dev' => false,
     ),
-    'reference' => '03772b97cb2297fe940e81837b14ac75ec3f217d',
-    'name' => 'afragen/the-events-calendar-category-colors',
-  ),
-  'versions' => 
-  array (
-    'afragen/the-events-calendar-category-colors' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '03772b97cb2297fe940e81837b14ac75ec3f217d',
+    'versions' => array(
+        'afragen/the-events-calendar-category-colors' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'type' => 'wordpress-plugin',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => '97bbd24b60cd1acb6c8c9b3c6970637d76e3c754',
+            'dev_requirement' => false,
+        ),
     ),
-  ),
 );

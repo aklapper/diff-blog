@@ -2,7 +2,7 @@
 
 //mimic the actuall admin-ajax
 define("DOING_AJAX", true);
-$wpdiscuz_ajax_action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
+$wpdiscuz_ajax_action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 if (!$wpdiscuz_ajax_action) {
     die('-1');
 }
@@ -51,6 +51,7 @@ $allowedActions = [
     "wpdAddSubscription",
     "wpdUnsubscribe",
     "wpdUserRate",
+    "wpdGetNonce"
 ];
 
 // Load more comments
@@ -142,6 +143,9 @@ add_action("wpdiscuz_nopriv_wpdAddSubscription", [$wpdiscuz->helperEmail, "addSu
 // Unsubscribe
 add_action("wpdiscuz_wpdUnsubscribe", [$wpdiscuz->helperAjax, "unsubscribe"]);
 add_action("wpdiscuz_nopriv_wpdUnsubscribe", [$wpdiscuz->helperAjax, "unsubscribe"]);
+//GetNonce
+add_action("wpdiscuz_wpdGetNonce", [$wpdiscuz->helper, "getNonce"]);
+add_action("wpdiscuz_nopriv_wpdGetNonce", [$wpdiscuz->helper, "getNonce"]);
 
 if (in_array($wpdiscuz_ajax_action, $allowedActions)) {
     if (is_user_logged_in()) {

@@ -8,7 +8,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isEnableOnHome">
     <div class="wpd-opt-name">
         <label for="isEnableOnHome"><?php echo esc_html($setting["options"]["isEnableOnHome"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isEnableOnHome"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isEnableOnHome"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -26,7 +26,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isNativeAjaxEnabled">
     <div class="wpd-opt-name">
         <label for="isNativeAjaxEnabled"><?php echo esc_html($setting["options"]["isNativeAjaxEnabled"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isNativeAjaxEnabled"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isNativeAjaxEnabled"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -43,7 +43,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="loadComboVersion">
     <div class="wpd-opt-name">
         <label for="loadComboVersion"><?php echo esc_html($setting["options"]["loadComboVersion"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["loadComboVersion"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["loadComboVersion"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -60,7 +60,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="loadMinVersion">
     <div class="wpd-opt-name">
         <label for="loadMinVersion"><?php echo esc_html($setting["options"]["loadMinVersion"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["loadMinVersion"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["loadMinVersion"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -78,7 +78,7 @@ if (!defined("ABSPATH")) {
     <div class="wpd-opt-row" data-wpd-opt="commentLinkFilter">
         <div class="wpd-opt-name">
             <label><?php echo esc_html($setting["options"]["commentLinkFilter"]["label"]) ?></label>
-            <p class="wpd-desc"><?php echo $setting["options"]["commentLinkFilter"]["description"] ?></p>
+            <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentLinkFilter"]["description"]) ?></p>
         </div>
         <div class="wpd-opt-input">
             <div class="wpd-radio">
@@ -107,7 +107,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="redirectPage">
     <div class="wpd-opt-name">
         <label for="redirectPage"><?php echo esc_html($setting["options"]["redirectPage"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["redirectPage"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["redirectPage"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <?php
@@ -129,7 +129,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="simpleCommentDate">
     <div class="wpd-opt-name">
         <label for="simpleCommentDate"><?php echo esc_html($setting["options"]["simpleCommentDate"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["simpleCommentDate"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["simpleCommentDate"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher" style="margin-bottom: 5px;">
@@ -151,7 +151,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="dateDiffFormat">
     <div class="wpd-opt-name">
         <label for="dateDiffFormat"><?php echo esc_html($setting["options"]["dateDiffFormat"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["dateDiffFormat"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["dateDiffFormat"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="text" value="<?php echo esc_attr($this->general["dateDiffFormat"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[dateDiffFormat]" id="dateDiffFormat" />
@@ -166,7 +166,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isUsePoMo">
     <div class="wpd-opt-name">
         <label for="isUsePoMo"><?php echo esc_html($setting["options"]["isUsePoMo"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isUsePoMo"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isUsePoMo"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -184,7 +184,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showPluginPoweredByLink" style="border-bottom: none;">
     <div class="wpd-opt-name">
         <label for="showPluginPoweredByLink" style="padding-right: 20px;"><?php echo esc_html($setting["options"]["showPluginPoweredByLink"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showPluginPoweredByLink"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showPluginPoweredByLink"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <label for="showPluginPoweredByLink">
@@ -199,60 +199,39 @@ if (!defined("ABSPATH")) {
 <!-- Option end -->
 
 <div class="wpd-subtitle">
-    <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e("Gravatar Cache", "wpdiscuz") ?>
+    <span class="dashicons dashicons-admin-generic"></span> <?php esc_html_e("Comment and User Cache", "wpdiscuz") ?>
 </div>
 
 <!-- Option start -->
-<div class="wpd-opt-row" data-wpd-opt="isGravatarCacheEnabled">
+<div class="wpd-opt-row" data-wpd-opt="isCacheEnabled">
     <div class="wpd-opt-name">
-        <label for="isGravatarCacheEnabled"><?php echo esc_html($setting["options"]["isGravatarCacheEnabled"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isGravatarCacheEnabled"]["description"] ?></p>
-        <?php if (!$this->isFileFunctionsExists) { ?>
-            <p class="desc"><?php esc_html_e("It seems file_get_contents() and file_put_contents() PHP functions don't exist.<br/> Please enable these functions in your server settings to use gravatar caching feature.", "wpdiscuz"); ?></p>
-        <?php } ?>
+        <label for="isCacheEnabled"><?php echo esc_html($setting["options"]["isCacheEnabled"]["label"]) ?></label>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isCacheEnabled"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
-            <input type="checkbox" <?php checked($this->general["isGravatarCacheEnabled"] == 1) ?> value="1" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[isGravatarCacheEnabled]" id="isGravatarCacheEnabled">
-            <label for="isGravatarCacheEnabled"></label>
+            <input type="checkbox" <?php checked($this->general["isCacheEnabled"] == 1) ?> value="1" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[isCacheEnabled]" id="isCacheEnabled">
+            <label for="isCacheEnabled"></label>
         </div>
     </div>
     <div class="wpd-opt-doc">
-        <?php $this->printDocLink($setting["options"]["isGravatarCacheEnabled"]["docurl"]) ?>
+		<?php $this->printDocLink($setting["options"]["isCacheEnabled"]["docurl"]) ?>
     </div>
 </div>
 <!-- Option end -->
 
 <!-- Option start -->
-<div class="wpd-opt-row" data-wpd-opt="gravatarCacheMethod">
+<div class="wpd-opt-row" data-wpd-opt="cacheTimeout" style="border-bottom: none;">
     <div class="wpd-opt-name">
-        <label for="gravatarCacheMethod"><?php echo esc_html($setting["options"]["gravatarCacheMethod"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["gravatarCacheMethod"]["description"] ?></p>
+        <label for="cacheTimeout"><?php echo esc_html($setting["options"]["cacheTimeout"]["label"]) ?></label>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["cacheTimeout"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
-        <div class="wpd-switch-field">
-            <input type="radio" <?php checked($this->general["gravatarCacheMethod"] === "runtime") ?> value="runtime" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[gravatarCacheMethod]" id="gravatarCacheMethodRuntime" /><label for="gravatarCacheMethodRuntime"><?php esc_html_e("Runtime", "wpdiscuz"); ?></label>
-            <input type="radio" <?php checked($this->general["gravatarCacheMethod"] === "cronjob") ?> value="cronjob" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[gravatarCacheMethod]" id="gravatarCacheMethodCronjob" /><label for="gravatarCacheMethodCronjob"><?php esc_html_e("Cron job", "wpdiscuz"); ?></label>
-        </div>
+		<?php $cacheTimeout = isset($this->general["cacheTimeout"]) && ($days = absint($this->general["cacheTimeout"])) ? $days : 10; ?>
+        <input type="number" id="cacheTimeout" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[cacheTimeout]" value="<?php echo esc_attr($cacheTimeout); ?>" style="width: 80px;"/>&nbsp; <?php esc_html_e("days", "wpdiscuz") ?>
     </div>
     <div class="wpd-opt-doc">
-        <?php $this->printDocLink($setting["options"]["gravatarCacheMethod"]["docurl"]) ?>
-    </div>
-</div>
-<!-- Option end -->
-
-<!-- Option start -->
-<div class="wpd-opt-row" data-wpd-opt="gravatarCacheTimeout" style="border-bottom: none;">
-    <div class="wpd-opt-name">
-        <label for="gravatarCacheTimeout"><?php echo esc_html($setting["options"]["gravatarCacheTimeout"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["gravatarCacheTimeout"]["description"] ?></p>
-    </div>
-    <div class="wpd-opt-input">
-        <?php $gravatarCacheTimeout = isset($this->general["gravatarCacheTimeout"]) && ($days = absint($this->general["gravatarCacheTimeout"])) ? $days : 10; ?>
-        <input type="number" id="gravatarCacheTimeout" name="<?php echo esc_attr(WpdiscuzCore::TAB_GENERAL); ?>[gravatarCacheTimeout]" value="<?php echo esc_attr($gravatarCacheTimeout); ?>" style="width: 80px;"/>&nbsp; <?php esc_html_e("days", "wpdiscuz") ?>
-    </div>
-    <div class="wpd-opt-doc">
-        <?php $this->printDocLink($setting["options"]["gravatarCacheTimeout"]["docurl"]) ?>
+		<?php $this->printDocLink($setting["options"]["cacheTimeout"]["docurl"]) ?>
     </div>
 </div>
 <!-- Option end -->
@@ -265,7 +244,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="removeVoteData">
     <div class="wpd-opt-name">
         <label for="removeVoteData"><?php echo esc_html($setting["options"]["removeVoteData"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["removeVoteData"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["removeVoteData"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <?php $voteUrl = admin_url("admin-post.php?action=removeVoteData"); ?>
@@ -278,30 +257,14 @@ if (!defined("ABSPATH")) {
 <!-- Option end -->
 
 <!-- Option start -->
-<div class="wpd-opt-row" data-wpd-opt="purgeAvatarCache">
-    <div class="wpd-opt-name">
-        <label for="purgeAvatarCache"><?php echo esc_html($setting["options"]["purgeAvatarCache"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["purgeAvatarCache"]["description"] ?></p>
-    </div>
-    <div class="wpd-opt-input">
-        <?php $expiredCacheUrl = admin_url("admin-post.php?action=purgeExpiredGravatarsCaches"); ?>
-        <a id="wpdiscuz-purge-expired-gravatars-cache" href="<?php echo esc_url_raw(wp_nonce_url($expiredCacheUrl, "purgeExpiredGravatarsCaches")); ?>" class="button button-secondary" style="text-decoration: none;"><?php esc_html_e("Purge expired caches", "wpdiscuz"); ?></a>
-    </div>
-    <div class="wpd-opt-doc">
-        <?php $this->printDocLink($setting["options"]["purgeAvatarCache"]["docurl"]) ?>
-    </div>
-</div>
-<!-- Option end -->
-
-<!-- Option start -->
 <div class="wpd-opt-row" data-wpd-opt="purgeAllCaches">
     <div class="wpd-opt-name">
         <label for="purgeAllCaches"><?php echo esc_html($setting["options"]["purgeAllCaches"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["purgeAllCaches"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["purgeAllCaches"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
-        <?php $allCacheUrl = admin_url("admin-post.php?action=purgeGravatarsCaches"); ?>
-        <a id="wpdiscuz-purge-gravatars-cache" href="<?php echo esc_url_raw(wp_nonce_url($allCacheUrl, "purgeGravatarsCaches")); ?>" class="button button-secondary" style="text-decoration: none;"><?php esc_html_e("Purge all caches", "wpdiscuz"); ?></a>
+        <?php $allCacheUrl = admin_url("admin-post.php?action=purgeAllCaches"); ?>
+        <a id="wpdiscuz-purge-cache" href="<?php echo esc_url_raw(wp_nonce_url($allCacheUrl, "purgeAllCaches")); ?>" class="button button-secondary" style="text-decoration: none;"><?php esc_html_e("Purge comments and users caches", "wpdiscuz"); ?></a>
     </div>
     <div class="wpd-opt-doc">
         <?php $this->printDocLink($setting["options"]["purgeAllCaches"]["docurl"]) ?>

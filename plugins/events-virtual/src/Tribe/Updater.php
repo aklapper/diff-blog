@@ -10,6 +10,7 @@
 namespace Tribe\Events\Virtual;
 
 use Tribe\Events\Virtual\Meetings\Zoom\Api;
+use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom\OAuth;
 use Tribe\Events\Virtual\Meetings\Zoom\Settings;
 use Tribe__Events__Updater;
@@ -54,6 +55,7 @@ class Updater extends Tribe__Events__Updater {
 		return [
 			'1.5' => [ $this, 'multiple_account_migration_setup' ],
 			'1.6' => [ $this, 'video_source_migration' ],
+			'1.8' => [ $this, 'autodetect_source_migration' ],
 		];
 	}
 
@@ -145,7 +147,7 @@ class Updater extends Tribe__Events__Updater {
 	 */
 	public function video_source_migration() {
 		$args = [
-			'posts_per_page' => 500,
+			'posts_per_page' => 1000,
 			'meta_query' => [
 				[
 					'relation' => 'OR',
@@ -165,6 +167,15 @@ class Updater extends Tribe__Events__Updater {
 			],
 		];
 
+		/**
+		 * Allows filtering of the arguments used to query events for the video source migration.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param array<string|mixed> An array of arguments used to query events for the video source migration.
+		 */
+		$args = apply_filters( 'tec_events_virtual_video_source_migration_args', $args  );
+
 		$virtual_events = tribe_events()->by_args( $args )->get_ids();
 
 		foreach ( $virtual_events as $event_id ) {
@@ -176,14 +187,48 @@ class Updater extends Tribe__Events__Updater {
 			}
 
 			// If a virtual event has zoom as the meeting provider
-			if ( 'zoom' === $event->virtual_meeting_provider ) {
-				update_post_meta( $event_id, Event_Meta::$key_video_source, 'zoom' );
+			if ( Zoom_Meta::$key_zoom_source_id === $event->virtual_meeting_provider ) {
+				update_post_meta( $event_id, Event_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
 
 				continue;
 			}
 
 			// Default to video as the video source.
-			update_post_meta( $event_id, Event_Meta::$key_video_source, 'video' );
+			update_post_meta( $event_id, Event_Meta::$key_video_source, Event_Meta::$key_video_source_id );
+		}
+	}
+
+	/**
+	 * Migration to the Smart URL/Autodetect Source.
+	 *
+	 * @since 1.8.0
+	 */
+	public function autodetect_source_migration() {
+		$args = [
+			'posts_per_page' => 1000,
+			'meta_query' => [
+				[
+					'key' =>  Event_Meta::$key_virtual,
+					'value' => Event_Meta::$key_video_source_id,
+				],
+			],
+		];
+
+		$virtual_events = tribe_events()->by_args( $args )->get_ids();
+
+		foreach ( $virtual_events as $event_id ) {
+			$event = tribe_get_event( $event_id );
+
+			// Safety check.
+			if (
+				Event_Meta::$key_video_source_id !== $event->virtual_video_source ||
+				$event->virtual_autodetect_source
+			 ) {
+				continue;
+			}
+
+			// Default to oembed as the autodetect source.
+			update_post_meta( $event->ID, Event_Meta::$key_autodetect_source, Event_Meta::$key_oembed_source_id );
 		}
 	}
 

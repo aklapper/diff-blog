@@ -65,7 +65,7 @@ if ($wmuIsActive) {
             <form action="" method="post" class="wc-tools-settings-form wc-form">
                 <?php wp_nonce_field("wc_tools_form", "wpd-cir-images"); ?>
                 <div class="wpdtool-block">
-                    <button type="submit" class="button button-secondary import-cir" <?php echo $cirDisabled; ?>>
+                    <button type="submit" class="button button-secondary import-cir" <?php echo esc_attr($cirDisabled); ?>>
                         <?php esc_html_e("Import images", "wpdiscuz"); ?>&nbsp;
                         <i class="fas wc-hidden"></i>
                     </button>
@@ -81,7 +81,7 @@ if ($wmuIsActive) {
             <form action="" method="post" class="wc-tools-settings-form wc-form">
                 <?php wp_nonce_field("wc_tools_form", "wpd-dco-images"); ?>
                 <div class="wpdtool-block">
-                    <button type="submit" class="button button-secondary import-dco" <?php echo $dcoDisabled; ?>>
+                    <button type="submit" class="button button-secondary import-dco" <?php echo esc_attr($dcoDisabled); ?>>
                         <?php esc_html_e("Import images", "wpdiscuz"); ?>&nbsp;
                         <i class="fas wc-hidden"></i>
                     </button>

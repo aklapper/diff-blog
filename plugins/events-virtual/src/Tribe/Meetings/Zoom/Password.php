@@ -11,6 +11,8 @@ namespace Tribe\Events\Virtual\Meetings\Zoom;
 
 use Tribe\Events\Virtual\Event_Meta as Virtual_Event_Meta;
 use Tribe__Utils__Array as Arr;
+use Tribe__Events__Main as Events_Plugin;
+use WP_Post;
 
 /**
  * Class Password
@@ -226,5 +228,62 @@ class Password {
 		update_post_meta( $event->ID, $prefix . 'zoom_join_url', esc_url( $meeting['join_url'] ) );
 
 		return true;
+	}
+
+	/**
+	 * Check Zoom Meeting in the admin.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param WP_Post $event The event post object.
+	 *
+	 * @return bool|void Whether the update completed.
+	 */
+	public function check_admin_zoom_meeting( $event ) {
+		if ( ! $event instanceof WP_Post ) {
+			// We should only act on event posts, else bail.
+			return;
+		}
+
+		/** @var \Tribe__Cache $cache */
+		$cache    = tribe( 'cache' );
+		$transient_name = $event->ID . '_zoom_pw__admin_last_check';
+
+		$last_check = (string) $cache->get_transient( $transient_name );
+		if ( $last_check ) {
+			return;
+		}
+
+		$cache->set_transient( $transient_name, true, MINUTE_IN_SECONDS * 10 );
+
+		return $this->update_password_from_zoom( $event );
+	}
+
+	/**
+	 * Check Zoom Meeting on Front End.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @return bool|void Whether the update completed.
+	 */
+	public function check_zoom_meeting() {
+		if ( ! is_singular( Events_Plugin::POSTTYPE ) ) {
+			return;
+		}
+
+		global $post;
+
+		/** @var \Tribe__Cache $cache */
+		$cache    = tribe( 'cache' );
+		$transient_name = $post->ID . '_zoom_pw_last_check';
+
+		$last_check = (string) get_transient( $transient_name );
+		if ( $last_check ) {
+			return;
+		}
+
+		$cache->set_transient( $transient_name, true, HOUR_IN_SECONDS );
+
+		return $this->update_password_from_zoom( $post );
 	}
 }

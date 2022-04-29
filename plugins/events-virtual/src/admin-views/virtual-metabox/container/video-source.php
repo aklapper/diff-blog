@@ -23,7 +23,7 @@
 ?>
 <tr class="tribe-events-virtual-video-source">
 	<td class="tribe-table-field-label tribe-events-virtual-video-source__label">
-		<?php esc_html_e( 'Add Video Source:', 'events-virtual' ); ?>
+		<?php esc_html_e( 'Add Video:', 'events-virtual' ); ?>
 	</td>
 	<td class="tribe-events-virtual-video-source__content">
 		<div
@@ -41,11 +41,7 @@
 				$video_sources =  (array) apply_filters( 'tribe_events_virtual_video_sources', [], $post );
 
 				$source_args = [
-					'label'       => _x(
-						'Choose Video Source',
-						'The label to choose the video source.',
-						'events-virtual'
-					),
+					'label'       => '',
 					'id'          => "{$metabox_id}-video-source",
 					'class'       => 'tribe-events-virtual-meetings-video-source-dropdown',
 					'name'        => "{$metabox_id}[video-source]",

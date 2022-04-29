@@ -125,6 +125,7 @@ class CoAuthors_Guest_Authors {
 			'publicly_queryable'  => false,
 			'exclude_from_search' => true,
 			'show_in_menu'        => false,
+			'show_in_rest'        => true,
 			'supports'            => array(
 				'thumbnail',
 			),
@@ -789,7 +790,11 @@ class CoAuthors_Guest_Authors {
 		if ( $user
 			&& is_user_member_of_blog( $user->ID, get_current_blog_id() )
 			&& $user->user_login != get_post_meta( $original_args['ID'], $this->get_post_meta_key( 'linked_account' ), true ) ) {
-			wp_die( esc_html__( 'Guest authors cannot be created with the same user_login value as a user. Try creating a profile from the user on the Manage Users listing instead.', 'co-authors-plus' ) );
+			// if user has selected to link account to matching user we don't have to bail
+			if ( isset( $_POST['cap-linked_account'] ) && (int) $_POST['cap-linked_account'] === (int) $user->ID ) {
+				return $post_data;
+			}
+			wp_die( esc_html__( 'There is a WordPress user with the same username as this guest author, please go back and link them in order to update.', 'co-authors-plus' ) );
 		}
 
 		// Guest authors can't have the same post_name value
@@ -1210,7 +1215,7 @@ class CoAuthors_Guest_Authors {
 
 		// Delete the lookup cache associated with each old co-author value
 		$keys = wp_list_pluck( $this->get_guest_author_fields(), 'key' );
-		$keys = array_merge( $keys, array( 'login', 'post_name', 'user_nicename', 'ID' ) );
+		$keys = array_merge( $keys, array( 'login', 'post_name', 'user_nicename', 'ID', 'id' ) );
 		foreach ( $keys as $key ) {
 			$value_key = $key;
 
@@ -1218,6 +1223,8 @@ class CoAuthors_Guest_Authors {
 				$value_key = 'user_nicename';
 			} elseif ( 'login' == $key ) {
 				$value_key = 'user_login';
+			} elseif ( 'id' == $key ) {
+				$value_key = 'ID';
 			}
 
 			$cache_key = $this->get_cache_key( $key, $guest_author->$value_key );

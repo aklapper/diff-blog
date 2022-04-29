@@ -12,23 +12,27 @@ namespace Tribe\Events\Virtual\Export;
  * Class Event_Export
  *
  * @since 1.0.4
+ * @since 1.7.3 - Change to extend abstract class.
+ *
  * @package Tribe\Events\Virtual\Export;
  */
-class Event_Export {
+class Event_Export extends Abstract_Export {
 
 	/**
 	 * Modify the export parameters for a virtual event export.
 	 *
 	 * @since 1.0.4
+	 * @since 1.7.3 - Add a filter to allow the active video source to modify the export fields.
+	 * @since 1.8.0 - Added a filter to determine if the export fields modified based on the show to setting.
 	 *
 	 * @param array  $fields   The various file format components for this specific event.
 	 * @param int    $event_id The event id.
 	 * @param string $key_name The name of the array key to modify.
+	 * @param string $type     The name of the export type.
 	 *
 	 * @return array The various file format components for this specific event.
 	 */
 	public function modify_export_output( $fields, $event_id, $key_name, $type = null ) {
-
 		$event = tribe_get_event( $event_id );
 
 		if ( ! $event instanceof \WP_Post ) {
@@ -45,12 +49,65 @@ class Event_Export {
 			return $fields;
 		}
 
-		// If an embed video or no linked button, set the permalink and return.
+		/**
+		 * Allows filtering of whether the current user should have export fields modified.
+		 *
+		 * Utilizes the values from the Show To field and provides the result to each video source
+		 * where it can be overridden.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param boolean   Whether to modify the export fields for the current user, default to false.
+		 * @param \WP_Post $event The WP_Post of this event.
+		 */
+		$should_show = apply_filters( 'tec_events_virtual_export_should_show', false, $event );
+
+		/**
+		 * Allow filtering of the export fields by the active video source.
+		 *
+		 * @since 1.7.3
+		 * @since 1.8.0 add should_show parameter.
+		 *
+		 * @param array    $fields      The various file format components for this specific event.
+		 * @param \WP_Post $event       The WP_Post of this event.
+		 * @param string   $key_name    The name of the array key to modify.
+		 * @param string   $type        The name of the export type.
+		 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
+		 */
+		$fields = apply_filters( 'tec_events_virtual_export_fields', $fields, $event, $key_name, $type, $should_show );
+
+		return $fields;
+	}
+
+	/**
+	 * Modify the export parameters for the video source.
+	 *
+	 * @since 1.7.3
+	 * @since 1.8.0 add should_show parameter.
+	 *
+	 * @param array    $fields      The various file format components for this specific event.
+	 * @param \WP_Post $event       The WP_Post of this event.
+	 * @param string   $key_name    The name of the array key to modify.
+	 * @param string   $type        The name of the export type.
+	 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
+	 *
+	 * @return array The various file format components for this specific event.
+	 */
+	public function modify_video_source_export_output( $fields, $event, $key_name, $type, $should_show ) {
+		if ( 'video' !== $event->virtual_video_source ) {
+			return $fields;
+		}
+
+		// If it should not show or it should not embed video or no linked button, set the permalink and return.
 		if (
-			$event->virtual_embed_video ||
+			! $should_show ||
 			(
-				! $event->virtual_linked_button &&
-				! $event->zoom_display_details
+				$event->virtual_embed_video &&
+				! $event->virtual_linked_button
+			)||
+			(
+				! $event->virtual_embed_video &&
+				! $event->virtual_linked_button
 			)
 		 ) {
 			$fields[ $key_name ] = $this->format_value( get_the_permalink( $event->ID ), $key_name, $type );
@@ -59,9 +116,7 @@ class Event_Export {
 		}
 
 		$url = $event->virtual_url;
-		if ( ! empty( $event->virtual_meeting_url ) ) {
-			$url = $event->virtual_meeting_url;
-		}
+
 
 		$fields[ $key_name ] = $this->format_value( $url, $key_name, $type );
 
@@ -69,27 +124,40 @@ class Event_Export {
 	}
 
 	/**
-	 * Format the exported value to conform to the export type's standard.
+	 * Filter whether the current user should see the video source in the export.
 	 *
-	 * @since 1.1.5
+	 * @since 1.8.0
 	 *
-	 * @param string $value    The value being exported.
-	 * @param string $key_name The key name to add to the value.
-	 * @param string $type     The name of the export, ie ical, gcal, etc...
+	 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
+	 * @param \WP_Post $event       The WP_Post of this event.
 	 *
-	 * @return string The value to add to the export.
+	 * @return boolean Whether to modify the export fields for the current user.
 	 */
-	public function format_value( $value, $key_name, $type ) {
-
-		if ( 'ical' === $type ) {
-			/**
-			 * With iCal we have to include the key name with the url
-			 * or the export will only include the url without the defining tag.
-			 * Example of expected output: - Location: https://tri.be?326t3425225
-			 */
-			$value = $key_name . ':' . $value;
+	public function filter_export_should_show( $should_show, $event ) {
+		if ( ! $event instanceof \WP_Post ) {
+			return $should_show;
 		}
 
-		return $value;
+		$show_to = (array) $event->virtual_show_embed_to;
+
+		if ( empty( $show_to ) ) {
+			return false;
+		}
+
+		if ( in_array( 'all', $show_to, true ) ) {
+			return true;
+		}
+
+		// Everything after this depends on the user being logged in.
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
+
+		// Do we need to be logged in?
+		if ( in_array( 'logged-in', $show_to ) ) {
+			return true;
+		}
+
+		return $should_show;
 	}
 }

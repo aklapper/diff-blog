@@ -79,6 +79,8 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 		add_filter( 'tribe_events_virtual_event_meta_keys', [ $this, 'filter_virtual_event_meta_keys' ] );
 
 		add_filter( 'tribe_events_virtual_show_virtual_content', [ $this, 'filter_show_virtual_content' ], 10, 2 );
+
+		add_filter( 'tec_events_virtual_export_should_show', [ $this, 'filter_export_should_show' ], 10, 2 );
 	}
 
 	/**
@@ -107,7 +109,6 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * @param string           $unused_file Complete path to include the PHP File.
 	 * @param array            $unused_name Template name.
 	 * @param \Tribe__Template $template    Current instance of the Tribe__Template.
-	 * @return void
 	 */
 	public function share_rsvp_controls( $unused_file, $unused_name, \Tribe__Template $template ) {
 		$this->container->make( Template_Modifications::class )
@@ -122,7 +123,6 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * @param string           $unused_file Complete path to include the PHP File.
 	 * @param array            $unused_name Template name.
 	 * @param \Tribe__Template $template    Current instance of the Tribe__Template.
-	 * @return void
 	 */
 	public function share_ticket_controls( $unused_file, $unused_name, \Tribe__Template $template ) {
 		$this->container->make( Template_Modifications::class )
@@ -158,7 +158,6 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 * @param string           $unused_file Complete path to include the PHP File.
 	 * @param array            $unused_name Template name.
 	 * @param \Tribe__Template $template    Current instance of the Tribe__Template.
-	 * @return void
 	 */
 	public function show_to_ticket_controls( $unused_file, $unused_name, \Tribe__Template $template ) {
 		$event = $template->get( 'post' );
@@ -216,7 +215,6 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 *
 	 * @param int   $event_id ID of the event post we're saving.
 	 * @param array $data     The meta data we're trying to save.
-	 * @return void
 	 */
 	public function action_update_post_meta( $event_id, $data ) {
 		$this->container->make( Ticket_Meta::class )->update_post_meta( $event_id, $data );
@@ -227,13 +225,16 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since 1.0.4
 	 * @since 1.1.2 Bail earlier if the user isn't logged in.
+	 * @since 1.9.0 - Only use tribe_get_event if an integer.
 	 *
 	 * @param boolean     $show  If the virtual content should show or not.
 	 * @param WP_Post|int $event The post object or ID of the viewed event.
 	 * @return boolean
 	 */
 	public function filter_show_virtual_content( $show, $event ) {
-		$event = tribe_get_event( $event );
+		if ( is_integer( $event ) ) {
+			$event = tribe_get_event( $event );
+		}
 
 		if ( ! $event instanceof \WP_Post ) {
 			return $show;
@@ -280,5 +281,19 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Filter whether the current user should see the video source in the export.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
+	 * @param \WP_Post $event       The WP_Post of this event.
+	 *
+	 * @return boolean Whether to modify the export fields for the current user.
+	 */
+	public function filter_export_should_show( $should_show, $event ) {
+		return $this->filter_show_virtual_content( $should_show, $event );
 	}
 }

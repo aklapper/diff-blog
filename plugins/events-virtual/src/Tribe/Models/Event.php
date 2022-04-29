@@ -38,6 +38,7 @@ class Event {
 		$event->virtual_event_type         = $this->get_virtual_event_type( $event );
 		$event->virtual                    = self::is_virtual( $event );
 		$event->virtual_video_source       = $this->get_video_source( $event );
+		$event->virtual_autodetect_source  = $this->get_autodetect_source( $event );
 		$event->virtual_url                = $this->get_virtual_url( $event );
 		$event->virtual_embed_video        = $this->get_virtual_embed_video( $event );
 		$event->virtual_linked_button      = $this->get_virtual_linked_button( $event );
@@ -140,6 +141,23 @@ class Event {
 		}
 
 		return get_post_meta( $event->ID, Event_Meta::$key_video_source, true );
+	}
+
+	/**
+	 * Retrieves an event's virtual autodetect source.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WP_Post $event Event post object.
+	 *
+	 * @return string The event's autodetect source or empty string if none.
+	 */
+	protected static function get_autodetect_source( WP_Post $event ) {
+		if ( ! self::is_virtual( $event ) ) {
+			return '';
+		}
+
+		return get_post_meta( $event->ID, Event_Meta::$key_autodetect_source, true );
 	}
 
 	/**
@@ -296,6 +314,12 @@ class Event {
 
 		if ( ! empty( $value ) ) {
 			return (array) $value;
+		}
+
+		// If a meta field with the given key exists, return an empty array.
+		$meta_exists = metadata_exists('post', $event->ID, Event_Meta::$key_show_embed_to);
+		if ( $meta_exists ) {
+			return [];
 		}
 
 		// If the metadata hasn't been set yet we grab the default.

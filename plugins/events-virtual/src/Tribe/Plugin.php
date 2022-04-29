@@ -27,7 +27,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.6.0';
+	const VERSION = '1.9.0';
 
 	/**
 	 * Stores the base slug for the plugin.
@@ -122,6 +122,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$this->container->register( Context\Context_Provider::class );
 		$this->container->register( ORM\ORM_Provider::class );
 		$this->container->register( Views\V2\Views_Provider::class );
+		$this->container->register( Editor\Provider::class );
 	}
 
 	/**
@@ -197,8 +198,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 * Adds template tags once the plugin has loaded.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	protected function load_template_tags() {
 		require_once $this->plugin_path . 'src/functions/template-tags/general.php';
