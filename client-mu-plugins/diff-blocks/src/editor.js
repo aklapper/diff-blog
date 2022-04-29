@@ -3,7 +3,7 @@
  * used to automatically detect and load any block files inside the blocks/
  * directory with hot-reloading enabled.
  */
-import { autoloadBlocks, autoloadPlugins } from '@humanmade/webpack-helpers/hmr';
+import { autoloadBlocks } from '@humanmade/webpack-helpers/hmr';
 
 /**
  * Callback function to handle DevServer hot updates.
@@ -26,20 +26,6 @@ autoloadBlocks(
 		 */
 		getContext() {
 			return require.context( './blocks', true, /index\.[tj]sx?$/ );
-		},
-	},
-	reloadOnHMRUpdate
-);
-
-autoloadPlugins(
-	{
-		/**
-		 * Load in all files matching ./filters/{folder name}/index.js
-		 *
-		 * @returns {object} Webpack ContextModule for matched files.
-		 */
-		getContext() {
-			return require.context( './filters', true, /index\.[tj]sx?$/ );
 		},
 	},
 	reloadOnHMRUpdate
