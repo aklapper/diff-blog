@@ -25,7 +25,7 @@ class CapsmanHandler
 		global $wpdb, $wp_roles;
 		
 		check_admin_referer('capsman-general-manager');
-
+		
 		if ( empty ($_POST['caps']) ) {
 		    $_POST['caps'] = array();
 		}
@@ -121,7 +121,7 @@ class CapsmanHandler
 			}
 			
 		} elseif ( ! empty($_POST['update_filtered_types']) || ! empty($_POST['update_filtered_taxonomies']) || ! empty($_POST['update_detailed_taxonomies']) ) {
-			ak_admin_notify(__('Type / Taxonomy settings saved.', 'capsman-enhanced'));
+				ak_admin_notify(__('Type / Taxonomy settings saved.', 'capsman-enhanced'));
 		} else {
 			if (!apply_filters('publishpress-caps_submission_ok', false)) {
 				ak_admin_error(__('Bad form received.', 'capsman-enhanced'));

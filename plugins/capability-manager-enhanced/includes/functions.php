@@ -134,12 +134,12 @@ function pp_capabilities_autobackup()
             $i++;
 
             if ($i > $max_auto_backups) {
-                $wpdb->query(
+        		$wpdb->query(
                     $wpdb->prepare(
                         "DELETE FROM $wpdb->options WHERE option_name = %s",
                         $option_name
                     )
-                );
+        		);
 
                 wp_cache_delete($option_name, 'options');
             }

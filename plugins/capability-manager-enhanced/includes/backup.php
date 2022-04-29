@@ -347,7 +347,7 @@ $auto_backups = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb-
                                                     <p><strong><span class="pp-caps-warning"><?php esc_html_e('WARNING:', 'capsman-enhanced'); ?></span> <?php esc_html_e('Please make a \'Manual Backup\' in the backup tab to enable backup restore in case anything goes wrong.', 'capsman-enhanced'); ?></p>
                                                     
                                                     <p><?php esc_html_e('Import the plugin settings from a .json file. This file can be obtained by exporting the settings on another site using the form above.', 'capsman-enhanced'); ?></p>
-                                                            
+                                                    
                                                     <p><?php esc_html_e('Before importing, we recommend using the "Backup" tab to create a backup of your current settings.', 'capsman-enhanced'); ?></p>
                                                  
                                                     <br />
