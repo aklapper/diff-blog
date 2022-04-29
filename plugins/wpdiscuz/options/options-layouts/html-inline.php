@@ -27,7 +27,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showInlineFilterButton">
     <div class="wpd-opt-name">
         <label for="showInlineFilterButton"><?php echo esc_html($setting["options"]["showInlineFilterButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showInlineFilterButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showInlineFilterButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -46,7 +46,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="inlineFeedbackAttractionType">
     <div class="wpd-opt-name">
         <label><?php echo esc_html($setting["options"]["inlineFeedbackAttractionType"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["inlineFeedbackAttractionType"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["inlineFeedbackAttractionType"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-radio">

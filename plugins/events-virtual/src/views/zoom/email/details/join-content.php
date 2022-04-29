@@ -16,7 +16,7 @@
  * @see tribe_get_event() For the format of the event object.
  */
 
-// Remove the query vars from the zoom URL to avoid too long a URL in display.
+// Remove the query vars from the Zoom URL to avoid too long a URL in display.
 if ( empty( $event->zoom_join_url ) ) {
 	return;
 }
@@ -40,13 +40,12 @@ $short_zoom_url = implode(
 		<?php
 		echo esc_html(
 			sprintf(
-				// translators: %1$s: ID label, %2$s: Zoom meeting ID.
+				// translators: %1$s: Zoom meeting ID.
 				_x(
-					'%1$s: %2$s',
+					'ID: %1$s',
 					'The label for the Zoom Meeting ID, prefixed by ID label.',
 					'events-virtual'
 				),
-				'ID',
 				$event->zoom_meeting_id
 			)
 		);

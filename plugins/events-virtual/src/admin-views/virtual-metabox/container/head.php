@@ -24,7 +24,7 @@ $metabox_id = Metabox::$id;
 ?>
 <?php wp_nonce_field( Metabox::$nonce_action, "{$metabox_id}[virtual-nonce]" ); ?>
 <thead>
-<?php if ( ! isset( $block_editor_compatibility ) || ! $block_editor_compatibility ) : ?>
+<?php if ( empty( $block_editor_compatibility ) ) : ?>
 	<tr>
 		<td colspan="2" class="tribe_sectionheader">
 			<h4>

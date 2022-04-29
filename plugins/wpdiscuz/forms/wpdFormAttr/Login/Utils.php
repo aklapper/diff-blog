@@ -344,7 +344,7 @@ class Utils {
     }
 
     public static function addOAuthState($provider, $secret, $postID) {
-        add_option(wpdFormConst::WPDISCUZ_OAUTH_STATE_TOKEN.md5($secret),[wpdFormConst::WPDISCUZ_OAUTH_STATE_PROVIDER => $provider , wpdFormConst::WPDISCUZ_OAUTH_CURRENT_POSTID => $postID]);
+        add_option(wpdFormConst::WPDISCUZ_OAUTH_STATE_TOKEN.md5($secret),[wpdFormConst::WPDISCUZ_OAUTH_STATE_PROVIDER => $provider , wpdFormConst::WPDISCUZ_OAUTH_CURRENT_POSTID => $postID],'','no');
     }
 
     public static function generateOAuthState($appID) {

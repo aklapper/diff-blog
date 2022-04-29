@@ -567,6 +567,17 @@ if ( ! function_exists( 'tribe_is_regex' ) ) {
 			return false;
 		}
 
+		$n = strlen( $candidate );
+		// regex must be at least 2 delimiters + 1 character - invalid regex.
+		if ( $n < 3 ) {
+			return false;
+		}
+
+		// Missing or mismatched delimiters - invalid regex.
+		if ( $candidate[0] !== $candidate[ $n - 1 ] ) {
+			return false;
+		}
+
 		// We need to have the Try/Catch for Warnings too
 		try {
 			return ! ( @preg_match( $candidate, null ) === false );
@@ -1096,7 +1107,7 @@ if ( ! function_exists( 'tribe_sanitize_deep' ) ) {
 			return $value;
 		}
 		if ( is_string( $value ) ) {
-			$value = filter_var( $value, FILTER_SANITIZE_STRING );
+			$value = filter_var( $value, FILTER_UNSAFE_RAW );
 			return $value;
 		}
 		if ( is_int( $value ) ) {
@@ -1228,4 +1239,24 @@ if ( ! function_exists( 'tribe_without_filters' ) ) {
 
 		return $result;
 	}
+}
+
+/**
+ * Get the next increment of a cached incremental value.
+ *
+ * @since 4.14.7
+ *
+ * @param string $key Cache key for the incrementor.
+ * @param string $expiration_trigger The trigger that causes the cache key to expire.
+ * @param int $default The default value of the incrementor.
+ *
+ * @return int
+ **/
+function tribe_get_next_cached_increment( $key, $expiration_trigger = '', $default = 0 ) {
+	$cache = tribe( 'cache' );
+	$value = (int) $cache->get( $key, $expiration_trigger, $default );
+	$value++;
+	$cache->set( $key, $value, \Tribe__Cache::NON_PERSISTENT, $expiration_trigger );
+
+	return $value;
 }

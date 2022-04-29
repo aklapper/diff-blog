@@ -5,7 +5,6 @@
 
 // Don't load directly
 
-use Tribe\Admin\Notice\WP_Version;
 use Tribe\DB_Lock;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -20,16 +19,14 @@ class Tribe__Main {
 	const EVENTSERROROPT      = '_tribe_events_errors';
 	const OPTIONNAME          = 'tribe_events_calendar_options';
 	const OPTIONNAMENETWORK   = 'tribe_events_calendar_network_options';
-
-	const VERSION             = '4.14.1';
-
+	const VERSION             = '4.14.18';
 	const FEED_URL            = 'https://theeventscalendar.com/feed/';
 
 	protected $plugin_context;
 	protected $plugin_context_class;
 
 	public static $tribe_url = 'http://tri.be/';
-	public static $tec_url = 'https://theeventscalendar.com/';
+	public static $tec_url   = 'https://theeventscalendar.com/';
 
 	public $plugin_dir;
 	public $plugin_path;
@@ -88,6 +85,16 @@ class Tribe__Main {
 
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 1 );
 		add_action( 'tribe_common_loaded', [ $this, 'tribe_common_app_store' ], 10 );
+		add_action( 'customize_controls_print_styles', [ $this, 'load_tec_variables' ], 10 );
+
+		if ( did_action( 'plugins_loaded' ) && ! doing_action( 'plugins_loaded' ) ) {
+			/*
+			 * This might happen in the context of a plugin activation.
+			 * Complete the loading now and set the singleton instance to avoid infinite loops.
+			 */
+			self::$instance = $this;
+			$this->plugins_loaded();
+		}
 	}
 
 	/**
@@ -97,6 +104,7 @@ class Tribe__Main {
 
 		$this->init_autoloading();
 
+		$this->init_early_libraries();
 		$this->bind_implementations();
 		$this->init_libraries();
 		$this->add_hooks();
@@ -156,10 +164,20 @@ class Tribe__Main {
 	}
 
 	/**
+	 * Initializes all libraries used/required by our singletons.
+	 *
+	 * @since 4.14.18
+	 */
+	public function init_early_libraries() {
+		require_once $this->plugin_path . 'src/functions/editor.php';
+	}
+
+	/**
 	 * initializes all required libraries
 	 */
 	public function init_libraries() {
 		require_once $this->plugin_path . 'src/functions/utils.php';
+		require_once $this->plugin_path . 'src/functions/conditionals.php';
 		require_once $this->plugin_path . 'src/functions/url.php';
 		require_once $this->plugin_path . 'src/functions/query.php';
 		require_once $this->plugin_path . 'src/functions/multibyte.php';
@@ -188,12 +206,13 @@ class Tribe__Main {
 			[
 				[ 'tribe-accessibility-css', 'accessibility.css' ],
 				[ 'tribe-query-string', 'utils/query-string.js' ],
-				[ 'tribe-clipboard', 'vendor/clipboard/clipboard.js' ],
+				[ 'tribe-clipboard', 'node_modules/clipboard/dist/clipboard.min.js' ],
 				[ 'datatables', 'vendor/datatables/datatables.js', [ 'jquery' ] ],
 				[ 'tribe-select2', 'vendor/tribe-selectWoo/dist/js/selectWoo.full.js', [ 'jquery' ] ],
 				[ 'tribe-select2-css', 'vendor/tribe-selectWoo/dist/css/selectWoo.css' ],
 				[ 'tribe-utils-camelcase', 'utils-camelcase.js', [ 'underscore' ] ],
 				[ 'tribe-moment', 'vendor/momentjs/moment.js' ],
+				[ 'tribe-moment-locales', 'vendor/momentjs/locale.min.js' ],
 				[ 'tribe-tooltipster', 'vendor/tooltipster/tooltipster.bundle.js', [ 'jquery' ] ],
 				[ 'tribe-tooltipster-css', 'vendor/tooltipster/tooltipster.bundle.css' ],
 				[ 'datatables-css', 'datatables.css' ],
@@ -206,14 +225,18 @@ class Tribe__Main {
 				[ 'tribe-jquery-timepicker-css', 'vendor/jquery-tribe-timepicker/jquery.timepicker.css' ],
 				[ 'tribe-timepicker', 'timepicker.js', [ 'jquery', 'tribe-jquery-timepicker' ] ],
 				[ 'tribe-attrchange', 'vendor/attrchange/js/attrchange.js' ],
+				[ 'tec-ky-module', 'vendor/ky/ky.js', [], null, [ 'module' => true ] ],
+				[ 'tec-ky', 'vendor/ky/tec-ky.js', [ 'tec-ky-module' ], null, [ 'module' => true ] ],
 			]
 		);
 
 		tribe_assets(
 			$this,
 			[
-				[ 'tribe-common-skeleton-style', 'common-skeleton.css' ],
-				[ 'tribe-common-full-style', 'common-full.css', [ 'tribe-common-skeleton-style' ] ],
+				[ 'tec-variables-skeleton', 'variables-skeleton.css', ],
+				[ 'tribe-common-skeleton-style', 'common-skeleton.css', [ 'tec-variables-skeleton' ] ],
+				[ 'tec-variables-full', 'variables-full.css', [ 'tec-variables-skeleton' ] ],
+				[ 'tribe-common-full-style', 'common-full.css', [ 'tec-variables-full', 'tribe-common-skeleton-style' ] ],
 			],
 			null
 		);
@@ -222,11 +245,11 @@ class Tribe__Main {
 		tribe_assets(
 			$this,
 			[
-				[ 'tribe-ui', 'tribe-ui.css' ],
+				[ 'tribe-ui', 'tribe-ui.css', [ 'tec-variables-full' ] ],
 				[ 'tribe-buttonset', 'buttonset.js', [ 'jquery', 'underscore' ] ],
-				[ 'tribe-common-admin', 'tribe-common-admin.css', [ 'tribe-dependency-style', 'tribe-bumpdown-css', 'tribe-buttonset-style', 'tribe-select2-css' ] ],
+				[ 'tribe-common-admin', 'tribe-common-admin.css', [ 'tec-variables-full', 'tribe-dependency-style', 'tribe-bumpdown-css', 'tribe-buttonset-style', 'tribe-select2-css' ] ],
 				[ 'tribe-validation', 'validation.js', [ 'jquery', 'underscore', 'tribe-common', 'tribe-utils-camelcase', 'tribe-tooltipster' ] ],
-				[ 'tribe-validation-style', 'validation.css', [ 'tribe-tooltipster-css' ] ],
+				[ 'tribe-validation-style', 'validation.css', [ 'tec-variables-full', 'tribe-tooltipster-css' ] ],
 				[ 'tribe-dependency', 'dependency.js', [ 'jquery', 'underscore', 'tribe-common' ] ],
 				[ 'tribe-dependency-style', 'dependency.css', [ 'tribe-select2-css' ] ],
 				[ 'tribe-pue-notices', 'pue-notices.js', [ 'jquery' ] ],
@@ -267,11 +290,21 @@ class Tribe__Main {
 			$this,
 			'tribe-customizer-controls',
 			'customizer-controls.css',
-			[],
+			[ 'tec-variables-full' ],
 			'customize_controls_print_styles'
 		);
 
 		tribe( Tribe__Admin__Help_Page::class )->register_assets();
+	}
+
+	/**
+	 * Ensure that the customizer styles get the variables they need.
+	 *
+	 * @since 4.14.13
+	 */
+	public function load_tec_variables() {
+		tribe_asset_enqueue( 'tec-variables-skeleton' );
+		tribe_asset_enqueue( 'tec-variables-full' );
 	}
 
 	/**
@@ -558,7 +591,20 @@ class Tribe__Main {
 	public static function post_id_helper( $candidate = null ) {
 		$candidate_post = get_post( $candidate );
 
-		return $candidate_post instanceof WP_Post ? $candidate_post->ID : false;
+		$post_id = $candidate_post instanceof WP_Post ? $candidate_post->ID : false;
+
+		/**
+		 * Allows modifying the post ID in order to allow redirection of values before any other additional
+		 * WordPress action is called from on result.
+		 *
+		 * @since 4.12.13
+		 *
+		 * @param int|bool         $post_id   The ID of the post if the $candidate value is a valid WP_Post Object, `false` otherwise.
+		 * @param null|int|WP_Post $candidate Post ID or object, `null` to get the ID of the global post object.
+		 *
+		 * @return  int|bool The ID of the post.
+		 */
+		return apply_filters( 'tribe_post_id', $post_id, $candidate );
 	}
 
 	/**
@@ -581,6 +627,8 @@ class Tribe__Main {
 		tribe_singleton( 'feature-detection', 'Tribe__Feature_Detection' );
 		tribe_register_provider( 'Tribe__Service_Providers__Processes' );
 
+		tribe( \Tribe\Admin\Notice\WP_Version::class );
+		tribe( \Tribe\Admin\Troubleshooting::class );
 
 		/**
 		 * Runs after all plugins including Tribe ones have loaded
@@ -621,6 +669,8 @@ class Tribe__Main {
 		tribe_singleton( 'freemius', 'Tribe__Freemius' );
 		tribe_singleton( 'customizer', 'Tribe__Customizer' );
 		tribe_singleton( Tribe__Dependency::class, Tribe__Dependency::class );
+		tribe_singleton( \Tribe\Admin\Troubleshooting::class, \Tribe\Admin\Troubleshooting::class, [ 'hook' ] );
+
 		tribe_singleton( 'callback', 'Tribe__Utils__Callback' );
 		tribe_singleton( Tribe__Admin__Help_Page::class, Tribe__Admin__Help_Page::class );
 
@@ -635,7 +685,9 @@ class Tribe__Main {
 		tribe_register_provider( Tribe\Log\Service_Provider::class );
 		tribe_register_provider( Tribe\Service_Providers\Crons::class );
 		tribe_register_provider( Tribe\Service_Providers\Widgets::class );
+		tribe_register_provider( Tribe\Service_Providers\Onboarding::class );
 		tribe_register_provider( Tribe\Admin\Notice\Service_Provider::class );
+		tribe_register_provider( Tribe\Admin\Conditional_Content\Service_Provider::class );
 	}
 
 	/**

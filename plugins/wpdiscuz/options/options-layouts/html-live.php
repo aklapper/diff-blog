@@ -21,7 +21,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="bubble">
     <div class="wpd-opt-name">
         <label><?php echo esc_html($setting["options"]["bubble"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubble"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo wp_kses($setting["options"]["bubble"]["description"], wp_kses_allowed_html('post')); ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -41,7 +41,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="bubbleLocation">
     <div class="wpd-opt-name">
         <label for="bubbleLocation"><?php echo esc_html($setting["options"]["bubbleLocation"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubbleLocation"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["bubbleLocation"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -63,7 +63,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="bubbleLiveUpdate">
     <div class="wpd-opt-name">
         <label><?php echo esc_html($setting["options"]["bubbleLiveUpdate"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubbleLiveUpdate"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["bubbleLiveUpdate"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -84,7 +84,7 @@ if (!defined("ABSPATH")) {
     <div class="wpd-opt-name">
         <label><?php echo esc_html($setting["options"]["bubbleShowNewCommentMessage"]["label"]) ?></label>
         <div style="width: 76%; margin-top: 5px;"><img src="<?php echo esc_url_raw(plugins_url(WPDISCUZ_DIR_NAME . "/assets/img/dashboard/bubble-new-comment-info.png")); ?>" style="width: 100%;"/></div>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubbleShowNewCommentMessage"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["bubbleShowNewCommentMessage"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -105,7 +105,7 @@ if (!defined("ABSPATH")) {
     <div class="wpd-opt-name">
         <label for="bubbleHintTimeout"><?php echo esc_html($setting["options"]["bubbleHintTimeout"]["label"]) ?></label>
         <div style="width: 77%; margin-top: 5px;"><img src="<?php echo esc_url_raw(plugins_url(WPDISCUZ_DIR_NAME . "/assets/img/dashboard/bubble-invite-to-comment.png")); ?>" style="width: 100%"/></div>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubbleHintTimeout"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["bubbleHintTimeout"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <span><input type="number" value="<?php echo esc_attr($this->live["bubbleHintTimeout"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_LIVE); ?>[bubbleHintTimeout]" id="bubbleHintTimeout" style="width:70px;"> <?php esc_html_e("seconds", "wpdiscuz") ?></span>
@@ -120,7 +120,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="bubbleHintHideTimeout">
     <div class="wpd-opt-name">
         <label for="bubbleHintHideTimeout"><?php echo esc_html($setting["options"]["bubbleHintHideTimeout"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["bubbleHintHideTimeout"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["bubbleHintHideTimeout"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <span><input type="number" value="<?php echo esc_attr($this->live["bubbleHintHideTimeout"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_LIVE); ?>[bubbleHintHideTimeout]" id="bubbleHintHideTimeout" style="width:70px;"> <?php esc_html_e("seconds", "wpdiscuz") ?></span>
@@ -135,7 +135,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentListUpdateType">
     <div class="wpd-opt-name">
         <label for="commentListUpdateType"><?php echo esc_html($setting["options"]["commentListUpdateType"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentListUpdateType"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentListUpdateType"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -155,7 +155,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="liveUpdateGuests">
     <div class="wpd-opt-name">
         <label for="liveUpdateGuests"><?php echo esc_html($setting["options"]["liveUpdateGuests"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["liveUpdateGuests"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["liveUpdateGuests"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -173,12 +173,10 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentListUpdateTimer">
     <div class="wpd-opt-name">
         <label for="commentListUpdateTimer"><?php echo esc_html($setting["options"]["commentListUpdateTimer"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentListUpdateTimer"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentListUpdateTimer"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
-        <select id="commentListUpdateTimer" name="<?php echo esc_attr(WpdiscuzCore::TAB_LIVE); ?>[commentListUpdateTimer]">
-            <option value="10" <?php selected($this->live["commentListUpdateTimer"], 10); ?>>10 <?php esc_html_e("Seconds", "wpdiscuz"); ?></option>
-            <option value="20" <?php selected($this->live["commentListUpdateTimer"], 20); ?>>20 <?php esc_html_e("Seconds", "wpdiscuz"); ?></option>
+        <select id="commentListUpdateTimer" name="<?php echo esc_attr(WpdiscuzCore::TAB_LIVE); ?>[commentListUpdateTimer]">            
             <option value="30" <?php selected($this->live["commentListUpdateTimer"], 30); ?>>30 <?php esc_html_e("Seconds", "wpdiscuz"); ?></option>
             <option value="60" <?php selected($this->live["commentListUpdateTimer"], 60); ?>>1 <?php esc_html_e("Minute", "wpdiscuz"); ?></option>
             <option value="180" <?php selected($this->live["commentListUpdateTimer"], 180); ?>>3 <?php esc_html_e("Minutes", "wpdiscuz"); ?></option>

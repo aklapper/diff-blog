@@ -13,12 +13,12 @@
  *
  * @var WP_Post $event             The event post object with properties added by the `tribe_get_event` function.
  * @var array   $link_button_attrs Associative array of link button attributes.
- * @var array   $zoom_link_attrs   Associative array of zoom link attributes.
+ * @var array   $zoom_link_attrs   Associative array of Zoom link attributes.
  *
  * @see tribe_get_event() For the format of the event object.
  */
 
-// Remove the query vars from the zoom URL to avoid too long a URL in display.
+// Remove the query vars from the Zoom URL to avoid too long a URL in display.
 if ( ! empty( $event->zoom_join_url ) ) {
 	$short_zoom_url = implode(
 		'',
@@ -28,7 +28,7 @@ if ( ! empty( $event->zoom_join_url ) ) {
 ?>
 <div class="tribe-events-virtual-single-zoom-details tribe-events-single-section tribe-events-event-meta tribe-clearfix">
 	<?php if ( $event->virtual_linked_button && ! empty( $event->zoom_join_url ) ) : ?>
-		<div class="tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--link-button tribe-events-meta-group">
+		<div class="tec-events-virtual-single-api-details__meta-group tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--link-button tribe-events-meta-group">
 			<?php
 			$this->template(
 				'components/link-button',
@@ -43,7 +43,7 @@ if ( ! empty( $event->zoom_join_url ) ) {
 	<?php endif; ?>
 
 	<?php if ( ! empty( $event->zoom_join_url ) ) : ?>
-		<div class="tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--zoom-link tribe-events-meta-group">
+		<div class="tec-events-virtual-single-api-details__meta-group tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--zoom-link tribe-events-meta-group">
 			<?php
 			$this->template(
 				'v2/components/icons/video',
@@ -55,10 +55,11 @@ if ( ! empty( $event->zoom_join_url ) ) {
 				]
 			);
 			?>
-			<div class="tribe-events-virtual-single-zoom-details__meta-group-content">
+			<div class="tec-events-virtual-single-api-details__meta-group-content tribe-events-virtual-single-zoom-details__meta-group-content">
 				<a
 					href="<?php echo esc_url( $event->zoom_join_url ); ?>"
 					class="tribe-events-virtual-single-zoom-details__zoom-link"
+					target="_blank"
 					<?php tribe_attributes( $zoom_link_attrs ); ?>
 				>
 					<?php echo esc_html( $short_zoom_url ); ?>
@@ -84,7 +85,7 @@ if ( ! empty( $event->zoom_join_url ) ) {
 	<?php endif; ?>
 
 	<?php if ( ! empty( $event->zoom_global_dial_in_numbers ) ) : ?>
-		<div class="tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--zoom-phone tribe-events-meta-group">
+		<div class="tec-events-virtual-single-api-details__meta-group tribe-events-virtual-single-zoom-details__meta-group tribe-events-virtual-single-zoom-details__meta-group--zoom-phone tribe-events-meta-group">
 			<?php
 			$this->template(
 				'v2/components/icons/phone',
@@ -96,7 +97,7 @@ if ( ! empty( $event->zoom_join_url ) ) {
 				]
 			);
 			?>
-			<div class="tribe-events-virtual-single-zoom-details__meta-group-content">
+			<div class="tec-events-virtual-single-api-details__meta-group-content tribe-events-virtual-single-zoom-details__meta-group-content">
 				<ul class="tribe-events-virtual-single-zoom-details__phone-number-list">
 					<?php foreach ( $event->zoom_global_dial_in_numbers as $phone_number ) : ?>
 						<li class="tribe-events-virtual-single-zoom-details__phone-number-list-item">

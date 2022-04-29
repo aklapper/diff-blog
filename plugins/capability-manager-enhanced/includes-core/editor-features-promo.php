@@ -20,8 +20,8 @@
 ?>
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
 
-        <td colspan="3">
-            <h4 class="ppc-menu-row-section"><?php _e('Metaboxes', 'capsman-enhanced'); ?></h4>
+        <td colspan="2">
+            <h4 class="ppc-menu-row-section"><?php esc_html_e('Metaboxes', 'capsman-enhanced'); ?></h4>
         </td>
     </tr>
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
@@ -29,12 +29,9 @@
         <td class="menu-column ppc-menu-item">
 
                 <span class="gutenberg menu-item-link">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Checklist', 'capsman-enhanced'); ?> </strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Checklist', 'capsman-enhanced'); ?> </strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>
@@ -42,12 +39,9 @@
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link restricted">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Editorial Comments', 'capsman-enhanced'); ?></strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Editorial Comments', 'capsman-enhanced'); ?></strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>
@@ -55,12 +49,9 @@
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Notifications', 'capsman-enhanced'); ?></strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Notifications', 'capsman-enhanced'); ?></strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>
@@ -68,27 +59,24 @@
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('TaxoPress - Settings', 'capsman-enhanced'); ?></strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('TaxoPress - Settings', 'capsman-enhanced'); ?></strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>
     </tr>
 
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row">
-        <td colspan="3">
+        <td colspan="2">
             <div class="pp-promo-upgrade-notice">
                 <p>
-                    <?php _e('You can hide plugin metaboxes. You can also hide specific items by entering their CSS class or ID. This feature is available in PublishPress Capabilities Pro.',
+                    <?php esc_html_e('You can hide plugin metaboxes. You can also hide specific items by entering their CSS class or ID. This feature is available in PublishPress Capabilities Pro.',
                         'capsman-enhanced'); ?>
                 </p>
                 <p>
                     <a href="https://publishpress.com/links/capabilities-banner" target="_blank">
-                        <?php _e('Upgrade to Pro', 'capsman-enhanced'); ?>
+                        <?php esc_html_e('Upgrade to Pro', 'capsman-enhanced'); ?>
                     </a>
                 </p>
             </div>
@@ -97,34 +85,28 @@
 
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
 
-        <td colspan="3">
-            <h4 class="ppc-menu-row-section"><?php _e('Custom Items', 'capsman-enhanced'); ?></h4>
+        <td colspan="2">
+            <h4 class="ppc-menu-row-section"><?php esc_html_e('Custom Items', 'capsman-enhanced'); ?></h4>
         </td>
     </tr>
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Custom item one', 'capsman-enhanced'); ?> <small>(.custom-plugin-item, #custom-plugin-item)</small> &nbsp; <span
-                        class="ppc-custom-features-delete"><small>(<?php _e('Delete', 'capsman-enhanced'); ?>)</small></span></strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Custom item one', 'capsman-enhanced'); ?> <small>(.custom-plugin-item, #custom-plugin-item)</small> &nbsp; <span
+                        class="ppc-custom-features-delete"><small>(<?php esc_html_e('Delete', 'capsman-enhanced'); ?>)</small></span></strong></span>
         </td>
 
         <td class="restrict-column ppc-menu-checkbox">
            <input type="checkbox">
         </td>
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
     </tr>
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link restricted">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Permalink: Descriptive Caption', 'capsman-enhanced'); ?> <small>(.editor-post-link p)</small> &nbsp; <span
-                        class="ppc-custom-features-delete"><small>(<?php _e('Delete', 'capsman-enhanced'); ?>)</small></span>                </strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Permalink: Descriptive Caption', 'capsman-enhanced'); ?> <small>(.editor-post-link p)</small> &nbsp; <span
+                        class="ppc-custom-features-delete"><small>(<?php esc_html_e('Delete', 'capsman-enhanced'); ?>)</small></span>                </strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>
@@ -132,12 +114,9 @@
     <tr class="ppc-menu-row parent-menu pp-promo-overlay-row pp-promo-blur">
         <td class="menu-column ppc-menu-item">
                 <span class="gutenberg menu-item-link">
-                <strong><i class="dashicons dashicons-arrow-right"></i> <?php _e('Page Attributes: Order', 'capsman-enhanced'); ?> <small>(.editor-page-attributes__order)</small> &nbsp; <span class="ppc-custom-features-delete"><small>(<?php _e('Delete', 'capsman-enhanced'); ?>)</small></span>                </strong></span>
+                <strong><i class="dashicons dashicons-arrow-right"></i> <?php esc_html_e('Page Attributes: Order', 'capsman-enhanced'); ?> <small>(.editor-page-attributes__order)</small> &nbsp; <span class="ppc-custom-features-delete"><small>(<?php esc_html_e('Delete', 'capsman-enhanced'); ?>)</small></span>                </strong></span>
         </td>
 
-        <td class="restrict-column ppc-menu-checkbox">
-            <input type="checkbox">
-        </td>
         <td class="restrict-column ppc-menu-checkbox">
             <input type="checkbox">
         </td>

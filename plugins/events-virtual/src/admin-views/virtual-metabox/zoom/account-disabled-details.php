@@ -8,6 +8,7 @@
  * See more documentation about our views templating system.
  *
  * @since   1.5.0
+ * @deprecated 1.9.0 - Use src/admin-views/virtual-metabox/api/account-disabled-details.php
  *
  * @version 1.5.0
  *
@@ -24,7 +25,7 @@
 		<?php echo esc_html( $disabled_title ); ?>
 	</div>
 
-	<div class="tribe-events-virtual-meetings-zoom-error__details-wrapper">
+	<div class="tec-events-virtual-meetings-api-standard-details__wrapper tribe-events-virtual-meetings-zoom-error__details-wrapper">
 		<p class="tribe-events-virtual-meetings-zoom-error__details-body">
 			<?php echo wp_kses_post( $disabled_body ); ?>
 		</p>

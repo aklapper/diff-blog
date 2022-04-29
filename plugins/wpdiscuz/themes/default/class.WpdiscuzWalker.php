@@ -7,14 +7,17 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
     private $helperOptimization;
     private $dbManager;
     private $options;
+    private $cache;
     private $users = [];
+    private $extra = [];
     private $feedbacks = [];
 
-    public function __construct($helper, $helperOptimization, $dbManager, $options) {
+    public function __construct($helper, $helperOptimization, $dbManager, $options, $cache) {
         $this->helper = $helper;
         $this->helperOptimization = $helperOptimization;
         $this->dbManager = $dbManager;
         $this->options = $options;
+        $this->cache = $cache;
     }
 
     /** START_EL */
@@ -23,6 +26,11 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $GLOBALS["comment_depth"] = $depth;
         $GLOBALS["comment"] = $comment;
         // BEGIN
+
+        if (!$this->extra && !empty($args["commentsArgs"])) {
+            $this->extra = $this->cache->getExtraCache($args["commentsArgs"]);
+        }
+
         $search = [];
         $replace = [];
         $commentOutput = "";
@@ -30,7 +38,13 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $uniqueId = $comment->comment_ID . "_" . $comment->comment_parent;
         $commentWrapperClass = ["wpd-comment"];
         $commentWrapClass = ["wpd-comment-wrap"];
-        $commentMetas = get_comment_meta($comment->comment_ID);
+
+        if (isset($this->extra[$comment->comment_ID]["metas"])) {
+            $commentMetas = $this->extra[$comment->comment_ID]["metas"];
+        } else {
+            $this->extra[$comment->comment_ID]["metas"] = $commentMetas = get_comment_meta($comment->comment_ID);
+        }
+
         $isClosed = isset($commentMetas[self::META_KEY_CLOSED]) ? intval($commentMetas[self::META_KEY_CLOSED][0]) : 0;
         $isInline = isset($commentMetas[self::META_KEY_FEEDBACK_FORM_ID][0]) ? intval($commentMetas[self::META_KEY_FEEDBACK_FORM_ID][0]) : 0;
         $isApproved = $comment->comment_approved === "1";
@@ -52,7 +66,12 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             }
         }
 
-		$commentLink = get_comment_link($comment);
+        if (isset($this->extra[$comment->comment_ID]["commentLink"])) {
+            $commentLink = $this->extra[$comment->comment_ID]["commentLink"];
+        } else {
+            $this->extra[$comment->comment_ID]["commentLink"] = $commentLink = get_comment_link($comment);
+        }
+
         if (!$this->options->wp["isPaginate"]) {
             if (!empty($args["last_visit"]) && !empty($args["current_user_email"]) && strtotime($comment->comment_date) > $args["last_visit"] && $args["current_user_email"] !== $comment->comment_author_email) {
                 $commentWrapperClass[] = "wpd-new-loaded-comment";
@@ -62,126 +81,12 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $userKey = $comment->user_id . "_" . $comment->comment_author_email . "_" . $comment->comment_author;
         if (isset($this->users[$userKey])) {
             $user = $this->users[$userKey];
-        } else {
-            $user = ["user" => ""];
-            if ($comment->user_id) {
-                $user["user"] = get_user_by("id", $comment->user_id);
-            } else if ($this->options->login["isUserByEmail"]) {
-                $user["user"] = get_user_by("email", $comment->comment_author_email);
-            }
-            $user["commentAuthorUrl"] = ("http://" === $comment->comment_author_url) ? "" : $comment->comment_author_url;
-            $user["commentAuthorUrl"] = apply_filters("get_comment_author_url", $user["commentAuthorUrl"], $comment->comment_ID, $comment);
-            $user["commentWrapClass"] = [];
-            $user["author_title"] = "";
-            if ($user["user"]) {
-                $user["authorName"] = $comment->comment_author;
-                $user["authorAvatarField"] = $user["user"]->ID;
-                $user["gravatarUserId"] = $user["user"]->ID;
-                $user["gravatarUserEmail"] = $comment->comment_author_email;
-                $user["profileUrl"] = in_array($user["user"]->ID, $args["posts_authors"]) ? get_author_posts_url($user["user"]->ID) : "";
-                $user["profileUrl"] = $this->helper->getProfileUrl($user["profileUrl"], $user["user"]);
-                if ($user["user"]->ID == $args["post_author"]) {
-                    $user["commentWrapClass"][] = "wpd-blog-user";
-                    $user["commentWrapClass"][] = "wpd-blog-post_author";
-                    if (!empty($this->options->labels["blogRoleLabels"]["post_author"])) {
-                        $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_post_author"));
-                    }
-                } else {
-                    if ($this->options->labels["blogRoles"]) {
-                        if ($user["user"]->roles && is_array($user["user"]->roles)) {
-                            foreach ($user["user"]->roles as $k => $role) {
-                                if (isset($this->options->labels["blogRoles"][$role])) {
-                                    $user["commentWrapClass"][] = "wpd-blog-user";
-                                    $user["commentWrapClass"][] = "wpd-blog-" . $role;
-                                    $rolePhrase = esc_html($this->options->getPhrase("wc_blog_role_" . $role, ["default" => ""]));
-                                    if (!empty($this->options->labels["blogRoleLabels"][$role])) {
-                                        $user["author_title"] = apply_filters("wpdiscuz_user_label", $rolePhrase, $user["user"]);
-                                    }
-                                    break;
-                                }
-                            }
-                        } else {
-                            $user["commentWrapClass"][] = "wpd-blog-guest";
-                            if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
-                                $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
-                            }
-                        }
-                    }
-                }
-                if ($this->options->social["displayIconOnAvatar"] && ($socialProvider = get_user_meta($user["user"]->ID, self::WPDISCUZ_SOCIAL_PROVIDER_KEY, true))) {
-                    $user["commentWrapClass"][] = "wpd-soc-user-" . $socialProvider;
-                    if ($socialProvider === "facebook") {
-                        $user["socIcon"] = "<i class='fab fa-facebook-f'></i>";
-                    } elseif ($socialProvider === "disqus") {
-                        $user["socIcon"] = "<i class='wpd-soc-user-disqus'>D</i>";
-                    } elseif ($socialProvider === "ok") {
-                        $user["socIcon"] = "<i class='fab fa-odnoklassniki'></i>";
-                    } elseif ($socialProvider === "yandex") {
-                        $user["socIcon"] = "<i class='fab fa-yandex-international'></i>";
-                    } elseif ($socialProvider === "mailru") {
-                        $user["socIcon"] = "<i class='fas fa-at'></i>";
-                    } elseif ($socialProvider === "baidu") {
-                        $user["socIcon"] = "<i class='fas fa-paw'></i>";
-                    } else {
-                        $user["socIcon"] = "<i class='fab fa-{$socialProvider}'></i>";
-                    }
-                }
-            } else {
-                $user["authorName"] = $comment->comment_author ? $comment->comment_author : esc_html($this->options->getPhrase("wc_anonymous"));
-                $user["authorAvatarField"] = $comment->comment_author_email;
-                $user["gravatarUserId"] = 0;
-                $user["gravatarUserEmail"] = $comment->comment_author_email;
-                $user["profileUrl"] = "";
-                $user["commentWrapClass"][] = "wpd-blog-guest";
-                if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
-                    $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
-                }
-            }
+        } else if ($user = $this->cache->getUserCache($userKey)) {
+            $this->helper->fillUserRoleData($user, $args);
             $this->users[$userKey] = $user;
-        }
-        $user["authorName"] = apply_filters("wpdiscuz_comment_author", $user["authorName"], $comment);
-        if ($this->options->thread_layouts["showAvatars"] && $this->options->wp["showAvatars"]) {
-            $user["authorAvatarField"] = apply_filters("wpdiscuz_author_avatar_field", $user["authorAvatarField"], $comment, $user["user"], $user["profileUrl"]);
-            $user["gravatarArgs"] = [
-                "wpdiscuz_gravatar_field" => $user["authorAvatarField"],
-                "wpdiscuz_gravatar_size" => $args["wpdiscuz_gravatar_size"],
-                "wpdiscuz_gravatar_user_id" => $user["gravatarUserId"],
-                "wpdiscuz_gravatar_user_email" => $user["gravatarUserEmail"],
-                "wpdiscuz_current_user" => $user["user"],
-            ];
-            $user["avatar"] = get_avatar($user["gravatarArgs"]["wpdiscuz_gravatar_field"], $user["gravatarArgs"]["wpdiscuz_gravatar_size"], "", $user["authorName"], $user["gravatarArgs"]);
-        }
-        $user["authorNameHtml"] = $user["authorName"];
-        if ($this->options->login["enableProfileURLs"]) {
-            if ($user["profileUrl"]) {
-                $attributes = apply_filters("wpdiscuz_avatar_link_attributes", ["href" => $user["profileUrl"], "target" => "_blank", "rel" => "noreferrer ugc"]);
-                if ($attributes && is_array($attributes)) {
-                    $attributesHtml = "";
-                    foreach ($attributes as $attribute => $value) {
-                        $attributesHtml .= " $attribute='{$value}'";
-                    }
-                    $user["authorAvatarSprintf"] = "<a" . str_replace("%", "%%", $attributesHtml) . ">%s</a>";
-                } else {
-                    $user["authorAvatarSprintf"] = "<a rel='noreferrer ugc' href='" . str_replace("%", "%%", $user["profileUrl"]) . "' target='_blank'>%s</a>";
-                }
-            }
-
-            if ((($href = $user["commentAuthorUrl"]) && $this->options->login["websiteAsProfileUrl"]) || ($href = $user["profileUrl"])) {
-                $rel = "noreferrer ugc";
-                if (strpos($href, $args["site_url"]) !== 0) {
-                    $rel .= " nofollow";
-                }
-                $attributes = apply_filters("wpdiscuz_author_link_attributes", ["href" => $href, "rel" => $rel, "target" => "_blank"]);
-                if ($attributes && is_array($attributes)) {
-                    $attributesHtml = "";
-                    foreach ($attributes as $attribute => $value) {
-                        $attributesHtml .= " $attribute='{$value}'";
-                    }
-                    $user["authorNameHtml"] = "<a$attributesHtml>{$user["authorNameHtml"]}</a>";
-                } else {
-                    $user["authorNameHtml"] = "<a rel='$rel' href='$href' target='_blank'>{$user["authorNameHtml"]}</a>";
-                }
-            }
+        } else {
+            $this->users[$userKey] = $user = $this->helper->getCommentAuthor($comment, $args);
+            $this->cache->setUserCache($userKey, $user);
         }
 
         if ($comment->comment_parent && $this->options->wp["threadComments"]) {
@@ -190,14 +95,21 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
 
         $showDate = false;
         if ($this->options->thread_layouts["showCommentDate"]) {
+
+            if (isset($this->extra[$comment->comment_ID]["commentDate"])) {
+                $commentDate = $this->extra[$comment->comment_ID]["commentDate"];
+            } else {
+                $this->extra[$comment->comment_ID]["commentDate"] = $commentDate = get_comment_date($this->options->wp["dateFormat"] . " " . $this->options->wp["timeFormat"], $comment->comment_ID);
+            }
+
             $search[] = "{DATE_WRAPPER_CLASSES}";
             $search[] = "{DATE_ICON}";
             $search[] = "{DATE}";
             $search[] = "{POSTED_DATE}";
             $replace[] = "wpd-comment-date";
             $replace[] = "<i class='far fa-clock' aria-hidden='true'></i>";
-            $replace[] = esc_html($this->options->general["simpleCommentDate"] ? get_comment_date($this->options->wp["dateFormat"] . " " . $this->options->wp["timeFormat"], $comment->comment_ID) : $this->helper->dateDiff($comment->comment_date_gmt));
-            $replace[] = esc_html(get_comment_date($this->options->wp["dateFormat"] . " " . $this->options->wp["timeFormat"], $comment->comment_ID));
+            $replace[] = ($this->options->general["simpleCommentDate"]) ? esc_html($commentDate) : esc_html($this->helper->dateDiff($comment->comment_date_gmt));
+            $replace[] = esc_html($commentDate);
             $showDate = true;
         }
 
@@ -227,7 +139,12 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                 $toolsActions .= sprintf($args["wpd_close_btn"], $closeText);
             }
         } else {
-            $parentComment = get_comment($comment->comment_parent);
+            if (isset($this->extra[$comment->comment_ID]["commentParent"])) {
+                $parentComment = $this->extra[$comment->comment_ID]["commentParent"];
+            } else {
+                $this->extra[$comment->comment_ID]["commentParent"] = $parentComment = get_comment($comment->comment_parent);
+            }
+
             $parentCommentLink = "#comment-" . $parentComment->comment_ID;
             $userKey = $parentComment->user_id . "_" . $parentComment->comment_author_email . "_" . $parentComment->comment_author;
             $parentCommentUserName = isset($this->users[$userKey]) ? $this->users[$userKey]["authorName"] : $parentComment->comment_author;
@@ -322,10 +239,10 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         if ($args["can_user_follow"] && $args["current_user_email"] !== $comment->comment_author_email) {
             if (is_array($args["user_follows"]) && in_array($comment->comment_author_email, $args["user_follows"])) {
                 $followClass = "wpd-unfollow wpd-follow-active";
-                $followTip = $this->options->getPhrase("wc_unfollow_user", ["comment" => $comment]);
+                $followTip = esc_html($this->options->getPhrase("wc_unfollow_user", ["comment" => $comment]));
             } else {
                 $followClass = "wpd-follow";
-                $followTip = $this->options->getPhrase("wc_follow_user", ["comment" => $comment]);
+                $followTip = esc_html($this->options->getPhrase("wc_follow_user", ["comment" => $comment]));
             }
             $showFollow = true;
             $search[] = "{FOLLOW_WRAPPER_CLASSES}";
@@ -334,7 +251,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $search[] = "{FOLLOW_ICON}";
             $replace[] = "wpd-follow-link wpd_not_clicked " . $followClass;
             $replace[] = esc_attr($followTip);
-            $replace[] = $args["layout"] == 1 ? (!is_rtl() ? (wp_is_mobile() ? 'left' : 'right') : (wp_is_mobile() ? 'right' : 'left')) : "top";
+            $replace[] = $args["follow_tooltip_position"];
             $replace[] = "<i class='fas fa-rss' aria-hidden='true'></i>";
         }
 
@@ -367,7 +284,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
                 $commentLinkIcon = $beforeCommentLink;
             }
             if ($this->options->thread_layouts["showCommentLink"]) {
-                $commentLinkIcon .= apply_filters("wpdiscuz_comment_link_img", "<span wpd-tooltip='" . esc_attr($this->options->getPhrase("wc_comment_link", ["comment" => $comment])) . "'><i class='fas fa-link' aria-hidden='true' data-comment-url='" . esc_url_raw($commentLink) . "'></i></span>", $comment);
+                $commentLinkIcon .= apply_filters("wpdiscuz_comment_link_img", "<span wpd-tooltip='" . esc_attr($this->options->getPhrase("wc_comment_link", ["comment" => $comment])) . "' wpd-tooltip-position='left'><i class='fas fa-link' aria-hidden='true' data-wpd-clipboard='" . esc_url_raw($commentLink) . "'></i></span>", $comment);
             }
             if ($afterCommentLink) {
                 $commentLinkIcon .= $afterCommentLink;
@@ -382,7 +299,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
         $showVote = false;
         if ($this->options->thread_layouts["showVotingButtons"] && $isApproved) {
             if ($this->options->thread_layouts["votingButtonsStyle"]) {
-                $voteCount = isset($commentMetas[self::META_KEY_VOTES_SEPARATE]) ? unserialize($commentMetas[self::META_KEY_VOTES_SEPARATE][0]) : ["like" => 0, "dislike" => 0];
+                $voteCount = isset($commentMetas[self::META_KEY_VOTES_SEPARATE]) ? maybe_unserialize($commentMetas[self::META_KEY_VOTES_SEPARATE][0]) : ["like" => 0, "dislike" => 0];
                 $like = !empty($voteCount["like"]) ? intval($voteCount["like"]) : 0;
                 $voteResult = "<div class='wpd-vote-result wpd-vote-result-like" . ($like ? " wpd-up" : "") . "' title='" . esc_attr($like) . "'>" . esc_html($this->helper->getNumber($like)) . "</div>";
                 if ($this->options->thread_layouts["enableDislikeButton"]) {
@@ -489,7 +406,7 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
             $lastEdited = "<div class='wpd-comment-last-edited'><i class='far fa-edit'></i>" . esc_html(sprintf($this->options->getPhrase("wc_last_edited", ["comment" => $comment]), $this->helper->dateDiff($commentMetas[self::META_KEY_LAST_EDITED_AT][0]), $username)) . "</div>";
         }
 
-        $commentWrapClass = array_merge($commentWrapClass, $user["commentWrapClass"]);
+        $commentWrapClass = array_merge($commentWrapClass, $user["commentWrapClass"], $user["commentWrapRoleClass"]);
         if ($args["layout"] == 1) {
             $search[] = "{WRAPPER_CLASSES}";
             $search[] = "{HEADER_WRAPPER_CLASSES}";
@@ -592,6 +509,11 @@ class WpdiscuzWalker extends Walker_Comment implements WpDiscuzConstants {
     public function end_el(&$output, $comment, $depth = 0, $args = []) {
         $output = apply_filters("wpdiscuz_thread_end", $output, $comment, $depth, $args);
         $output .= "</div>";
+
+        if (!empty($args["lastCommentIdInList"]) && !empty($args["commentsArgs"]) && $args["lastCommentIdInList"] === $comment->comment_ID && $this->extra) {
+            $this->cache->setExtraCache($args["commentsArgs"], $this->extra);
+        }
+
         return $output;
     }
 

@@ -414,7 +414,7 @@ $settings = $this->settingsArray();
                         ?>
                         <!-- Settings start -->
                         <div class="wpd-box">
-                            <div class="wpd-box-info wpd-<?php echo $setting["status"] ?>">
+                            <div class="wpd-box-info wpd-<?php echo esc_attr($setting["status"]); ?>">
                                 <img src="<?php echo esc_url_raw(plugins_url(WPDISCUZ_DIR_NAME . "/assets/img/dashboard/" . $setting["status"] . ".png")); ?>"/>
                             </div>
                             <div class="wpd-box-head">
@@ -487,10 +487,14 @@ $settings = $this->settingsArray();
                                 wp_nonce_field("wc_options_form-" . $tab);
                                 include_once $filePath;
                                 do_action("wpdiscuz_settings_tab_after", $tab, $setting);
-                                $resetOptionsUrl = admin_url("admin.php?page=" . WpdiscuzCore::PAGE_SETTINGS . "&wpd_tab=" . $tab . "&wpdiscuz_reset_options=1");
-                                $resetOptionsUrl = wp_nonce_url($resetOptionsUrl, "wpdiscuz_reset_options_nonce-" . $tab);
-                                $resetAllTabs = admin_url("admin.php?page=" . WpdiscuzCore::PAGE_SETTINGS . "&wpd_tab=all&wpdiscuz_reset_options=1");
-                                $resetAllTabs = wp_nonce_url($resetAllTabs, "wpdiscuz_reset_options_nonce-all");
+                                $nonce = wp_create_nonce(md5(ABSPATH . get_home_url()));
+                                $mainUrlTab = admin_url("admin.php?page=" . WpdiscuzCore::PAGE_SETTINGS . "&wpd_tab={$tab}");
+                                $mainUrlAll = admin_url("admin.php?page=" . WpdiscuzCore::PAGE_SETTINGS . "&wpd_tab=all");
+                                
+                                $resetOptionsUrl = $mainUrlTab . "&_wpnonce={$nonce}&redirect_to=" . urlencode_deep($mainUrlTab);
+//                                $resetOptionsUrl = wp_nonce_url($resetOptionsUrl, "wpdiscuz_reset_options_nonce-" . $tab);
+                                $resetAllTabs = $mainUrlAll . "&_wpnonce={$nonce}&redirect_to=" . urlencode_deep($mainUrlTab);
+//                                $resetAllTabs = wp_nonce_url($resetAllTabs, "wpdiscuz_reset_options_nonce-all");
                                 ?>
                                 <div class="wpd-opt-row">
                                     <input type="hidden" name="wpd_tab" value="<?php echo esc_attr($tab); ?>" />                                

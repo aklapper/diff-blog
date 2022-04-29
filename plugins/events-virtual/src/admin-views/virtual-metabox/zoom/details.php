@@ -10,22 +10,26 @@
  * @since   1.0.0
  * @since   1.4.0 - Add display of host and choice of alternative hosts
  * @since   1.5.0 - Add support for multiple accounts.
+ * @since 1.9.0 - Add support using shared classes between APIs.
  *
- * @version 1.5.0
+ * @version 1.9.0
  *
  * @link    http://evnt.is/1aiy
  *
- * @var \WP_Post             $event             The event post object, as decorated by the `tribe_get_event` function.
- * @var string               $account_name      The api account name of a Zoom Meeting or Webinar.
- * @var string               $host_label        The label used to designate the host of a Zoom Meeting or Webinar.
- * @var string               $remove_link_url   The URL to remove the event Zoom Meeting.
- * @var string               $remove_link_label The label of the button to remove the event Zoom Meeting link.
- * @var string               $details_title     The title of the details box.
- * @var array<string>        $phone_numbers     A list of the available meeting dial-in phone numbers.
- * @var string               $id_label          The label used to prefix the meeting ID.
- * @var array<string,string> $alt_hosts         An array of users to be able to select as an alternative host,
- * @var array<string,string> $attrs             Associative array of attributes of the details template.
- * @var string               $message           A html message to display.
+ * @var \WP_Post             $event                    The event post object, as decorated by the `tribe_get_event` function.
+ * @var array<string,string> $attrs                    Associative array of attributes of the details template.
+ * @var boolean              $connected                Whether the meeting or webinar was connected to the event instead of created by it.
+ * @var string               $connected_msg            A html message to display if a Zoom meeting or webinar is manually connected.
+ * @var string               $account_name             The api account name of a Zoom Meeting or Webinar.
+ * @var string               $host_label               The label used to designate the host of a Zoom Meeting or Webinar.
+ * @var string               $remove_link_url          The URL to remove the event Zoom Meeting.
+ * @var string               $remove_link_label        The label of the button to remove the event Zoom Meeting link.
+ * @var array<string,string> $remove_attrs             Associative array of attributes of the remove link.
+ * @var string               $details_title            The title of the details box.
+ * @var array<string>        $phone_numbers            A list of the available meeting dial-in phone numbers.
+ * @var string               $id_label                 The label used to prefix the meeting ID.
+ * @var array<string,string> $alt_hosts                An array of users to be able to select as an alternative host,
+ * @var string               $message                  A html message to display.
  *
  * @see     tribe_get_event() For the format of the event object.
  */
@@ -47,23 +51,31 @@ $short_zoom_url = implode(
 
 <div
 	id="tribe-events-virtual-meetings-zoom"
-	class="tribe-dependent tribe-events-virtual-meetings-zoom-details"
+	class="tribe-dependent tec-events-virtual-meetings-api-container tribe-events-virtual-meetings-zoom-details"
 	<?php tribe_attributes( $attrs ) ?>
-
-	data-depends="#tribe-events-virtual-video-source"
-	data-condition="zoom"
 >
-	<div class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
+	<div class="tec-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
 		<a
-			class="tribe-events-virtual-meetings-zoom-details__remove-link"
+			class="tec-events-virtual-meetings-api-details__remove-link"
 			href="<?php echo esc_url( $remove_link_url ); ?>"
 			aria-label="<?php echo esc_attr( $remove_link_label ); ?>"
 			title="<?php echo esc_attr( $remove_link_label ); ?>"
+			<?php tribe_attributes( $remove_attrs ) ?>
 		>
 			×
 		</a>
 
 		<?php echo $message; ?>
+
+		<?php
+		 if ( $connected_msg ) {
+		 	?>
+			 <div class="tec-events-virtual-settings-message__wrap tribe-events-virtual-meetings-zoom__connected-message">
+					<?php echo $connected_msg; ?>
+				</div>
+		 	<?php
+		 }
+		?>
 
 		<div class="tribe-events-virtual-meetings-zoom__title">
 			<?php echo esc_html( $details_title ); ?> <?php echo esc_html( $account_name ); ?>
@@ -74,10 +86,17 @@ $short_zoom_url = implode(
 		</div>
 
 		<div class="tribe-events-virtual-meetings-zoom__alternative-host">
-			<?php $this->template( 'virtual-metabox/zoom/components/multiselect', $alt_hosts );	?>
+			<?php
+			// If the meeting or webinar is connected to the event then only list the altnative hosts.
+			if ( $connected ) {
+				echo esc_html( $alt_hosts['label'] ); ?>: <?php echo esc_html( is_array( $alt_hosts['selected'] ) ? implode( ', ', $alt_hosts['selected'] ) : $alt_hosts['selected'] );
+			} else {
+				$this->template( 'virtual-metabox/zoom/components/multiselect', $alt_hosts );
+			}
+			?>
 		</div>
 
-		<div class="tribe-events-virtual-meetings-zoom__url-wrapper">
+		<div class="tec-events-virtual-meetings-api-standard-details__wrapper tribe-events-virtual-meetings-zoom__url-wrapper">
 			<?php
 			$this->template( 'virtual-metabox/zoom/icons/video', [
 				'classes' => [
@@ -90,6 +109,7 @@ $short_zoom_url = implode(
 				<a
 					href="<?php echo esc_url( $event->zoom_join_url ); ?>"
 					class="tribe-events-virtual-meetings-zoom__url-meeting-link"
+					target="_blank"
 				>
 					<?php echo esc_html( $short_zoom_url ); ?>
 				</a>
@@ -101,7 +121,7 @@ $short_zoom_url = implode(
 		</div>
 
 		<?php if ( count( $phone_numbers ) ) : ?>
-			<div class="tribe-events-virtual-meetings-zoom__phone-wrapper">
+			<div class="tec-events-virtual-meetings-api-standard-details__wrapper tribe-events-virtual-meetings-zoom__phone-wrapper">
 				<?php
 				$this->template( 'virtual-metabox/zoom/icons/phone', [
 					'classes' => [

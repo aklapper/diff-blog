@@ -28,6 +28,7 @@ use Tribe__Customizer__Section as Customizer_Section;
 use Tribe__Events__Main as TEC;
 use Tribe__Rewrite as TEC_Rewrite;
 use Tribe__Utils__Array as Arr;
+use WP_Post;
 
 /**
  * Class Hooks
@@ -45,9 +46,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function register() {
 		$this->container->tag( [ Event_Query_Controller::class, ], 'query_controllers' );
-
-		// Register the Views V2 Customizer controls asset.
-		tribe_asset( TEC::instance(), 'tribe-customizer-views-v2-controls', 'customizer-views-v2-controls.css' );
 
 		$this->add_actions();
 		$this->add_filters();
@@ -70,10 +68,40 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		add_action( 'the_post', [ $this, 'manage_sensitive_info' ] );
 		add_action( 'get_header', [ $this, 'print_single_json_ld' ] );
 		add_action( 'tribe_template_after_include:events/v2/components/after', [ $this, 'action_add_promo_banner' ], 10, 3 );
+		add_action( 'tribe_events_parse_query', [ $this, 'parse_query' ] );
+		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_customizer_in_block_editor' ] );
+	}
 
-		// Customizer.
-		add_action( 'tribe_customizer_register_global_elements_settings', [ $this, 'action_include_global_elements_settings' ], 10, 3 );
-		add_action( 'tribe_customizer_register_single_event_settings', [ $this, 'action_include_single_event_settings' ], 15, 3 );
+	/**
+	 * Enqueue Customizer styles for the single event block editor screen.
+	 *
+	 * @since 5.14.1
+	 */
+	public function enqueue_customizer_in_block_editor() {
+		// Make sure we're on the block edit screen
+		if ( ! is_admin() || ! get_current_screen()->is_block_editor ) {
+			return;
+		}
+
+		if ( ! tribe( 'admin.helpers' )->is_post_type_screen() ) {
+			return;
+		}
+
+		global $post;
+		// Make sure we're editing an Event post.
+		if ( empty( $post ) || ! $post instanceof WP_Post || ! tribe_is_event( $post ) ) {
+			return;
+		}
+
+		// Append the customizer styles to the single block stylesheet
+		add_filter( 'tribe_customizer_inline_stylesheets', static function( $sheets ) {
+			$sheets[] = 'tribe-admin-v2-single-blocks';
+
+			return $sheets;
+		} );
+
+		// Print the styles!
+		tribe( 'customizer' )->inline_style( true );
 	}
 
 	/**
@@ -82,9 +110,9 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @since 4.9.2
 	 */
 	protected function add_filters() {
+		add_filter( 'tec_system_information', [ $this, 'filter_system_information' ] );
 		add_filter( 'wp_redirect', [ $this, 'filter_redirect_canonical' ], 10, 2 );
 		add_filter( 'redirect_canonical', [ $this, 'filter_redirect_canonical' ], 10, 2 );
-		add_action( 'tribe_events_parse_query', [ $this, 'parse_query' ] );
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], 50 );
 		add_filter( 'embed_template', [ $this, 'filter_template_include' ], 50 );
 		add_filter( 'posts_pre_query', [ $this, 'filter_posts_pre_query' ], 20, 2 );
@@ -122,16 +150,12 @@ class Hooks extends \tad_DI52_ServiceProvider {
 			add_filter( 'get_post_time', [ 'Tribe__Events__Templates', 'event_date_to_pubDate' ], 10, 3 );
 		}
 
-		add_filter( 'tribe_customizer_inline_stylesheets', [ $this, 'customizer_inline_stylesheets' ], 12, 2 );
 		add_filter( 'tribe_events_views_v2_view_data', [ View_Utils::class, 'clean_data' ] );
 
 		// Customizer.
 		add_filter( 'tribe_customizer_print_styles_action', [ $this, 'print_inline_styles_in_footer' ] );
-		add_filter( 'tribe_customizer_section_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 2 );
-		add_filter( 'tribe_customizer_section_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 2 );
-
-		// Register the asset for Customizer controls.
-		add_action( 'customize_controls_print_styles', [ $this, 'enqueue_customizer_controls_styles' ] );
+		add_filter( 'tribe_customizer_global_elements_css_template', [ $this, 'filter_global_elements_css_template' ], 10, 3 );
+		add_filter( 'tribe_customizer_single_event_css_template', [ $this, 'filter_single_event_css_template' ], 10, 3 );
 
 		// Add filters to change the display of website links on the Single Event template.
 		add_filter( 'tribe_get_event_website_link_label', [ $this, 'filter_single_event_details_event_website_label' ], 10, 2 );
@@ -145,6 +169,8 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		// iCalendar export request handling.
 		add_filter( 'tribe_ical_template_event_ids', [ $this, 'inject_ical_event_ids' ] );
+
+		add_filter( 'tec_events_query_default_view', [ $this, 'filter_tec_events_query_default_view' ] );
 	}
 
 	/**
@@ -205,6 +231,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 * @since 4.9.2
 	 */
 	public function on_wp_head() {
+		if ( tec_is_full_site_editor() ) {
+			return;
+		}
+
 		$this->container->make( Template\Page::class )->maybe_hijack_main_query();
 	}
 
@@ -853,31 +883,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Add views stylesheets to customizer styles array to check.
-	 * Remove unused legacy stylesheets.
-	 *
-	 * @since 5.1.1
-	 *
-	 * @param array<string> $sheets Array of sheets to search for.
-	 * @param string        $css_template String containing the inline css to add.
-	 *
-	 * @return array Modified array of sheets to search for.
-	 */
-	public function customizer_inline_stylesheets( $sheets, $css_template ) {
-		$v2_sheets = [ 'tribe-events-views-v2-full' ];
-
-		// Dequeue legacy sheets.
-		$keys = array_keys( $sheets, 'tribe-events-calendar-style' );
-		if ( ! empty( $keys ) ) {
-			foreach ( $keys as $key ) {
-				unset( $sheets[ $key ] );
-			}
-		}
-
-		return array_merge( $sheets, $v2_sheets );
-	}
-
-	/**
 	 * Changes the action the Customizer should use to try and print inline styles to print the inline
 	 * styles in the footer.
 	 *
@@ -887,79 +892,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function print_inline_styles_in_footer() {
 		return 'wp_print_footer_scripts';
-	}
-
-	/**
-	 * Adds new Global Elements settings via the hook in common.
-	 *
-	 * @since 5.3.1
-	 *
-	 * @param \Tribe__Customizer__Section $section    The Global Elements Customizer section.
-	 * @param WP_Customize_Manager        $manager    The settings manager.
-	 * @param \Tribe__Customizer          $customizer The Customizer object.
-	 */
-	public function action_include_global_elements_settings( $section, $manager, $customizer ) {
-		$this->container->make( Customizer::class )->include_global_elements_settings( $section, $manager, $customizer );
-	}
-
-	/**
-	 * Adds new Single Event settings via the hook in common.
-	 *
-	 * @since 5.3.1
-	 *
-	 * @param \Tribe__Customizer__Section $section    The Single Event Customizer section.
-	 * @param WP_Customize_Manager        $manager    The settings manager.
-	 * @param \Tribe__Customizer          $customizer The Customizer object.
-	 */
-	public function action_include_single_event_settings( $section, $manager, $customizer ) {
-		$this->container->make( Customizer::class )->include_single_event_settings( $section, $manager, $customizer );
-	}
-
-	/**
-	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
-	 *
-	 * @since 5.3.1
-	 *
-	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
-	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
-	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
-	 *
-	 * @return string The filtered CSS template.
-	 */
-	public function filter_global_elements_css_template( $css_template, $section ) {
-		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
-			return $css_template;
-		}
-
-		return $this->container->make( Customizer::class )->filter_global_elements_css_template( $css_template, $section );
-	}
-
-	/**
-	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
-	 *
-	 * @since 5.3.1
-	 *
-	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
-	 * @param \Tribe__Customizer__Section $section      The Single Event section.
-	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
-	 *
-	 * @return string The filtered CSS template.
-	 */
-	public function filter_single_event_css_template( $css_template, $section ) {
-		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
-			return $css_template;
-		}
-
-		return $this->container->make( Customizer::class )->filter_single_event_css_template( $css_template, $section );
-	}
-
-	/**
-	 * Enqueues Customizer controls styles specific to Views v2 components.
-	 *
-	 * @since 5.4.0
-	 */
-	public function enqueue_customizer_controls_styles() {
-		return $this->container->make( Customizer::class )->enqueue_customizer_controls_styles();
 	}
 
 	/**
@@ -977,6 +909,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	public function filter_single_event_details_event_website_label( $label, $post_id = null ) {
 		// If not V2 or not Classic Editor, return the website url.
 		if ( $this->is_v1_or_blocks( $post_id ) ) {
+			return $label;
+		}
+
+		if ( 'Website' !== $label ) {
 			return $label;
 		}
 
@@ -1046,6 +982,10 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		);
 	}
 
+	public function filter_tec_events_query_default_view( $default_view ) {
+		return tribe( Manager::class )->get_default_view();
+	}
+
 	/**
 	 * Sugar function for the above that determines if the labels should be filtered.
 	 *
@@ -1058,7 +998,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	public function is_v1_or_blocks( $post_id = null ) {
 		return is_null( $post_id )
 				|| ! tribe_events_single_view_v2_is_enabled()
-				|| has_blocks( $post_id );
+				|| tribe( 'editor' )->should_load_blocks() && has_blocks( $post_id );
 	}
 
 	/**
@@ -1084,5 +1024,95 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		return $this->container->make( iCalendar\Request::class )->get_event_ids();
+	}
+
+	/* DEPRECATED */
+
+	/**
+	 * Adds new Global Elements settings via the hook in common.
+	 *
+	 * @since 5.3.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param \Tribe__Customizer__Section $section    The Global Elements Customizer section.
+	 * @param WP_Customize_Manager        $manager    The settings manager.
+	 * @param \Tribe__Customizer          $customizer The Customizer object.
+	 */
+	public function action_include_global_elements_settings( $section, $manager, $customizer ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		tribe( 'customizer' )->include_global_elements_settings( $section, $manager, $customizer );
+	}
+
+	/**
+	 * Adds new Single Event settings via the hook in common.
+	 *
+	 * @since 5.3.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param \Tribe__Customizer__Section $section    The Single Event Customizer section.
+	 * @param WP_Customize_Manager        $manager    The settings manager.
+	 * @param \Tribe__Customizer          $customizer The Customizer object.
+	 */
+	public function action_include_single_event_settings( $section, $manager, $customizer ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		tribe( 'customizer' )->include_single_event_settings( $section, $manager, $customizer );
+	}
+
+	/**
+	 * Filters the Global Elements section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.3.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Global Elements section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_global_elements_css_template( $css_template, $section ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
+			return $css_template;
+		}
+
+		return tribe( 'customizer' )->filter_global_elements_css_template( $css_template, $section );
+	}
+
+	/**
+	 * Filters the Single Event section CSS template to add Views v2 related style templates to it.
+	 *
+	 * @since 5.3.1
+	 * @deprecated 5.9.0
+	 *
+	 * @param string                      $css_template The CSS template, as produced by the Global Elements.
+	 * @param \Tribe__Customizer__Section $section      The Single Event section.
+	 * @param \Tribe__Customizer          $customizer   The current Customizer instance.
+	 *
+	 * @return string The filtered CSS template.
+	 */
+	public function filter_single_event_css_template( $css_template, $section ) {
+		_deprecated_function( __METHOD__, '5.9.0' );
+		if ( ! ( is_string( $css_template ) && $section instanceof Customizer_Section ) ) {
+			return $css_template;
+		}
+
+		return tribe( 'customizer' )->filter_single_event_css_template( $css_template, $section );
+	}
+
+	/**
+	 * Add the views v2 status in a more prominent way in the Troubleshooting page system info panel.
+	 *
+	 * @since 5.12.4
+	 *
+	 * @param array $info Existing information that will be displayed.
+	 *
+	 * @return array
+	 */
+	public function filter_system_information( array $info = [] ) {
+		$views_v2_status = [
+			'Views V2 Status' => tribe_events_views_v2_is_enabled() ? esc_html__( 'Enabled', 'the-events-calendar' ) : esc_html__( 'Disabled', 'the-events-calendar' ),
+		];
+		return \Tribe__Main::array_insert_before_key( 'Settings', $info, $views_v2_status );
 	}
 }

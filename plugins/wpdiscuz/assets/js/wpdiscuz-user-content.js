@@ -16,6 +16,8 @@ jQuery(document).ready(function ($) {
         btn.removeClass('wpd-not-clicked');
         var data = new FormData();
         data.append('action', 'wpdGetInfo');
+        data.append('wpdiscuz_nonce', wpdiscuzAjaxObj.wpdiscuz_nonce);
+        
         wpdFullInfo(btn, data);
         return false;
     });
@@ -50,6 +52,7 @@ jQuery(document).ready(function ($) {
         if (!$('#wpdUserContentInfo #' + relValue).text().length) {
             var data = new FormData();
             data.append('action', $this.attr('data-action'));
+            data.append('wpdiscuz_nonce',wpdiscuzAjaxObj.wpdiscuz_nonce);
             data.append('page', 0);
             $('#wpdUserContentInfo #' + relValue).addClass('wpd-active');
             $('#wpdUserContentInfo #' + relValue).css('text-align', 'center');
@@ -77,6 +80,7 @@ jQuery(document).ready(function ($) {
         var data = new FormData();
         data.append('action', action);
         data.append('page', goToPage);
+        data.append('wpdiscuz_nonce',wpdiscuzAjaxObj.wpdiscuz_nonce);
         wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, true, data)
                 .done(function (response) {
                     btn.addClass('wpd-not-clicked');
@@ -113,6 +117,7 @@ jQuery(document).ready(function ($) {
             data.append('id', id);
             data.append('page', goToPage);
             data.append('action', action);
+            data.append('wpdiscuz_nonce',wpdiscuzAjaxObj.wpdiscuz_nonce);
 
             wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
                     .done(function (response) {
@@ -139,6 +144,7 @@ jQuery(document).ready(function ($) {
         $('.wpd-loading', btn).addClass('wpd-show');
         var data = new FormData();
         data.append('action', 'wpdEmailDeleteLinks');
+        data.append('wpdiscuz_nonce',wpdiscuzAjaxObj.wpdiscuz_nonce);
         wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
                 .done(function (response) {
                     btn.addClass('wpd-not-clicked');
@@ -155,6 +161,8 @@ jQuery(document).ready(function ($) {
             var data = new FormData();
             data.append('action', 'wpdGuestAction');
             data.append('guestAction', guestAction);
+            data.append('wpdiscuz_nonce',wpdiscuzAjaxObj.wpdiscuz_nonce);
+            
             wpdiscuzAjaxObj.getAjaxObj(isNativeAjaxEnabled || additionalTab, false, data)
                     .done(function (response) {
                         btn.addClass('wpd-not-clicked');

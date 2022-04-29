@@ -5,14 +5,16 @@ use Tribe\Events\Views\V2\Manager;
  * Registers a view.
  *
  * @since 5.7.0
+ * @since 5.10.0 Added route slug parameter that is decoupled from the slug view param.
  *
- * @param string $slug View slug.
+ * @param string $slug Slug for locating the view file.
  * @param string $name View name.
  * @param string $class View class.
  * @param int $priority View registration priority.
+ * @param string $route_slug The slug applied to the route for this view.
  */
-function tribe_register_view( $slug, $name, $class, $priority = 50 ) {
-	return tribe( Manager::class )->register_view( $slug, $name, $class, $priority );
+function tribe_register_view( $slug, $name, $class, $priority = 50, $route_slug = null) {
+	return tribe( Manager::class )->register_view( $slug, $name, $class, $priority, $route_slug );
 }
 
 /**
@@ -204,4 +206,24 @@ function tribe_events_single_view_v2_is_enabled() {
 	 * @return boolean Do we enable the single event styles overrides?
 	 */
 	return apply_filters( 'tribe_events_single_view_v2_is_enabled', true );
+}
+
+/**
+ * For legacy usage of the Views V1 we allow removing all notices related to V1 before of Version 6.0.0.
+ *
+ * @since 5.13.0
+ *
+ * @todo Once version 6.0.0 is launched this method will be deprecated since all v1 code will be REMOVED.
+ *
+ * @return bool
+ */
+function tec_events_views_v1_should_display_deprecated_notice() {
+	/**
+	 * Allows toggling notices for V1 deprecation via a filter. Defaults to true.
+	 *
+	 * @since 5.13.0
+	 *
+	 * @return boolean Disable showing the
+	 */
+	return (bool) apply_filters( 'tec_events_views_v1_should_display_deprecated_notice', true );
 }

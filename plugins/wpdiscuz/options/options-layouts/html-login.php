@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showLoggedInUsername">
     <div class="wpd-opt-name">
         <label for="showLoggedInUsername"><?php echo esc_html($setting["options"]["showLoggedInUsername"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showLoggedInUsername"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showLoggedInUsername"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -37,7 +37,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showLoginLinkForGuests">
     <div class="wpd-opt-name">
         <label for="showLoginLinkForGuests"><?php echo esc_html($setting["options"]["showLoginLinkForGuests"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showLoginLinkForGuests"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showLoginLinkForGuests"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -55,7 +55,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="loginUrl">
     <div class="wpd-opt-name">
         <label for="loginUrl"><?php echo esc_html($setting["options"]["loginUrl"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["loginUrl"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["loginUrl"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="url" value="<?php echo esc_attr($this->login["loginUrl"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_LOGIN); ?>[loginUrl]" id="loginUrl" placeholder="<?php echo esc_url_raw(home_url("/my-login-page/")) ?>" />
@@ -70,7 +70,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="myContentSettings">
     <div class="wpd-opt-name">
         <?php echo esc_html($setting["options"]["myContentSettings"]["label"]) ?>
-        <p class="wpd-desc"><?php echo $setting["options"]["myContentSettings"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["myContentSettings"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-optset">
@@ -120,7 +120,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableProfileURLs">
     <div class="wpd-opt-name">
         <label for="enableProfileURLs"><?php echo esc_html($setting["options"]["enableProfileURLs"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableProfileURLs"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableProfileURLs"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -138,7 +138,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="websiteAsProfileUrl">
     <div class="wpd-opt-name">
         <label for="websiteAsProfileUrl"><?php echo esc_html($setting["options"]["websiteAsProfileUrl"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["websiteAsProfileUrl"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["websiteAsProfileUrl"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -156,7 +156,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isUserByEmail">
     <div class="wpd-opt-name">
         <label for="isUserByEmail"><?php echo esc_html($setting["options"]["isUserByEmail"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isUserByEmail"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isUserByEmail"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">

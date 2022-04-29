@@ -19,6 +19,8 @@ namespace Tribe\Events\Virtual;
 use Tribe\Events\Views\V2\Assets as Event_Assets;
 use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Events__Templates;
+use Tribe__Events__Main as TEC;
+use Tribe__Admin__Helpers as Admin_Helpers;
 
 /**
  * Register Assets.
@@ -72,23 +74,44 @@ class Assets extends \tad_DI52_ServiceProvider {
 		$this->container->singleton( static::class, $this );
 		$this->container->singleton( 'events-virtual.assets', $this );
 
+		$this->enqueue_admin_assets();
+		$this->enqueue_frontend_assets();
+	}
+
+	/**
+	 * Setup admin assets.
+	 *
+	 * @since 1.8.0
+	 */
+	protected function enqueue_admin_assets() {
 		$plugin = tribe( Plugin::class );
+		$admin_helpers = Admin_Helpers::instance();
 
 		tribe_asset(
 			$plugin,
 			'tribe-events-virtual-admin-css',
 			'events-virtual-admin.css',
-			[],
-			'admin_enqueue_scripts'
+			[ 'tec-variables-full', 'tribe-tooltip' ],
+			'admin_enqueue_scripts',
+			[
+				'conditionals' => [
+					'operator' => 'OR',
+					[ $admin_helpers, 'is_screen' ],
+				],
+			]
 		);
 
 		tribe_asset(
 			$plugin,
 			'tribe-events-virtual-admin-js',
 			'events-virtual-admin.js',
-			[ 'jquery', 'tribe-tooltip-js', 'tribe-events-views-v2-accordion' ],
+			[ 'jquery', 'tribe-dropdowns', 'tribe-tooltip-js', 'tribe-events-views-v2-accordion' ],
 			'admin_enqueue_scripts',
 			[
+				'conditionals' => [
+					'operator' => 'OR',
+					[ $admin_helpers, 'is_screen' ],
+				],
 				'localize' => [
 					'name' => 'tribe_events_virtual_strings',
 					'data' => [
@@ -97,6 +120,15 @@ class Assets extends \tad_DI52_ServiceProvider {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Setup frontend assets.
+	 *
+	 * @since 1.8.0
+	 */
+	protected function enqueue_frontend_assets() {
+		$plugin = tribe( Plugin::class );
 
 		tribe_asset(
 			$plugin,
@@ -246,6 +278,89 @@ class Assets extends \tad_DI52_ServiceProvider {
 				],
 			]
 		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-v2-virtual-single-block',
+			'events-virtual-single-block.css',
+			[
+				'tec-variables-full',
+				'tec-variables-skeleton',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority' => 15,
+				'conditionals' => [
+					[ tribe( Event_Assets::class ), 'should_enqueue_single_event_block_editor_styles' ],
+				],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-virtual-single-js',
+			'events-virtual-single.js',
+			[ 'jquery' ],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_single_event' ],
+				'groups'       => [ static::$group_key ],
+				'localize' => [
+					'name' => 'tribe_events_virtual_settings',
+					'data' => [
+						'facebookAppId' => static::get_facebook_app_id(),
+					],
+				],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-virtual-admin-v2-single-block',
+			'events-virtual-admin-single-block.css',
+			[
+				'tec-variables-full',
+				'tec-variables-skeleton',
+			],
+			[ 'admin_enqueue_scripts' ],
+			[
+				'conditionals' => [
+					[ $this, 'should_enqueue_admin' ]
+				],
+			]
+		);
+
+		$this->maybe_enqueue_accordion_for_v1();
+	}
+
+	/**
+	 * If V1 is active enqueue the accordion script for YouTube feature.
+	 *
+	 * @since 1.6.1
+	 */
+	protected function maybe_enqueue_accordion_for_v1() {
+		if ( tribe_events_views_v2_is_enabled() ) {
+			return;
+		}
+		$admin_helpers = Admin_Helpers::instance();
+
+		tribe_asset(
+			TEC::instance(),
+			'tribe-events-views-v2-accordion',
+			'views/accordion.js',
+			[
+				'jquery',
+				'tribe-common',
+			],
+			'admin_enqueue_scripts',
+			[
+				'conditionals' => [
+					'operator' => 'OR',
+					[ $admin_helpers, 'is_screen' ],
+				],
+			]
+		);
 	}
 
 	/**
@@ -376,8 +491,6 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 * Fires to include the virtual event assets on shortcodes.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void Action hook with no return.
 	 */
 	public function load_on_shortcode() {
 		tribe_asset_enqueue( 'tribe-events-virtual-skeleton' );
@@ -395,10 +508,55 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 * @return string The confirmation text.
 	 */
 	public static function get_confirmation_to_delete_account() {
+		if (
+			tribe( 'editor' )->should_load_blocks()
+			&& tribe( 'events.editor.compatibility' )->is_blocks_editor_toggled_on()
+		) {
+			return _x(
+				"Are you sure you want to delete the virtual settings? \nThis will also delete any virtual event blocks for this event. \n\nThis operation cannot be undone.",
+				'The block editor message to display to confirm a user would like to delete the virtual settings.',
+				'events-virtual'
+			);
+		}
+
 		return _x(
-			'Are you sure you want to delete the virtual settings? This operation cannot be undone.',
-			'The message to display to confirm a user would like to delete the virtual settings.',
+			"Are you sure you want to delete the virtual settings? \n\nThis operation cannot be undone.",
+			'The classic editor message to display to confirm a user would like to delete the virtual settings.',
 			'events-virtual'
 		);
+	}
+
+	/**
+	 * Get the Facebook app id from the options.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string The Facebook app id or empty string if not found.
+	 */
+	public static function get_facebook_app_id() {
+		return tribe_get_option( 'tribe_facebook_app_id', '' );
+	}
+
+	/**
+	 * Load assets on the add or edit pages of the block editor only.
+	 *
+	 * @since  1.8.3
+	 *
+	 * @return bool
+	 */
+	public function should_enqueue_admin() {
+		if ( ! is_admin() ) {
+			return false;
+		}
+
+		if ( ! get_current_screen()->is_block_editor ) {
+			return false;
+		}
+
+		if ( ! tribe( 'admin.helpers' )->is_post_type_screen() ) {
+			return;
+		}
+
+		return true;
 	}
 }

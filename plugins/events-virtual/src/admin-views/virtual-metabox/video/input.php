@@ -8,6 +8,7 @@
  * See more documentation about our views templating system.
  *
  * @since   1.6.0
+ * @deprecated 1.8.0 - Replaced with Autodetect, src/admin-views/virtual-metabox/autodetect/controls.php
  *
  * @version 1.6.0
  *
@@ -58,7 +59,7 @@ $embed_notice_classes = [
 	data-condition="video"
 >
 	<div
-		class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-source-video__inner"
+		class="tec-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-source-video__inner"
 	>
 		<div class="tribe-events-virtual-meetings-video-source__title">
 			<?php echo esc_html( _x( 'Video', 'Title for video source.', 'events-virtual' ) ); ?>

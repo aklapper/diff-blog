@@ -35,7 +35,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 	/**
 	 * Key for this group of assets.
 	 *
-	 * @since TBD
+	 * @since 5.8.2
 	 *
 	 * @var string
 	 */
@@ -226,6 +226,22 @@ class Assets extends \tad_DI52_ServiceProvider {
 				'tribe-common',
 				'tribe-events-views-v2-viewport',
 				'tribe-events-views-v2-accordion',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
+				'groups'       => [ static::$group_key ],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-views-v2-ical-links',
+			'views/ical-links.js',
+			[
+				'jquery',
+				'tribe-common',
 			],
 			'wp_enqueue_scripts',
 			[
@@ -437,6 +453,40 @@ class Assets extends \tad_DI52_ServiceProvider {
 				],
 			]
 		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-events-v2-single-blocks',
+			'tribe-events-single-blocks.css',
+			[
+				'tec-variables-full',
+				'tec-variables-skeleton',
+			],
+			'enqueue_block_assets',
+			[
+				'priority'     => 15,
+				'groups'       => [ static::$single_group_key ],
+				'conditionals' => [
+					[ $this, 'should_enqueue_single_event_block_editor_styles' ],
+				],
+			]
+		);
+
+		tribe_asset(
+			$plugin,
+			'tribe-admin-v2-single-blocks',
+			'tribe-admin-single-blocks.css',
+			[
+				'tec-variables-full',
+				'tec-variables-skeleton',
+			],
+			[ 'admin_enqueue_scripts' ],
+			[
+				'conditionals' => [
+					[ $this, 'should_enqueue_admin' ]
+				],
+			]
+		);
 	}
 
 	/**
@@ -448,13 +498,22 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 */
 	public function disable_v1() {
 		// Don't disable V1:
-		// - on Single Event page
-		// - using the Block Editor OR using the Classic editor but with the V2 overrides disabled.
+		// - on Single Event page with the V2 overrides disabled.
 		if (
 			tribe( Template_Bootstrap::class )->is_single_event() &&
-			( has_blocks( get_queried_object_id() ) || ! tribe_events_single_view_v2_is_enabled() )
+			! tribe_events_single_view_v2_is_enabled()
 		) {
 			return;
+		}
+
+		// Don't disable V1:
+		// - on Single Event page while using the Block Editor.
+		if (
+			tribe( Template_Bootstrap::class )->is_single_event() &&
+			tribe( 'editor' )->should_load_blocks() &&
+			has_blocks( get_queried_object_id() )
+		) {
+				return;
 		}
 
 		add_filter( 'tribe_asset_enqueue_tribe-events-calendar-script', '__return_false' );
@@ -483,6 +542,23 @@ class Assets extends \tad_DI52_ServiceProvider {
 	public function should_enqueue_frontend() {
 		if ( null !== $this->should_enqueue_frontend ) {
 			return $this->should_enqueue_frontend;
+		}
+
+		/**
+		 * Checks whether the page is being viewed in Elementor preview mode.
+		 *
+		 * @since 5.14.1
+		 *
+		 * @return bool $should_enqueue Should the frontend assets be enqueued.
+		 */
+		if (
+			defined( 'ELEMENTOR_PATH' )
+
+			&& ! empty( ELEMENTOR_PATH )
+
+			&& isset( $_GET[ 'elementor-preview' ] )
+		) {
+			return $this->should_enqueue = true;
 		}
 
 		$should_enqueue = tribe( Template_Bootstrap::class )->should_load();
@@ -557,9 +633,58 @@ class Assets extends \tad_DI52_ServiceProvider {
 
 		// Bail if Block Editor.
 		if (
-			tribe( 'editor' )->is_events_using_blocks()
+			tribe( 'editor' )->should_load_blocks()
 			&& has_blocks( get_queried_object_id() )
 		) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks if we are on V2, on Event Single and if we are using the Block Editor in order to enqueue the block editor reskin styles for Single Event.
+	 *
+	 * @since 5.10.0
+	 *
+	 * @return boolean
+	 */
+	public function should_enqueue_single_event_block_editor_styles() {
+		// Bail if not Single Event V2.
+		if ( ! tribe_events_single_view_v2_is_enabled() ) {
+			return false;
+		}
+
+		// Bail if not Single Event.
+		if ( ! tribe( Template_Bootstrap::class )->is_single_event() ) {
+			return false;
+		}
+
+		// Bail if not Block Editor.
+		if ( ! tribe( 'editor' )->should_load_blocks() && ! has_blocks( get_queried_object_id() ) ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Load assets on the add or edit pages of the block editor only.
+	 *
+	 * @since  5.14.1
+	 *
+	 * @return bool
+	 */
+	public function should_enqueue_admin() {
+		if ( ! is_admin() ) {
+			return false;
+		}
+
+		if ( ! get_current_screen()->is_block_editor ) {
+			return false;
+		}
+
+		if ( ! tribe( 'admin.helpers' )->is_post_type_screen() ) {
 			return false;
 		}
 

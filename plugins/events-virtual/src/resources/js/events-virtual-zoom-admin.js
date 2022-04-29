@@ -1,5 +1,3 @@
-/* eslint-disable no-var */
-/* globals tribe_dropdowns */
 /**
  * Makes sure we have all the required levels on the Tribe Object
  *
@@ -24,6 +22,7 @@ tribe.events.virtualAdmin = tribe.events.virtualAdmin || {};
  * Configures Virtual Events Admin Object on the Global Tribe variable
  *
  * @since 1.0.0
+ * @deprecated 1.9.0 - Replaced with tribe.events.virtualAdminAPI
  *
  * @type   {PlainObject}
  */
@@ -40,10 +39,9 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
  *
  * @return {void}
  */
-( function( $, obj, virtualAdmin, tribe_dropdowns ) { // eslint-disable-line camelcase
+( function( $, obj, virtualAdmin, tribe_dropdowns ) {
 	'use-strict';
-	var $document = $( document ); // eslint-disable-line no-var
-	var $window = $( window );
+	var $document = $( document );
 
 	/**
 	 * Selectors used for configuration and setup
@@ -59,6 +57,9 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		hidden: '.tribe-events-virtual-hidden',
 		linkedButtonOption: '#tribe-events-virtual-linked-button',
 		accountSelect: '.tribe-events-virtual-meetings-zoom-details__account-select-link',
+		hostsDropdown: '#tribe-events-virtual-zoom-host',
+		createOptions: '.tribe-events-virtual-meetings-zoom-details__types',
+		meetingHostsDropdown: '#tribe-events-virtual-zoom-host',
 		meetingCreate: '.tribe-events-virtual-meetings-zoom-details__create-link',
 		meetingDetails: '.tribe-events-virtual-meetings-zoom-details',
 		meetingDetailsFloat: '.tribe-events-virtual-meetings-zoom-details--float',
@@ -66,9 +67,14 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		remove: '.tribe-remove-virtual-event',
 		setupZoomCheckbox: '#tribe-events-virtual-zoom-link-generate',
 		urlField: '.tribe-events-virtual-video-source__virtual-url-input',
+		videoSource: '#tribe-events-virtual-video-source',
 		virtualContainer: '#tribe-virtual-events',
 		zoomMeetingsContainer: '#tribe-events-virtual-meetings-zoom',
 		zoomType: 'input[name="tribe-events-virtual[zoom-meeting-type]"]:checked',
+		zoomLoader: '.tribe-common-c-loader',
+		zoomHiddenElement: '.tribe-common-a11y-hidden',
+		zoomMessagesWrap: '.tec-events-virtual-video-source-zoom-setup__messages-wrap',
+		zoomMessage: '.tec-events-virtual-settings-message__wrap',
 	};
 
 	/**
@@ -110,6 +116,8 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		var url = $( ev.target ).attr( 'href' );
 		var accountId = $( '#tribe-events-virtual-zoom-account option:selected' ).val();
 
+		obj.show( $( obj.selectors.zoomMeetingsContainer ) );
+
 		$.ajax(
 			url,
 			{
@@ -124,6 +132,60 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	};
 
 	/**
+	 * Handles the selection of the host dropdown validation.
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param {Event} ev The click event.
+	 */
+	obj.handleUserValidation = function( ev ) {
+		ev.preventDefault();
+		var url = $( obj.selectors.hostsDropdown ).data('validateUrl');
+		var hostId = $( obj.selectors.hostsDropdown ).find( 'option:selected' ).val();
+		var accountId = $( obj.selectors.zoomMeetingsContainer ).data( 'accountId' );
+		if ( ! url || ! hostId || ! accountId ) {
+			return;
+		}
+
+		obj.show( $( obj.selectors.zoomMeetingsContainer ) );
+
+		$.ajax(
+			url,
+			{
+				contentType: 'application/json',
+				context: $( obj.selectors.createOptions ),
+				data: {
+					zoom_account_id: accountId,
+					zoom_host_id: hostId,
+				},
+				success: obj.onMeetingValidateUserSuccess,
+			}
+		);
+	};
+
+	/**
+	 * Handles the successful response from the backend to a user validation request.
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param {string} html The HTML that should replace the current meeting selection.
+	 */
+	obj.onMeetingValidateUserSuccess = function( html ) {
+		obj.hide( $( obj.selectors.zoomMeetingsContainer ) );
+
+		const $message = $( html ).filter( obj.selectors.zoomMessage );
+		const $createOptions = $( html ).filter( obj.selectors.createOptions );
+
+		$( obj.selectors.zoomMessagesWrap ).html( $message );
+
+		if ( 0 === $createOptions.length ) {
+			return;
+		}
+
+		$( obj.selectors.createOptions ).replaceWith( $createOptions );
+	};
+
+	/**
 	 * Handles the click on a link to generate a meeting.
 	 *
 	 * @since 1.0.0
@@ -134,8 +196,10 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	obj.handleMeetingRequest = function( ev ) {
 		ev.preventDefault();
 		var url = $( obj.selectors.zoomType ).val();
-		var hostId = $( '#tribe-events-virtual-zoom-host option:selected' ).val();
+		var hostId = $( obj.selectors.hostsDropdown ).find( 'option:selected' ).val();
 		var accountId = $( obj.selectors.zoomMeetingsContainer ).data( 'accountId' );
+
+		obj.show( $( obj.selectors.zoomMeetingsContainer ) );
 
 		$.ajax(
 			url,
@@ -203,9 +267,43 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		$( obj.selectors.zoomMeetingsContainer ).replaceWith( html );
 		obj.setupControls();
 		obj.checkButtons();
-		virtualAdmin.handleVideoSourceClasses();
 		obj.initTribeDropdowns();
 		$( virtualAdmin.selectors.videoSource ).trigger( 'verify.dependency' );
+
+		if (
+			virtualAdmin.handleShowOptionInteractivity &&
+			typeof virtualAdmin.handleShowOptionInteractivity === 'function'
+		) {
+			virtualAdmin.handleShowOptionInteractivity();
+		}
+	};
+
+	/**
+	 * Handle the Autodetect Response for Zoom.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param {Event} event The trigger event.
+	 * @param {data} data The data object included with the trigger event.
+	 */
+	obj.handleAutoDetectZoom = function( event, data ) {
+		if ( ! data.html ) {
+			return;
+		}
+
+		const $meetingDetails = $( data.html ).filter( obj.selectors.zoomMeetingsContainer );
+		if ( 0 === $meetingDetails.length ) {
+			return;
+		}
+
+		$( obj.selectors.zoomMeetingsContainer ).html( $meetingDetails );
+		obj.setupControls();
+		obj.checkButtons();
+		obj.initTribeDropdowns();
+		$( virtualAdmin.selectors.videoSource )
+			.val('zoom')
+			.trigger('change')
+			.trigger( 'verify.dependency' );
 
 		if (
 			virtualAdmin.handleShowOptionInteractivity &&
@@ -226,7 +324,6 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		var checkExist = setInterval( function() {
 			counter--;
 			if ( $( obj.selectors.meetingDetails ).length || counter === 0 ) {
-				virtualAdmin.handleVideoSourceClasses();
 				clearInterval( checkExist );
 			}
 		}, 200 );
@@ -257,12 +354,13 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 */
 	obj.bindEvents = function() {
 		$( obj.selectors.virtualContainer )
-			.on( 'verify.dependency', obj.waitForVirtualEventsToLoad )
 			.on( 'click', obj.selectors.configureZoom, obj.setZoomCheckboxCheckedAttr( true ) )
 			.on( 'click', obj.selectors.accountSelect, obj.handleAccountSelection )
 			.on( 'click', obj.selectors.meetingCreate, obj.handleMeetingRequest )
 			.on( 'click', obj.selectors.meetingRemove, obj.handleRemoveRequest );
 		$document.on( 'virtual.delete', obj.handleLinkedMetaRemove );
+		$document.on( 'autodetect.complete', obj.handleAutoDetectZoom );
+		$document.on( 'change', obj.selectors.meetingHostsDropdown, obj.handleUserValidation );
 	};
 
 	/**
@@ -294,13 +392,6 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 		var $linkedButtonOption = $( obj.selectors.linkedButtonOption );
 
 		if ( $( obj.selectors.meetingDetails ).length ) {
-			// Disable the URL field.
-			$urlField
-				.prop( { disabled: true } )
-				.attr(
-					'placeholder',
-					tribe_events_virtual_placeholder_strings.zoom
-				);
 			// Hide the "Embed Video" option.
 			$embedVideoOptionItem.addClass( obj.selectors.hidden.className() );
 			// Show the Zoom link display option.
@@ -361,45 +452,36 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	};
 
 	/**
-	 * @deprecated 1.5.0 - Accordions are no longer part of the UI.
+	 * Show loader for the container.
+	 *
+	 * @since 1.8.2
+	 *
+	 * @param {jQuery} $container jQuery object of the container.
+	 *
+	 * @return {void}
 	 */
-	obj.initMultipleControlsAccordion = function() {
-		console.info( 'Method deprecated with no replacement.' ); // eslint-disable-line no-console
-		if ( ! tribe.events.views.accordion ) {
-			return;
+	obj.show = function( $container ) {
+		const $loader = $container.find( obj.selectors.zoomLoader );
+
+		if ( $loader.length ) {
+			$loader.removeClass( obj.selectors.zoomHiddenElement.className() );
 		}
-		var accordion = tribe.events.views.accordion;
-		var controlsSelector = '#tribe-events-virtual-meetings-zoom' +
-			'.tribe-events-virtual-meetings-zoom-controls--multi';
-		var $container = $( controlsSelector );
-		accordion.bindAccordionEvents( $container );
 	};
 
 	/**
-	 * Handles the classes for the meeting details.
+	 * Hide loader for the container.
 	 *
-	 * @deprecated 1.6.0 - Support for video source dropdown.
+	 * @since 1.8.2
 	 *
-	 * @since 1.0.0
+	 * @param {jQuery} $container jQuery object of the container.
+	 *
+	 * @return {void}
 	 */
-	obj.handleMeetingDetailsClasses = function() {
-		console.info( 'Method deprecated and replaced with virtualAdmin.handleVideoSourceClasses.' ); // eslint-disable-line no-console, max-len
+	obj.hide = function( $container ) {
+		const $loader = $container.find( obj.selectors.zoomLoader );
 
-		var $meetingDetails = $( obj.selectors.meetingDetails );
-
-		if ( ! $meetingDetails.length ) {
-			return;
-		}
-
-		var $urlField = $( obj.selectors.urlField );
-		var content = $urlField.parent();
-		var isWide = content.width() >=
-			$meetingDetails.outerWidth( true ) + $urlField.outerWidth( true );
-
-		if ( isWide ) {
-			$meetingDetails.addClass( obj.selectors.meetingDetailsFloat.className() );
-		} else {
-			$meetingDetails.removeClass( obj.selectors.meetingDetailsFloat.className() );
+		if ( $loader.length ) {
+			$loader.addClass( obj.selectors.zoomHiddenElement.className() );
 		}
 	};
 
@@ -407,10 +489,12 @@ tribe.events.virtualAdminZoom = tribe.events.virtualAdminZoom || {};
 	 * Handles the initialization of the admin when Document is ready
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.9.0 - Replaced with tribe.events.virtualAdminAPI
 	 *
 	 * @return {void}
 	 */
 	obj.ready = function() {
+		console.info( 'Scripts deprecated and replaced with tribe.events.virtualAdminAPI.' ); // eslint-disable-line no-console, max-len
 		obj.bindEvents();
 	};
 

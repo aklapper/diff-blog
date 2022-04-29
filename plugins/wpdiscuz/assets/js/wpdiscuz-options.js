@@ -37,8 +37,8 @@ jQuery(document).ready(function ($) {
             return false;
         }
     });
-    $(document).on('click', '#wpdiscuz-purge-gravatars-cache', function (e) {
-        if (!confirm(wpdiscuzObj.msgConfirmPurgeGravatarsCache)) {
+    $(document).on('click', '#wpdiscuz-purge-cache', function (e) {
+        if (!confirm(wpdiscuzObj.msgConfirmPurgeCache)) {
             e.preventDefault();
             return false;
         }
@@ -53,6 +53,7 @@ jQuery(document).ready(function ($) {
         data.append('action', 'wpdStickComment');
         data.append('commentId', commentId);
         data.append('postId', postId);
+        data.append('wpdiscuz_nonce',wpdiscuzObj.wpdiscuz_nonce);
         $.ajax({
             type: 'POST',
             url: ajaxurl,
@@ -87,6 +88,7 @@ jQuery(document).ready(function ($) {
         data.append('action', 'wpdCloseThread');
         data.append('commentId', commentId);
         data.append('postId', postId);
+        data.append('wpdiscuz_nonce',wpdiscuzObj.wpdiscuz_nonce);
         $.ajax({
             type: 'POST',
             url: ajaxurl,
@@ -125,7 +127,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {stcrData: data, 'action': 'wpdImportSTCR'}
+            data: {stcrData: data, 'action': 'wpdImportSTCR' , wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -172,7 +174,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {lstcData: data, 'action': 'wpdImportLSTC'}
+            data: {lstcData: data, 'action': 'wpdImportLSTC',  wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -223,7 +225,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {voteRegenerateData: data, action: 'wpdRegenerateVoteMetas'}
+            data: {voteRegenerateData: data, action: 'wpdRegenerateVoteMetas', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -277,7 +279,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {closedRegenerateData: data, action: 'wpdRegenerateClosedComments'}
+            data: {closedRegenerateData: data, action: 'wpdRegenerateClosedComments', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -331,7 +333,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {regenerateVoteData: data, action: 'wpdRegenerateVoteData'}
+            data: {regenerateVoteData: data, action: 'wpdRegenerateVoteData', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -381,7 +383,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {syncCommenterData: data, action: 'wpdSyncCommenterData'}
+            data: {syncCommenterData: data, action: 'wpdSyncCommenterData', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (r) {
             if (typeof r === 'object') {
                 if (r.success) {
@@ -420,7 +422,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {rebuildRatings: data, action: 'wpdRebuildRatings'}
+            data: {rebuildRatings: data, action: 'wpdRebuildRatings', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (response) {
             try {
                 var resp = JSON.parse(response);
@@ -469,7 +471,7 @@ jQuery(document).ready(function ($) {
         $.ajax({
             type: 'POST',
             url: ajaxurl,
-            data: {fixTables: data, action: 'wpdFixTables'}
+            data: {fixTables: data, action: 'wpdFixTables', wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce}
         }).done(function (r) {
             if (typeof r === 'object') {
                 if (r.success) {
@@ -744,7 +746,8 @@ jQuery(document).ready(function ($) {
                 url: ajaxurl,
                 data: {
                     action: 'searchOption',
-                    s: s
+                    s: s,
+                    wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce
                 }
             });
             searchAjax.done(function (r) {
@@ -870,7 +873,8 @@ function wpd_stat_brief() {
         type: 'POST',
         url: ajaxurl,
         data: {
-            action: 'wpd_stat_brief'
+            action: 'wpd_stat_brief',
+            wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce
         }
     }).done(function (r) {
         if (r.success) {
@@ -893,7 +897,8 @@ function wpd_stat_subs(el, body) {
         type: 'POST',
         url: ajaxurl,
         data: {
-            action: 'wpd_stat_subs'
+            action: 'wpd_stat_subs',
+            wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce
         }
     }).done(function (r) {
         body.html(r);
@@ -917,7 +922,8 @@ function wpd_stat_graph(el, body) {
         url: ajaxurl,
         data: {
             action: 'wpd_stat_graph',
-            interval: interval
+            interval: interval,
+            wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce
         }
     }).done(function (r) {
         if (r.success) {
@@ -972,6 +978,7 @@ function wpd_stat_graph(el, body) {
     });
 }
 
+
 function wpd_stat_user(el, body) {
     body.html(wpdSpinner);
     jQuery('.wpd-stat-user .wpd-box-toggle .dashicons-arrow-left, .wpd-stat-user .wpd-box-toggle .dashicons-arrow-right').removeClass('wpd_not_clicked');
@@ -990,7 +997,8 @@ function wpd_stat_user(el, body) {
             action: 'wpd_stat_user',
             orderby: orderby,
             order: order,
-            page: wpdStatUserPage
+            page: wpdStatUserPage,
+            wpdiscuz_nonce: wpdiscuzObj.wpdiscuz_nonce
         }
     }).done(function (r) {
         if (r.success) {

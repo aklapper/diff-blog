@@ -24,6 +24,15 @@ use Tribe__Utils__Array as Arr;
 class Event_Meta {
 
 	/**
+	 * Key for Zoom video and autodetect source.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	public static $key_zoom_source_id = 'zoom';
+
+	/**
 	 * An array of fields to encrypt, using names from Zoom API.
 	 *
 	 * @since 1.4.0
@@ -107,7 +116,7 @@ class Event_Meta {
 	}
 
 	/**
-	 * Add information about the zoom meeting if available, only if the user has permission to read_private_posts via
+	 * Add information about the Zoom meeting if available, only if the user has permission to read_private_posts via
 	 * the REST Api.
 	 *
 	 * @since 1.1.1
@@ -121,6 +130,11 @@ class Event_Meta {
 		$event = tribe_get_event( $event );
 
 		if ( ! $event instanceof \WP_Post || ! current_user_can( 'read_private_posts' ) ) {
+			return $data;
+		}
+
+		// Return when Zoom is not the source.
+		if ( static::$key_zoom_source_id !== $event->virtual_video_source ) {
 			return $data;
 		}
 
@@ -145,7 +159,7 @@ class Event_Meta {
 	}
 
 	/**
-	 * Get the host email from the meta or saved zoom data.
+	 * Get the host email from the meta or saved Zoom data.
 	 *
 	 * @since 1.4.0
 	 *
@@ -168,7 +182,7 @@ class Event_Meta {
 	}
 
 	/**
-	 * Get the alternative host emails from the meta or saved zoom data.
+	 * Get the alternative host emails from the meta or saved Zoom data.
 	 *
 	 * @since 1.4.0
 	 *
@@ -201,17 +215,30 @@ class Event_Meta {
 	 * @return \WP_Post The decorated event post object, with Zoom related properties added to it.
 	 */
 	public static function add_event_properties( \WP_Post $event ) {
+
+		// Get the current actions
+		$current_action = tribe_get_request_var( 'action' );
+		$create_actions = [
+			'ev_zoom_meetings_create',
+			'ev_zoom_webinars_create',
+		];
+
+		// Return when Zoom is not the source and not running the create actions for meetings and webinars.
+		if ( static::$key_zoom_source_id !== $event->virtual_video_source && ! in_array( $current_action, $create_actions ) ) {
+			return $event;
+		}
+
 		$prefix = Virtual_Event_Meta::$prefix;
 
 		$is_new_event = empty( $event->ID );
 
-		$event->zoom_meeting_type      = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_meeting_type', true );
-		$event->zoom_meeting_id        = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_meeting_id', true );
-		$event->zoom_join_url          = $is_new_event ? '' : tribe( Password::class )->get_zoom_meeting_link( $event );
-		$event->zoom_join_instructions = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_join_instructions', true );
-		$event->zoom_display_details   = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_display_details', true );
-		$event->zoom_host_email        = $is_new_event ? '' : self::get_host_email( $event );
-		$event->zoom_alternative_hosts = $is_new_event ? '' : self::get_alt_host_emails( $event );
+		$event->zoom_meeting_type               = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_meeting_type', true );
+		$event->zoom_meeting_id                 = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_meeting_id', true );
+		$event->zoom_join_url                   = $is_new_event ? '' : tribe( Password::class )->get_zoom_meeting_link( $event );
+		$event->zoom_join_instructions          = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_join_instructions', true );
+		$event->virtual_meeting_display_details = $is_new_event ? '' : get_post_meta( $event->ID, $prefix . 'zoom_display_details', true );
+		$event->zoom_host_email                 = $is_new_event ? '' : self::get_host_email( $event );
+		$event->zoom_alternative_hosts          = $is_new_event ? '' : self::get_alt_host_emails( $event );
 
 		$dial_in_numbers = $is_new_event ? [] : array_filter(
 			(array) get_post_meta( $event->ID, $prefix . 'zoom_global_dial_in_numbers', true )
@@ -239,11 +266,11 @@ class Event_Meta {
 			$event->virtual                  = true;
 			$event->virtual_meeting          = true;
 			$event->virtual_meeting_url      = $event->zoom_join_url;
-			$event->virtual_meeting_provider = tribe( Zoom_Provider::class )->get_slug();
+			$event->virtual_meeting_provider = static::$key_zoom_source_id;
 
-			// Override the virtual url if no zoom details and linked button is checked.
+			// Override the virtual url if no Zoom details and linked button is checked.
 			if (
-				empty( $event->zoom_display_details )
+				empty( $event->virtual_meeting_display_details )
 				&& ! empty( $event->virtual_linked_button )
 			) {
 				$event->virtual_url = $event->virtual_meeting_url;
@@ -275,10 +302,10 @@ class Event_Meta {
 		}
 
 		$map = [
-			'meetings-zoom-display-details' => $prefix . 'zoom_display_details',
+			'meetings-api-display-details' => $prefix . 'zoom_display_details',
 		];
 		foreach ( $map as $data_key => $meta_key ) {
-			$value = Arr::get( $data, 'meetings-zoom-display-details', false );
+			$value = Arr::get( $data, 'meetings-api-display-details', false );
 			if ( ! empty( $value ) ) {
 				update_post_meta( $post_id, $meta_key, $value );
 			} else {

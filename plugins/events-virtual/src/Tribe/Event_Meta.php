@@ -46,6 +46,15 @@ class Event_Meta {
 	public static $key_video_source = '_tribe_events_virtual_video_source';
 
 	/**
+	 * Meta key for autodetect source field.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	public static $key_autodetect_source = '_tribe_events_virtual_autodetect_source';
+
+	/**
 	 * Meta key for virtual url field.
 	 *
 	 * @since 1.0.0
@@ -170,6 +179,25 @@ class Event_Meta {
 	 * @var string
 	 */
 	public static $key_show_on_views = '_tribe_events_virtual_show_on_views';
+
+	/**
+	 * Key for video/smart url video source.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	public static $key_video_source_id = 'video';
+
+	/**
+	 * Key for Oembed autodetect source.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @var string
+	 */
+	public static $key_oembed_source_id = 'oembed';
+
 	/**
 	 * All the meta keys, in a set.
 	 *
@@ -243,8 +271,8 @@ class Event_Meta {
 		$event = tribe_get_event( $event );
 
 		$text = _x(
-			'Enter URL for YouTube, Vimeo, etc.',
-			'Default placeholder text for the virtual event URL input.',
+			'Enter URL for hosted video (YouTube, Webex, Vimeo, Zoom, etc.)',
+			'Default placeholder text for the virtual event smart URL input.',
 			'events-virtual'
 		);
 

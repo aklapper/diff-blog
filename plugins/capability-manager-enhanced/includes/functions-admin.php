@@ -94,14 +94,26 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
                 }
             } else {
                 $use_block = ('block' == get_user_meta($current_user->ID, 'wp_classic-editor-settings'));
-                return $use_block && apply_filters('use_block_editor_for_post_type', $use_block, $post_type, PHP_INT_MAX);
+
+                if (version_compare($wp_version, '5.9-beta', '>=')) {
+                    remove_action('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2);
+                    remove_filter('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2);
+                }
+
+                $use_block = $use_block && apply_filters('use_block_editor_for_post_type', $use_block, $post_type, PHP_INT_MAX);
+
+                if (defined('PP_CAPABILITIES_RESTORE_NAV_TYPE_BLOCK_EDITOR_DISABLE') && version_compare($wp_version, '5.9-beta', '>=')) {
+                    add_filter('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2 );
+                }
+
+                return $use_block;
             }
         }
     }
 
     $pluginsState = array(
-        'classic-editor' => class_exists( 'Classic_Editor' ), // is_plugin_active('classic-editor/classic-editor.php'),
-        'gutenberg'      => function_exists( 'the_gutenberg_project' ), //is_plugin_active('gutenberg/gutenberg.php'),
+        'classic-editor' => class_exists( 'Classic_Editor' ),
+        'gutenberg'      => function_exists( 'the_gutenberg_project' ),
         'gutenberg-ramp' => class_exists('Gutenberg_Ramp'),
     );
     
@@ -115,6 +127,12 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
      * Classic editor either disabled or enabled (either via an option or with GET argument).
      * It's a hairy conditional :(
      */
+
+    if (version_compare($wp_version, '5.9-beta', '>=')) {
+        remove_action('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2);
+        remove_filter('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2);
+    }
+
     // phpcs:ignore WordPress.VIP.SuperGlobalInputUsage.AccessDetected, WordPress.Security.NonceVerification.NoNonceVerification
     $conditions[] = (version_compare($wp_version, '5.0', '>=') || $pluginsState['gutenberg'])
                     && ! $pluginsState['classic-editor']
@@ -133,6 +151,10 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
 
     $conditions[] = $pluginsState['gutenberg-ramp'] 
                     && apply_filters('use_block_editor_for_post', true, get_post(pp_capabilities_get_post_id()), PHP_INT_MAX);
+
+    if (defined('PP_CAPABILITIES_RESTORE_NAV_TYPE_BLOCK_EDITOR_DISABLE') && version_compare($wp_version, '5.9-beta', '>=')) {
+        add_filter('use_block_editor_for_post_type', '_disable_block_editor_for_navigation_post_type', 10, 2 );
+    }
 
     // Returns true if at least one condition is true.
     $result = count(
@@ -163,4 +185,66 @@ function _pp_capabilities_is_block_editor_active($post_type = '', $args = [])
 function ppc_remove_non_alphanumeric_space_characters($string)
 {
     return preg_replace("/(\W)+/", "", $string);
+}
+	
+/**
+ * Get all capabilities backup section.
+ *
+ * @return array $backup_sections
+ */
+function pp_capabilities_backup_sections()
+{
+   $cms_id = 'capsman';
+   $backup_sections = [];
+
+   //Editor Features
+   $backup_sections[$cms_id . '_editor_features_backup']['label']    = esc_html__('Editor Features', 'capsman-enhanced');
+   $classic_editor = pp_capabilities_is_classic_editor_available();
+   $def_post_types = array_unique(apply_filters('pp_capabilities_feature_post_types', ['post', 'page']));
+   foreach ($def_post_types as $post_type) {
+       if ($classic_editor) {
+           $backup_sections[$cms_id . '_editor_features_backup']['options'][] = "capsman_feature_restrict_classic_{$post_type}";
+       }
+       $backup_sections[$cms_id . '_editor_features_backup']['options'][] = "capsman_feature_restrict_{$post_type}";
+   }
+
+   //Admin Features
+   $backup_sections[$cms_id . '_admin_features_backup']['label']     = esc_html__('Admin Features', 'capsman-enhanced');
+   $backup_sections[$cms_id . '_admin_features_backup']['options'][] = "capsman_disabled_admin_features";
+
+   return apply_filters('pp_capabilities_backup_sections', $backup_sections);
+}
+
+/**
+ * Register and add inline styles.
+ *
+ * @param string $custom_css
+ * @param string $handle
+ *
+ * @return string
+ *
+ * @since 2.3.5
+ */
+function ppc_add_inline_style($custom_css, $handle = 'ppc-dummy-css-handle')
+{
+    wp_register_style(esc_attr($handle), false);
+    wp_enqueue_style(esc_attr($handle));
+    wp_add_inline_style(esc_attr($handle), $custom_css);
+}
+
+/**
+ * Register and add inline script.
+ *
+ * @param string $custom_script
+ * @param string $handle
+ *
+ * @return string
+ *
+ * @since 2.4.0
+ */
+function ppc_add_inline_script($custom_script, $handle = 'ppc-dummy-script-handle')
+{
+    wp_register_script(esc_attr($handle), false, ['jquery']);
+    wp_enqueue_script(esc_attr($handle), false, ['jquery']);
+    wp_add_inline_script(esc_attr($handle), $custom_script);
 }

@@ -9,6 +9,8 @@
  *
  * @link    https://evnt.is/1aiy
  *
+ * @deprecated 1.9.0 Use src/admin-views/components/dropdown.php.
+ *
  * @version 1.4.0
  *
  * @var string               $label    Label for the dropdown input.

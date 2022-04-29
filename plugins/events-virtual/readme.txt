@@ -1,12 +1,12 @@
 === Virtual Events ===
 
-Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, dcronian, hazelquimpo, juanfra, leahkoerper, lirianojoel, lucatume, neillmcshea, paulskim, rafsuntaskin, remaworksattribe, sc0ttkclark, zbtirrell
+Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, juanfra, leahkoerper, lirianojoel, lucatume, neillmcshea, rafsuntaskin, zbtirrell
 Tags: virtual events, events, calendar, event, venue, organizer, dates, date, schema, conference, online events, concert, meeting, seminar, summit, class, the events calendar, tec, zoom, livestream
 Donate link: https://evnt.is/29
-Requires at least: 4.9.16
-Tested up to: 5.8.0
-Stable tag: 1.6.0
-Requires PHP: 5.6
+Requires at least: 5.6
+Tested up to: 5.9.2
+Stable tag: 1.9.0
+Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,96 @@ Our premium products:
 * <a href="https://evnt.is/1ako" target="_blank">Image Widget Plus</a>
 
 == Changelog ==
+
+= [1.9.0] 2022-03-30 =
+
+* Feature - Add an option to generate a Webex meeting from the event editor and display meeting details on the event. [VE-502]
+* Feature - Connect existing Webex Meetings to your events using the new 'Smart' url field. [VE-484]
+* Fix - Fix high number of YouTube or Zoom user API calls by switching to a persistent cache. [VE-500]
+* Fix - Fix issue that would cause the show to setting to default to everyone even if unchecked. [VE-498]
+* Fix - Fix Zoom Alternative hosts returning a 404 error when attempting to save them to a meeting or webinar. [VE-505]
+* Fix - Fix fatal when using Zoom or Webex in PHP 7.2 or older. [VE-506]
+* Tweak - Added filters: `tribe_events_virtual_meetings_{$app_id}_actions`, `tec_events_virtual_api_select_account_url`, `tec_events_virtual_{$api_id}_select_account_url`, `tribe_events_virtual_meetings_api_accounts`, `tribe_events_virtual_meetings_{$api_id}_accounts`, `tec_events_virtual_meetings_api_post_response`, `tec_events_virtual_meetings_{$app_id}_api_post_response`, `tec_events_virtual_meetings_webex_{$this::$meeting_type}_data`, `tec_events_virtual_webex_get_users_arguments`, `tec_events_virtual_webex_{$type}_link_allow_generation`, `tec_events_virtual_meetings_webex_hosts`, `tec_events_virtual_webex_meeting_link_creation_urls`, `tec_events_virtual_webex_export_fields`, `tec_events_virtual_show_virtual_content`, `tec_events_virtual_meetings_webex_meeting_show_password`, `tec_events_virtual_webex_regex_meeting_join_url`, `tec_events_virtual_meetings_webex_settings_fields`, `tec_events_virtual_link_button_new_window`, `tec_events_virtual_webex_link_new_window`, `tec_events_virtual_meetings_webex_user_cache`
+* Tweak - Removed filters: `tribe_events_virtual_meetings_zoom_actions`, `tribe_events_virtual_meetings_zoom_api_post_response`, `tribe_events_virtual_meetings_zoom_api_allow_webinars`, `tribe_events_virtual_meetings_zoom_accounts`
+* Tweak - Added actions: `tec_events_virtual_before_update_api_accounts`
+* Tweak - Changed views: `components/icons/lock`, `webex/email/details/join-content`, `webex/email/details/join-header`, `webex/email/details/password-content`, `webex/email/details/password-header`, `webex/email/ticket-email-webex-details`, `webex/single/webex-details`, `zoom/email/details/dial-in-content`, `zoom/email/details/join-content`, `zoom/single/zoom-details`, `zoom/zoom-details`
+* Language - 58 new strings added, 68 updated, 23 fuzzied, and 6 obsoleted
+
+= [1.8.3] 2022-03-17 =
+
+* Tweak - Update the backend block editor UI for a single event to look similar to its frontend version in order to create a true WYSIWYG experience when using the block editor. [TEC-4250]
+
+= [1.8.2] 2022-02-23 =
+
+* Feature - Add support for Zoom accounts with over 300 users. [VE-475]
+* Feature - Add validation for every Zoom user to determine if the user supports webinars. [VE-328]
+* Tweak - Change spacing of Zoom detail icons in RTL languages. [VE-271]
+* Fix - Prevent intermittent fatal error when importing non events.
+* Language - 9 new strings added, 37 updated, 0 fuzzied, and 0 obsoleted.
+
+= [1.8.1] 2022-02-15 =
+
+* Version - Virtual Events 1.8.1 is only compatible with The Events Calendar 5.14.0 and higher
+* Tweak - Modify the Virtual Events block to improve performance.
+* Tweak - Alter some code that uses functions and filters deprecated in TEC. [TEC-4235]
+* Language - 0 new strings added, 9 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.8.0] 2022-01-31 =
+
+* Version - Virtual Events 1.8.0 is only compatible with The Events Calendar 5.12.4 and higher
+* Feature - Update the video field to the new 'Smart' url field to be able to autodetect a video source using Oembed. [VE-435]
+* Feature - Connect existing Zoom Meetings or Webinars to your events using the new 'Smart' url field. [VE-438]
+* Feature - Add and display Facebook Videos using the new 'Smart' url field. [VE-428]
+* Feature - Add support for Virtual Event fields in CSV importer. [VE-387]
+* Tweak - Always show a search field for the Zoom Account, Host, and Alternative Host dropdown fields. [VE-417]
+* Fix - Display the Zoom video icon when linked button is disabled. [VE-441]
+* Fix - PHP notices when creating Zoom events in PHP (5.6) and WP minimums (4.9.x). [VE-440]
+* Fix - Add check utilizing the "show to" field to prevent the Zoom links from being added to the export file. [VE-462]
+* Fix - Ensure the virtual event details aren't duplicated in the single events page on the block editor. [VE-463]
+* Fix - Enable webinars on accounts using the Zoom Event account type. [VE-449]
+* Language - 52 new strings added, 85 updated, 2 fuzzied, and 6 obsoleted
+
+= [1.7.3] 2021-12-14 =
+
+* Version - Virtual Events 1.7.3 is only compatible with The Events Calendar 5.12.1 and higher
+* Feature - Add Moved Online event status option to use to add the related schema to an event. [VE-94]
+* Feature - Add Moved Online event status as an option in the Event Status Filter bar setting if active. [FBAR-92]
+* Fix - Add an additional check for the Virtual Events block to prevent block editor scripts from running in the classic editor. [VE-443]
+* Fix - Prevent undefined errors in Javascript by adding a check for Facebook App ID before trying to load FB SDK. [VE-451]
+* Fix - Update gCal and iCal export location for better support for Zoom, Facebook Live, and YouTube Live. [VE-442]
+* Fix - Bypass caching of the event when dealing with the admin event list table to prevent event title duplication. [VE-454]
+* Tweak - Load tooltip style sheet for compatibility with Community Events front end form. [VE-368]
+* Tweak - Update the override template paths for the files in the components directory 'src/views/components'. [VE-385]
+* Language - 2 new strings added, 19 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.7.2] 2021-11-17 =
+
+* Fix - Add the YouTube Live channel link or Facebook page link to ticket emails when that setting is selected by using a new filter. [VE-399]
+* Tweak - Remove coding that disables the video url field if the virtual event is connected to Zoom. [VE-427]
+* Language - 0 new strings added, 20 updated, 1 fuzzied, and 0 obsoleted
+
+= [1.7.1] 2021-10-19 =
+
+* Feature - Add a virtual events block on the block editor which users can drag around to any position they want it to appear. These changes can be bypassed by adding the following constant to the wp-config file, define( 'TRIBE_EVENTS_SINGLE_VIEW_V2_DISABLED', true ); [VE-404]
+* Tweak - Improve the look and feel of the virtual event section in the single events page when using the block editor. [VE-403]
+* Language - 0 new strings added, 3 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.7.0] 2021-10-12 =
+
+* Feature - Add Facebook Live Video integration with support for multiple pages to display live video directly in a virtual event. [VE-391]
+* Fix - If the event duration changes, update the duration in the connected Zoom meeting or webinar . [VE-367]
+* Tweak - Move the video sources field to always be under the video source dropdown. [VE-380]
+* Language - 58 new strings added, 10 updated, 1 fuzzied, and 2 obsoleted
+
+= [1.6.1] 2021-09-14 =
+
+* Fix - Enable custom providers with Oembed by changing how the Oembed class is created. [VE-381]
+* Fix - Enable support for Show on Calendar views option when using the hybrid event type. [VE-338]
+* Fix - Prevent tribe-dropdown undefined on admin pages. [VE-386]
+* Fix - When V1 is active load the accordion script directly to prevent VE fields from breaking. [VE-400]
+* Tweak - Only add zoom meeting information to the event object if it is a zoom meeting. [VE-384]
+* Tweak - Fix names of filters to enable different roles to create and manage Zoom events. [VE-351]
+* Language - 0 new strings added, 15 updated, 0 fuzzied, and 0 obsoleted
 
 = [1.6.0] 2021-07-26 =
 

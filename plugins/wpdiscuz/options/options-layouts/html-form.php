@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentFormView">
     <div class="wpd-opt-name">
         <label for="commentFormView"><?php echo esc_html($setting["options"]["commentFormView"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentFormView"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentFormView"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">
@@ -39,7 +39,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableDropAnimation">
     <div class="wpd-opt-name">
         <label for="enableDropAnimation"><?php echo esc_html($setting["options"]["enableDropAnimation"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableDropAnimation"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableDropAnimation"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -57,7 +57,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="richEditor">
     <div class="wpd-opt-name">
         <label for="richEditor"><?php echo esc_html($setting["options"]["richEditor"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["richEditor"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["richEditor"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-radio">
@@ -86,7 +86,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="editorToolbar">
     <div class="wpd-opt-name" style="width: 100%;">
         <label for="editorToolbar"><?php echo esc_html($setting["options"]["editorToolbar"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["editorToolbar"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["editorToolbar"]["description"]) ?></p>
         <div class="wpd-editor-toolbar">
             <div id="wpdeb_b" title="<?php esc_attr_e("Bold", "wpdiscuz"); ?>" class="<?php echo $this->form["boldButton"] ? "wpd-enabled" : "wpd-disabled"; ?> wpd-editor-button" style="background-position: 1px 0;"></div>
             <input type="hidden" id="wpdeb_b-button" value="<?php echo esc_attr($this->form["boldButton"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[boldButton]" />
@@ -128,7 +128,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableQuickTags">
     <div class="wpd-opt-name">
         <label for="enableQuickTags"><?php echo esc_html($setting["options"]["enableQuickTags"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableQuickTags"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableQuickTags"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -146,11 +146,11 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commenterNameLength">
     <div class="wpd-opt-name">
         <label for="commenterNameLength"><?php echo esc_html($setting["options"]["commenterNameLength"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commenterNameLength"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commenterNameLength"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
-        <span><input type="number" value="<?php echo esc_attr($this->form["commenterNameMinLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[commenterNameMinLength]" id="commenterNameMinLength" style="width:70px;"> <?php esc_html_e("Min", "wpdiscuz") ?> </span>
-        <span>&nbsp; <input type="number" value="<?php echo esc_attr($this->form["commenterNameMaxLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[commenterNameMaxLength]" id="commenterNameMaxLength" style="width:70px;"> <?php esc_html_e("Max", "wpdiscuz") ?></span>
+        <span><input type="number" value="<?php echo esc_attr($this->form["commenterNameMinLength"]); ?>" min="1" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[commenterNameMinLength]" id="commenterNameMinLength" style="width:70px;"> <?php esc_html_e("Min", "wpdiscuz") ?> </span>
+        <span>&nbsp; <input type="number" value="<?php echo esc_attr($this->form["commenterNameMaxLength"]); ?>" min="3" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[commenterNameMaxLength]" id="commenterNameMaxLength" style="width:70px;"> <?php esc_html_e("Max", "wpdiscuz") ?></span>
     </div>
     <div class="wpd-opt-doc">
         <?php $this->printDocLink($setting["options"]["commenterNameLength"]["docurl"]) ?>
@@ -162,7 +162,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="storeCommenterData">
     <div class="wpd-opt-name">
         <label for="storeCommenterData"><?php echo esc_html($setting["options"]["storeCommenterData"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["storeCommenterData"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["storeCommenterData"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="number" value="<?php echo esc_attr($this->form["storeCommenterData"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_FORM); ?>[storeCommenterData]" id="storeCommenterData" style="width:100px;">

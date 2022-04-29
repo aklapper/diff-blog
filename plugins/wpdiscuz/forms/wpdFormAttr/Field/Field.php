@@ -3,6 +3,7 @@
 namespace wpdFormAttr\Field;
 
 use wpdFormAttr\FormConst\wpdFormConst;
+use wpdFormAttr\Tools\Sanitizer;
 
 abstract class Field {
 
@@ -41,7 +42,7 @@ abstract class Field {
     abstract public function frontHtml($value, $args);
 
     public function drawContent($value, $args) {
-        if ($args["is_show_on_comment"] || is_admin()) {
+        if ($args["is_show_on_comment"] || (is_admin() && !wp_doing_ajax())) {
             return $this->frontHtml($value, $args);
         }
         return "";
@@ -166,8 +167,8 @@ abstract class Field {
 
     protected function isCommentParentZero() {
         $isParent = false;
-        $uniqueID = filter_input(INPUT_POST, "wpdiscuz_unique_id", FILTER_SANITIZE_STRING);
-        $action = filter_input(INPUT_POST, "action", FILTER_SANITIZE_STRING);
+        $uniqueID = Sanitizer::sanitize(INPUT_POST, "wpdiscuz_unique_id", "FILTER_SANITIZE_STRING");
+        $action = Sanitizer::sanitize(INPUT_POST, "action", "FILTER_SANITIZE_STRING");
         if ($uniqueID) {
             $commentParent = strstr($uniqueID, "_");
             $isParent = ($action === "editedcomment" && $commentParent === "_0") || ($action === "wpdSaveEditedComment" && $commentParent === "_0") || ($action === "wpdAddComment" && $uniqueID === "0_0") ? true : false;

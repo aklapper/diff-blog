@@ -118,8 +118,6 @@ class Metabox {
 	 *
 	 * @param WP_Post $post_id   Which post we are using here.
 	 * @param array   $arguments Arguments from the metabox, which we use to determine compatibility usage.
-	 *
-	 * @return void Here we just print the template without return.
 	 */
 	public function print_template( $post_id, array $arguments = [] ) {
 		/**
@@ -132,20 +130,33 @@ class Metabox {
 	}
 
 	/**
+	 * Renders, echoing to the page, the API meeting display controls.
+	 *
+	 * @since 1.9.0
+	 *
+	 * @param null|\WP_Post|int $post The post object or ID of the event to generate the controls for, or `null` to use
+	 *                                the global post object.
+	 * @param bool              $echo Whether to echo the template contents to the page (default) or to return it.
+	 *
+	 * @return string The template contents, if not rendered to the page.
+	 */
+	public function render_classic_display_controls( $post = null, $echo = true ) {
+		return $this->template->template(
+			'virtual-metabox/api/display',
+			[
+				'event'      => $post,
+				'metabox_id' => Metabox::$id,
+			],
+			$echo
+		);
+	}
+
+	/**
 	 * Registers the plugin meta box for Blocks Editor support.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void Registering has no return.
 	 */
 	public function register_blocks_editor_legacy() {
-
-		// Only add the metabox with the block editor.
-		$classic_editor = tribe( 'events.editor.compatibility' )->filter_is_classic_editor();
-		if ( $classic_editor ) {
-			return;
-		}
-
 		add_meta_box(
 			static::$id,
 			$this->get_title(),
@@ -154,7 +165,7 @@ class Metabox {
 			'normal',
 			'default',
 			[
-				'block_editor_compatibility' => true,
+				'block_editor_compatibility' => tribe( 'editor' )->should_load_blocks(),
 			]
 		);
 	}
@@ -163,8 +174,6 @@ class Metabox {
 	 * Register all the fields in the Rest API for this metabox.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void Registering fields has no return.
 	 */
 	public function register_fields() {
 		foreach ( Event_Meta::$virtual_event_keys as $key ) {
@@ -191,8 +200,6 @@ class Metabox {
 	 * @param int     $post_id Which post ID we are dealing with when saving.
 	 * @param WP_Post $post    WP Post instance we are saving.
 	 * @param boolean $update  If we are updating the post or not.
-	 *
-	 * @return void Just saving requires no return.
 	 */
 	public function save( $post_id, $post, $update ) {
 		// Skip non-events.
@@ -284,13 +291,19 @@ class Metabox {
 		do_action( 'tribe_events_virtual_update_post_meta', $post_id, $data );
 
 		// These need some logic around them.
-		$embed_video = Arr::get( $data, 'embed-video', false );
-		$virtual_url = Arr::get( $data, 'virtual-url', false );
-		$video_source = Arr::get( $data, 'video-source', '' );
+		$embed_video       = Arr::get( $data, 'embed-video', false );
+		$virtual_url       = Arr::get( $data, 'virtual-url', false );
+		$video_source      = Arr::get( $data, 'video-source', '' );
+		$autodetect_source = get_post_meta( $post_id, Event_Meta::$key_autodetect_source, true );
+		if ( ! $autodetect_source ) {
+			$autodetect_source      = Arr::get( $data, 'autodetect-source', '' );
+		}
+
 		// If the link is not embeddable, uncheck key_embed_video.
 		if (
-			'video' !== $video_source
-			|| tribe( OEmbed::class )->is_embeddable( $virtual_url )
+			Event_Meta::$key_video_source_id !== $video_source ||
+			Event_Meta::$key_oembed_source_id !== $autodetect_source ||
+			tribe( OEmbed::class )->is_embeddable( $virtual_url )
 		) {
 			update_post_meta( $post_id, Event_Meta::$key_embed_video, $embed_video );
 		} else {
@@ -320,6 +333,7 @@ class Metabox {
 	 * Renders the video input fields.
 	 *
 	 * @since 1.6.0
+	 * @deprecated 1.8.0
 	 *
 	 * @param null|\WP_Post|int $post            The post object or ID of the event to generate the controls for, or `null` to use
 	 *                                           the global post object.
@@ -328,6 +342,8 @@ class Metabox {
 	 * @return string The template contents, if not rendered to the page or empty string if no post object.
 	 */
 	public function classic_meeting_video_source_ui( $post = null, $echo = true ) {
+		_deprecated_function( __FUNCTION__, '1.8.0', 'Deprecated for autodetect support, use classic_meeting_autodetect_video_source_ui()' );
+
 		$post = tribe_get_event( get_post( $post ) );
 
 		if ( ! $post instanceof \WP_Post ) {
