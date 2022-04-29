@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Interconnection Blocks
+ * Plugin Name: Wikimedia Diff Blocks
  * Plugin URI: https://github.com/wpcomvip/wikimedia-blog-wikimedia-org
  * Description: Blocks and other editorial functionality for the Interconnection theme.
  * Author: Human Made
@@ -12,7 +12,7 @@
  * @package wikimediadiff
  */
 
-namespace WikimediaDiff\Interconnection_Editor;
+namespace WikimediaDiff\Blocks;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;

@@ -3,20 +3,24 @@
  * This file defines the development build configuration
  */
 const { helpers, externals, presets } = require( '@humanmade/webpack-helpers' );
-const { choosePort, filePath } = helpers;
+const { choosePort, filePath, cleanOnExit } = helpers;
 
-module.exports = choosePort( 8080 ).then( port =>
+cleanOnExit( [
+	filePath( 'client-mu-plugins/diff-blocks/dist/asset-manifest.json' ),
+] );
+
+module.exports = choosePort( 8181 ).then( port =>
 	presets.development( {
 		devServer: {
 			port,
 		},
 		externals,
 		entry: {
-			editor: filePath( 'plugins/interconnection-blocks/src/editor.js' ),
-			frontend: filePath( 'plugins/interconnection-blocks/src/frontend.js' ),
+			editor: filePath( 'client-mu-plugins/diff-blocks/src/editor.js' ),
+			frontend: filePath( 'client-mu-plugins/diff-blocks/src/frontend.js' ),
 		},
 		output: {
-			path: filePath( 'plugins/interconnection-blocks/dist' )
+			path: filePath( 'client-mu-plugins/diff-blocks/dist' )
 		},
 	} )
 );

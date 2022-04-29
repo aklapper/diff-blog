@@ -1,6 +1,11 @@
 <?php
+/**
+ * Base namespace for the Diff Blocks editorial features plugin.
+ */
 
-namespace WikimediaDiff\Interconnection_Editor;
+namespace WikimediaDiff\Blocks;
+
+use Asset_Loader;
 
 /**
  * Add all our hooks.
@@ -12,27 +17,44 @@ function bootstrap() {
 }
 
 /**
+ * Get the manifest for the site, using the dev server if available.
+ */
+function get_webpack_manifest() : ?string {
+	$plugin_path = trailingslashit( plugin_dir_path( dirname( __FILE__, 1 ) ) );
+
+	return Asset_Loader\Manifest\get_active_manifest( [
+		$plugin_path . 'dist/asset-manifest.json',
+		$plugin_path . 'dist/production-asset-manifest.json',
+	] );
+}
+
+/**
  * Enqueue block editor-only JavaScript and CSS.
  */
 function enqueue_block_editor_assets() {
+	$manifest = get_webpack_manifest();
 
-	$editor_js  = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/editor.js';
-	$editor_css = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/editor.css';
-
-	wp_enqueue_script(
-		'interconnection-blocks-editor',
-		$editor_js,
-		[],
-		'1.0.0',
-		true
+	Asset_Loader\enqueue_asset(
+		$manifest,
+		'editor.js',
+		[
+			'dependencies' => [
+				'wp-block-editor',
+				'wp-blocks',
+				'wp-element',
+				'wp-i18n',
+			],
+			'handle' => 'diff-blocks'
+		]
 	);
 
-	wp_enqueue_style(
-		'interconnection-blocks-editor',
-		$editor_css,
-		[],
-		'1.0.0',
-		'all'
+	Asset_Loader\enqueue_asset(
+		$manifest,
+		'editor.css',
+		[
+			'dependencies' => [],
+			'handle' => 'diff-blocks'
+		]
 	);
 }
 
@@ -40,30 +62,27 @@ function enqueue_block_editor_assets() {
  * Enqueue front end and editor JavaScript and CSS assets.
  */
 function enqueue_frontend_assets() {
-
 	if ( is_admin() ) {
 		return;
 	}
 
-	$frontend_js  = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/frontend.js';
-	$frontend_css = plugin_dir_url( dirname( __FILE__ ) ) . 'dist/frontend.css';
+	$manifest = get_webpack_manifest();
 
-	wp_enqueue_script(
-		'interconnection-blocks-frontend',
-		$frontend_js,
-		[],
-		filemtime( $frontend_js ),
-		true
+	Asset_Loader\enqueue_asset(
+		$manifest,
+		'frontend.js',
+		[
+			'dependencies' => [],
+			'handle' => 'diff-blocks-frontend'
+		]
 	);
 
-	$css_updated_time = filemtime( $frontend_css );
-	if ( $css_updated_time ) {
-		wp_enqueue_style(
-			'interconnection-blocks-frontend',
-			$frontend_css,
-			[],
-			$css_updated_time,
-			'all'
-		);
-	}
+	Asset_Loader\enqueue_asset(
+		$manifest,
+		'frontend.css',
+		[
+			'dependencies' => [],
+			'handle' => 'diff-blocks-frontend'
+		]
+	);
 }

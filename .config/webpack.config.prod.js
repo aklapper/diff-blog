@@ -8,16 +8,13 @@ const { filePath } = helpers;
 module.exports = presets.production( {
 	externals,
 	entry: {
-		editor: filePath( 'plugins/interconnection-blocks/src/editor.js' ),
-		frontend: filePath( 'plugins/interconnection-blocks/src/frontend.js' ),
+		editor: filePath( 'client-mu-plugins/diff-blocks/src/editor.js' ),
+		frontend: filePath( 'client-mu-plugins/diff-blocks/src/frontend.js' ),
 	},
 	output: {
-		filename: '[name].js',
-		path: filePath( 'plugins/interconnection-blocks/dist' ),
+		path: filePath( 'client-mu-plugins/diff-blocks/dist' ),
 	},
 	plugins: [
-		plugins.miniCssExtract( {
-			filename: '[name].css',
-		} ),
+		plugins.clean(),
 	],
 } );

@@ -1,0 +1,2 @@
+# Never commit the dev manifest, those files are virtual!
+dist/asset-manifest.json
