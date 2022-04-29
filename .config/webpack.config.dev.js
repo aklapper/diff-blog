@@ -6,7 +6,7 @@ const { helpers, externals, presets } = require( '@humanmade/webpack-helpers' );
 const { choosePort, filePath, cleanOnExit } = helpers;
 
 cleanOnExit( [
-	filePath( 'client-mu-plugins/diff-blocks/dist/asset-manifest.json' ),
+	filePath( 'client-mu-plugins/diff-blocks/dist/development-asset-manifest.json' ),
 ] );
 
 module.exports = choosePort( 8181 ).then( port =>
