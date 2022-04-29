@@ -23,7 +23,7 @@ function enqueue_block_editor_assets() {
 		'interconnection-blocks-editor',
 		$editor_js,
 		[],
-		filemtime( $editor_js ),
+		'1.0.0',
 		true
 	);
 
@@ -31,7 +31,7 @@ function enqueue_block_editor_assets() {
 		'interconnection-blocks-editor',
 		$editor_css,
 		[],
-		filemtime( $editor_css ),
+		'1.0.0',
 		'all'
 	);
 }
