@@ -1,5 +1,5 @@
 {
-  "editor.css": "auto/editor.css",
-  "editor.js": "auto/editor.js",
-  "frontend.js": "auto/frontend.js"
+  "editor.css": "editor.css",
+  "editor.js": "editor.js",
+  "frontend.js": "frontend.js"
 }
