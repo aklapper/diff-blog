@@ -23,7 +23,7 @@ function get_webpack_manifest() : ?string {
 	$plugin_path = trailingslashit( plugin_dir_path( dirname( __FILE__, 1 ) ) );
 
 	return Asset_Loader\Manifest\get_active_manifest( [
-		$plugin_path . 'dist/asset-manifest.json',
+		$plugin_path . 'dist/development-asset-manifest.json',
 		$plugin_path . 'dist/production-asset-manifest.json',
 	] );
 }
