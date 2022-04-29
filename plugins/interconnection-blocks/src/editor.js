@@ -25,7 +25,7 @@ autoloadBlocks(
 		 * @returns {object} Webpack ContextModule for matched files.
 		 */
 		getContext() {
-			return require.context( './blocks', true, /index\.js$/ );
+			return require.context( './blocks', true, /index\.[tj]sx?$/ );
 		},
 	},
 	reloadOnHMRUpdate
@@ -39,7 +39,7 @@ autoloadPlugins(
 		 * @returns {object} Webpack ContextModule for matched files.
 		 */
 		getContext() {
-			return require.context( './filters', true, /index\.js$/ );
+			return require.context( './filters', true, /index\.[tj]sx?$/ );
 		},
 	},
 	reloadOnHMRUpdate

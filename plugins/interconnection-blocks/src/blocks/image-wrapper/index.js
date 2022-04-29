@@ -19,7 +19,7 @@ const TEMPLATE = [
 	} ],
 ];
 
-export const options = {
+export const settings = {
 	title: __( 'Image Wrapper', 'interconnection' ),
 
 	description: __( 'Wrapper to use for images.', 'interconnection' ),
