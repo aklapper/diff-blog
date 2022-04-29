@@ -20,6 +20,8 @@
  */
 // https://github.com/humanmade/asset-loader, for loading webpack-generated asset bundles.
 require_once __DIR__ . '/asset-loader/asset-loader.php';
+// Editor blocks for the Diff site.
+require_once __DIR__ . '/diff-blocks/plugin.php';
 
 /**
  * Disable New Relic browser monitoring.
