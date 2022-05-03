@@ -25,6 +25,24 @@ Diff uses the following plugins.
 * AMP for distribution
 * Diff customizations for small tweaks to the editing interface to help new folks
 
+## Theme development
+Development occurs primarily within the [themes/interconnection](themes/interconnection/) folder.
+
+Run `composer install` to enable the use of PHPCS for linting theme code.
+
+Run `npm install` to enable the frontend asset build process. The theme currently requires Node v14; if you use [nvm](https://github.com/nvm-sh/nvm), you can run `nvm use` (or `nvm install v14`) in the theme directory to set the correct version.
+
+Useful commands, all usable from within the theme directory:
+
+ Command                   | Description
+-------------------------- | --------------------------------------------------------
+`npm run`                  | See a list of all available npm commands
+`npm run compile:css`      | Build the sass files into a single CSS file
+`npm run watch:css`        | Monitor sass files for changes and automatically rebuild
+`npm run lint:scss`        | Check the sass code for errors
+`npm run lint:js`          | Check the JS files for errors
+`composer lint:php`        | Check theme PHP files for errors
+
 ## Testing
 When making changes to the site, test that the design and functionality works locally before pushing changes to the `develop` branch for staging verification, and that all key site functions still work as expected. This is a partial list of tests and checks you may want to perform:
 
