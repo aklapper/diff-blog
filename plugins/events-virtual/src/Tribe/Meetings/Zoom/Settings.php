@@ -37,6 +37,7 @@ class Settings {
 	 * The name of the action used to change the status of an account.
 	 *
 	 * @since 1.5.0
+	 * @deprecated 1.9.0 - use API::status_action
 	 *
 	 * @var string
 	 */
@@ -46,6 +47,7 @@ class Settings {
 	 * The name of the action used to delete an account.
 	 *
 	 * @since 1.5.0
+	 * @deprecated 1.9.0 - use API::delete_action
 	 *
 	 * @var string
 	 */
@@ -105,6 +107,7 @@ class Settings {
 	public function add_fields( array $fields = [] ) {
 		$wrapper_classes = tribe_get_classes(
 			[
+				'tec-settings-api-application' => true,
 				'tribe-settings-zoom-application' => true,
 			]
 		);
@@ -210,151 +213,31 @@ class Settings {
 	 * Handles the request to change the status of a Zoom account.
 	 *
 	 * @since 1.5.0
+	 * @deprecated 1.9.0 - Uses shared method in API class.
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_status( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$status_action, $nonce ) ) {
-			return false;
-		}
+		_deprecated_function( __METHOD__, '1.9.0', 'Api::ajax_status()' );
 
-		$success = false;
-
-		$zoom_account_id = tribe_get_request_var( 'zoom_account_id' );
-		$account         = $this->api->get_account_by_id( $zoom_account_id );
-		// If no account id found, fail the request.
-		if ( empty( $zoom_account_id ) || empty( $account ) ) {
-			$error_message =
-				_x(
-					'The Zoom Account ID or Account is missing to change the status.',
-					'Account ID is missing on status change error message.',
-					'events-virtual'
-				);
-			$this->get_settings_message_template( $error_message, 'error' );
-
-			wp_die();
-
-			return false;
-		}
-
-		// Set the status to the opposite of what is saved.
-		$new_status        = tribe_is_truthy( $account['status'] ) ? false : true;
-		$account['status'] = $new_status;
-		$this->api->set_account_by_id( $account );
-
-		// Attempt to load the account when status is changed to enabled and on failure display a message.
-		$loaded = $new_status ? $this->api->load_account_by_id( $account['id'] ) : true;
-		if ( empty( $loaded ) ) {
-			$error_message =
-				_x(
-					'There seems to be a problem with the connection to this Zoom account. Please refresh the connection.',
-					'Message to display when the Zoom account could not be loaded after being enabled.',
-					'events-virtual'
-				);
-			$this->get_settings_message_template( $error_message, 'error' );
-
-			wp_die();
-
-			return false;
-		}
-
-		$status_msg = $new_status
-			? _x(
-				'Zoom connection enabled for %1$s',
-				'Enables the Zoom Account for the Website.',
-				'events-virtual'
-			)
-			: _x(
-				'Zoom connection disabled for %1$s',
-				'Disables the Zoom Account for the Website.',
-				'events-virtual'
-			);
-
-		$message = sprintf(
-			/* Translators: %1$s: the name of the account that has the status change. */
-			$status_msg,
-			$account['name']
-		);
-		$this->get_settings_message_template( $message );
-
-		wp_die();
-
-		return $success;
+		return tribe( Api::class )->ajax_status( $nonce );
 	}
 
 	/**
 	 * Handles the request to delete a Zoom account.
 	 *
 	 * @since 1.5.0
+	 * @deprecated 1.9.0 - Uses shared method in API class.
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_delete( $nonce = null ) {
+		_deprecated_function( __METHOD__, '1.9.0', 'API::ajax_delete()' );
 
-		if ( ! $this->check_ajax_nonce( static::$delete_action, $nonce ) ) {
-			return false;
-		}
-
-		$success = false;
-
-		$zoom_account_id = tribe_get_request_var( 'zoom_account_id' );
-		$account = $this->api->get_account_by_id( $zoom_account_id );
-		// If no account id found, fail the request.
-		if ( empty( $zoom_account_id ) || empty( $account ) ) {
-			$error_message = _x( 'The Zoom Account ID or Account is missing and cannot be deleted.', 'Account ID is missing on delete error message.', 'events-virtual' );
-			$this->get_settings_message_template( $error_message, 'error' );
-
-			wp_die();
-
-			return false;
-		}
-
-		$success = $this->api->delete_account_by_id( $zoom_account_id );
-		if ( $success ){
-			$message = sprintf(
-				/* Translators: %1$s: the name of the account that has been deleted. */
-				_x(
-					'%1$s was successfully deleted',
-					'The message after a Zoom Account has been deleted from the Website.',
-					'events-virtual'
-				),
-				$account['name']
-			);
-			$this->get_settings_message_template( $message );
-
-			wp_die();
-
-			return $success;
-		}
-
-		$error_message = _x(
-			'The Zoom Account access token could not be revoked.',
-			'The message to display if a Zoom account access token could not be revoked.',
-			'events-virtual'
-		);
-		$this->get_settings_message_template( $error_message, 'error' );
-
-		wp_die();
-
-		return $success;
-	}
-
-	/**
-	 * Returns the current API refresh token.
-	 *
-	 * If not available, then a new token should be fetched by the API.
-	 *
-	 * @since 1.0.1
-	 * @deprecated 1.5.0 - Remove for Multiple Account Support.
-	 *
-	 * @return string|boolean The API access token, or false if the token cannot be fetched (error).
-	 */
-	public static function get_refresh_token() {
-		_deprecated_function( __FUNCTION__, '1.5.0', 'Removed for multiple account support with no replacement.' );
-		return tribe( Encryption::class )->decrypt( tribe_get_option( static::$option_prefix . 'refresh_token', false ) );
+		return tribe( Api::class )->ajax_delete( $nonce );
 	}
 }

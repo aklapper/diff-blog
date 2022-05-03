@@ -8,6 +8,7 @@
  * See more documentation about our views templating system.
  *
  * @since   1.5.0
+ * @deprecated 1.9.0 - Use src/admin-views/virtual-metabox/api/account-disabled.php
  *
  * @version 1.5.0
  *
@@ -26,7 +27,7 @@
 >
 	<div
 		id="tribe-events-virtual-meetings-zoom"
-		class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-error"
+		class="tec-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-error"
 	>
 		<?php
 		 $this->template(

@@ -11,8 +11,23 @@
  * @since 1.0.2
  */
 class PLL_WPML_Compat {
-	protected static $instance; // For singleton
-	protected static $strings; // Used for cache
+	/**
+	 * Singleton instance
+	 *
+	 * @var PLL_WPML_Compat
+	 */
+	protected static $instance;
+
+	/**
+	 * Stores the strings registered with the WPML API.
+	 *
+	 * @var array
+	 */
+	protected static $strings;
+
+	/**
+	 * @var PLL_WPML_API
+	 */
 	public $api;
 
 	/**
@@ -37,7 +52,7 @@ class PLL_WPML_Compat {
 	 *
 	 * @since 1.7
 	 *
-	 * @return object
+	 * @return PLL_WPML_Compat
 	 */
 	public static function instance() {
 		if ( empty( self::$instance ) ) {
@@ -52,6 +67,8 @@ class PLL_WPML_Compat {
 	 * in 'setup_theme' by Polylang ( based on user info ) and 'plugins_loaded' by WPML ( based on cookie )
 	 *
 	 * @since 0.9.5
+	 *
+	 * @return void
 	 */
 	public function define_constants() {
 		if ( ! empty( PLL()->curlang ) ) {
@@ -83,8 +100,13 @@ class PLL_WPML_Compat {
 	 * @param string $context The group in which the string is registered.
 	 * @param string $name    A unique name for the string.
 	 * @param string $string  The string to register.
+	 * @return void
 	 */
 	public function register_string( $context, $name, $string ) {
+		if ( ! $string || ! is_scalar( $string ) ) {
+			return;
+		}
+
 		// If a string has already been registered with the same name and context, let's replace it.
 		$exist_string = $this->get_string_by_context_and_name( $context, $name );
 		if ( $exist_string && $exist_string !== $string ) {
@@ -104,7 +126,7 @@ class PLL_WPML_Compat {
 
 		// Registers the string if it does not exist yet (multiline as in WPML).
 		$to_register = array( 'context' => $context, 'name' => $name, 'string' => $string, 'multiline' => true, 'icl' => true );
-		if ( ! in_array( $to_register, self::$strings ) && $to_register['string'] ) {
+		if ( ! in_array( $to_register, self::$strings ) ) {
 			$key = md5( "$context | $name" );
 			self::$strings[ $key ] = $to_register;
 			update_option( 'polylang_wpml_strings', self::$strings );
@@ -118,6 +140,7 @@ class PLL_WPML_Compat {
 	 *
 	 * @param string $context The group in which the string is registered.
 	 * @param string $name    A unique name for the string.
+	 * @return void
 	 */
 	public function unregister_string( $context, $name ) {
 		$key = md5( "$context | $name" );

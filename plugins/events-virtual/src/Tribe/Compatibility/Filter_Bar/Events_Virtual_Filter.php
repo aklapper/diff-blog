@@ -151,8 +151,6 @@ class Events_Virtual_Filter extends \Tribe__Events__Filterbar__Filter {
 	 * Sets up our join clause for the query.
 	 *
 	 * @since 1.0.4
-	 *
-	 * @return void
 	 */
 	protected function setup_join_clause() {
 		// If they choose all - don't modify the query.
@@ -197,8 +195,6 @@ class Events_Virtual_Filter extends \Tribe__Events__Filterbar__Filter {
 	 * Sets up our where clause for the query.
 	 *
 	 * @since 1.0.4
-	 *
-	 * @return void
 	 */
 	protected function setup_where_clause() {
 		// If they choose all - don't modify the query.

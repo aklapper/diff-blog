@@ -59,12 +59,12 @@ class Encryption {
 		 */
 		$key = apply_filters( 'tribe_events_virtual_encryption_key', $key );
 
-		if ( ! ctype_xdigit( $key ) ) {
+		if ( ! \ctype_xdigit( $key ) ) {
 
 			do_action( 'tribe_log', 'error', __CLASS__, [
 				'action'  => __METHOD__,
 				'code'    => 'Key Error',
-				'message' => 'Provided key is not a hexidecimal, only decimal digits[0-9] and characters from [a-f]',
+				'message' => 'Provided key is not a hexadecimal, only decimal digits[0-9] and characters from [a-f]',
 			] );
 
 			return false;

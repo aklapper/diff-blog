@@ -10,8 +10,9 @@
  * @since   1.0.0
  * @since   1.5.0 - Add $message variable.
  * @since   1.6.0 - Use a common message component.
+ * @since 1.9.0 - Add support using shared classes between APIs.
  *
- * @version 1.6.0
+ * @version 1.9.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -22,9 +23,9 @@
 
 $accounts = $api->get_list_of_accounts( true );
 ?>
-<fieldset id="tribe-field-zoom_token" class="tribe-field tribe-field-text tribe-size-medium">
+<fieldset id="tribe-field-zoom_token" class="tec-meetings-api-fields tribe-field tribe-field-text tribe-size-medium">
 	<legend class="tribe-field-label"><?php esc_html_e( 'Connected Accounts', 'events-virtual' ); ?></legend>
-	<div class="tec-zoom-accounts-messages">
+	<div class="tec-api-accounts-messages tec-zoom-accounts-messages">
 		<?php
 		$this->template( 'components/message', [
 			'message' => $message,

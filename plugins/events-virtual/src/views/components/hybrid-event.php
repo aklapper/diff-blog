@@ -3,7 +3,7 @@
  * Marker for a hybrid event.
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/events-virtual/components/hybrid-event.php
+ * [your-theme]/tribe/events-virtual/v2/components/hybrid-event.php
  *
  * See more documentation about our views templating system.
  *
@@ -19,6 +19,11 @@
  */
 
 use Tribe\Events\Virtual\Event_Meta;
+
+// Don't print anything when this event is not virtual.
+if ( ! $event->virtual || ! $event->virtual_show_on_views ) {
+	return;
+}
 
 // Don't print anything when this event is not hybrid.
 if ( Event_Meta::$value_hybrid_event_type !== $event->virtual_event_type ) {

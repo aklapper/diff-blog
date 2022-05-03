@@ -38,6 +38,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         add_action("post_updated", [&$this, "checkFeedbackShortcodes"], 10, 3);
         add_filter("comment_row_actions", [&$this, "commentRowStickAction"], 10, 2);
         add_filter("admin_comment_types_dropdown", [&$this, "addCommentTypes"]);
+        add_filter("wpdiscuz_after_comment_author", [&$this, "userNicename"], 1, 3);
 
         add_action("wp_ajax_wpdGetInfo", [&$this, "wpdGetInfo"]);
         add_action("wp_ajax_nopriv_wpdGetInfo", [&$this, "wpdGetInfo"]);
@@ -60,6 +61,9 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         }
         add_filter("wpdiscuz_comment_author", [$this, "umAuthorName"], 10, 2);
         add_action("add_meta_boxes", [&$this, "addRatingResetButton"], 10, 2);
+
+        add_action("wp_ajax_wpdGetNonce", [&$this, "getNonce"]);
+        add_action("wp_ajax_nopriv_wpdGetNonce", [&$this, "getNonce"]);
     }
 
     public function filterKses() {
@@ -134,11 +138,35 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         return $text;
     }
 
+    //================== Nonce==================================================
+    public function generateNonceKey() {
+        return ($key = get_home_url()) ? md5($key) : self::GLOBAL_NONCE_NAME;
+    }
+
+    public function generateNonce() {
+        return wp_create_nonce($this->generateNonceKey());
+    }
+
+    public function validateNonce() {
+        if (is_user_logged_in() || apply_filters('wpdiscuz_validate_nonce_for_guests', false)) {
+            $nonce = !empty($_REQUEST[self::GLOBAL_NONCE_NAME]) ? sanitize_text_field($_REQUEST[self::GLOBAL_NONCE_NAME]) : "";
+            if (!wp_verify_nonce($nonce, $this->generateNonceKey())) {
+                wp_die(__("Nonce is invalid.", "wpdiscuz"));
+            }
+        }
+    }
+
+    public function getNonce() {
+        wp_send_json_success($this->generateNonce());
+    }
+
+    //==========================================================================
+
     public function getNumber($number) {
         if ($this->options->general["humanReadableNumbers"]) {
             if (absint($number) >= 1000000) {
-				$number = sprintf(esc_html__("%sM", "wpdiscuz"), str_replace(".0", "", number_format($number / 1000000, 1)));
-			} else if (absint($number) >= 1000) {
+                $number = sprintf(esc_html__("%sM", "wpdiscuz"), str_replace(".0", "", number_format($number / 1000000, 1)));
+            } else if (absint($number) >= 1000) {
                 $number = sprintf(esc_html__("%sK", "wpdiscuz"), str_replace(".0", "", number_format($number / 1000, 1)));
             }
         }
@@ -207,8 +235,8 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             $commentMinLength = intval($this->options->content["replyTextMinLength"]);
             $commentMaxLength = intval($this->options->content["replyTextMaxLength"]);
         } else {
-			$commentMinLength = intval($this->options->content["commentTextMinLength"]);
-			$commentMaxLength = intval($this->options->content["commentTextMaxLength"]);
+            $commentMinLength = intval($this->options->content["commentTextMinLength"]);
+            $commentMaxLength = intval($this->options->content["commentTextMaxLength"]);
         }
         $commentContent = trim(strip_tags($commentContent));
         $contentLength = function_exists("mb_strlen") ? mb_strlen($commentContent) : strlen($commentContent);
@@ -377,11 +405,18 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         return $user;
     }
 
+    public function userNicename($html, $comment, $user) {
+        if (apply_filters("wpdiscuz_show_nicename", false) && $this->options->subscription["enableUserMentioning"] && isset($user->user_nicename)) {
+            $html .= "<span class='wpd-user-nicename' data-wpd-clipboard='@" . esc_attr($user->user_nicename) . "'>(@" . esc_html($user->user_nicename) . ")</span>";
+        }
+        return $html;
+    }
+
     public function canUserEditComment($comment, $currentUser, $commentListArgs = []) {
         if (isset($commentListArgs["comment_author_email"])) {
             $storedCookieEmail = $commentListArgs["comment_author_email"];
         } else {
-            $storedCookieEmail = isset($_COOKIE["comment_author_email_" . COOKIEHASH]) ? $_COOKIE["comment_author_email_" . COOKIEHASH] : "";
+            $storedCookieEmail = isset($_COOKIE["comment_author_email_" . COOKIEHASH]) ? sanitize_email($_COOKIE["comment_author_email_" . COOKIEHASH]) : "";
         }
         return !(!$this->options->moderation["enableEditingWhenHaveReplies"] && $comment->get_children(["post_id" => $comment->comment_post_ID])) && (($storedCookieEmail === $comment->comment_author_email && $_SERVER["REMOTE_ADDR"] === $comment->comment_author_IP) || ($currentUser && $currentUser->ID && $currentUser->ID == $comment->user_id));
     }
@@ -468,6 +503,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function wpdGetInfo() {
+        $this->validateNonce();
         $response = "";
         $currentUser = self::getCurrentUser();
         if ($currentUser && $currentUser->ID) {
@@ -475,7 +511,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             $currentUserEmail = $currentUser->user_email;
         } else {
             $currentUserId = 0;
-            $currentUserEmail = isset($_COOKIE["comment_author_email_" . COOKIEHASH]) ? $_COOKIE["comment_author_email_" . COOKIEHASH] : "";
+            $currentUserEmail = isset($_COOKIE["comment_author_email_" . COOKIEHASH]) ? sanitize_email($_COOKIE["comment_author_email_" . COOKIEHASH]) : "";
         }
 
         if (is_user_logged_in()) {
@@ -599,6 +635,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function getActivityPage() {
+        $this->validateNonce();
         ob_start();
         include_once WPDISCUZ_DIR_PATH . "/utils/layouts/activity/activity-page.php";
         $html = ob_get_clean();
@@ -606,6 +643,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     private function getSubscriptionsTitleHtml() {
+        $this->validateNonce();
         ob_start();
         include_once WPDISCUZ_DIR_PATH . "/utils/layouts/subscriptions/title.php";
         return ob_get_clean();
@@ -623,6 +661,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function getSubscriptionsPage() {
+        $this->validateNonce();
         ob_start();
         include_once WPDISCUZ_DIR_PATH . "/utils/layouts/subscriptions/subscriptions-page.php";
         $html = ob_get_clean();
@@ -630,6 +669,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     private function getFollowsTitleHtml() {
+        $this->validateNonce();
         ob_start();
         include_once WPDISCUZ_DIR_PATH . "/utils/layouts/follows/title.php";
         return ob_get_clean();
@@ -654,15 +694,15 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public static function fixEmailFrom($domain) {
-		$domain = strtolower($domain);
-		if (substr($domain, 0, 4) === "www.") {
-			$domain = substr($domain, 4);
-		}
-		$localhost = ['127.0.0.1', '::1'];
-		if (in_array($_SERVER['REMOTE_ADDR'], $localhost, true)) {
-			$domain .= ".com";
-		}
-		return $domain;
+        $domain = strtolower($domain);
+        if (substr($domain, 0, 4) === "www.") {
+            $domain = substr($domain, 4);
+        }
+        $localhost = ['127.0.0.1', '::1'];
+        if (in_array($_SERVER['REMOTE_ADDR'], $localhost, true)) {
+            $domain .= ".com";
+        }
+        return $domain;
     }
 
     public function fixLocalhostIp($ip) {
@@ -670,6 +710,13 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             $ip = "127.0.0.1";
         }
         return $ip;
+    }
+
+    public function fixURLScheme($url) {
+        if (is_ssl() && strpos($url, "http://") !== false) {
+            $url = str_replace("http://", "https://", $url);
+        }
+        return $url;
     }
 
     public function commentDataArr($data, $comment, $commentarr) {
@@ -796,24 +843,27 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function userMentioning($content, $comment, $args = []) {
-        if (apply_filters("wpdiscuz_enable_user_mentioning", true) && !empty($args["is_wpdiscuz_comment"]) && ($users = $this->getMentionedUsers($content, false))) {
+        if (apply_filters("wpdiscuz_enable_user_mentioning", true) && !empty($args["is_wpdiscuz_comment"]) && ($users = $this->getMentionedUsers($content))) {
             foreach ($users as $k => $user) {
-                $user_link = "";
-                if (class_exists("BuddyPress")) {
-                    $user_link = bp_core_get_user_domain($user["u_id"]);
-                }
-                if (class_exists("UM_API")) {
-                    um_fetch_user($user["u_id"]);
-                    $user_link = um_user_profile_url();
-                }
-                if (!$user_link) {
-                    $user_link = get_author_posts_url($user["u_id"]);
-                }
-                if ($user_link) {
-                    $replacement = "<a href='" . $user_link . "' rel='author'>@" . $user["name"] . "</a>";
+                if ($this->options->login["enableProfileURLs"]) {
+                    $user_link = "";
+                    if (class_exists("UM_API")) {
+                        $user_link = um_user_profile_url($user["u_id"]);
+                    } else if (class_exists("BuddyPress")) {
+                        $user_link = bp_core_get_user_domain($user["u_id"]);
+                    } else {
+                        $user_link = get_author_posts_url($user["u_id"]);
+                    }
+
+                    if ($user_link) {
+                        $replacement = "<a href='" . $user_link . "' rel='author'>@" . $user["name"] . "</a>";
+                    } else {
+                        $replacement = "<span>@" . $user["name"] . "</span>";
+                    }
                 } else {
                     $replacement = "<span>@" . $user["name"] . "</span>";
                 }
+
                 $replacement .= "$2";
                 $content = preg_replace("/(" . $user["replace"] . ")([\s\n\r\t\@\,\.\!\?\#\$\%\-\:\;\'\"\`\~\)\(\}\{\|\\\[\]]?)/", $replacement, $content);
             }
@@ -828,41 +878,36 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         return $content;
     }
 
-    public function getMentionedUsers($content, $onlyNick = true) {
+    public function getMentionedUsers($content) {
         $users = [];
-        if (preg_match_all("/(@[^\s\,\@\.\!\?\#\$\%\:\;\'\"\`\~\)\(\}\{\|\\\[\]]*)/is", $content, $nicknames)) {
-            $nicknames = array_map("strip_tags", $nicknames[0]);
-            $nicknames = array_unique($nicknames);
-            foreach ($nicknames as $k => $nickname) {
-                if ($onlyNick) {
-					$user = $this->dbManager->getUserByNickname(ltrim($nickname, "@"));
-                } else {
-					$user = $this->dbManager->getUserByNicknameOrNicename(ltrim($nickname, "@"));
-                }
+        if (preg_match_all("/(@[^\s\,\@\.\!\?\#\$\%\:\;\'\"\`\~\)\(\}\{\|\\\[\]]*)/is", $content, $nicenames)) {
+            $nicenames = array_unique(array_map("strip_tags", $nicenames[0]));
+            foreach ($nicenames as $k => $nicename) {
+                $user = $this->dbManager->getUserByNicename(ltrim($nicename, "@"));
                 if ($user) {
-                    $users[] = ["replace" => $nickname, "u_id" => $user->ID, "name" => $user->display_name, "email" => $user->user_email];
+                    $users[] = ["replace" => $nicename, "u_id" => $user->ID, "name" => $user->display_name, "email" => $user->user_email];
                 }
             }
         }
         return $users;
     }
 
-	public function checkFeedbackShortcodes($post_ID, $post_after, $post_before) {
-		if (comments_open($post_ID) && ($form = $this->wpdiscuzForm->getForm($post_ID)) && $form->getFormID()) {
+    public function checkFeedbackShortcodes($post_ID, $post_after, $post_before) {
+        if (comments_open($post_ID) && ($form = $this->wpdiscuzForm->getForm($post_ID)) && $form->getFormID()) {
             preg_match_all(self::$inlineFormPattern, $post_before->post_content, $matchesBefore, PREG_SET_ORDER);
-		    if ($post_after->post_content) {
+            if ($post_after->post_content) {
                 preg_match_all(self::$inlineFormPattern, $post_after->post_content, $matchesAfter, PREG_SET_ORDER);
             } else {
-				$matchesAfter = $matchesBefore;
-				$matchesBefore = [];
+                $matchesAfter = $matchesBefore;
+                $matchesBefore = [];
             }
-			if ($matchesAfter || $matchesBefore) {
-				$inlineFormsBefore = [];
-				$defaultAtts = ["id" => "", "question" => "", "opened" => 0, "content" => ""];
-				foreach ($matchesBefore as $k => $matchBefore) {
-					if (isset($matchBefore[3])) {
-					    $matchBefore[3] = str_replace('\"', "'", addslashes($matchBefore[3]));
-					    if (preg_match_all(self::$inlineFormAttsPattern, $matchBefore[3], $attsBefore, PREG_SET_ORDER)) {
+            if ($matchesAfter || $matchesBefore) {
+                $inlineFormsBefore = [];
+                $defaultAtts = ["id" => "", "question" => "", "opened" => 0, "content" => ""];
+                foreach ($matchesBefore as $k => $matchBefore) {
+                    if (isset($matchBefore[3])) {
+                        $matchBefore[3] = str_replace('\"', "'", addslashes($matchBefore[3]));
+                        if (preg_match_all(self::$inlineFormAttsPattern, $matchBefore[3], $attsBefore, PREG_SET_ORDER)) {
                             $atts = [];
                             foreach ($attsBefore as $k1 => $attrBefore) {
                                 $atts[$attrBefore[1]] = $attrBefore[2];
@@ -872,44 +917,44 @@ class WpdiscuzHelper implements WpDiscuzConstants {
                                 $inlineFormsBefore[$atts["id"]] = ["question" => $atts["question"], "opened" => $atts["opened"], "content" => $matchBefore[5]];
                             }
                         }
-					}
-				}
-				foreach ($matchesAfter as $k => $matchAfter) {
-					if (isset($matchAfter[3])) {
-						$matchAfter[3] = str_replace('\"', "'", addslashes($matchAfter[3]));
-						if (function_exists("use_block_editor_for_post") && use_block_editor_for_post($post_ID)) {
-							$matchAfter[3] = json_decode('"' . $matchAfter[3] . '"');
-						}
-						if (preg_match_all(self::$inlineFormAttsPattern, $matchAfter[3], $attsAfter, PREG_SET_ORDER)) {
-							$atts = [];
-							foreach ($attsAfter as $k1 => $attrAfter) {
-								$atts[$attrAfter[1]] = $attrAfter[2];
-							}
-							$atts["content"] = $matchAfter[5];
-							$atts = array_merge($defaultAtts, $atts);
-							if (($atts["id"] = trim($atts["id"])) && ($atts["question"] = strip_tags($atts["question"]))) {
-								if (isset($inlineFormsBefore[$atts["id"]])) {
-									if ($this->dbManager->getFeedbackFormByUid($post_ID, $atts["id"])) {
-										if ($atts["question"] !== $inlineFormsBefore[$atts["id"]]["question"] || $atts["opened"] !== $inlineFormsBefore[$atts["id"]]["opened"] || $atts["content"] !== $inlineFormsBefore[$atts["id"]]["content"]) {
-											$this->dbManager->updateFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
-										}
-									} else {
-										$this->dbManager->addFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
-									}
-									unset($inlineFormsBefore[$atts["id"]]);
-								} else {
-									$this->dbManager->addFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
-								}
-							}
-						}
-					}
-				}
-				foreach ($inlineFormsBefore as $uid => $inlineFormBefore) {
-					$this->dbManager->deleteFeedbackForm($post_ID, $uid);
-				}
-			}
-		}
-	}
+                    }
+                }
+                foreach ($matchesAfter as $k => $matchAfter) {
+                    if (isset($matchAfter[3])) {
+                        $matchAfter[3] = str_replace('\"', "'", addslashes($matchAfter[3]));
+                        if (function_exists("use_block_editor_for_post") && use_block_editor_for_post($post_ID)) {
+                            $matchAfter[3] = json_decode('"' . $matchAfter[3] . '"');
+                        }
+                        if (preg_match_all(self::$inlineFormAttsPattern, $matchAfter[3], $attsAfter, PREG_SET_ORDER)) {
+                            $atts = [];
+                            foreach ($attsAfter as $k1 => $attrAfter) {
+                                $atts[$attrAfter[1]] = $attrAfter[2];
+                            }
+                            $atts["content"] = $matchAfter[5];
+                            $atts = array_merge($defaultAtts, $atts);
+                            if (($atts["id"] = trim($atts["id"])) && ($atts["question"] = strip_tags($atts["question"]))) {
+                                if (isset($inlineFormsBefore[$atts["id"]])) {
+                                    if ($this->dbManager->getFeedbackFormByUid($post_ID, $atts["id"])) {
+                                        if ($atts["question"] !== $inlineFormsBefore[$atts["id"]]["question"] || $atts["opened"] !== $inlineFormsBefore[$atts["id"]]["opened"] || $atts["content"] !== $inlineFormsBefore[$atts["id"]]["content"]) {
+                                            $this->dbManager->updateFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
+                                        }
+                                    } else {
+                                        $this->dbManager->addFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
+                                    }
+                                    unset($inlineFormsBefore[$atts["id"]]);
+                                } else {
+                                    $this->dbManager->addFeedbackForm($post_ID, $atts["id"], $atts["question"], $atts["opened"], $atts["content"]);
+                                }
+                            }
+                        }
+                    }
+                }
+                foreach ($inlineFormsBefore as $uid => $inlineFormBefore) {
+                    $this->dbManager->deleteFeedbackForm($post_ID, $uid);
+                }
+            }
+        }
+    }
 
     public function getCommentFormPath($theme) {
         if (file_exists(get_stylesheet_directory() . "/wpdiscuz/comment-form.php")) {
@@ -983,6 +1028,155 @@ class WpdiscuzHelper implements WpDiscuzConstants {
                 if ($count >= $this->options->moderation["userCommentsLimit"]) {
                     wp_die(esc_html(sprintf($this->options->getPhrase("wc_not_allowed_to_reply_more_than"), $count)));
                 }
+            }
+        }
+    }
+
+    public function isUnapprovedInTree($comments) {
+        foreach ($comments as $comment) {
+            if ($comment->comment_approved === "0") {
+                return true;
+            }
+            if ($children = $comment->get_children()) {
+                return $this->isUnapprovedInTree($children);
+            }
+        }
+        return false;
+    }
+
+    public function getCommentAuthor($comment, $args) {
+        $user = ["user" => ""];
+        if ($comment->user_id) {
+            $user["user"] = get_user_by("id", $comment->user_id);
+        } else if ($this->options->login["isUserByEmail"]) {
+            $user["user"] = get_user_by("email", $comment->comment_author_email);
+        }
+        $user["commentAuthorUrl"] = ("http://" === $comment->comment_author_url) ? "" : $comment->comment_author_url;
+        $user["commentAuthorUrl"] = apply_filters("get_comment_author_url", $user["commentAuthorUrl"], $comment->comment_ID, $comment);
+        $user["commentWrapClass"] = [];
+        if ($user["user"]) {
+            $user["authorName"] = $comment->comment_author;
+            $user["authorAvatarField"] = $user["user"]->ID;
+            $user["gravatarUserId"] = $user["user"]->ID;
+            $user["gravatarUserEmail"] = $comment->comment_author_email;
+            $user["profileUrl"] = in_array($user["user"]->ID, $args["posts_authors"]) ? get_author_posts_url($user["user"]->ID) : "";
+            $user["profileUrl"] = $this->getProfileUrl($user["profileUrl"], $user["user"]);
+            if ($this->options->social["displayIconOnAvatar"] && ($socialProvider = get_user_meta($user["user"]->ID, self::WPDISCUZ_SOCIAL_PROVIDER_KEY, true))) {
+                $user["commentWrapClass"][] = "wpd-soc-user-" . $socialProvider;
+                if ($socialProvider === "facebook") {
+                    $user["socIcon"] = "<i class='fab fa-facebook-f'></i>";
+                } else if ($socialProvider === "disqus") {
+                    $user["socIcon"] = "<i class='wpd-soc-user-disqus'>D</i>";
+                } else if ($socialProvider === "ok") {
+                    $user["socIcon"] = "<i class='fab fa-odnoklassniki'></i>";
+                } else if ($socialProvider === "yandex") {
+                    $user["socIcon"] = "<i class='fab fa-yandex-international'></i>";
+                } else if ($socialProvider === "mailru") {
+                    $user["socIcon"] = "<i class='fas fa-at'></i>";
+                } else if ($socialProvider === "baidu") {
+                    $user["socIcon"] = "<i class='fas fa-paw'></i>";
+                } else {
+                    $user["socIcon"] = "<i class='fab fa-{$socialProvider}'></i>";
+                }
+            }
+        } else {
+            $user["authorName"] = $comment->comment_author ? $comment->comment_author : esc_html($this->options->getPhrase("wc_anonymous"));
+            $user["authorAvatarField"] = $comment->comment_author_email;
+            $user["gravatarUserId"] = 0;
+            $user["gravatarUserEmail"] = $comment->comment_author_email;
+            $user["profileUrl"] = "";
+        }
+        $user["authorName"] = apply_filters("wpdiscuz_comment_author", $user["authorName"], $comment);
+        if ($this->options->thread_layouts["showAvatars"] && $this->options->wp["showAvatars"]) {
+            $user["authorAvatarField"] = apply_filters("wpdiscuz_author_avatar_field", $user["authorAvatarField"], $comment, $user["user"], $user["profileUrl"]);
+            $user["gravatarArgs"] = [
+                "wpdiscuz_gravatar_field" => $user["authorAvatarField"],
+                "wpdiscuz_gravatar_size" => $args["wpdiscuz_gravatar_size"],
+                "wpdiscuz_gravatar_user_id" => $user["gravatarUserId"],
+                "wpdiscuz_gravatar_user_email" => $user["gravatarUserEmail"],
+                "wpdiscuz_current_user" => $user["user"],
+            ];
+            $user["avatar"] = get_avatar($user["gravatarArgs"]["wpdiscuz_gravatar_field"], $user["gravatarArgs"]["wpdiscuz_gravatar_size"], "", $user["authorName"], $user["gravatarArgs"]);
+        }
+        $user["authorNameHtml"] = $user["authorName"];
+        if ($this->options->login["enableProfileURLs"]) {
+            if ($user["profileUrl"]) {
+                $attributes = apply_filters("wpdiscuz_avatar_link_attributes", [
+                    "href" => $user["profileUrl"],
+                    "target" => "_blank",
+                    "rel" => "noreferrer ugc"
+                ]);
+                if ($attributes && is_array($attributes)) {
+                    $attributesHtml = "";
+                    foreach ($attributes as $attribute => $value) {
+                        $attributesHtml .= " $attribute='{$value}'";
+                    }
+                    $user["authorAvatarSprintf"] = "<a" . str_replace("%", "%%", $attributesHtml) . ">%s</a>";
+                } else {
+                    $user["authorAvatarSprintf"] = "<a rel='noreferrer ugc' href='" . str_replace("%", "%%", $user["profileUrl"]) . "' target='_blank'>%s</a>";
+                }
+            }
+            if ((($href = $user["commentAuthorUrl"]) && $this->options->login["websiteAsProfileUrl"]) || ($href = $user["profileUrl"])) {
+                $rel = "noreferrer ugc";
+                if (strpos($href, $args["site_url"]) !== 0) {
+                    $rel .= " nofollow";
+                }
+                $attributes = apply_filters("wpdiscuz_author_link_attributes", [
+                    "href" => $href,
+                    "rel" => $rel,
+                    "target" => "_blank"
+                ]);
+                if ($attributes && is_array($attributes)) {
+                    $attributesHtml = "";
+                    foreach ($attributes as $attribute => $value) {
+                        $attributesHtml .= " $attribute='$value'";
+                    }
+                    $user["authorNameHtml"] = "<a$attributesHtml>{$user["authorNameHtml"]}</a>";
+                } else {
+                    $user["authorNameHtml"] = "<a rel='$rel' href='$href' target='_blank'>{$user["authorNameHtml"]}</a>";
+                }
+            }
+        }
+        $this->fillUserRoleData($user, $args);
+        return $user;
+    }
+
+    public function fillUserRoleData(&$user, $args) {
+        $user["author_title"] = "";
+        $user["commentWrapRoleClass"] = [];
+        if ($user["user"]) {
+            if ($user["user"]->ID == $args["post_author"]) {
+                $user["commentWrapRoleClass"][] = "wpd-blog-user";
+                $user["commentWrapRoleClass"][] = "wpd-blog-post_author";
+                if (!empty($this->options->labels["blogRoleLabels"]["post_author"])) {
+                    $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_post_author"));
+                }
+            } else {
+                if ($this->options->labels["blogRoles"]) {
+                    if ($user["user"]->roles && is_array($user["user"]->roles)) {
+                        foreach ($user["user"]->roles as $k => $role) {
+                            if (isset($this->options->labels["blogRoles"][$role])) {
+                                $user["commentWrapRoleClass"][] = "wpd-blog-user";
+                                $user["commentWrapRoleClass"][] = "wpd-blog-" . $role;
+                                $rolePhrase = esc_html($this->options->getPhrase("wc_blog_role_" . $role, ["default" => ""]));
+                                if (!empty($this->options->labels["blogRoleLabels"][$role])) {
+                                    $user["author_title"] = apply_filters("wpdiscuz_user_label", $rolePhrase, $user["user"]);
+                                }
+                                break;
+                            }
+                        }
+                    } else {
+                        $user["commentWrapRoleClass"][] = "wpd-blog-guest";
+                        if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
+                            $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
+                        }
+                    }
+                }
+            }
+        } else {
+            $user["commentWrapRoleClass"][] = "wpd-blog-guest";
+            if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
+                $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
             }
         }
     }
@@ -1129,7 +1323,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         $darkCommentFieldsPlaceholderColor = $this->options->thread_styles["darkCommentFieldsPlaceholderColor"] ? "opacity:1;color:" . $this->options->thread_styles["darkCommentFieldsPlaceholderColor"] . ";" : "";
         $defaultCommentAreaBG = $this->options->thread_styles["defaultCommentAreaBG"] ? "background:" . $this->options->thread_styles["defaultCommentAreaBG"] . ";" : "";
         $defaultCommentTextColor = $this->options->thread_styles["defaultCommentTextColor"] ? "color:" . $this->options->thread_styles["defaultCommentTextColor"] . ";" : "";
-        $defaultCommentFieldsBG = $this->options->thread_styles["defaultCommentFieldsBG"] ? "background:" . $this->options->thread_styles["defaultCommentFieldsBorderColor"] . ";" : "";
+        $defaultCommentFieldsBG = $this->options->thread_styles["defaultCommentFieldsBG"] ? "background:" . $this->options->thread_styles["defaultCommentFieldsBG"] . ";" : "";
         $defaultCommentFieldsBorderColor = $this->options->thread_styles["defaultCommentFieldsBorderColor"] ? "border: 1px solid " . $this->options->thread_styles["defaultCommentFieldsBorderColor"] . ";" : "";
         $defaultCommentFieldsTextColor = $this->options->thread_styles["defaultCommentFieldsTextColor"] ? "color:" . $this->options->thread_styles["defaultCommentFieldsTextColor"] . ";" : "";
         $defaultCommentFieldsPlaceholderColor = $this->options->thread_styles["defaultCommentFieldsPlaceholderColor"] ? "opacity:1;color:" . $this->options->thread_styles["defaultCommentFieldsPlaceholderColor"] . ";" : "";
@@ -1140,115 +1334,115 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             }
             foreach ($blogRoles as $role => $color) {
                 echo "\r\n";
-                echo "#wpdcom .wpd-blog-" . $role . " .wpd-comment-label{color: #ffffff; background-color: " . $color . "; border: none;}\r\n";
-                echo "#wpdcom .wpd-blog-" . $role . " .wpd-comment-author, #wpdcom .wpd-blog-" . $role . " .wpd-comment-author a{color: " . $color . ";}\r\n";
+                echo "#wpdcom .wpd-blog-" . esc_html($role) . " .wpd-comment-label{color: #ffffff; background-color: " . esc_html($color) . "; border: none;}\r\n";
+                echo "#wpdcom .wpd-blog-" . esc_html($role) . " .wpd-comment-author, #wpdcom .wpd-blog-" . esc_html($role) . " .wpd-comment-author a{color: " . esc_html($color) . ";}\r\n";
                 if ($role === "post_author") {
-                    echo "#wpdcom .wpd-blog-post_author .wpd-avatar img{border-color: " . $color . ";}";
+                    echo "#wpdcom .wpd-blog-post_author .wpd-avatar img{border-color: " . esc_html($color) . ";}";
                 }
                 if ($role !== "subscriber" && $role !== "guest") {
-	                echo "#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-" . $role . " .wpd-avatar img{border-color: " . $color . ";}\r\n";
+                    echo "#wpdcom.wpd-layout-1 .wpd-comment .wpd-blog-" . esc_html($role) . " .wpd-avatar img{border-color: " . esc_html($color) . ";}\r\n";
                 }
                 if ($role === "administrator" || $role === "editor" || $role === "post_author") {
-                    echo "#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply .wpd-comment-wrap.wpd-blog-" . $role . "{border-" . $left . ": 3px solid " . $color . ";}\r\n";
+                    echo "#wpdcom.wpd-layout-2 .wpd-comment.wpd-reply .wpd-comment-wrap.wpd-blog-" . esc_html($role) . "{border-" . esc_html($left) . ": 3px solid " . esc_html($color) . ";}\r\n";
                 }
                 if ($role !== "guest") {
-	                echo "#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-" . $role . " .wpd-avatar img{border-bottom-color: " . $color . ";}\r\n";
+                    echo "#wpdcom.wpd-layout-2 .wpd-comment .wpd-blog-" . esc_html($role) . " .wpd-avatar img{border-bottom-color: " . esc_html($color) . ";}\r\n";
                 }
-                echo "#wpdcom.wpd-layout-3 .wpd-blog-" . $role . " .wpd-comment-subheader{border-top: 1px dashed " . $color . ";}\r\n";
+                echo "#wpdcom.wpd-layout-3 .wpd-blog-" . esc_html($role) . " .wpd-comment-subheader{border-top: 1px dashed " . esc_html($color) . ";}\r\n";
                 if ($role !== "subscriber" && $role !== "guest") {
-	                echo "#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-" . $role . " .wpd-comment-right{border-" . $left . ": 1px solid " . $color . ";}\r\n";
+                    echo "#wpdcom.wpd-layout-3 .wpd-reply .wpd-blog-" . esc_html($role) . " .wpd-comment-right{border-" . esc_html($left) . ": 1px solid " . esc_html($color) . ";}\r\n";
                 }
             }
             ?>
-            <?php echo ( $this->options->thread_styles["commentTextSize"] !== "14px") ? "#wpdcom .wpd-comment-text p{font-size:" . $this->options->thread_styles["commentTextSize"] . ";}\r\n" : ""; ?>
+            <?php echo ( $this->options->thread_styles["commentTextSize"] !== "14px") ? "#wpdcom .wpd-comment-text p{font-size:" . esc_html($this->options->thread_styles["commentTextSize"]) . ";}\r\n" : ""; ?>
             <?php if ($dark) { ?>
-                #comments, #respond, .comments-area, #wpdcom.wpd-dark{<?php echo $darkCommentAreaBG . $darkCommentTextColor ?>}
-                #wpdcom .ql-editor > *{<?php echo $darkCommentFieldsTextColor ?>}
-                #wpdcom .ql-editor::before{<?php echo $darkCommentFieldsPlaceholderColor ?>}
-                #wpdcom .ql-toolbar{<?php echo $darkCommentFieldsBorderColor ?>border-top:none;}
-                #wpdcom .ql-container{<?php echo $darkCommentFieldsBG . $darkCommentFieldsBorderColor ?>border-bottom:none;}
-                #wpdcom .wpd-form-row .wpdiscuz-item input[type="text"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="email"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="url"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="color"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="date"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime-local"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="month"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="number"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="time"], #wpdcom textarea, #wpdcom select{<?php echo $darkCommentFieldsBG . $darkCommentFieldsBorderColor . $darkCommentFieldsTextColor ?>}
-                #wpdcom.wpd-dark .wpdiscuz-item.wpd-field-select select.wpdiscuz_select, #wpdcom.wpd-dark select{<?php echo str_replace(';', '!important;', $darkCommentFieldsBG . $darkCommentFieldsBorderColor . $darkCommentFieldsTextColor) ?>}
-                #wpdcom .wpd-form-row .wpdiscuz-item textarea{<?php echo $darkCommentFieldsBorderColor ?>}
-                #wpdcom input::placeholder, #wpdcom textarea::placeholder, #wpdcom input::-moz-placeholder, #wpdcom textarea::-webkit-input-placeholder{<?php echo $darkCommentFieldsPlaceholderColor ?>}
-                #wpdcom .wpd-comment-text{<?php echo $darkCommentTextColor ?>}
+                #comments, #respond, .comments-area, #wpdcom.wpd-dark{<?php echo esc_html($darkCommentAreaBG . $darkCommentTextColor) ?>}
+                #wpdcom .ql-editor > *{<?php echo esc_html($darkCommentFieldsTextColor) ?>}
+                #wpdcom .ql-editor::before{<?php echo esc_html($darkCommentFieldsPlaceholderColor) ?>}
+                #wpdcom .ql-toolbar{<?php echo esc_html($darkCommentFieldsBorderColor) ?>border-top:none;}
+                #wpdcom .ql-container{<?php echo esc_html($darkCommentFieldsBG . $darkCommentFieldsBorderColor) ?>border-bottom:none;}
+                #wpdcom .wpd-form-row .wpdiscuz-item input[type="text"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="email"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="url"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="color"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="date"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime-local"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="month"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="number"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="time"], #wpdcom textarea, #wpdcom select{<?php echo esc_html($darkCommentFieldsBG . $darkCommentFieldsBorderColor . $darkCommentFieldsTextColor) ?>}
+                #wpdcom.wpd-dark .wpdiscuz-item.wpd-field-select select.wpdiscuz_select, #wpdcom.wpd-dark select{<?php echo str_replace(';', '!important;', esc_html($darkCommentFieldsBG . $darkCommentFieldsBorderColor . $darkCommentFieldsTextColor)) ?>}
+                #wpdcom .wpd-form-row .wpdiscuz-item textarea{<?php echo esc_html($darkCommentFieldsBorderColor) ?>}
+                #wpdcom input::placeholder, #wpdcom textarea::placeholder, #wpdcom input::-moz-placeholder, #wpdcom textarea::-webkit-input-placeholder{<?php echo esc_html($darkCommentFieldsPlaceholderColor) ?>}
+                #wpdcom .wpd-comment-text{<?php echo esc_html($darkCommentTextColor) ?>}
                 .lity-wrap .wpd-item a{color: #666;} .lity-wrap .wpd-item a:hover{color: #222;} .wpd-inline-shortcode.wpd-active{background-color: #666;}
             <?php } else { ?>
-                #comments, #respond, .comments-area, #wpdcom{<?php echo $defaultCommentAreaBG ?>}
-                #wpdcom .ql-editor > *{<?php echo $defaultCommentFieldsTextColor ?>}
-                #wpdcom .ql-editor::before{<?php echo $defaultCommentFieldsPlaceholderColor ?>}
-                #wpdcom .ql-toolbar{<?php echo $defaultCommentFieldsBorderColor ?>border-top:none;}
-                #wpdcom .ql-container{<?php echo $defaultCommentFieldsBG . $defaultCommentFieldsBorderColor ?>border-bottom:none;}
-                #wpdcom .wpd-form-row .wpdiscuz-item input[type="text"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="email"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="url"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="color"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="date"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime-local"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="month"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="number"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="time"], #wpdcom textarea, #wpdcom select{<?php echo $defaultCommentFieldsBG . $defaultCommentFieldsBorderColor . $defaultCommentTextColor ?>}
-                #wpdcom .wpd-form-row .wpdiscuz-item textarea{<?php echo $defaultCommentFieldsBorderColor ?>}
-                #wpdcom input::placeholder, #wpdcom textarea::placeholder, #wpdcom input::-moz-placeholder, #wpdcom textarea::-webkit-input-placeholder{<?php echo $defaultCommentFieldsPlaceholderColor ?>}
-                #wpdcom .wpd-comment-text{<?php echo $defaultCommentTextColor ?>}
+                #comments, #respond, .comments-area, #wpdcom{<?php echo esc_html($defaultCommentAreaBG) ?>}
+                #wpdcom .ql-editor > *{<?php echo esc_html($defaultCommentFieldsTextColor) ?>}
+                #wpdcom .ql-editor::before{<?php echo esc_html($defaultCommentFieldsPlaceholderColor) ?>}
+                #wpdcom .ql-toolbar{<?php echo esc_html($defaultCommentFieldsBorderColor) ?>border-top:none;}
+                #wpdcom .ql-container{<?php echo esc_html($defaultCommentFieldsBG . $defaultCommentFieldsBorderColor) ?>border-bottom:none;}
+                #wpdcom .wpd-form-row .wpdiscuz-item input[type="text"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="email"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="url"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="color"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="date"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="datetime-local"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="month"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="number"], #wpdcom .wpd-form-row .wpdiscuz-item input[type="time"], #wpdcom textarea, #wpdcom select{<?php echo esc_html($defaultCommentFieldsBG . $defaultCommentFieldsBorderColor . $defaultCommentTextColor) ?>}
+                #wpdcom .wpd-form-row .wpdiscuz-item textarea{<?php echo esc_html($defaultCommentFieldsBorderColor) ?>}
+                #wpdcom input::placeholder, #wpdcom textarea::placeholder, #wpdcom input::-moz-placeholder, #wpdcom textarea::-webkit-input-placeholder{<?php echo esc_html($defaultCommentFieldsPlaceholderColor) ?>}
+                #wpdcom .wpd-comment-text{<?php echo esc_html($defaultCommentTextColor) ?>}
             <?php } ?>
-            #wpdcom .wpd-thread-head .wpd-thread-info{ border-bottom:2px solid <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-thread-head .wpd-thread-info.wpd-reviews-tab svg{fill: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-thread-head .wpdiscuz-user-settings{border-bottom: 2px solid <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-thread-head .wpdiscuz-user-settings:hover{color: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-comment .wpd-follow-link:hover{color: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-comment-status .wpd-sticky{color: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-thread-filter .wpdf-active{color: <?php echo $this->options->thread_styles["primaryColor"]; ?>; border-bottom-color:<?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-comment-info-bar {border: 1px dashed <?php echo $this->colorBrightness($this->options->thread_styles["primaryColor"], '0.2'); ?>; background: <?php echo $this->colorBrightness($this->options->thread_styles["primaryColor"], '0.9'); ?>; }
-            #wpdcom .wpd-comment-info-bar .wpd-current-view i{color: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpd-filter-view-all:hover{background: <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpdiscuz-item .wpdiscuz-rating > label {color: <?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
+            #wpdcom .wpd-thread-head .wpd-thread-info{ border-bottom:2px solid <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-thread-head .wpd-thread-info.wpd-reviews-tab svg{fill: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-thread-head .wpdiscuz-user-settings{border-bottom: 2px solid <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-thread-head .wpdiscuz-user-settings:hover{color: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-comment .wpd-follow-link:hover{color: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-comment-status .wpd-sticky{color: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-thread-filter .wpdf-active{color: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>; border-bottom-color:<?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-comment-info-bar {border: 1px dashed <?php echo esc_html($this->colorBrightness($this->options->thread_styles["primaryColor"], '0.2')); ?>; background: <?php echo esc_html($this->colorBrightness($this->options->thread_styles["primaryColor"], '0.9')); ?>; }
+            #wpdcom .wpd-comment-info-bar .wpd-current-view i{color: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpd-filter-view-all:hover{background: <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpdiscuz-item .wpdiscuz-rating > label {color: <?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
             #wpdcom .wpdiscuz-item .wpdiscuz-rating:not(:checked) > label:hover,
             .wpdiscuz-rating:not(:checked) > label:hover ~ label {}
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input ~ label:hover,
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label,
-            #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label{color: <?php echo $this->options->rating["ratingHoverColor"]; ?>;}
+            #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:not(:checked) ~ label:hover ~ label{color: <?php echo esc_html($this->options->rating["ratingHoverColor"]); ?>;}
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover,
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover,
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > label:hover ~ input:checked ~ label,
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked + label:hover ~ label,
             #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label:hover ~ label, .wpd-custom-field .wcf-active-star,
-            #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label{ color:<?php echo $this->options->rating["ratingActiveColor"]; ?>;}
-            #wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill: <?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
-            #wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:<?php echo $this->options->rating["ratingActiveColor"]; ?>;}
-            #wpd-post-rating .wpd-rating-wrap .wpd-rate-starts svg .wpd-star{fill:<?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
-            #wpd-post-rating .wpd-rating-wrap .wpd-rate-starts:hover svg .wpd-star{fill:<?php echo $this->options->rating["ratingHoverColor"]; ?>;}
-            #wpd-post-rating.wpd-not-rated .wpd-rating-wrap .wpd-rate-starts svg:hover ~ svg .wpd-star{ fill:<?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
-            .wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill:<?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
-            .wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:<?php echo $this->options->rating["ratingActiveColor"]; ?>;}
+            #wpdcom .wpdiscuz-item .wpdiscuz-rating > input:checked ~ label{ color:<?php echo esc_html($this->options->rating["ratingActiveColor"]); ?>;}
+            #wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill: <?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
+            #wpd-post-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:<?php echo esc_html($this->options->rating["ratingActiveColor"]); ?>;}
+            #wpd-post-rating .wpd-rating-wrap .wpd-rate-starts svg .wpd-star{fill:<?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
+            #wpd-post-rating .wpd-rating-wrap .wpd-rate-starts:hover svg .wpd-star{fill:<?php echo esc_html($this->options->rating["ratingHoverColor"]); ?>;}
+            #wpd-post-rating.wpd-not-rated .wpd-rating-wrap .wpd-rate-starts svg:hover ~ svg .wpd-star{ fill:<?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
+            .wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-star{fill:<?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
+            .wpdiscuz-post-rating-wrap .wpd-rating .wpd-rating-wrap .wpd-rating-stars svg .wpd-active{fill:<?php echo esc_html($this->options->rating["ratingActiveColor"]); ?>;}
             #wpdcom .wpd-comment .wpd-follow-active{color:#ff7a00;}
             #wpdcom .page-numbers{color:#555;border:#555 1px solid;}
             #wpdcom span.current{background:#555;}
-            #wpdcom.wpd-layout-1 .wpd-new-loaded-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
-            #wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
+            #wpdcom.wpd-layout-1 .wpd-new-loaded-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
+            #wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
             #wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment.wpd-reply > .wpd-comment-wrap > .wpd-comment-right{background:transparent;}
-            #wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment.wpd-reply > .wpd-comment-wrap {background:<?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
-            #wpdcom.wpd-layout-3 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
-            #wpdcom .wpd-follow:hover i, #wpdcom .wpd-unfollow:hover i, #wpdcom .wpd-comment .wpd-follow-active:hover i{color:<?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom .wpdiscuz-readmore{cursor:pointer;color:<?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            .wpd-custom-field .wcf-pasiv-star, #wpcomm .wpdiscuz-item .wpdiscuz-rating > label {color: <?php echo $this->options->rating["ratingInactiveColor"]; ?>;}
-            .wpd-wrapper .wpd-list-item.wpd-active{border-top: 3px solid <?php echo $this->options->thread_styles["primaryColor"]; ?>;}
-            #wpdcom.wpd-layout-2 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-wrap{border-<?php echo $left ?>: 3px solid <?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
-            #wpdcom.wpd-layout-3 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-right{border-<?php echo $left ?>: 1px solid <?php echo $this->options->thread_styles["newLoadedCommentBGColor"]; ?>;}
-            #wpdcom .wpd-prim-button{background-color: <?php echo $this->options->thread_styles["primaryButtonBG"]; ?>; color: <?php echo $this->options->thread_styles["primaryButtonColor"]; ?>;}
-            #wpdcom .wpd_label__check i.wpdicon-on{color: <?php echo $this->options->thread_styles["primaryButtonBG"]; ?>; border: 1px solid <?php echo $this->colorBrightness($this->options->thread_styles["primaryButtonBG"], 0.5); ?>;}
-            #wpd-bubble-wrapper #wpd-bubble-all-comments-count{color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>;}
-            #wpd-bubble-wrapper > div{background-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>;}
-            #wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message{background-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>;}
-            #wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>; border-right-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>;}
-            #wpd-bubble-wrapper.wpd-right-corner > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>; border-right-color:<?php echo $this->options->thread_styles["bubbleColors"]; ?>;}
-            .wpd-inline-icon-wrapper path.wpd-inline-icon-first{fill:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-inline-icon-count{background-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-inline-icon-count::before{border-<?php echo $right ?>-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-inline-form-wrapper::before{border-bottom-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-inline-form-question{background-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-inline-form{background-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-last-inline-comments-wrapper{border-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-last-inline-comments-wrapper::before{border-bottom-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments{background:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
-            .wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:hover,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:active,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:focus{background-color:<?php echo $this->options->thread_styles["inlineFeedbackColors"]; ?>;}
+            #wpdcom.wpd-layout-2 .wpd-new-loaded-comment.wpd-comment.wpd-reply > .wpd-comment-wrap {background:<?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
+            #wpdcom.wpd-layout-3 .wpd-new-loaded-comment.wpd-comment > .wpd-comment-wrap > .wpd-comment-right{background:<?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
+            #wpdcom .wpd-follow:hover i, #wpdcom .wpd-unfollow:hover i, #wpdcom .wpd-comment .wpd-follow-active:hover i{color:<?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom .wpdiscuz-readmore{cursor:pointer;color:<?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            .wpd-custom-field .wcf-pasiv-star, #wpcomm .wpdiscuz-item .wpdiscuz-rating > label {color: <?php echo esc_html($this->options->rating["ratingInactiveColor"]); ?>;}
+            .wpd-wrapper .wpd-list-item.wpd-active{border-top: 3px solid <?php echo esc_html($this->options->thread_styles["primaryColor"]); ?>;}
+            #wpdcom.wpd-layout-2 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-wrap{border-<?php echo esc_html($left) ?>: 3px solid <?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
+            #wpdcom.wpd-layout-3 .wpd-comment.wpd-reply.wpd-unapproved-comment .wpd-comment-right{border-<?php echo esc_html($left) ?>: 1px solid <?php echo esc_html($this->options->thread_styles["newLoadedCommentBGColor"]); ?>;}
+            #wpdcom .wpd-prim-button{background-color: <?php echo esc_html($this->options->thread_styles["primaryButtonBG"]); ?>; color: <?php echo esc_html($this->options->thread_styles["primaryButtonColor"]); ?>;}
+            #wpdcom .wpd_label__check i.wpdicon-on{color: <?php echo esc_html($this->options->thread_styles["primaryButtonBG"]); ?>; border: 1px solid <?php echo esc_html($this->colorBrightness($this->options->thread_styles["primaryButtonBG"], 0.5)); ?>;}
+            #wpd-bubble-wrapper #wpd-bubble-all-comments-count{color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>;}
+            #wpd-bubble-wrapper > div{background-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>;}
+            #wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message{background-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>;}
+            #wpd-bubble-wrapper > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>; border-right-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>;}
+            #wpd-bubble-wrapper.wpd-right-corner > #wpd-bubble #wpd-bubble-add-message::before{border-left-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>; border-right-color:<?php echo esc_html($this->options->thread_styles["bubbleColors"]); ?>;}
+            .wpd-inline-icon-wrapper path.wpd-inline-icon-first{fill:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-inline-icon-count{background-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-inline-icon-count::before{border-<?php echo esc_html($right) ?>-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-inline-form-wrapper::before{border-bottom-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-inline-form-question{background-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-inline-form{background-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-last-inline-comments-wrapper{border-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-last-inline-comments-wrapper::before{border-bottom-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments{background:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
+            .wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:hover,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:active,.wpd-last-inline-comments-wrapper .wpd-view-all-inline-comments:focus{background-color:<?php echo esc_html($this->options->thread_styles["inlineFeedbackColors"]); ?>;}
             <?php
         }
         ?>
-        #wpdcom .ql-snow .ql-tooltip[data-mode="link"]::before{content:"<?php _e("Enter link:", "wpdiscuz"); ?>";}
-        #wpdcom .ql-snow .ql-tooltip.ql-editing a.ql-action::after{content:"<?php _e("Save", "wpdiscuz"); ?>";}
+        #wpdcom .ql-snow .ql-tooltip[data-mode="link"]::before{content:"<?php esc_html_e("Enter link:", "wpdiscuz"); ?>";}
+        #wpdcom .ql-snow .ql-tooltip.ql-editing a.ql-action::after{content:"<?php esc_html_e("Save", "wpdiscuz"); ?>";}
         <?php
         do_action("wpdiscuz_dynamic_css", $this->options);
         if ($this->options->thread_styles["theme"] !== "wpd-minimal") {
@@ -1289,6 +1483,19 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             $color = str_pad(dechex($color + $adjustAmount), 2, '0', STR_PAD_LEFT);
         }
         return '#' . implode($hexCode);
+    }
+
+    public static function sanitize($action, $variable_name, $filter, $default = "") {
+        if ($filter === "FILTER_SANITIZE_STRING") {
+            $glob = INPUT_POST === $action ? $_POST : $_GET;
+            if (key_exists($variable_name, $glob)) {
+                return sanitize_text_field($glob[$variable_name]);
+            }else{
+                return $default;
+            }
+        }
+        $variable = filter_input($action, $variable_name, $filter);
+        return $variable ? $variable : $default;
     }
 
 }

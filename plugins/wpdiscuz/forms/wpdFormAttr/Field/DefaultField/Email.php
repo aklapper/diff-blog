@@ -76,7 +76,7 @@ class Email extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        $email = isset($_POST[$fieldName]) ? trim($_POST[$fieldName]) : "";
+        $email = isset($_POST[$fieldName]) ? sanitize_email(trim($_POST[$fieldName])) : "";
         if (!$args["required"]) {
             if (!$email) {
                 $email = uniqid() . "@example.com";

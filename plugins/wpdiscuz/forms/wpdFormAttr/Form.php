@@ -37,11 +37,13 @@ class Form {
     }
 
     public function initFormMeta() {
-        if (!$this->generalOptions) {
-            $this->generalOptions = get_post_meta($this->formID, wpdFormConst::WPDISCUZ_META_FORMS_GENERAL_OPTIONS, true);
-        }
-        if (!$this->formeStructure) {
-            $this->formeStructure = get_post_meta($this->formID, wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE, true);
+        if ((int) $this->formID) {
+            if (!$this->generalOptions) {
+                $this->generalOptions = get_post_meta($this->formID, wpdFormConst::WPDISCUZ_META_FORMS_GENERAL_OPTIONS, true);
+            }
+            if (!$this->formeStructure) {
+                $this->formeStructure = get_post_meta($this->formID, wpdFormConst::WPDISCUZ_META_FORMS_STRUCTURE, true);
+            }
         }
         if (!$this->formPostTypes) {
             $this->formPostTypes = isset($this->generalOptions[wpdFormConst::WPDISCUZ_META_FORMS_POSTE_TYPES]) ? $this->generalOptions[wpdFormConst::WPDISCUZ_META_FORMS_POSTE_TYPES] : [];
@@ -81,7 +83,7 @@ class Form {
             return;
         }
         $form = get_post($formID);
-        if ($form && $form->post_status === "publish" && $form->post_type === wpdFormConst::WPDISCUZ_FORMS_CONTENT_TYPE) {
+        if ($form && $form->post_type === wpdFormConst::WPDISCUZ_FORMS_CONTENT_TYPE) {
             $this->formID = $formID;
             do_action("wpdiscuz_form_init", $this);
         } else {
@@ -263,7 +265,7 @@ class Form {
                 $postID = $comment->comment_post_ID;
                 if (!(class_exists("WooCommerce") && get_post_type($postID) === "product") && $oldCommentRating && $commentApproved === "1") {
                     $postRatingMeta = get_post_meta($postID, wpdFormConst::WPDISCUZ_RATING_COUNT, true);
-					$postRatingMeta = is_array($postRatingMeta) ? $postRatingMeta : [];
+                    $postRatingMeta = is_array($postRatingMeta) ? $postRatingMeta : [];
                     $oldCommentRatingCount = $postRatingMeta[$mettaKey][$oldCommentRating] - 1;
                     if ($oldCommentRatingCount > 0) {
                         $postRatingMeta[$mettaKey][$oldCommentRating] = $oldCommentRatingCount;
@@ -333,7 +335,7 @@ class Form {
                 }
             }
             update_post_meta($postID, wpdFormConst::WPDISCUZ_RATING_COUNT, $wpdiscuzRatingCount);
-			$this->updateSeparateRatingMeta($wpdiscuzRatingCount, $postID);
+            $this->updateSeparateRatingMeta($wpdiscuzRatingCount, $postID);
         }
     }
 
@@ -456,7 +458,6 @@ class Form {
             "metakey" => "all",
             "show-label" => true,
             "show-lable" => true,
-            "show-count" => true,
             "show-average" => true,
             "itemprop" => !!$this->wpdOptions->rating["enablePostRatingSchema"],
             "post_id" => null,
@@ -491,9 +492,9 @@ class Form {
             if ($this->ratingsExists && (($this->wpdOptions->rating["ratingCssOnNoneSingular"] && !is_singular()) || is_singular())) {
                 $ratingList = [];
                 foreach (array_unique($this->ratingsFieldsKey) as $key => $field) {
-                    $avg = get_post_meta($post->ID, wpdFormConst::WPDISCUZ_RATING_SEPARATE_AVG . $field, true);
-                    $c = get_post_meta($post->ID, wpdFormConst::WPDISCUZ_RATING_SEPARATE_COUNT . $field, true);
-					$ratingList[$field]["average"] = $avg ? $avg : 0;
+                    $avg = floatval(get_post_meta($post->ID, wpdFormConst::WPDISCUZ_RATING_SEPARATE_AVG . $field, true));
+                    $c = intval(get_post_meta($post->ID, wpdFormConst::WPDISCUZ_RATING_SEPARATE_COUNT . $field, true));
+                    $ratingList[$field]["average"] = $avg ? $avg : 0;
                     $ratingList[$field]["count"] = $c ? $c : 0;
                 }
                 if ($ratingList) {
@@ -790,7 +791,7 @@ class Form {
             <?php
             if ($this->isUserCanComment($currentUser, $message)) {
                 ?>
-                <form class="wpd_comm_form <?php echo $isMain ? "wpd_main_comm_form" : "wpd-secondary-form-wrapper"; ?>" method="post" enctype="multipart/form-data">
+                <form class="wpd_comm_form <?php echo $isMain ? "wpd_main_comm_form" : "wpd-secondary-form-wrapper"; ?>" method="post" enctype="multipart/form-data" data-uploading="false">
                     <div class="wpd-field-comment">
                         <div class="wpdiscuz-item wc-field-textarea">
                             <div class="wpdiscuz-textarea-wrap <?php echo $this->wpdOptions->form["richEditor"] === "both" || (!wp_is_mobile() && $this->wpdOptions->form["richEditor"] === "desktop") ? "" : "wpd-txt"; ?>">
@@ -843,7 +844,7 @@ class Form {
                 <label style="display: none;" for="wc-textarea-<?php echo esc_attr($uniqueId); ?>">Label</label>
                 <textarea id="wc-textarea-<?php echo esc_attr($uniqueId); ?>" required name="wc_comment" class="wc_comment wpd-field"></textarea>
                 <div id="wpd-editor-<?php echo esc_attr($uniqueId); ?>"></div>
-            <?php $this->renderTextEditorButtons($uniqueId); ?>
+                <?php $this->renderTextEditorButtons($uniqueId); ?>
             </div>
             <?php
         } else {
@@ -853,12 +854,12 @@ class Form {
                 $textarea_placeholder = $this->wpdOptions->getPhrase("wc_be_the_first_text", ["unique_id" => $uniqueId]);
             }
             if (strrchr($uniqueId, "_") === "_0") {
-				$commentTextMinLength = intval($this->wpdOptions->content["commentTextMinLength"]);
-				$commentTextMaxLength = intval($this->wpdOptions->content["commentTextMaxLength"]);
-			} else {
-				$commentTextMinLength = intval($this->wpdOptions->content["replyTextMinLength"]);
-				$commentTextMaxLength = intval($this->wpdOptions->content["replyTextMaxLength"]);
-			}
+                $commentTextMinLength = intval($this->wpdOptions->content["commentTextMinLength"]);
+                $commentTextMaxLength = intval($this->wpdOptions->content["commentTextMaxLength"]);
+            } else {
+                $commentTextMinLength = intval($this->wpdOptions->content["replyTextMinLength"]);
+                $commentTextMaxLength = intval($this->wpdOptions->content["replyTextMaxLength"]);
+            }
             $commentTextLengthRange = ($commentTextMinLength && $commentTextMaxLength) ? 'pattern=".{' . $commentTextMinLength . ',' . $commentTextMaxLength . '}"' : '';
             $textareaMaxLength = $commentTextMaxLength ? "maxlength=$commentTextMaxLength" : '';
             ?>
@@ -879,37 +880,37 @@ class Form {
     private function renderTextEditorButtons($uniqueId) {
         $editorButtons = [];
         if ($this->wpdOptions->form["boldButton"]) {
-            $editorButtons[] = ["class" => "ql-bold", "value" => "", "name" => "", "title" => "Bold", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-bold", "value" => "", "name" => "", "title" => __("Bold", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["italicButton"]) {
-            $editorButtons[] = ["class" => "ql-italic", "value" => "", "name" => "", "title" => "Italic", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-italic", "value" => "", "name" => "", "title" => __("Italic", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["underlineButton"]) {
-            $editorButtons[] = ["class" => "ql-underline", "value" => "", "name" => "", "title" => "Underline", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-underline", "value" => "", "name" => "", "title" => __("Underline", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["strikeButton"]) {
-            $editorButtons[] = ["class" => "ql-strike", "value" => "", "name" => "", "title" => "Strike", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-strike", "value" => "", "name" => "", "title" => __("Strike", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["olButton"]) {
-            $editorButtons[] = ["class" => "ql-list", "value" => "ordered", "name" => "", "title" => "Ordered List", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-list", "value" => "ordered", "name" => "", "title" => __("Ordered List", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["ulButton"]) {
-            $editorButtons[] = ["class" => "ql-list", "value" => "bullet", "name" => "", "title" => "Unordered List", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-list", "value" => "bullet", "name" => "", "title" => __("Unordered List", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["blockquoteButton"]) {
-            $editorButtons[] = ["class" => "ql-blockquote", "value" => "", "name" => "", "title" => "Blockquote", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-blockquote", "value" => "", "name" => "", "title" => __("Blockquote", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["codeblockButton"]) {
-            $editorButtons[] = ["class" => "ql-code-block", "value" => "", "name" => "", "title" => "Code Block", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-code-block", "value" => "", "name" => "", "title" => __("Code Block", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["linkButton"]) {
-            $editorButtons[] = ["class" => "ql-link", "value" => "", "name" => "", "title" => "Link", "svg" => ""];
+            $editorButtons[] = ["class" => "ql-link", "value" => "", "name" => "", "title" => __("Link", "wpdiscuz"), "svg" => ""];
         }
         if ($this->wpdOptions->form["sourcecodeButton"]) {
-            $editorButtons[] = ["class" => "ql-sourcecode", "value" => "", "name" => "sourcecode", "title" => "Source Code", "svg" => "{}"];
+            $editorButtons[] = ["class" => "ql-sourcecode", "value" => "", "name" => "sourcecode", "title" => __("Source Code", "wpdiscuz"), "svg" => "{}"];
         }
         if ($this->wpdOptions->form["spoilerButton"]) {
-            $editorButtons[] = ["class" => "ql-spoiler", "value" => "", "name" => "spoiler", "title" => "Spoiler", "svg" => "[+]"];
+            $editorButtons[] = ["class" => "ql-spoiler", "value" => "", "name" => "spoiler", "title" => __("Spoiler", "wpdiscuz"), "svg" => "[+]"];
         }
         $editorButtons = apply_filters("wpdiscuz_editor_buttons", $editorButtons, $uniqueId);
         $editorButtonsHtml = apply_filters("wpdiscuz_editor_buttons_html", "", $uniqueId);
@@ -995,8 +996,38 @@ class Form {
         $this->initFormMeta();
         $blogRoles = get_editable_roles();
         ?>
-        <style>.wpd-form-table td{ position: relative;} .wpd-form-table td i.fa-question-circle{ font-size: 16px; right: 15px; top: 15px; position: absolute;} .wpdiscuz-form-builder-help{text-align: right; padding: 5px; font-size: 16px; margin-top: -15px;}</style>
-        <style>[dir=rtl] .wpd-form-table td{ position: relative; padding-left: 25px;}  [dir=rtl] .wpd-form-table td i.fa-question-circle{ font-size: 16px; right:auto; left: 0px; top: 15px; position: absolute;}  [dir=rtl] .wpdiscuz-form-builder-help{text-align: left; padding: 5px; font-size: 16px; margin-top: -15px;}</style>
+        <style>.wpd-form-table td{
+                position: relative;
+            }
+            .wpd-form-table td i.fa-question-circle{
+                font-size: 16px;
+                right: 15px;
+                top: 15px;
+                position: absolute;
+            }
+            .wpdiscuz-form-builder-help{
+                text-align: right;
+                padding: 5px;
+                font-size: 16px;
+                margin-top: -15px;
+            }</style>
+        <style>[dir=rtl] .wpd-form-table td{
+                position: relative;
+                padding-left: 25px;
+            }
+            [dir=rtl] .wpd-form-table td i.fa-question-circle{
+                font-size: 16px;
+                right:auto;
+                left: 0px;
+                top: 15px;
+                position: absolute;
+            }
+            [dir=rtl] .wpdiscuz-form-builder-help{
+                text-align: left;
+                padding: 5px;
+                font-size: 16px;
+                margin-top: -15px;
+            }</style>
         <div class="wpdiscuz-wrapper">
             <div class="wpd-form-options" style="width:100%;">
                 <table class="wpd-form-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:10px 0px 20px 0px;">
@@ -1147,7 +1178,7 @@ class Form {
                                     }
                                     $checked = array_key_exists($typeKey, $this->formPostTypes) ? "checked" : "";
                                     $formRelExistsClass = "";
-                                    if (!$checked && isset($formContentTypeRel[$typeKey][$lang])) {
+                                    if (!$checked && !empty($formContentTypeRel[$typeKey][$lang])) {
                                         $formRelExistsClass = "wpd-form-rel-exixts";
                                         $hasForm = true;
                                     }
@@ -1293,20 +1324,20 @@ class Form {
             $post = get_post($postId);
         }
         $this->initFormMeta();
-		$this->isUserCanSeeComments = true;
+        $this->isUserCanSeeComments = true;
         if ($currentUser && $currentUser->ID) {
             if ($post->post_author && $post->post_author != $currentUser->ID && $currentUser->roles && is_array($currentUser->roles)) {
                 $this->generalOptions["roles_cannot_see_comments"] = isset($this->generalOptions["roles_cannot_see_comments"]) ? $this->generalOptions["roles_cannot_see_comments"] : [];
                 foreach ($currentUser->roles as $k => $role) {
                     if (in_array($role, $this->generalOptions["roles_cannot_see_comments"])) {
                         //Filter hook to add extra conditions in user role dependent restriction.
-						$this->isUserCanSeeComments = apply_filters("wpdiscuz_user_role_can_see_comments", false, $role);
+                        $this->isUserCanSeeComments = apply_filters("wpdiscuz_user_role_can_see_comments", false, $role);
                         break;
                     }
                 }
             }
         } else {
-			$this->isUserCanSeeComments = $this->generalOptions["guest_can_see_comments"] = isset($this->generalOptions["guest_can_see_comments"]) ? $this->generalOptions["guest_can_see_comments"] : 1;
+            $this->isUserCanSeeComments = $this->generalOptions["guest_can_see_comments"] = isset($this->generalOptions["guest_can_see_comments"]) ? $this->generalOptions["guest_can_see_comments"] : 1;
         }
         return $this->isUserCanSeeComments;
     }
@@ -1333,7 +1364,7 @@ class Form {
                 }
             }
         } else {
-			$this->generalOptions["guest_can_see_comments"] = isset($this->generalOptions["guest_can_see_comments"]) ? $this->generalOptions["guest_can_see_comments"] : 1;
+            $this->generalOptions["guest_can_see_comments"] = isset($this->generalOptions["guest_can_see_comments"]) ? $this->generalOptions["guest_can_see_comments"] : 1;
             $user_can_comment = $this->generalOptions["guest_can_see_comments"] && $this->generalOptions["guest_can_comment"];
         }
         if ($user_can_comment && class_exists("WooCommerce") && get_post_type($postId) === "product") {
@@ -1443,7 +1474,7 @@ class Form {
 
     public function transferJSData($data) {
         $this->initFormFields();
-        $data["is_email_field_required"] = $this->formFields[wpdFormConst::WPDISCUZ_FORMS_EMAIL_FIELD]["required"];
+        $data["is_email_field_required"] = empty($this->formFields[wpdFormConst::WPDISCUZ_FORMS_EMAIL_FIELD]["required"]) ? 0 : $this->formFields[wpdFormConst::WPDISCUZ_FORMS_EMAIL_FIELD]["required"];
         return $data;
     }
 
@@ -1544,10 +1575,10 @@ class Form {
             foreach ($values as $rating => $count) {
                 $avg += $rating * $count;
                 $c += $count;
-			}
+            }
             update_post_meta($post_id, wpdFormConst::WPDISCUZ_RATING_SEPARATE_AVG . $key, ($c === 0 ? 0 : round($avg / $c, 1)));
             update_post_meta($post_id, wpdFormConst::WPDISCUZ_RATING_SEPARATE_COUNT . $key, $c);
-		}
-	}
+        }
+    }
 
 }

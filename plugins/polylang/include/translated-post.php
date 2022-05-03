@@ -11,11 +11,11 @@
 class PLL_Translated_Post extends PLL_Translated_Object {
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 1.8
 	 *
-	 * @param object $model
+	 * @param PLL_Model $model PLL_Model instance.
 	 */
 	public function __construct( &$model ) {
 		// init properties
@@ -38,20 +38,29 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 	}
 
 	/**
-	 * Store the post language in the database
+	 * Store the post language in the database.
 	 *
 	 * @since 0.6
 	 *
-	 * @param int               $post_id post id
-	 * @param int|string|object $lang    language ( term_id or slug or object )
+	 * @param int                     $post_id Post id.
+	 * @param int|string|PLL_Language $lang    Language (term_id or slug or object).
+	 * @return void
 	 */
 	public function set_language( $post_id, $lang ) {
+		$post_id = $this->sanitize_int_id( $post_id );
+
+		if ( empty( $post_id ) ) {
+			return;
+		}
+
 		$old_lang = $this->get_language( $post_id );
 		$old_lang = $old_lang ? $old_lang->slug : '';
-		$lang = $lang ? $this->model->get_language( $lang )->slug : '';
+
+		$lang = $this->model->get_language( $lang );
+		$lang = $lang ? $lang->slug : '';
 
 		if ( $old_lang !== $lang ) {
-			wp_set_post_terms( (int) $post_id, $lang, 'language' );
+			wp_set_post_terms( $post_id, $lang, $this->tax_language );
 		}
 	}
 
@@ -61,23 +70,36 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 	 * @since 0.1
 	 *
 	 * @param int $post_id post id
-	 * @return bool|object PLL_Language object, false if no language is associated to that post
+	 * @return PLL_Language|false PLL_Language object, false if no language is associated to that post
 	 */
 	public function get_language( $post_id ) {
-		$lang = $this->get_object_term( $post_id, 'language' );
-		return ( $lang ) ? $this->model->get_language( $lang ) : false;
+		$post_id = $this->sanitize_int_id( $post_id );
+
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
+		$lang = $this->get_object_term( $post_id, $this->tax_language );
+		return ! empty( $lang ) ? $this->model->get_language( $lang ) : false;
 	}
 
 	/**
-	 * Deletes a translation
+	 * Deletes a translation.
 	 *
 	 * @since 0.5
 	 *
-	 * @param int $id post id
+	 * @param int $id Post id.
+	 * @return void
 	 */
 	public function delete_translation( $id ) {
+		$id = $this->sanitize_int_id( $id );
+
+		if ( empty( $id ) ) {
+			return;
+		}
+
 		parent::delete_translation( $id );
-		wp_set_object_terms( $id, null, $this->tax_translations );
+		wp_set_object_terms( $id, array(), $this->tax_translations );
 	}
 
 	/**
@@ -100,10 +122,12 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 	 * Register the language taxonomy
 	 *
 	 * @since 1.2
+	 *
+	 * @return void
 	 */
 	public function register_taxonomy() {
 		register_taxonomy(
-			'language',
+			$this->tax_language,
 			$this->model->get_translated_post_types(),
 			array(
 				'labels' => array(
@@ -128,22 +152,24 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 	 * @since 1.2
 	 *
 	 * @param string $post_type post type name
+	 * @return void
 	 */
 	public function registered_post_type( $post_type ) {
 		if ( $this->model->is_translated_post_type( $post_type ) ) {
-			register_taxonomy_for_object_type( 'language', $post_type );
-			register_taxonomy_for_object_type( 'post_translations', $post_type );
+			register_taxonomy_for_object_type( $this->tax_language, $post_type );
+			register_taxonomy_for_object_type( $this->tax_translations, $post_type );
 		}
 	}
 
 	/**
-	 * Forces calling 'update_object_term_cache' when querying posts or pages
-	 * this is especially useful for nav menus with a lot of pages
-	 * without doing this, we would have one query per page in the menu to get the page language for the permalink
+	 * Forces calling 'update_object_term_cache' when querying posts or pages.
+	 * This is especially useful for nav menus with a lot of pages as, without doing this,
+	 * we would have one query per page in the menu to get the page language for the permalink.
 	 *
 	 * @since 1.8
 	 *
-	 * @param object $query reference to the query object
+	 * @param WP_Query $query Reference to the query object.
+	 * @return void
 	 */
 	public function pre_get_posts( $query ) {
 		if ( ! empty( $query->query['post_type'] ) && $this->model->is_translated_post_type( $query->query['post_type'] ) ) {
@@ -161,6 +187,12 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 	 * @return bool
 	 */
 	public function current_user_can_read( $post_id, $context = 'view' ) {
+		$post_id = $this->sanitize_int_id( $post_id );
+
+		if ( empty( $post_id ) ) {
+			return false;
+		}
+
 		$post = get_post( $post_id );
 
 		if ( empty( $post ) ) {
@@ -169,6 +201,10 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 
 		if ( 'inherit' === $post->post_status && $post->post_parent ) {
 			$post = get_post( $post->post_parent );
+
+			if ( empty( $post ) ) {
+				return false;
+			}
 		}
 
 		if ( 'inherit' === $post->post_status || in_array( $post->post_status, get_post_stati( array( 'public' => true ) ) ) ) {
@@ -177,9 +213,19 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 
 		// Follow WP practices, which shows links to private posts ( when readable ), but not for draft posts ( ex: get_adjacent_post_link() )
 		if ( in_array( $post->post_status, get_post_stati( array( 'private' => true ) ) ) ) {
-			$post_type_object = get_post_type_object( $post->post_type );
+			if ( ! is_user_logged_in() ) {
+				return false;
+			}
+
 			$user = wp_get_current_user();
-			return is_user_logged_in() && ( current_user_can( $post_type_object->cap->read_private_posts ) || $user->ID == $post->post_author ); // Comparison must not be strict!
+
+			if ( (int) $user->ID === (int) $post->post_author ) {
+				return true;
+			}
+
+			$post_type_object = get_post_type_object( $post->post_type );
+
+			return ! empty( $post_type_object ) && current_user_can( $post_type_object->cap->read_private_posts );
 		}
 
 		// In edit context, show draft and future posts.
@@ -202,15 +248,15 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 
 	/**
 	 * Returns a list of posts in a language ( $lang )
-	 * not translated in another language ( $untranslated_in )
+	 * not translated in another language ( $untranslated_in ).
 	 *
 	 * @since 2.6
 	 *
-	 * @param string $type            Post type
-	 * @param string $untranslated_in The posts must not be translated in this language
-	 * @param string $lang            Language of the search posts
-	 * @param string $search          Limit results to posts matching this string
-	 * @return array Array of posts
+	 * @param string       $type            Post type.
+	 * @param PLL_Language $untranslated_in The language the posts must not be translated in.
+	 * @param PLL_Language $lang            Language of the searched posts.
+	 * @param string       $search          Limit the results to the posts matching this string.
+	 * @return WP_Post[] Array of posts.
 	 */
 	public function get_untranslated( $type, $untranslated_in, $lang, $search = '' ) {
 		$return = array();
@@ -225,7 +271,7 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 			'post_type'        => $type,
 			'tax_query'        => array(
 				array(
-					'taxonomy' => 'language',
+					'taxonomy' => $this->tax_language,
 					'field'    => 'term_taxonomy_id', // WP 3.5+
 					'terms'    => $lang->term_taxonomy_id,
 				),
@@ -246,11 +292,12 @@ class PLL_Translated_Post extends PLL_Translated_Object {
 		$posts = get_posts( $args );
 
 		foreach ( $posts as $post ) {
-			if ( ! $this->get_translation( $post->ID, $untranslated_in ) && $this->current_user_can_read( $post->ID, 'edit' ) ) {
+			if ( $post instanceof WP_Post && ! $this->get_translation( $post->ID, $untranslated_in ) && $this->current_user_can_read( $post->ID, 'edit' ) ) {
 				$return[] = $post;
 			}
 		}
 
 		return $return;
 	}
+
 }

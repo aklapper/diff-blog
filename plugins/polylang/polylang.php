@@ -10,8 +10,8 @@
  * Plugin Name:       Polylang
  * Plugin URI:        https://polylang.pro
  * Description:       Adds multilingual capability to WordPress
- * Version:           2.8.4
- * Requires at least: 4.9
+ * Version:           3.2.2
+ * Requires at least: 5.6
  * Requires PHP:      5.6
  * Author:            WP SYNTEX
  * Author URI:        https://polylang.pro
@@ -21,7 +21,7 @@
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.txt
  *
  * Copyright 2011-2019 Frédéric Demarle
- * Copyright 2019-2020 WP SYNTEX
+ * Copyright 2019-2022 WP SYNTEX
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,12 +53,17 @@ if ( defined( 'POLYLANG_VERSION' ) ) {
 	}
 } else {
 	// Go on loading the plugin
-	define( 'POLYLANG_VERSION', '2.8.4' );
-	define( 'PLL_MIN_WP_VERSION', '4.9' );
+	define( 'POLYLANG_VERSION', '3.2.2' );
+	define( 'PLL_MIN_WP_VERSION', '5.6' );
 	define( 'PLL_MIN_PHP_VERSION', '5.6' );
 
 	define( 'POLYLANG_FILE', __FILE__ );
 	define( 'POLYLANG_DIR', __DIR__ );
+
+	// Whether we are using Polylang or Polylang Pro, get the filename of the plugin in use.
+	if ( ! defined( 'POLYLANG_ROOT_FILE' ) ) {
+		define( 'POLYLANG_ROOT_FILE', __FILE__ );
+	}
 
 	if ( ! defined( 'POLYLANG_BASENAME' ) ) {
 		define( 'POLYLANG_BASENAME', plugin_basename( __FILE__ ) ); // Plugin name as known by WP.
@@ -67,6 +72,7 @@ if ( defined( 'POLYLANG_VERSION' ) ) {
 
 	define( 'POLYLANG', ucwords( str_replace( '-', ' ', dirname( POLYLANG_BASENAME ) ) ) );
 
-	require __DIR__ . '/include/class-polylang.php';
-	new Polylang();
+	if ( empty( $_GET['deactivate-polylang'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification
+		new Polylang();
+	}
 }

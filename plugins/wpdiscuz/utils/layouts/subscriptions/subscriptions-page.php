@@ -2,7 +2,7 @@
 if (!defined("ABSPATH")) {
     exit();
 }
-$action = isset($_POST["action"]) ? $_POST["action"] : "";
+$action = isset($_POST["action"]) ? sanitize_text_field($_POST["action"]) : "";
 $currentUser = self::getCurrentUser();
 if ($currentUser && $currentUser->ID) {
     $currentUserId = $currentUser->ID;

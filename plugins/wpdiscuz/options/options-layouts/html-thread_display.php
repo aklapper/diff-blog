@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="firstLoadWithAjax">
     <div class="wpd-opt-name">
         <label for="firstLoadWithAjax"><?php echo esc_html($setting["options"]["firstLoadWithAjax"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["firstLoadWithAjax"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["firstLoadWithAjax"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-radio">
@@ -48,7 +48,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentListLoadType">
     <div class="wpd-opt-name">
         <label for="commentListLoadType"><?php echo esc_html($setting["options"]["commentListLoadType"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentListLoadType"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentListLoadType"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <fieldset>
@@ -84,7 +84,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="isLoadOnlyParentComments">
     <div class="wpd-opt-name">
         <label for="isLoadOnlyParentComments"><?php echo $setting["options"]["isLoadOnlyParentComments"]["label"] ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["isLoadOnlyParentComments"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["isLoadOnlyParentComments"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -102,7 +102,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showReactedFilterButton">
     <div class="wpd-opt-name">
         <label for="showReactedFilterButton"><?php echo esc_html($setting["options"]["showReactedFilterButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showReactedFilterButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showReactedFilterButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -120,7 +120,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showHottestFilterButton">
     <div class="wpd-opt-name">
         <label for="showHottestFilterButton"><?php echo esc_html($setting["options"]["showHottestFilterButton"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showHottestFilterButton"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showHottestFilterButton"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -138,7 +138,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="showSortingButtons">
     <div class="wpd-opt-name">
         <label for="showSortingButtons"><?php echo esc_html($setting["options"]["showSortingButtons"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["showSortingButtons"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["showSortingButtons"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -156,7 +156,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="mostVotedByDefault">
     <div class="wpd-opt-name">
         <label for="mostVotedByDefault"><?php echo esc_html($setting["options"]["mostVotedByDefault"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["mostVotedByDefault"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["mostVotedByDefault"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -174,7 +174,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="reverseChildren">
     <div class="wpd-opt-name">
         <label for="reverseChildren"><?php echo esc_html($setting["options"]["reverseChildren"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["reverseChildren"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["reverseChildren"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -192,7 +192,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="highlightUnreadComments">
     <div class="wpd-opt-name">
         <label for="highlightUnreadComments"><?php echo esc_html($setting["options"]["highlightUnreadComments"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["highlightUnreadComments"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["highlightUnreadComments"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -210,7 +210,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="scrollToComment">
     <div class="wpd-opt-name">
         <label for="scrollToComment"><?php echo $setting["options"]["scrollToComment"]["label"] ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["scrollToComment"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["scrollToComment"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -228,7 +228,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="orderCommentsBy">
     <div class="wpd-opt-name">
         <label for="orderCommentsBy"><?php echo esc_html($setting["options"]["orderCommentsBy"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["orderCommentsBy"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["orderCommentsBy"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switch-field">

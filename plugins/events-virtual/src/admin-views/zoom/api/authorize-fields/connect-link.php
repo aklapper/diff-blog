@@ -8,6 +8,7 @@
  * See more documentation about our views templating system.
  *
  * @since   1.0.0
+ * @deprecated 1.9.0 - Replaced with Multiple Account Support.
  *
  * @version 1.0.0
  *

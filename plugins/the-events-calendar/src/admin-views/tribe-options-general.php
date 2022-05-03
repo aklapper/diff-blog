@@ -11,12 +11,12 @@ $general_tab_fields = Tribe__Main::array_insert_after_key(
 		'upsell-heading'                => [
 			'type'        => 'heading',
 			'label'       => esc_html__( 'Finding & extending your calendar.', 'the-events-calendar' ),
-			'conditional' => ( ! defined( 'TRIBE_HIDE_UPSELL' ) || ! TRIBE_HIDE_UPSELL ),
+			'conditional' => ! tec_should_hide_upsell(),
 		],
 		'finding-heading'               => [
 			'type'        => 'heading',
 			'label'       => esc_html__( 'Finding your calendar.', 'the-events-calendar' ),
-			'conditional' => ( defined( 'TRIBE_HIDE_UPSELL' ) && TRIBE_HIDE_UPSELL ),
+			'conditional' => tec_should_hide_upsell(),
 		],
 		'view-calendar-link'            => [
 			'type' => 'html',
@@ -147,6 +147,19 @@ $general_tab_fields = Tribe__Main::array_insert_before_key(
 			'size'            => 'small',
 			'default'         => '$',
 		],
+		'defaultCurrencyCode'         => [
+			'type'            => 'text',
+			'label'           => esc_html__( 'Default currency code', 'the-events-calendar' ),
+			'tooltip'         => esc_html__( 'Set the default currency ISO-4217 code for event costs. This is a three-letter code and is mainly used for data/SEO purposes.', 'the-events-calendar' ),
+			'validation_type' => 'textarea',
+			'size'            => 'small',
+			'default'         => 'USD',
+			'attributes'      => [
+				'minlength'   => 3,
+				'maxlength'   => 3,
+				'placeholder' => __( 'USD', 'the-events-calendar' ),
+			],
+		],
 		'reverseCurrencyPosition'       => [
 			'type'            => 'checkbox_bool',
 			'label'           => esc_html__( 'Currency symbol follows value', 'the-events-calendar' ),
@@ -156,7 +169,7 @@ $general_tab_fields = Tribe__Main::array_insert_before_key(
 		],
 		'amalgamateDuplicates'          => [
 			'type'        => 'html',
-			'html'        => '<fieldset class="tribe-field tribe-field-html"><legend>' . esc_html__( 'Duplicate Venues &amp; Organizers', 'the-events-calendar' ) . '</legend><div class="tribe-field-wrap">' . Tribe__Events__Amalgamator::migration_button( esc_html__( 'Merge Duplicates', 'the-events-calendar' ) ) . '<p class="tribe-field-indent description">' . esc_html__( 'You might find duplicate venues and organizers when updating The Events Calendar from a pre-3.0 version. Click this button to automatically merge identical venues and organizers.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
+			'html'        => '<fieldset class="tribe-field tribe-field-html"><legend>' . esc_html__( 'Duplicate Venues &amp; Organizers', 'the-events-calendar' ) . '</legend><div class="tribe-field-wrap">' . Tribe__Events__Amalgamator::migration_button( esc_html__( 'Merge Duplicates', 'the-events-calendar' ) ) . '<p class="tribe-field-indent description">' . esc_html__( 'Click this button to automatically merge identical venues and organizers.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
 		],
 		tribe( 'tec.event-cleaner' )->key_trash_events  => [
 			'type'            => 'dropdown',

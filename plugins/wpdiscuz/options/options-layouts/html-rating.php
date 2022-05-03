@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enablePostRatingSchema">
     <div class="wpd-opt-name">
         <label for="enablePostRatingSchema"><?php echo esc_html($setting["options"]["enablePostRatingSchema"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enablePostRatingSchema"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enablePostRatingSchema"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -37,7 +37,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="displayRatingOnPost">
     <div class="wpd-opt-name">
         <label for="displayRatingOnPost"><?php echo esc_html($setting["options"]["displayRatingOnPost"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["displayRatingOnPost"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["displayRatingOnPost"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div>
@@ -67,7 +67,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="ratingStarColors">
     <div class="wpd-opt-input" style="width: calc(100% - 40px);">
         <h2 style="margin-bottom: 0px;font-size: 15px; color: #555;"><?php echo esc_html($setting["options"]["ratingStarColors"]["label"]) ?></h2>
-        <p class="wpd-desc"><?php echo $setting["options"]["ratingStarColors"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["ratingStarColors"]["description"]) ?></p>
         <hr />
         <div class="wpd-color-wrap">
             <input type="text" class="wpdiscuz-color-picker regular-text" value="<?php echo esc_attr($this->rating["ratingHoverColor"]); ?>" id="ratingHovratingHoverColorerColor" name="<?php echo esc_attr(WpdiscuzCore::TAB_RATING); ?>[ratingHoverColor]" placeholder="<?php esc_attr_e("Example: #00FF00", "wpdiscuz"); ?>"/>

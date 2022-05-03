@@ -264,7 +264,9 @@
 #wpd-setbox .wpd-setbox-body .wpd-opt-search[dir=rtl]{text-align: left;}
 #wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results{display:none;box-sizing:border-box;position: absolute;width: 100%;text-align: left;z-index: 99;border: 1px solid #ccc;background-color: #fff;left: 1px;top: 30px;}
 #wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a{padding: 5px;display: inline-block;text-decoration: none;width: 97%;}
-#wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a:hover, #wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a:focus{background-color: #ccc;}
+#wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a:hover, #wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a:focus{-webkit-transition: color .3s linear;-moz-transition: color .3s linear;-o-transition: color .3s linear;-ms-transition: color .3s linear;transition: color .3s linear;color: #00B38F;}
+#wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a.wpd-opt-search-tabtitle{margin-left: 5px; width: 90%; font-weight: 600; font-size: 14px;}
+#wpd-setbox .wpd-setbox-body .wpd-opt-search #wpd-opt-search-results a.wpd-opt-search-taboption{margin-left: 20px;width: 90%; font-size: 13px;}
 #wpd-setbox .wpd-setbox-body .dashicons-search{display: inline-block; position: absolute; bottom: 4px; right: 4px; font-size: 20px; color: #07b290; cursor: pointer;}
 #wpd-setbox .wpd-setbox-body .dashicons-search[dir=rtl]{right: auto; left: 4px;}
 #wpd-setbox .wpd-setbox-body input[type="text"]{width: 318px; font-size: 14px; line-height: 20px; padding: 3px 10px; display: inline-block;}
@@ -481,8 +483,8 @@
     border: 1px solid #d3d3d3;
     background-color: #f9f9f9;
     color: #333;
-/*    background-color: #00aadd;
-    color: #f9f9f9;*/
+    /*    background-color: #00aadd;
+        color: #f9f9f9;*/
 }
 
 .wpdtool-accordion-title p {
@@ -512,12 +514,12 @@
 .wpdtool-accordion-current .wpdtool-accordion-title {
     background-color: #00B38F;
     color:#f0f0f0;
-/*    background-color: #f9f9f9;
-    color:#00aadd;*/
-/*    border-left: 3px solid #00aadd;
-    border-right: 1px solid #00aadd;
-    border-top: 1px solid #00aadd;
-    border-bottom: 1px solid #00aadd;*/
+    /*    background-color: #f9f9f9;
+        color:#00aadd;*/
+    /*    border-left: 3px solid #00aadd;
+        border-right: 1px solid #00aadd;
+        border-top: 1px solid #00aadd;
+        border-bottom: 1px solid #00aadd;*/
 }
 
 .wpdtool {

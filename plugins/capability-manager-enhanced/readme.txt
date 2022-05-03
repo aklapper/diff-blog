@@ -5,9 +5,9 @@ Author: PublishPress
 Author URI: https://publishpress.com
 Tags: user roles, capabilities, permissions, admin menus, post editing, post types, taxonomies
 Requires at least: 4.9.7
-Tested up to: 5.8
+Tested up to: 5.9
 Requires PHP: 5.6.20
-Stable tag: 2.3.2
+Stable tag: 2.4.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -408,6 +408,46 @@ Fixed : Non-administrators with user editing capabilities could add new Administ
 Fixed : Security issue. Please update.
 
 == Changelog ==
+
+= 2.4.0 - 28 Apr 2022 =
+  * Fixed : Post title not working with editor features #370
+  * Fixed : Issue with revision metabox and some plugin metabox in Editor features. #369
+  * Fixed : Editor Features compability with taxonomies created by the "Toolset" plugin. #367
+  * Fixed : Backup Features text missing some "s" #365
+  * Update : Change import upload file delete to use WordPress function #364
+  * Update : Make sure "Copy" feature for roles works with Editor Features and more #362
+  * Update : Add short description for "Role Level" #361
+  * Update : Make "Roles" into the top menu link #326
+  * Update : Vertical tabs similar to the "Capabilities" for Editor Features #257
+  * Fixed : Can't hide the "Profile" link with "Admin Menus" #337
+  * Update : More Columns on Roles Screen #181
+
+= 2.3.7 - 21 Apr 2022 =
+  * Lang : Translations were not loaded on some sites
+
+= 2.3.6 - 14 Apr 2022 =
+  * Fixed : Non-administrators cannot access profile screen
+  * Compat : WooCommerce - Shop Managers could not access Users
+  * Compat : WooCommerce - Editor Feature restrictions did not hide Product Categories, Tags in Classic Editor
+
+= 2.3.5 - 13 Apr 2022 =
+  * Feature : Export / Import for new features
+  * Change : Clarify captions on Roles, Backup screens
+  * Fixed : Multisite: Don't apply Feature, Menu Restrictions to Super Administrators unless constant PP_CAPABILITIES_RESTRICT_SUPER_ADMIN is defined
+  * Fixed : Capabilities could not be updated if third party code executes too early. Now support constant PP_CAPABILITIES_COMPAT_MODE to work around conflicts.
+  * Fixed : Coding standards - WordPress VIP scan compliance improvements
+  * Compat : LoginWP - custom redirect failed
+  * Lang : New French, Italian and Spanish translations
+
+= 2.3.4 - 26 Jan 2022 =
+  * Compat : WordPress 5.9 - failure adding / editing posts under some Editor Features configurations (work around WP hooking late-defined function _disable_block_editor_for_navigation_post_type)
+
+= 2.3.3 - 13 Jan 2022 =
+  * Fixed : Capability names with dashes could not be added
+  * Fixed : After role rename, title in dropdown does not refresh
+  * Fixed : Input sanitization consistency
+  * Fixed : Escape output variables
+  * Lang : Spanish, French, Italian
 
 = 2.3.2 - 8 Dec 2021 =
   * Feature : Filter Capabilities display by post type or text entry

@@ -168,7 +168,7 @@ class Connection {
 		/** @var \Tribe__Cache $cache */
 		$cache    = tribe( 'cache' );
 		$cache_id = 'events_virtual_meetings_youtube_' . md5( $channel_id );
-		$video_id = $cache->get( $cache_id );
+		$video_id = $cache->get_transient( $cache_id );
 		if ( ! empty( $video_id ) ) {
 			return $video_id;
 		}
@@ -194,8 +194,7 @@ class Connection {
 		}
 
 		$expiration = MINUTE_IN_SECONDS * 3;
-		$cache->set( $cache_id, $is_live, $expiration );
-
+		$cache->set_transient( $cache_id, $is_live, $expiration );
 		return $is_live;
 	}
 

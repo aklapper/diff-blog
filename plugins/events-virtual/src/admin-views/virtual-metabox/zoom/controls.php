@@ -3,7 +3,7 @@
  * View: Virtual Events Metabox Zoom API link controls for 2+ meeting types.
  *
  * Override this template in your own theme by creating a file at:
- * [your-theme]/tribe/admin-views/virtual-metabox/zoom/multiple-controls.php
+ * [your-theme]/tribe/admin-views/virtual-metabox/zoom/controls.php
  *
  * See more documentation about our views templating system.
  *
@@ -29,7 +29,7 @@
 	data-condition="zoom"
 >
 
-	<div class="tribe-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
+	<div class="tec-events-virtual-meetings-video-source__inner tribe-events-virtual-meetings-zoom-details__inner">
 
 		<a
 			class="tribe-events-virtual-meetings-zoom__connect-link"

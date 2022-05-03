@@ -19,7 +19,6 @@ tribe.events.youtubeSettingsAdmin = tribe.events.youtubeSettingsAdmin || {};
 
 ( function( $, obj ) {
 	'use-strict';
-	const $document = $( document );
 
 	/**
 	 * Selectors used for configuration and setup

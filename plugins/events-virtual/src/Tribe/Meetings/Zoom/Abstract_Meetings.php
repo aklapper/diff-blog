@@ -15,7 +15,6 @@ use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Meta;
 use Tribe\Events\Virtual\Traits\With_AJAX;
 use Tribe__Date_Utils as Dates;
 use Tribe__Timezones as Timezones;
-use Tribe__Utils__Array as Arr;
 
 /**
  * Class Abstract_Meetings
@@ -160,9 +159,11 @@ class Abstract_Meetings {
 			return false;
 		}
 
-		$zoom_host_id = tribe_get_request_var( 'zoom_host_id' );
+		$zoom_host_id = tribe_get_request_var( 'host_id' );
 		// If no host id found, fail the request as account level apps do not support 'me'
 		if ( empty( $zoom_host_id ) ) {
+			$error_message = _x( 'The Zoom Host ID is missing to access the API.', 'Host ID is missing error message.', 'events-virtual' );
+			$this->classic_editor->render_meeting_generation_error_details( $event, $error_message, true );
 
 			wp_die();
 
@@ -170,7 +171,7 @@ class Abstract_Meetings {
 		}
 
 		// Load the account.
-		$zoom_account_id = tribe_get_request_var( 'zoom_account_id' );
+		$zoom_account_id = tribe_get_request_var( 'account_id' );
 		// if no id, fail the request.
 		if ( empty( $zoom_account_id ) ) {
 			$error_message = _x( 'The Zoom Account ID is missing to access the API.', 'Account ID is missing error message.', 'events-virtual' );
@@ -426,6 +427,20 @@ class Abstract_Meetings {
 	}
 
 	/**
+	 * Processes the Zoom API Meeting connection response.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param array<string,mixed> $response The entire Zoom API response.
+	 * @param int                 $post_id  The event post ID.
+	 *
+	 * @return array<string,mixed> The Zoom Meeting data.
+	 */
+	public function process_meeting_connection_response( array $response, $post_id ) {
+		return $this->process_meeting_creation_response( $response, $post_id );
+	}
+
+	/**
 	 * Processes the Zoom API Meeting creation response to massage, filter and save the data.
 	 *
 	 * @since 1.0.0
@@ -525,6 +540,9 @@ class Abstract_Meetings {
 		// Cache the raw meeting data for future use.
 		update_post_meta( $post_id, $prefix . 'zoom_meeting_data', $this->encryption->encrypt( $response_body, true ) );
 
+		// Set the video source to prevent issues with loading the information later.
+		update_post_meta( $post_id, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
+
 		$map = [
 			$prefix . 'zoom_meeting_id'             => 'id',
 			$prefix . 'zoom_join_url'               => 'join_url',
@@ -562,7 +580,7 @@ class Abstract_Meetings {
 	 *
 	 * @param string|null $nonce The nonce that should accompany the request.
 	 *
-	 * @return bool Whether the request was handled or not.
+	 * @return bool|string Whether the request was handled or a string with html for meeting creation.
 	 */
 	public function ajax_remove( $nonce = null ) {
 		if ( ! $this->check_ajax_nonce( static::$remove_action, $nonce ) ) {
@@ -578,7 +596,7 @@ class Abstract_Meetings {
 		Zoom_Meta::delete_meeting_meta( $event->ID );
 
 		// Send the HTML for the meeting creation.
-		$this->classic_editor->render_initial_zoom_setup_options( $event, true );
+		$this->classic_editor->render_initial_setup_options( $event, true );
 
 		wp_die();
 
@@ -592,8 +610,6 @@ class Abstract_Meetings {
 	 * @since 1.2.0 Utilize the datepicker format when parse the Event Date to prevent the wrong date in Zoom.
 	 *
 	 * @param \WP_Post|int $event The event (or event ID) we're updating the meeting for.
-	 *
-	 * @return void
 	 */
 	public function update( $event ) {
 		// Get event if not an object.
@@ -605,19 +621,23 @@ class Abstract_Meetings {
 		if ( ! ( $event instanceof \WP_Post ) || empty( $event->zoom_meeting_id ) ) {
 			return;
 		}
-		$start_date = tribe_get_request_var( 'EventStartDate' );
-		if ( empty( $start_date ) ) {
-			$start_date = $event->start_date;
+
+		// If manually connected, do not update Zoom meeting or webinar when event details change.
+		$manual_connected = get_post_meta( $event->ID, Virtual_Events_Meta::$key_autodetect_source, true );
+		if ( Zoom_Meta::$key_zoom_source_id === $manual_connected ) {
+			return;
 		}
 
-		$start_time = tribe_get_request_var( 'EventStartTime' );
-		if ( empty( $start_time ) ) {
-			$start_time = $event->start_time;
-		}
+		$start_date = tribe_get_request_var( 'EventStartDate', $event->start_date );
+		$start_time = tribe_get_request_var( 'EventStartTime', $event->start_time );
+		$time_zone  = tribe_get_request_var( 'EventTimezone', $event->timezone );
+		$end_date   = tribe_get_request_var( 'EventEndDate', $event->end_date );
+		$end_time   = tribe_get_request_var( 'EventEndTime', $event->end_time );
 
-		$time_zone = tribe_get_request_var( 'EventTimezone' );
-		if ( empty( $time_zone ) ) {
-			$time_zone = $event->timezone;
+		// Get the duration of the event from the field values instead of the event object, which has previously saved values.
+		$duration = $this->calculate_duration( $start_date, $start_time, $end_date, $end_time, $time_zone );
+		if ( empty( $duration ) ) {
+			$duration = $event->duration;
 		}
 
 		$zoom_date         = $this->format_date_for_zoom( $start_date, $start_time, $time_zone );
@@ -628,7 +648,7 @@ class Abstract_Meetings {
 			'topic'             => $event->post_title,
 			'start_time'        => $zoom_date,
 			'timezone'          => $time_zone,
-			'duration'          => (int) ceil( (int) $event->duration / 60 ),
+			'duration'          => (int) ceil( (int) $duration / 60 ),
 			'alternative_hosts' => esc_attr( implode( ";", $alternative_hosts ) ),
 		];
 
@@ -822,5 +842,31 @@ class Abstract_Meetings {
 		$start_date_time   = Dates::datetime_from_format( $datepicker_format, $start_date ) . ' ' . $start_time;
 
 		return Dates::build_date_object( $start_date_time, $time_zone )->setTimezone( $timezone_object )->format( 'Y-m-d\TH:i:s\Z' );
+	}
+
+	/**
+	 * Get the duration of an event.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string $start_date The start date of the event.
+	 * @param string $start_time The start time of the event.
+	 * @param string $end_date   The end date of the event.
+	 * @param string $end_time   The end time of the event.
+	 * @param string $time_zone  The timezone of the event.
+	 *
+	 * @return string The duration in seconds.
+	 */
+	private function calculate_duration( $start_date, $start_time, $end_date, $end_time, $time_zone ) {
+		$timezone_object   = Timezones::build_timezone_object( 'UTC' );
+		$datepicker_format = Dates::datepicker_formats( tribe_get_option( 'datepickerFormat' ) );
+
+		$start_date_time = Dates::datetime_from_format( $datepicker_format, $start_date ) . ' ' . $start_time;
+		$start_timestamp = Dates::build_date_object( $start_date_time, $time_zone )->setTimezone( $timezone_object )->getTimestamp();
+
+		$end_date_time = Dates::datetime_from_format( $datepicker_format, $end_date ) . ' ' . $end_time;
+		$end_timestamp = Dates::build_date_object( $end_date_time, $time_zone )->setTimezone( $timezone_object )->getTimestamp();
+
+		return absint( $end_timestamp - $start_timestamp );
 	}
 }

@@ -19,7 +19,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentTextLength">
     <div class="wpd-opt-name">
         <label for="commentTextLength"><?php echo esc_html($setting["options"]["commentTextLength"]["label"]); ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentTextLength"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentTextLength"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <span for="commentTextMinLength"><input type="number" value="<?php echo esc_attr($this->content["commentTextMinLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[commentTextMinLength]" id="commentTextMinLength" style="width:70px;"> <?php esc_html_e("Min", "wpdiscuz") ?> </span>
@@ -35,7 +35,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="replyTextLength">
     <div class="wpd-opt-name">
         <label for="replyTextLength"><?php echo esc_html($setting["options"]["replyTextLength"]["label"]); ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["replyTextLength"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["replyTextLength"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <span for="replyTextMinLength"><input type="number" value="<?php echo esc_attr($this->content["replyTextMinLength"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[replyTextMinLength]" id="replyTextMinLength" style="width:70px;"> <?php esc_html_e("Min", "wpdiscuz") ?> </span>
@@ -51,7 +51,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableImageConversion">
     <div class="wpd-opt-name">
         <label for="enableImageConversion"><?php echo esc_html($setting["options"]["enableImageConversion"]["label"]); ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableImageConversion"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableImageConversion"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -69,7 +69,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="enableShortcodes">
     <div class="wpd-opt-name">
         <label for="enableShortcodes"><?php echo esc_html($setting["options"]["enableShortcodes"]["label"]); ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["enableShortcodes"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["enableShortcodes"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -87,7 +87,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="commentReadMoreLimit">
     <div class="wpd-opt-name">
         <label for="commentReadMoreLimit"><?php echo esc_html($setting["options"]["commentReadMoreLimit"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["commentReadMoreLimit"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["commentReadMoreLimit"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="number" value="<?php echo esc_attr($this->content["commentReadMoreLimit"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[commentReadMoreLimit]" id="commentReadMoreLimit" style="width:100px;" />
@@ -106,7 +106,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuIsEnabled">
     <div class="wpd-opt-name">
         <label for="wmuIsEnabled"><?php echo esc_html($setting["options"]["wmuIsEnabled"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuIsEnabled"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuIsEnabled"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -124,7 +124,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuIsGuestAllowed">
     <div class="wpd-opt-name">
         <label for="wmuIsGuestAllowed"><?php echo esc_html($setting["options"]["wmuIsGuestAllowed"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuIsGuestAllowed"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuIsGuestAllowed"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -142,7 +142,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuIsLightbox">
     <div class="wpd-opt-name">
         <label for="wmuIsLightbox"><?php echo esc_html($setting["options"]["wmuIsLightbox"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuIsLightbox"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuIsLightbox"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -161,7 +161,7 @@ if (!defined("ABSPATH")) {
     <div class="wpd-opt-name" style="width: 100%;">
         <div style="float: left;">
             <label for="wmuMimeTypes"><?php echo esc_html($setting["options"]["wmuMimeTypes"]["label"]) ?></label>
-            <p class="wpd-desc"><?php echo $setting["options"]["wmuMimeTypes"]["description"] ?></p>
+            <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuMimeTypes"]["description"]) ?></p>
         </div>
         <div class="wpd-opt-doc" style="float: right;">
             <?php $this->printDocLink($setting["options"]["wmuMimeTypes"]["docurl"]) ?>
@@ -196,7 +196,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuMaxFileSize">
     <div class="wpd-opt-name">
         <label for="wmuMaxFileSize"><?php echo esc_html($setting["options"]["wmuMaxFileSize"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuMaxFileSize"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuMaxFileSize"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input step="any" type="number" value="<?php echo esc_attr($this->content["wmuMaxFileSize"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[wmuMaxFileSize]" id="wmuMaxFileSize" class="wmu-number" style="width: 80px;"/> <span style="vertical-align:middle;">MB</span>
@@ -221,7 +221,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuIsShowFilesDashboard">
     <div class="wpd-opt-name">
         <label for="wmuIsShowFilesDashboard"><?php echo esc_html($setting["options"]["wmuIsShowFilesDashboard"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuIsShowFilesDashboard"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuIsShowFilesDashboard"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <div class="wpd-switcher">
@@ -239,7 +239,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuSingleImageSize">
     <div class="wpd-opt-name">
         <label for="wmuSingleImageSize"><?php echo esc_html($setting["options"]["wmuSingleImageSize"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuSingleImageSize"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuSingleImageSize"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <input type="text" value="<?php echo esc_attr($this->content["wmuSingleImageWidth"]); ?>" name="<?php echo esc_attr(WpdiscuzCore::TAB_CONTENT); ?>[wmuSingleImageWidth]" id="wmuSingleImageWidth" class="wmu-number wmu-image-dimension wmu-image-width" style="width: 80px;" /><span> <?php esc_html_e("Width (px)", "wpdiscuz"); ?> </span><br>
@@ -255,7 +255,7 @@ if (!defined("ABSPATH")) {
 <div class="wpd-opt-row" data-wpd-opt="wmuImageSizes">
     <div class="wpd-opt-name">
         <label for="wmuImageSizes"><?php echo esc_html($setting["options"]["wmuImageSizes"]["label"]) ?></label>
-        <p class="wpd-desc"><?php echo $setting["options"]["wmuImageSizes"]["description"] ?></p>
+        <p class="wpd-desc"><?php echo esc_html($setting["options"]["wmuImageSizes"]["description"]) ?></p>
     </div>
     <div class="wpd-opt-input">
         <?php
