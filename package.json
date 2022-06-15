@@ -1,7 +1,8 @@
 {
-	"author": "Human Made",
-	"name": "interconnection-blocks",
-	"description": "Blocks and other editorial functionality for the Interconnection theme",
+	"name": "wikimedia-diff",
+	"private": true,
+	"authors": [ "Human Made", "Wikimedia Foundation" ],
+	"description": "Application build for the Diff site, Interconnection theme, and associated editorial plugins",
 	"version": "1.0.0",
 	"license": "GPL-2.0-or-later",
 	"repository": {
