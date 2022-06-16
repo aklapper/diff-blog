@@ -34,6 +34,11 @@ function get_webpack_manifest() : ?string {
 function enqueue_block_editor_assets() {
 	$manifest = get_webpack_manifest();
 
+	if ( empty( $manifest ) ) {
+		trigger_error( 'No asset manifest available for diff-blocks plugin' );
+		return;
+	}
+
 	Asset_Loader\enqueue_asset(
 		$manifest,
 		'editor.js',
@@ -67,6 +72,11 @@ function enqueue_frontend_assets() {
 	}
 
 	$manifest = get_webpack_manifest();
+
+	if ( empty( $manifest ) ) {
+		trigger_error( 'No asset manifest available for diff-blocks plugin' );
+		return;
+	}
 
 	Asset_Loader\enqueue_asset(
 		$manifest,
