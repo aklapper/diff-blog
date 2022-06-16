@@ -17,11 +17,6 @@ module.exports = choosePort( 8181 ).then( port =>
 			},
 			port,
 		},
-		stats: {
-			all: false,
-			assets: true,
-			colors: true,
-		},
 		externals,
 		entry: {
 			editor: filePath( 'client-mu-plugins/diff-blocks/src/editor.js' ),
