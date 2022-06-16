@@ -12,7 +12,15 @@ cleanOnExit( [
 module.exports = choosePort( 8181 ).then( port =>
 	presets.development( {
 		devServer: {
+			client: {
+				webSocketURL: `ws://localhost:${ port }/ws`,
+			},
 			port,
+		},
+		stats: {
+			all: false,
+			assets: true,
+			colors: true,
 		},
 		externals,
 		entry: {
