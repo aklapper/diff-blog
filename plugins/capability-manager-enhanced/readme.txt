@@ -5,9 +5,9 @@ Author: PublishPress
 Author URI: https://publishpress.com
 Tags: user roles, capabilities, permissions, admin menus, post editing, post types, taxonomies
 Requires at least: 4.9.7
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 5.6.20
-Stable tag: 2.4.0
+Stable tag: 2.4.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -408,6 +408,45 @@ Fixed : Non-administrators with user editing capabilities could add new Administ
 Fixed : Security issue. Please update.
 
 == Changelog ==
+
+= 2.4.3 - 12 Jul 2022 =
+  * Fixed : Capabilities conflict with Advanced Custom Fields #494
+  * Fixed : Issue with editor features when options is not array #495
+  * Update : Add checkbox for the "Allowed Editors" feature #498
+  * Update : Add support for TaxoPress on the Capabilities screen #500
+  * Update : Use 3 clicks approach for all boxes in Capabilities #497
+  * Fixed : Uncaught TypeError: in_array(): Argument #2 ($haystack) must be of type array, null given. #513
+  * Fixed : Hide Invalid Capabilities if empty #490
+
+= 2.4.2 - 14 Jun 2022 =
+  * Fixed : Correct match of post types and Editor Features boxes #427
+  * Update : Changes to user role selection UI and make role draggable for re-ordering #443
+  * Added : Two new role tabs (Redirects and Editing) #403
+  * Added : Redirect users to original page after login to role editor #301
+  * Added : Redirect on login and logout to role editor #11
+  * Fixed : Admin Menus issue with JetPack #381
+  * Added : Hide the "add new block" button to editor feature #436
+  * Added : Hide the Revisions box in Editor Features #428
+  * Update : UI clean up for Backup screens #322
+  * Update : Move the Taxonomy area to it's own tab #425
+  * Added : Support for WPML capabilities #411
+  * Added : Support for WS Form #305
+  * Added : Support Gravity Forms support #306
+  * Added : Add a new setting to disable Code Editor in Posts to role editor #298
+  * Update : Remember last tab after updating role settings #445
+  * Update : Add toggle all checkmarks options on the Capabilities screen #419
+  * Update : More categorization for capabilities #303
+  * Update : Force user roles to use specific editors in role settings #276
+  * Added : Add a setting to show private taxonomies on the "Capabilities" screen #314
+  * Added: Extend admin features "hide by css" to include plugin list #488
+
+= 2.4.1 - 09 May 2022 =
+  * Fixed : Small bug with Capabilities search #340
+  * Update : Add sorting for more table columns in "Roles" #388
+  * Fixed : Edit Role screen: Right sidebar links to Capabilities screen without role argument #407
+  * Fixed : Admin Features issue with JetPack #412
+  * Update : Stop Free and Pro from being enabled together #323
+  * Update : Add PublishPress Building Package for Capabilities #400
 
 = 2.4.0 - 28 Apr 2022 =
   * Fixed : Post title not working with editor features #370

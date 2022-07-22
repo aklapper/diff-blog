@@ -3,7 +3,7 @@
  * @package PublishPress
  * @author  PublishPress
  *
- * Copyright (c) 2021 PublishPress
+ * Copyright (c) 2022 PublishPress
  *
  * WordPressBanners is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ namespace PublishPress\WordPressBanners;
 use Exception;
 
 if (! defined('PP_WP_BANNERS_VERSION')) {
-    define('PP_WP_BANNERS_VERSION', '1.2.8');
+    define('PP_WP_BANNERS_VERSION', '1.3.0');
 }
 
 if (! class_exists('\\PublishPress\\WordPressBanners\\BannersMain')) {
@@ -41,6 +41,7 @@ if (! class_exists('\\PublishPress\\WordPressBanners\\BannersMain')) {
          * @param string $link Link to apply to button and image
          * @param string $link_title Link title
          * @param string $image A filename from assets/images/ folder; disabled if blank
+         * @param string $link_class Link class. e.g. 'button button-secondary'
          *
          * @return void
          */
@@ -50,7 +51,8 @@ if (! class_exists('\\PublishPress\\WordPressBanners\\BannersMain')) {
             $contents = array(),
             $link = '',
             $link_title = '',
-            $image = ''
+            $image = '',
+            $link_class = 'button pp-button-yellow'
         ) {
             if (! empty($heading)) {
                 ?>
@@ -94,7 +96,7 @@ if (! class_exists('\\PublishPress\\WordPressBanners\\BannersMain')) {
                 ?>
 
                 <p>
-                    <a class="button button-primary" href="<?php echo $link ?>">
+                    <a class="<?php echo $link_class ?>" href="<?php echo $link ?>">
                         <?php echo $link_title ?>
                     </a>
                 </p>
