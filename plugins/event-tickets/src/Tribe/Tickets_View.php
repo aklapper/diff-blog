@@ -770,6 +770,7 @@ class Tribe__Tickets__Tickets_View {
 		$args = [
 			'by' => [
 				'provider__not_in' => 'rsvp',
+				'status'           => 'publish',
 			],
 		];
 
@@ -1143,10 +1144,11 @@ class Tribe__Tickets__Tickets_View {
 	 *
 	 * @param WP_Post|int $post The post object or ID.
 	 * @param boolean     $echo Whether to echo the output or not.
+	 * @param int[]       $include_tickets Array of ticket IDs to include, excluding all others.
 	 *
 	 * @return string The block HTML.
 	 */
-	public function get_rsvp_block( $post, $echo = true ) {
+	public function get_rsvp_block( $post, $echo = true, $include_tickets = [] ) {
 		if ( empty( $post ) ) {
 			return '';
 		}
@@ -1191,6 +1193,12 @@ class Tribe__Tickets__Tickets_View {
 		$tickets        = $blocks_rsvp->get_tickets( $post_id );
 		$active_tickets = $blocks_rsvp->get_active_tickets( $tickets );
 		$past_tickets   = $blocks_rsvp->get_all_tickets_past( $tickets );
+		
+		if( class_exists( 'Tribe__Tickets_Plus__Main' ) && ! empty( $include_tickets ) ) {
+			$tickets        = Tribe__Tickets_Plus__Tickets::filter_tickets_by_ids( $tickets, $include_tickets );
+			$active_tickets = Tribe__Tickets_Plus__Tickets::filter_tickets_by_ids( $active_tickets, $include_tickets );
+			$past_tickets   = Tribe__Tickets_Plus__Tickets::filter_tickets_by_ids( $past_tickets, $include_tickets );
+		}
 
 		$args = [
 			'post_id'             => $post_id,
@@ -1235,20 +1243,6 @@ class Tribe__Tickets__Tickets_View {
 		 * @var bool                             $block_html_id       [Global] The RSVP block HTML ID. $doing_shortcode may alter it.
 		 */
 		$template->add_template_globals( $args );
-
-		// Determine whether to show the previews on the page.
-		if (
-			defined( 'TRIBE_TICKETS_RSVP_NEW_VIEWS_PREVIEW' )
-			&& TRIBE_TICKETS_RSVP_NEW_VIEWS_PREVIEW
-		) {
-			// Enqueue new assets.
-			tribe_asset_enqueue( 'tribe-tickets-rsvp-style' );
-			tribe_asset_enqueue( 'tribe-tickets-forms-style' );
-			// @todo: Remove this once we solve the common breakpoints vs container based.
-			tribe_asset_enqueue( 'tribe-common-responsive' );
-
-			return $template->template( 'v2/rsvp-kitchen-sink', $args, $echo );
-		}
 
 		ob_start();
 

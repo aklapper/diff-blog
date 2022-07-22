@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Tribe__Tickets__Commerce__PayPal__Main
  *
@@ -24,6 +23,13 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 	 * Name of the CPT that holds Orders
 	 */
 	const ORDER_OBJECT = 'tribe_tpp_orders';
+
+	/**
+	 * Name of the CPT that holds Orders
+	 *
+	 * @var string
+	 */
+	public $order_object = 'tribe_tpp_orders';
 
 	/**
 	 * Meta key that relates Attendees and Events.
@@ -222,8 +228,8 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 		 *
 		 * @since 4.7
 		 *
-		 * @param bool                                   $is_active
-		 * @param Tribe__Tickets__Commerce__PayPal__Main $this
+		 * @param bool                                   $is_active Whether the provider is active.
+		 * @param Tribe__Tickets__Commerce__PayPal__Main $commerce  The Tickets Commerce provider.
 		 */
 		$is_active = apply_filters( 'tribe_tickets_commerce_paypal_is_active', null, $this );
 
@@ -236,8 +242,9 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 		/** @var Tribe__Tickets__Commerce__PayPal__Handler__Interface $handler */
 		$handler = $gateway->build_handler();
 
-		return tribe_is_truthy( tribe_get_option( 'ticket-paypal-enable', false ) )
-		       && 'complete' === $handler->get_config_status();
+		return
+			tribe_is_truthy( tribe_get_option( 'ticket-paypal-enable', false ) )
+			&& 'complete' === $handler->get_config_status();
 	}
 
 	/**
@@ -1538,9 +1545,7 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 		 * @param int    $post_id
 		 * @param int    $ticket_id
 		 */
-		$ticket = apply_filters( 'tribe_tickets_tpp_get_ticket', $return, $event_id, $ticket_id );
-
-		return $return;
+		return apply_filters( 'tribe_tickets_tpp_get_ticket', $return, $event_id, $ticket_id );
 	}
 
 	/**
@@ -1589,7 +1594,7 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function get_attendees_by_order_id( $order_id, $ticket_id = null ) {
+	public function get_attendees_by_order_id( $order_id, $ticket_id = null ) {
 		if ( ! is_numeric( $order_id ) ) {
 			return parent::get_attendees_by_order_id( $order_id, $ticket_id );
 		}
@@ -1804,8 +1809,9 @@ class Tribe__Tickets__Commerce__PayPal__Main extends Tribe__Tickets__Tickets {
 		 *
 		 * @param int Post ID
 		 * @param string the provider class name
+		 * @param int $ticket_id The ticket ID.
 		 */
-		do_action( 'tribe_events_tickets_metabox_edit_ajax_advanced', $post_id, $provider );
+		do_action( 'tribe_events_tickets_metabox_edit_ajax_advanced', $post_id, $provider, $ticket_id );
 
 		echo '</div>';
 	}

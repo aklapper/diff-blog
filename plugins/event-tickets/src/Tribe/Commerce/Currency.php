@@ -4,6 +4,8 @@ class Tribe__Tickets__Commerce__Currency {
 
 	/**
 	 * @var string
+	 *
+	 * @depreacated 5.2.2
 	 */
 	public $currency_code;
 
@@ -16,7 +18,6 @@ class Tribe__Tickets__Commerce__Currency {
 	 * @since 4.7
 	 */
 	public function __construct() {
-		$this->currency_code = tribe_get_option( 'ticket-commerce-currency-code', 'USD' );
 		$this->generate_default_currency_map();
 	}
 
@@ -44,7 +45,7 @@ class Tribe__Tickets__Commerce__Currency {
 	 * @return string
 	 */
 	public function get_currency_symbol( $post_id = null, $decode = false ) {
-		$symbol = $this->currency_code_options_map[ $this->currency_code ]['symbol'];
+		$symbol = $this->currency_code_options_map[ $this->get_currency_code() ]['symbol'];
 		$symbol = apply_filters( 'tribe_commerce_currency_symbol', $symbol, $post_id );
 
 		return $decode ? html_entity_decode( $symbol ) : $symbol;
@@ -98,10 +99,10 @@ class Tribe__Tickets__Commerce__Currency {
 	 * @return string
 	 */
 	public function get_currency_symbol_position( $post_id = null ) {
-		if ( ! isset( $this->currency_code_options_map[ $this->currency_code ]['position'] ) ) {
+		if ( ! isset( $this->currency_code_options_map[ $this->get_currency_code() ]['position'] ) ) {
 			$currency_position = 'prefix';
 		} else {
-			$currency_position = $this->currency_code_options_map[ $this->currency_code ]['position'];
+			$currency_position = $this->currency_code_options_map[ $this->get_currency_code() ]['position'];
 		}
 
 		if (
@@ -142,8 +143,8 @@ class Tribe__Tickets__Commerce__Currency {
 
 	/**
 	 * Format the currency using the currency_code_options_map
-	 * @param      $cost
-	 * @param null $post_id
+	 * @param numeric $cost
+	 * @param null    $post_id
 	 *
 	 * @return string
 	 */
@@ -422,12 +423,18 @@ class Tribe__Tickets__Commerce__Currency {
 	 *
 	 * @since 4.7
 	 *
-	 * @param string $provider  The ticket provider class name
+	 * @param mixed  $provider  The ticket provider class name or object.
 	 * @param int    $object_id The post ID
 	 *
 	 * @return string
 	 */
 	public function get_provider_symbol( $provider, $object_id = null ) {
+
+		// Convert to class name if object is passed.
+		if ( is_object( $provider ) ) {
+			$provider = get_class( $provider );
+		}
+
 		if ( ! class_exists( $provider ) ) {
 			return $this->get_currency_symbol( $object_id );
 		}
@@ -438,6 +445,10 @@ class Tribe__Tickets__Commerce__Currency {
 
 		if ( 'Tribe__Tickets_Plus__Commerce__EDD__Main' === $provider && function_exists( 'edd_currency_symbol' ) ) {
 			return edd_currency_symbol();
+		}
+
+		if ( 'TEC\Tickets\Commerce\Module' === $provider && function_exists( 'tec_tickets_commerce_currency_symbol' ) ) {
+			return tec_tickets_commerce_currency_symbol();
 		}
 
 		/** @var Tribe__Tickets__Commerce__PayPal__Main $tpp */
@@ -456,21 +467,21 @@ class Tribe__Tickets__Commerce__Currency {
 	 *
 	 * @since 4.7
 	 *
-	 * @param string $provider
-	 * @param string $cost
+	 * @since 5.3.2 removed unused WooCommerce formatting.
+	 *
+	 * @param string | Tribe__Tickets__Tickets $provider Provider class name or object.
+	 * @param string $cost Cost for the Event.
 	 *
 	 * @return string
 	 */
 	protected function get_provider_cost( $provider = '', $cost = '' ) {
-		if ( ! class_exists( $provider ) ) {
-			return $cost;
+		// Convert to class name if object is passed.
+		if ( is_object( $provider ) ) {
+			$provider = get_class( $provider );
 		}
 
-		if (
-			'Tribe__Tickets_Plus__Commerce__WooCommerce__Main' === $provider
-			&& function_exists( 'wc_format_localized_price' )
-		) {
-			return wc_format_localized_price( $cost );
+		if ( ! class_exists( $provider ) ) {
+			return $cost;
 		}
 
 		if (
@@ -488,12 +499,18 @@ class Tribe__Tickets__Commerce__Currency {
 	 *
 	 * @since 4.7
 	 *
-	 * @param string $provider  The ticket provider class name
+	 * @param mixed  $provider  The ticket provider class name or object.
 	 * @param int    $object_id The post ID
 	 *
 	 * @return string
 	 */
 	public function get_provider_symbol_position( $provider, $object_id ) {
+
+		// Convert to class name if object is passed.
+		if ( is_object( $provider ) ) {
+			$provider = get_class( $provider );
+		}
+
 		if ( ! class_exists( $provider ) ) {
 			return $this->get_currency_symbol_position( $object_id );
 		}
@@ -512,6 +529,10 @@ class Tribe__Tickets__Commerce__Currency {
 			return 'before' === $position ? 'prefix' : 'postfix';
 		}
 
+		if ( 'TEC\Tickets\Commerce\Module' === $provider && function_exists( 'tec_tickets_commerce_currency_position' ) ) {
+			return tec_tickets_commerce_currency_position();
+		}
+
 		return $this->get_currency_symbol_position( $object_id );
 	}
 
@@ -526,7 +547,7 @@ class Tribe__Tickets__Commerce__Currency {
 	 * @return string
 	 */
 	public function get_currency_locale( $key, $currency_code = null ) {
-		$currency_code = null === $currency_code ? $this->currency_code : strtoupper( $currency_code );
+		$currency_code = null === $currency_code ? $this->get_currency_code() : strtoupper( $currency_code );
 
 		$default       = reset( $this->currency_code_options_map );
 		$currency_data = Tribe__Utils__Array::get( $this->currency_code_options_map, $currency_code, $default );
@@ -592,7 +613,7 @@ class Tribe__Tickets__Commerce__Currency {
 	 *                e.g. "USD".
 	 */
 	public function get_currency_code() {
-		return $this->currency_code;
+		return tribe_get_option( 'ticket-commerce-currency-code', 'USD' );
 	}
 
 	/**
@@ -825,6 +846,17 @@ class Tribe__Tickets__Commerce__Currency {
 	 * @return mixed
 	 */
 	public function get_formatted_currency_with_symbol( $amount, $post_id, $provider = null, $html = true ) {
+
+		if ( \TEC\Tickets\Commerce\Module::class === $provider ) {
+			$value = \TEC\Tickets\Commerce\Utils\Value::create( $amount );
+
+			if ( $html ) {
+				return $value->get_shortcode_price_html();
+			}
+
+			return $value->get_currency();
+		}
+
 
 		$amount   = $this->get_formatted_currency( $amount, $post_id, $provider );
 		$currency = $this->get_currency_by_provider( $post_id, $provider );

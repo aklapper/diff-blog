@@ -1,14 +1,14 @@
 <?php
-
 use Tribe\Tickets\Events\Service_Provider as Events_Service_Provider;
 use Tribe\Tickets\Promoter\Service_Provider as Promoter_Service_Provider;
+use Tribe\Tickets\Admin\Settings;
 
 class Tribe__Tickets__Main {
 
 	/**
 	 * Current version of this plugin
 	 */
-	const VERSION = '5.1.5';
+	const VERSION = '5.4.3.1';
 
 	/**
 	 * Used to store the version history.
@@ -43,7 +43,7 @@ class Tribe__Tickets__Main {
 	*
 	* @since 4.10
 	*/
-	protected $min_tec_version = '5.5.0';
+	protected $min_tec_version = '5.15.0-dev';
 
 	/**
 	 * Name of the provider
@@ -302,8 +302,19 @@ class Tribe__Tickets__Main {
 
 		add_action( 'tribe_common_loaded', [ $this, 'bootstrap' ], 0 );
 
-		// Customizer support.
-		tribe_register_provider( Tribe\Tickets\Service_Providers\Customizer::class );
+		// Customizer support - only loaded on older version of TEC for backwards compatibility.
+		if (
+			class_exists( 'Tribe__Events__Main' )
+			&& (
+				! function_exists( 'tribe_events_views_v2_is_enabled' )
+				|| ! tribe_events_views_v2_is_enabled()
+			)
+		) {
+			tribe_register_provider( Tribe\Tickets\Service_Providers\Customizer::class );
+		}
+
+		// Admin home.
+		tribe_register_provider( Tribe\Tickets\Admin\Home\Service_Provider::class );
 	}
 
 	/**
@@ -345,13 +356,16 @@ class Tribe__Tickets__Main {
 	public function bind_implementations() {
 		tribe_singleton( 'tickets.main', $this );
 
+		// Tickets Commerce providers.
+		tribe_register_provider( TEC\Tickets\Provider::class );
+
 		tribe_singleton( 'tickets.rsvp', new Tribe__Tickets__RSVP );
 		tribe_singleton( 'tickets.commerce.cart', 'Tribe__Tickets__Commerce__Cart' );
 		tribe_singleton( 'tickets.commerce.currency', 'Tribe__Tickets__Commerce__Currency', [ 'hook' ] );
 		tribe_singleton( 'tickets.commerce.paypal', new Tribe__Tickets__Commerce__PayPal__Main );
 		tribe_singleton( 'tickets.redirections', 'Tribe__Tickets__Redirections' );
 
-		tribe_singleton( 'tickets.theme-compatibility', 'Tribe__Tickets__Theme_Compatibility' );
+		tribe_singleton( Tribe__Tickets__Theme_Compatibility::class, Tribe__Tickets__Theme_Compatibility::class );
 
 		// Event Tickets Provider to manage Events.
 		tribe_register_provider( Events_Service_Provider::class );
@@ -379,8 +393,11 @@ class Tribe__Tickets__Main {
 		// Admin manager.
 		tribe_register_provider( Tribe\Tickets\Admin\Manager\Service_Provider::class );
 
-		// Promoter
+		// Promoter.
 		tribe_register_provider( Promoter_Service_Provider::class );
+
+		// Admin provider.
+		tribe_register_provider( \Tribe\Tickets\Admin\Provider::class );
 	}
 
 	/**
@@ -415,8 +432,11 @@ class Tribe__Tickets__Main {
 			), 'upgrade-plugin_' . $plugin_short_path
 		);
 
+		$min_version = str_replace( '-dev', '', $this->min_tec_version );
+
 		$output = '<div class="error">';
-		$output .= '<p>' . sprintf( __( 'When The Events Calendar and Event Tickets are both activated, The Events Calendar must be running version %1$s or greater. Please %2$supdate now.%3$s', 'event-tickets' ), $this->min_tec_version, '<a href="' . esc_url( $upgrade_path ) . '">', '</a>' ) . '</p>';
+		// Translators: %1$s is the min required version of The Events Calendar. %2$s Is the update link opening `<a>`. %3$s Is the update link closing `</a>`.
+		$output .= '<p>' . sprintf( __( 'When The Events Calendar and Event Tickets are both activated, The Events Calendar must be running version %1$s or greater. Please %2$supdate now.%3$s', 'event-tickets' ), $min_version, '<a href="' . esc_url( $upgrade_path ) . '">', '</a>' ) . '</p>';
 		$output .= '</div>';
 
 		echo $output;
@@ -513,6 +533,7 @@ class Tribe__Tickets__Main {
 		$this->register_plugin_autoload_paths();
 
 		require_once $this->plugin_path . 'src/template-tags/tickets.php';
+		require_once $this->plugin_path . 'src/template-tags/commerce.php';
 
 		// deprecated classes are registered in a class to path fashion
 		foreach ( glob( $this->plugin_path . 'src/deprecated/*.php' ) as $file ) {
@@ -596,7 +617,7 @@ class Tribe__Tickets__Main {
 		add_action( 'init', tribe_callback( 'tickets.commerce.cart', 'hook' ) );
 
 		// Theme Compatibility.
-		add_filter( 'body_class', tribe_callback( 'tickets.theme-compatibility', 'filter_body_class' ) );
+		add_filter( 'body_class', [ tribe( Tribe__Tickets__Theme_Compatibility::class ), 'add_body_classes' ], 55 );
 	}
 
 	/**
@@ -815,6 +836,8 @@ class Tribe__Tickets__Main {
 		if ( empty( $this->activation_page ) ) {
 			$this->activation_page = new Tribe__Admin__Activation_Page( [
 				'slug'                  => 'event-tickets',
+				'admin_page'            => 'tickets_page_tec-tickets-settings',
+				'admin_url'             => tribe( Settings::class )->get_url(),
 				'version'               => self::VERSION,
 				'activation_transient'  => '_tribe_tickets_activation_redirect',
 				'plugin_path'           => $this->plugin_dir . 'event-tickets.php',
@@ -891,16 +914,23 @@ class Tribe__Tickets__Main {
 	}
 
 	/**
-	 * settings page object accessor
+	 * Settings page object accessor.
+	 *
+	 * @return \Tribe\Tickets\Admin\Settings
 	 */
 	public function settings_tab() {
-		static $settings;
+		return tribe( \Tribe\Tickets\Admin\Settings::class );
+	}
 
-		if ( ! $settings ) {
-			$settings = new Tribe__Tickets__Admin__Ticket_Settings;
-		}
-
-		return $settings;
+	/**
+	 * Settings page object accessor.
+	 *
+	 * @since 5.4.0
+	 *
+	 * @return \Tribe\Tickets\Admin\Settings
+	 */
+	public function settings() {
+		return $this->settings_tab();
 	}
 
 	/**

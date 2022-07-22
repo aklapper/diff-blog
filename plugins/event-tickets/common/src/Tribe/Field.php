@@ -143,20 +143,21 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			$label_attributes = $args['label_attributes'];
 			$tooltip    = wp_kses(
 				$args['tooltip'], [
-					'a'      => [ 'href' => [], 'title' => [], 'target' => [] ],
+					'a'      => [  'class' => [], 'href' => [], 'title' => [], 'target' => [], 'rel' => [] ],
 					'br'     => [],
-					'em'     => [],
-					'strong' => [],
-					'b'      => [],
-					'i'      => [],
-					'u'      => [],
+					'em'     => [ 'class' => [] ],
+					'strong' => [ 'class' => [] ],
+					'b'      => [ 'class' => [] ],
+					'i'      => [ 'class' => [] ],
+					'u'      => [ 'class' => [] ],
 					'img'    => [
+						'class' => [],
 						'title' => [],
 						'src'   => [],
 						'alt'   => [],
 					],
 					'code'   => [ 'span' => [] ],
-					'span'   => [],
+					'span'   => [ 'class' => [] ],
 				]
 			);
 			$fieldset_attributes = [];
@@ -231,7 +232,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				} else {
 
 					// fail, log the error
-					Tribe__Main::debug( esc_html__( 'Invalid field type specified', 'tribe-common' ), $this->type, 'notice' );
+					Tribe__Debug::debug( esc_html__( 'Invalid field type specified', 'tribe-common' ), $this->type, 'notice' );
 
 				}
 			}

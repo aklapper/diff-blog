@@ -5,6 +5,9 @@
  * Helpers to work with and customize ticketing-related features.
  */
 
+use TEC\Tickets\Commerce\Repositories\Tickets_Repository;
+
+
 // Don't load directly
 if ( ! defined( 'ABSPATH' ) ) {
 	exit( '-1' );
@@ -1247,6 +1250,7 @@ if ( ! function_exists( 'tribe_tickets' ) ) {
 			'rsvp'           => 'tickets.ticket-repository.rsvp',
 			'tribe-commerce' => 'tickets.ticket-repository.commerce',
 			'restv1'         => 'tickets.rest-v1.ticket-repository',
+			'tickets-commerce' => Tickets_Repository::class,
 		];
 
 		/**
@@ -1791,8 +1795,13 @@ if ( ! function_exists( 'tribe_tickets_new_views_is_enabled' ) ) {
 			return (bool) $env_var;
 		}
 
+		// If ET was installed on or after version 5.0.3, default to enabled.
+		$should_default_to_on_et = ! tribe_installed_before( 'Tribe__Tickets__Main', '5.0.3' );
+
 		// If ETP was installed on or after version 5.1, default to enabled.
-		$should_default_to_on = class_exists( 'Tribe__Tickets_Plus__Main' ) && ! tribe_installed_before( 'Tribe__Tickets_Plus__Main', '5.1' );
+		$should_default_to_on_etp = class_exists( 'Tribe__Tickets_Plus__Main' ) && ! tribe_installed_before( 'Tribe__Tickets_Plus__Main', '5.1' );
+
+		$should_default_to_on = $should_default_to_on_etp || $should_default_to_on_et;
 
 		// Check for settings UI option.
 		$enabled = (bool) tribe_get_option( 'tickets_use_new_views', $should_default_to_on );
@@ -1808,4 +1817,21 @@ if ( ! function_exists( 'tribe_tickets_new_views_is_enabled' ) ) {
 		 */
 		return (bool) apply_filters( 'tribe_tickets_new_views_is_enabled', $enabled );
 	}
+}
+/**
+ * Returns the tickets provider slug.
+ *
+ * @since 5.1.10
+ *
+ * @return string String containing the tickets provider slug.
+ */
+function tribe_tickets_get_provider_query_slug() {
+	/**
+	 * Allow filtering of the tickets_provider slug.
+	 *
+	 * @since 5.1.10
+	 *
+	 * @param string  String for which the slug should be named.
+	 */
+	return apply_filters( 'tribe_tickets_get_provider_query_slug', 'tickets_provider' );
 }

@@ -263,12 +263,13 @@ class Tribe__Tickets__REST__V1__Post_Repository
 			$provider_class = get_class( $provider_class );
 		}
 
-		$map = array(
+		$map = [
 			'Tribe__Tickets__RSVP'                             => 'rsvp',
 			'Tribe__Tickets__Commerce__PayPal__Main'           => 'tribe-commerce',
 			'Tribe__Tickets_Plus__Commerce__WooCommerce__Main' => 'woo',
 			'Tribe__Tickets_Plus__Commerce__EDD__Main'         => 'edd',
-		);
+			\TEC\Tickets\Commerce\Module::class                => \TEC\Tickets\Commerce::ABBR,
+		];
 
 		/**
 		 * Filters the provider class to slug map.
@@ -508,11 +509,15 @@ class Tribe__Tickets__REST__V1__Post_Repository
 		/** @var Tribe__Tickets__Tickets_Handler $handler */
 		$handler = tribe( 'tickets.handler' );
 
-		$start_date = get_post_meta( $ticket_id, $handler->key_start_date, true );
+		$start_info = [
+			get_post_meta( $ticket_id, $handler->key_start_date, true ),
+			get_post_meta( $ticket_id, $handler->key_start_time, true )
+		];
+		$start_string = implode( ' ', $start_info );
 
 		return $get_details
-			? $this->get_date_details( $start_date )
-			: $start_date;
+			? $this->get_date_details( $start_string )
+			: $start_string;
 	}
 
 	/**
@@ -529,11 +534,15 @@ class Tribe__Tickets__REST__V1__Post_Repository
 		/** @var Tribe__Tickets__Tickets_Handler $handler */
 		$handler = tribe( 'tickets.handler' );
 
-		$end_date = get_post_meta( $ticket_id, $handler->key_end_date, true );
+		$end_info = [
+			get_post_meta( $ticket_id, $handler->key_end_date, true ),
+			get_post_meta( $ticket_id, $handler->key_end_time, true ),
+		];
+		$end_string = implode( ' ', $end_info );
 
 		return $get_details
-			? $this->get_date_details( $end_date )
-			: $end_date;
+			? $this->get_date_details( $end_string )
+			: $end_string;
 	}
 
 	/**

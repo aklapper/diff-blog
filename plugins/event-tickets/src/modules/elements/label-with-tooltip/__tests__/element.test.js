@@ -7,7 +7,7 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-import LabelWithTooltip from '@moderntribe/tickets/elements/label-with-tooltip/element';
+import LabelWithTooltip from '../element';
 
 jest.mock( '@wordpress/components', () => ( {
 	Tooltip: ( { text, position, children } ) => (
@@ -28,7 +28,7 @@ describe( 'Tooltip Element', () => {
 			tooltipPosition: 'bottom left',
 			tooltipText: 'here is the tooltip text',
 		};
-		const component = renderer.create( <LabelWithTooltip { ...props } />)
-		expect( component.toJSON() ).toMatchSnapshot()
+		const component = renderer.create( <LabelWithTooltip { ...props } /> );
+		expect( component.toJSON() ).toMatchSnapshot();
 	} );
 } );

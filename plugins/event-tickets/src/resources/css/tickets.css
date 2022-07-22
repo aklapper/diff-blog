@@ -5,7 +5,7 @@
  * src/resources/postcss/ file. For more information, check out our engineering
  * docs on how we handle CSS in our engineering docs.
  *
- * @see: http://moderntribe.github.io/products-engineering/css/
+ * @see: https://the-events-calendar.github.io/products-engineering/docs/code-standards/css/
  */
 
 /**
@@ -13,6 +13,18 @@
  *
  * @since 5.0.3
  */
+
+/*
+ * Common CSS
+ *
+ * DO NOT EDIT THIS CSS FILE DIRECTLY.
+ * -------------------------------------------------------------
+ * This file is just a clearing-house, see the pcss directory
+ *
+ and edit the source files found there.
+ */
+
+/* Event Tickets Utilities */
 
 /* -----------------------------------------------------------------------------
  *
@@ -23,87 +35,7 @@
  *
  * ----------------------------------------------------------------------------- */
 
-/* Variables */
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Borders - Radius
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Borders - Width
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Box Shadows
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Layers of z-index
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Colors - Typography
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Colors - Iconography
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Colors - UI
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Colors - Borders & Misc
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Forms - Colors
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Forms - Box Shadows
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Gutter - Default
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Gutter - Page
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Grid Width - Default
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Grid Width - Relative
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Opacities
-	 * ----------------------------------------------------------------------------- */
-}
-
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Spacers
-	 * ----------------------------------------------------------------------------- */
-}
+/* Variables - needed everywhere. */
 
 /* -----------------------------------------------------------------------------
  * SVG - Arrow Right
@@ -189,6 +121,8 @@
  * SVG - Messages
  * ----------------------------------------------------------------------------- */
 
+/* stylelint-disable-line block-no-empty */
+
 /* -----------------------------------------------------------------------------
  * SVG - Month
  * ----------------------------------------------------------------------------- */
@@ -196,6 +130,8 @@
 /* -----------------------------------------------------------------------------
  * SVG - No Map
  * ----------------------------------------------------------------------------- */
+
+/* stylelint-disable-line block-no-empty */
 
 /* -----------------------------------------------------------------------------
  * SVG - Paper Plane
@@ -237,29 +173,11 @@
  * SVG - Week
  * ----------------------------------------------------------------------------- */
 
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Transitions
-	 * ----------------------------------------------------------------------------- */
-}
+/* -----------------------------------------------------------------------------
+ * SVG - Cal Export
+ * ----------------------------------------------------------------------------- */
 
-:root {
-	/* -----------------------------------------------------------------------------
-	 * Font Stacks
-	 * ----------------------------------------------------------------------------- */ /* stylelint-disable-line value-keyword-case */
-
-	/* -----------------------------------------------------------------------------
-	 * Font Weights
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Font Sizing
-	 * ----------------------------------------------------------------------------- */
-
-	/* -----------------------------------------------------------------------------
-	 * Line Height
-	 * ----------------------------------------------------------------------------- */
-}
+/* stylelint-disable-line block-no-empty */
 
 /* Mixins */
 
@@ -344,6 +262,13 @@
  * ----------------------------------------------------------------------------- */
 
 /* -----------------------------------------------------------------------------
+ * Anchor - Event Title
+ *
+ * This mixin intentionally only affects the text and border _colors_
+ * to make sure they all follow the Customizer overrides.
+ * ----------------------------------------------------------------------------- */
+
+/* -----------------------------------------------------------------------------
  * Button - Global
  * ----------------------------------------------------------------------------- */
 
@@ -389,23 +314,25 @@
  * Visually Show: Show element after has been hidden with %visually-hide
  * ----------------------------------------------------------------------------- */
 
+/* Event Tickets Components */
+
 /* Accordion Styles */
 
 .accordion-header {
 	background: none;
 	border: 0;
+	box-sizing: border-box;
 	color: inherit;
 	cursor: pointer;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 10px 20px;
-	box-sizing: border-box;
 	position: relative;
 	text-align: left;
 	width: 100%;
 }
 
-.accordion-header::before {
+.accordion-header:before {
 		background-color: #000;
 		border-radius: 100%;
 		box-sizing: border-box;
@@ -413,29 +340,29 @@
 		content: '\f132';
 		font-family: 'dashicons';
 		font-size: 10px;
-		line-height: 17px;
 		font-weight: 400;
 		height: 14px;
 		left: 0;
+		line-height: 17px;
 		padding: 0;
+		padding-right: 1px;
 		position: absolute;
+		text-align: center;
 		top: 12px;
 		width: 15px;
-		text-align: center;
-		padding-right: 1px;
 	}
 
-.accordion-header::after {
-		content: '';
+.accordion-header:after {
 		border-bottom: 1px solid #ddd;
+		content: '';
 		position: absolute;
 		right: 0;
-		width: 80%;
 		top: 50%;
 		transform: translateY(-50%);
+		width: 80%;
 	}
 
-.accordion-header.is-active::before {
+.accordion-header.is-active:before {
 			content: '\f460';
 			line-height: 15px;
 		}
@@ -448,15 +375,15 @@
 		background: none;
 	}
 
-.tribe-tickets-editor-history::after {
+.tribe-tickets-editor-history:after {
 	width: calc(100% - 80px);
 }
 
-.tribe_attendee_meta::after {
+.tribe_attendee_meta:after {
 	width: calc(100% - 170px);
 }
 
-.tribe_advanced_meta::after {
+.tribe_advanced_meta:after {
 	width: calc(100% - 105px);
 }
 
@@ -479,7 +406,7 @@
 .tribe-common-c-loader.tribe-tickets-loader__tickets-block,
 	.tribe-common-c-loader.tribe-tickets-loader__modal {
 		align-items: center;
-		background: rgba(255,255,255, 0.6);
+		background: var(--tec-color-background-transparent);
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -488,7 +415,7 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 100;
+		z-index: var(--tec-z-index-spinner-container);
 	}
 
 .tribe-common-c-loader.tribe-tickets-loader__modal {
@@ -499,7 +426,7 @@
 
 .event-tickets .tribe-common-c-loader {
 		align-items: center;
-		background: rgba(255,255,255, 0.6);
+		background: var(--tec-color-background-transparent);
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -508,27 +435,27 @@
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: 100;
+		z-index: var(--tec-z-index-spinner-container);
 	}
 
-.tribe-common .tribe-tickets__notice {
-		padding: 16px;
-		background-color: #f7f6f6;
-		border-radius: 4px;
-		margin: 20px 0;
+.tribe-common .tribe-tickets__notice, .event-tickets .tribe-tickets__notice {
+		background-color: var(--tec-color-background-secondary);
+		border-radius: var(--tec-border-radius-default);
+		margin: var(--tec-spacer-4) 0;
+		padding: var(--tec-spacer-3);
 	}
 
-.tribe-common .tribe-tickets__notice > *:last-child {
-			padding-bottom: 0;
+.tribe-common .tribe-tickets__notice > *:last-child, .event-tickets .tribe-tickets__notice > *:last-child {
 			margin-bottom: 0;
+			padding-bottom: 0;
 		}
 
-.tribe-common .tribe-tickets-notice__title {
+.tribe-common .tribe-tickets-notice__title, .event-tickets .tribe-tickets-notice__title {
 		margin: 0;
 		position: relative;
 	}
 
-.tribe-common .tribe-tickets-notice__title:empty {
+.tribe-common .tribe-tickets-notice__title:empty, .event-tickets .tribe-tickets-notice__title:empty {
 			display: none;
 		}
 
@@ -536,48 +463,45 @@
 		Error Notices
 	*/
 
-.tribe-common .tribe-tickets__notice--error {
-		background-color: rgba(218,57,77, 0.08);
+.tribe-common .tribe-tickets__notice--error, .event-tickets .tribe-tickets__notice--error {
+		background-color: var(--tec-color-background-error);
 		display: none;
 		padding-left: 50px;
-	}
-
-.tribe-common .tribe-tickets__notice--error .tribe-tickets-notice__title {
 		position: relative;
 	}
 
-.tribe-common .tribe-tickets__notice--error .tribe-tickets-notice__title:before {
-			background-image: url( "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3E%3Cg fill='none' fill-rule='evenodd' transform='translate(1 1)'%3E%3Ccircle cx='8' cy='8' r='7.467' stroke='%23141827' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Ccircle cx='8' cy='11.733' r='1.067' fill='%23141827' fill-rule='nonzero'/%3E%3Cpath stroke='%23141827' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M8 3.733v4.8' fill='%23141827'/%3E%3C/g%3E%3C/svg%3E" );
+.tribe-common .tribe-tickets__notice--error:before, .event-tickets .tribe-tickets__notice--error:before {
+			background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3E%3Cg fill='none' fill-rule='evenodd' transform='translate(1 1)'%3E%3Ccircle cx='8' cy='8' r='7.467' stroke='%23141827' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5'/%3E%3Ccircle cx='8' cy='11.733' r='1.067' fill='%23141827' fill-rule='nonzero'/%3E%3Cpath stroke='%23141827' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M8 3.733v4.8' fill='%23141827'/%3E%3C/g%3E%3C/svg%3E");
 			background-size: contain;
 			content: '';
-			height: 16px;
-			left: -32px;
+			height: var(--tec-spacer-3);
+			left: var(--tec-spacer-4);
 			position: absolute;
-			top: 2px;
-			width: 16px;
+			top: var(--tec-spacer-4);
+			width: var(--tec-spacer-3);
 		}
 
 /*
 		"Barred" Notices (visible side borders)
 	*/
 
-.tribe-common .tribe-tickets__notice--barred {
-		background-color: #fff;
-		border: 4px solid #e4e4e4;
+.tribe-common .tribe-tickets__notice--barred, .event-tickets .tribe-tickets__notice--barred {
+		background-color: var(--tec-color-background);
+		border: var(--tec-spacer-0) solid var(--tec-color-border-secondary);
 		border-bottom: 0;
 		border-radius: 0;
 		border-top: 0;
-		padding: 0 12px;
+		padding: 0 var(--tec-spacer-2);
 	}
 
-.tribe-common .tribe-tickets__notice--barred-left {
+.tribe-common .tribe-tickets__notice--barred-left, .event-tickets .tribe-tickets__notice--barred-left {
 		border-right: 0;
-		padding: 0 0 0 12px;
+		padding: 0 0 0 var(--tec-spacer-2);
 	}
 
-.tribe-common .tribe-tickets__notice--barred-right {
+.tribe-common .tribe-tickets__notice--barred-right, .event-tickets .tribe-tickets__notice--barred-right {
 		border-left: 0;
-		padding: 0 12px 0 0;
+		padding: 0 var(--tec-spacer-2) 0 0;
 	}
 
 /* -------------------------------------------------------------------------
@@ -598,13 +522,13 @@
 /* Defining our tooltipster theme. */
 
 .tooltipster-base.tribe-tickets-tooltip-theme {
-	background-color: #fff;
-	border: 1px solid #d5d5d5;
-	border-radius: 4px;
-	box-shadow: 0 2px 12px 0 rgba(0,0,0, 0.14);
+	background-color: var(--tec-color-background);
+	border: 1px solid var(--tec-color-border-default);
+	border-radius: var(--tec-border-radius-default);
+	box-shadow: var(--tec-box-shadow-tooltip);
 	height: auto !important;
-	padding: 24px;
 	max-width: 254px;
+	padding: var(--tec-spacer-5);
 }
 
 .tooltipster-base.tribe-tickets-tooltip-theme .tooltipster-box {
@@ -616,7 +540,7 @@
 	}
 
 .tooltipster-base.tribe-tickets-tooltip-theme .tooltipster-box .tooltipster-content {
-			color: #141827;
+			color: var(--tec-color-text-primary);
 			overflow: inherit;
 			padding: 0;
 			word-break: break-word;
@@ -637,7 +561,7 @@
 	 * ----------------------------------------------------------------------------- */
 
 .tribe-common button.tribe-common-c-btn--small, .tribe-common input[type="button"].tribe-common-c-btn--small, .tribe-common input[type="submit"].tribe-common-c-btn--small, .tribe-common a.tribe-common-c-btn--small {
-			background-color: #334aff;
+			background-color: var(--tec-color-accent-primary);
 			padding: 11px 14px;
 			width: auto;
 		}
@@ -653,11 +577,11 @@
 	 * ----------------------------------------------------------------------------- */
 
 .tribe-common button.tribe-common-c-btn-link, .tribe-common input[type="button"].tribe-common-c-btn-link, .tribe-common input[type="submit"].tribe-common-c-btn-link, .tribe-common a.tribe-common-c-btn-link {
-			color: #141827;
-			font-family: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-			font-size: 14px;
-			line-height: 1.62;
-			font-weight: 400;
+			color: var(--tec-color-text-primary);
+			font-family: var(--tec-font-family-sans-serif);
+			font-size: var(--tec-font-size-2);
+			line-height: var(--tec-line-height-3);
+			font-weight: var(--tec-font-weight-regular);
 			border: 0;
 			cursor: pointer;
 			display: inline-block;
@@ -668,7 +592,7 @@
 			background-color: transparent;
 			text-align: center;
 			text-decoration: underline;
-			transition: color 0.2s ease;
+			transition: var(--tec-transition-color);
 		}
 
 .tribe-common button.tribe-common-c-btn-link:hover,
@@ -685,7 +609,7 @@
 .tribe-common button.tribe-common-c-btn-link, .tribe-common input[type="button"].tribe-common-c-btn-link, .tribe-common input[type="submit"].tribe-common-c-btn-link, .tribe-common a.tribe-common-c-btn-link {
 
 			background-color: transparent;
-			color: #334aff;
+			color: var(--tec-color-accent-primary);
 			padding: 11px 20px;
 			width: 100%;
 }
@@ -698,15 +622,15 @@
 			.tribe-common input[type="submit"].tribe-common-c-btn-link:hover,
 			.tribe-common a.tribe-common-c-btn-link:focus,
 			.tribe-common a.tribe-common-c-btn-link:hover {
-				color: rgba(51,74,255, 0.8);
+				color: var(--tec-color-accent-primary-hover);
 			}
 
 .tribe-common button.tribe-common-c-btn-link:active, .tribe-common input[type="button"].tribe-common-c-btn-link:active, .tribe-common input[type="submit"].tribe-common-c-btn-link:active, .tribe-common a.tribe-common-c-btn-link:active {
-				color: rgba(51,74,255, 0.9);
+				color: var(--tec-color-accent-primary-active);
 			}
 
 .tribe-common button.tribe-common-c-btn-link:disabled, .tribe-common input[type="button"].tribe-common-c-btn-link:disabled, .tribe-common input[type="submit"].tribe-common-c-btn-link:disabled, .tribe-common a.tribe-common-c-btn-link:disabled {
-				color: rgba(51,74,255, 0.07);
+				color: var(--tec-color-accent-primary-background);
 			}
 
 /**
@@ -722,15 +646,15 @@
  */
 
 .event-tickets .tribe-tickets__tickets-form, .entry .entry-content .event-tickets .tribe-tickets__tickets-form {
-		background-color: #fff;
-		border-radius: 4px;
-		border: 1px solid #e4e4e4;
+		background-color: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-secondary);
+		border-radius: var(--tec-border-radius-default);
 		-moz-osx-font-smoothing: grayscale;
 		-webkit-font-smoothing: antialiased;
-		font-smoothing: antialiased;
-		margin: 24px 0;
+		font-smoothing: antialiased; /* stylelint-disable-line property-no-unknown */
+		margin: var(--tec-spacer-5) 0;
 		max-width: 580px;
-		padding: 16px 16px  20px;
+		padding: var(--tec-spacer-3) var(--tec-spacer-3)  var(--tec-spacer-4);
 		position: relative;
 		width: 100%;
 	}
@@ -740,39 +664,42 @@
 		}
 
 .event-tickets .tribe-tickets__tickets-title, .entry .entry-content .event-tickets .tribe-tickets__tickets-title {
-		color: #141827;
-		margin: 0 0 8px;
+		color: var(--tec-color-text-primary);
+		margin: 0 0 var(--tec-spacer-1);
 	}
 
 /* Override since we don't have a header at this size */
 
 .event-tickets .tribe-tickets__notice--barred, .entry .entry-content .event-tickets .tribe-tickets__notice--barred {
-		margin-bottom: 16px;
+		margin-bottom: var(--tec-spacer-3);
 	}
 
 .event-tickets .tribe-tickets__tickets-item, .entry .entry-content .event-tickets .tribe-tickets__tickets-item {
 		align-items: center;
-		border-top: 1px solid #e4e4e4;
-		display: -ms-grid;
+		border-top: 1px solid var(--tec-color-border-secondary); /* stylelint-disable-line value-no-vendor-prefix */
 		display: grid;
 		-ms-grid-columns: 10fr 1fr;
-		grid-template-columns: 10fr 1fr;
 		-ms-grid-rows: 1fr 1.5fr;
+		grid-template-columns: 10fr 1fr;
 		grid-template-rows: auto;
 		margin: 0;
 		padding: 12px 0 16px;
 	}
 
 .event-tickets .tribe-tickets__tickets-item[data-available="false"], .entry .entry-content .event-tickets .tribe-tickets__tickets-item[data-available="false"] {
-			opacity: .5;
+			opacity: 0.5;
 		}
 
 .event-tickets .tribe-tickets__tickets-item.show-optout, .entry .entry-content .event-tickets .tribe-tickets__tickets-item.show-optout {
 			-ms-grid-columns: 10fr 1fr;
-			grid-template-columns: 10fr 1fr;
 			-ms-grid-rows: 1fr 1.5fr 1fr 1fr;
+			grid-template-columns: 10fr 1fr;
 			grid-template-rows: auto;
 		}
+
+.event-tickets .tribe-tickets__tickets-item.show-optout .tribe-tickets-attendees-list-optout--wrapper, .entry .entry-content .event-tickets .tribe-tickets__tickets-item.show-optout .tribe-tickets-attendees-list-optout--wrapper {
+				display: block;
+			}
 
 .event-tickets .tribe-tickets__tickets-item--inactive + .tribe-tickets__tickets-item--inactive, .entry .entry-content .event-tickets .tribe-tickets__tickets-item--inactive + .tribe-tickets__tickets-item--inactive {
 		display: none;
@@ -780,30 +707,22 @@
 
 .event-tickets .tribe-tickets__tickets-item-content-title, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-content-title {
 		align-self: end;
-		-ms-grid-column: 1;
 		grid-column: 1;
-		-ms-grid-row: 1;
 		grid-row: 1;
 		line-height: 1;
 	}
 
-.event-tickets .tribe-tickets__tickets-item.show-optout .tribe-tickets-attendees-list-optout--wrapper, .entry .entry-content .event-tickets .tribe-tickets__tickets-item.show-optout .tribe-tickets-attendees-list-optout--wrapper {
-			display: block;
-		}
-
 .event-tickets .tribe-tickets-attendees-list-optout--wrapper, .entry .entry-content .event-tickets .tribe-tickets-attendees-list-optout--wrapper {
 		display: none;
-		-ms-grid-column: 1;
-		-ms-grid-column-span: 3;
 		grid-column: 1/span all;
-		-ms-grid-row: 4;
+		-ms-grid-column-span: 3;
 		grid-row: 4;
 	}
 
 .event-tickets .tribe-tickets__form .tribe-tickets-attendees-list-optout--wrapper label, .entry .entry-content .event-tickets .tribe-tickets__form .tribe-tickets-attendees-list-optout--wrapper label {
-				color: #5d5d5d;
+				color: var(--tec-color-text-secondary);
 				display: flex;
-				font-size: 12px;
+				font-size: var(--tec-font-size-1);
 			}
 
 /*
@@ -811,8 +730,8 @@
 	*/
 
 .event-tickets .tribe-tickets__tickets-item--disabled *, .entry .entry-content .event-tickets .tribe-tickets__tickets-item--disabled * {
-			color: rgba( #141827, 0.8);
-			color: rgba(0,0,0, 0.5);
+			color: var(--tec-color-text-disabled);
+			color: var(--tec-color-scroll-bar);
 		}
 
 .event-tickets .tribe-tickets__tickets-item--disabled .tribe-tickets__tickets-item-quantity,
@@ -823,8 +742,8 @@
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item--disabled .tribe-tickets__tickets-item-quantity-add,
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item--disabled .tribe-tickets__tickets-item-quantity-remove,
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item--disabled .tribe-tickets__tickets-item-quantity-number-input {
-			color: rgba( #141827, 0.8);
-			color: rgba(0,0,0, 0.5);
+			color: var(--tec-color-text-disabled);
+			color: var(--tec-color-scroll-bar);
 		}
 
 /**
@@ -838,14 +757,12 @@
 	*/
 
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
-		color: #5d5d5d;
+		color: var(--tec-color-text-secondary);
 		display: none;
-		-ms-grid-column: 1;
 		grid-column: 1;
-		-ms-grid-row: 3;
 		grid-row: 3;
 		line-height: 1;
-		margin: 4px 0;
+		margin: var(--tec-spacer-0) 0;
 	}
 
 .event-tickets .tribe-tickets__tickets-item-details-content.tribe__details--open, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content.tribe__details--open {
@@ -853,35 +770,32 @@
 		}
 
 .event-tickets .tribe-tickets__tickets-item-details-summary, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary {
-		color: #5d5d5d;
-		display: -ms-grid;
+		color: var(--tec-color-text-secondary); /* stylelint-disable-line value-no-vendor-prefix */
 		display: grid;
-		-ms-grid-column: 2;
 		grid-column: 2;
-		-ms-grid-row: 1;
 		grid-row: 1;
 		justify-content: flex-start;
-		padding-left: 4px;
+		padding-left: var(--tec-spacer-0);
 	}
 
 .event-tickets .tribe-tickets__tickets-item-details-summary-button--more,
 	.event-tickets .tribe-tickets__tickets-item-details-summary-button--less,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--more,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--less {
-		color: #141827;
-		font-family: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-		font-size: 12px;
-		font-weight: 400;
-		line-height: 1.38;
+		color: var(--tec-color-text-primary);
+		font-family: var(--tec-font-family-sans-serif);
+		font-size: var(--tec-font-size-1);
+		font-weight: var(--tec-font-weight-regular);
+		line-height: var(--tec-line-height-0);
 
 		background-color: transparent;
-		color: #5d5d5d;
+		color: var(--tec-color-text-secondary);
 		position: relative;
 		white-space: nowrap;
 	}
 
 .event-tickets .tribe-tickets__tickets-item-details-summary-button--more:after, .event-tickets .tribe-tickets__tickets-item-details-summary-button--less:after, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--more:after, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--less:after {
-			border: 4px solid rgba(255,255,255, 0.6);
+			border: var(--tec-spacer-0) solid var(--tec-color-background-transparent);
 			content: '';
 			display: inline-block;
 			margin-bottom: 1px;
@@ -889,7 +803,7 @@
 
 .event-tickets .tribe-tickets__tickets-item-details-summary-button--more:after, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--more:after {
 			border-bottom: 0 none;
-			border-top: 4px solid #5d5d5d;
+			border-top: var(--tec-spacer-0) solid var(--tec-color-text-secondary);
 		}
 
 .event-tickets .tribe-tickets__tickets-item-details-summary-button--less, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--less {
@@ -897,7 +811,7 @@
 	}
 
 .event-tickets .tribe-tickets__tickets-item-details-summary-button--less:after, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-summary-button--less:after {
-			border-bottom: 4px solid #5d5d5d;
+			border-bottom: var(--tec-spacer-0) solid var(--tec-color-text-secondary);
 			border-top: 0 none;
 		}
 
@@ -922,42 +836,39 @@
 
 .event-tickets .tribe-tickets__tickets-item-extra, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra {
 		align-items: baseline;
-		-ms-grid-row: 2;
+		-ms-grid-columns: min-content max-content auto;
 		grid-row: 2;
-		-ms-grid-columns:  min-content max-content auto;
-		grid-template-columns: -webkit-min-content -webkit-max-content auto;
 		grid-template-columns: min-content max-content auto;
 	}
 
 .event-tickets .tribe-tickets__tickets-item-extra.tribe-tickets__tickets-item-extra--price-suffix, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra.tribe-tickets__tickets-item-extra--price-suffix {
-			text-align: left;
 			overflow: hidden;
+			text-align: left;
 		}
 
 .event-tickets .tribe-tickets__tickets-item-extra-available, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra-available {
-		color: #5d5d5d;
+		color: var(--tec-color-text-secondary);
 	}
 
 .event-tickets .tribe-tickets__tickets-item-extra-price, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra-price {
-
-		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 .event-tickets .tribe-tickets__tickets-item-extra-price .tribe-formatted-currency-wrap, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra-price .tribe-formatted-currency-wrap {
-			font-weight: 700;
+			font-weight: var(--tec-font-weight-bold);
 		}
 
 .event-tickets .tribe-tickets__tickets-item-extra-price .tribe-tickets__tickets-original-price, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra-price .tribe-tickets__tickets-original-price {
-			color: #5d5d5d;
-			font-weight: 400;
+			color: var(--tec-color-text-secondary);
+			font-weight: var(--tec-font-weight-regular);
 			text-decoration: line-through;
 		}
 
 .event-tickets .tribe-tickets__tickets-sale-price-suffix, .entry .entry-content .event-tickets .tribe-tickets__tickets-sale-price-suffix {
-		color: #5d5d5d;
-		font-weight: 400;
+		color: var(--tec-color-text-secondary);
+		font-weight: var(--tec-font-weight-regular);
 	}
 
 .event-tickets .tribe-tickets__tickets-sale-price-suffix small, .entry .entry-content .event-tickets .tribe-tickets__tickets-sale-price-suffix small {
@@ -965,7 +876,6 @@
 		}
 
 .event-tickets .tribe-tickets__tickets-item-extra-available + .tribe-tickets__tickets-item-details-summary, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra-available + .tribe-tickets__tickets-item-details-summary {
-		-ms-grid-column: 3;
 		grid-column: 3;
 	}
 
@@ -981,14 +891,12 @@
 
 .event-tickets .tribe-tickets__tickets-item-quantity, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity {
 		align-self: flex-start;
-		color: #5d5d5d;
+		color: var(--tec-color-text-secondary);
 		display: flex;
 		flex: 0 0 82px;
-		-ms-grid-row: 1;
-		-ms-grid-row-span: 2;
-		grid-row: 1 / span 2;
-		-ms-grid-column: 3;
 		grid-column: 3;
+		grid-row: 1 / span 2;
+		-ms-grid-row-span: 2;
 		justify-content: center;
 	}
 
@@ -1002,11 +910,11 @@
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity-remove {
 		align-self: center;
 		background-color: transparent;
-		color: #bababa;
+		color: var(--tec-color-icon-secondary);
 		display: inline-block;
 		font-size: 24px;
-		font-weight: 400;
-		margin-bottom: 4px;
+		font-weight: var(--tec-font-weight-regular);
+		margin-bottom: var(--tec-spacer-0);
 		width: 12px;
 	}
 
@@ -1019,43 +927,40 @@
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity-remove:hover,
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity-remove:focus {
 			background-color: transparent;
-			color: #5d5d5d;
+			color: var(--tec-color-icon-primary);
 		}
 
 .event-tickets .tribe-tickets__tickets-item-quantity-number, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity-number {
-		-webkit-appearance: none;
-		   -moz-appearance: none;
-		        appearance: none;
 		align-items: center;
+		-webkit-appearance: none;
+		        appearance: none;
 		background-color: transparent;
 		border: none;
+		color: var(--tec-color-icon-secondary);
 		cursor: pointer;
-		color: #bababa;
 		display: inline-flex;
 		height: 48px;
 		justify-content: center;
 		margin: 0;
-		outline:none;
+		outline: none;
 		overflow: hidden;
 		position: relative;
 		width: 40px;
 	}
 
 .event-tickets .tribe-tickets__tickets-item-quantity-unavailable, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-quantity-unavailable {
-		margin-left: 8px;
+		margin-left: var(--tec-spacer-1);
 		white-space: nowrap;
 	}
 
 .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input, .entry .entry-content .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input {
 			-webkit-appearance: textfield;
-			   -moz-appearance: textfield;
 			        appearance: textfield;
 			background: transparent;
 			border: none;
-			color: #141827;
+			color: var(--tec-color-text-primary);
 			padding: 0;
 			text-align: center;
-			width: -webkit-fit-content;
 			width: -moz-fit-content;
 			width: fit-content;
 		}
@@ -1068,11 +973,11 @@
 			}
 
 .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input:focus, .entry .entry-content .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input:focus {
-				color: #141827;
+				color: var(--tec-color-text-primary);
 			}
 
 .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input.tribe-tickets__tickets-item-quantity-number--active, .entry .entry-content .event-tickets .tribe-tickets__form input[type="number"].tribe-tickets__tickets-item-quantity-number-input.tribe-tickets__tickets-item-quantity-number--active {
-				color: #141827;
+				color: var(--tec-color-text-primary);
 			}
 
 /**
@@ -1087,18 +992,18 @@
 
 .event-tickets .tribe-tickets__tickets-footer, .entry .entry-content .event-tickets .tribe-tickets__tickets-footer {
 		align-items: baseline;
-		border-top: 1px solid #e4e4e4;
-		padding: 20px 0 0;
+		border-top: 1px solid var(--tec-color-border-secondary);
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: flex-end;
+		padding: var(--tec-spacer-4) 0 0;
 	}
 
 .event-tickets .tribe-tickets__tickets-footer-total,
 	.event-tickets .tribe-tickets__tickets-footer-quantity,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-footer-total,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-footer-quantity {
-		color: #5d5d5d;
+		color: var(--tec-color-text-secondary);
 		display: none;
 		text-align: center;
 	}
@@ -1111,7 +1016,7 @@
 		}
 
 .event-tickets .tribe-tickets__tickets-footer-total, .entry .entry-content .event-tickets .tribe-tickets__tickets-footer-total {
-		margin-left: 8px;
+		margin-left: var(--tec-spacer-1);
 	}
 
 .event-tickets .tribe-tickets__tickets-footer-total-wrap,
@@ -1120,20 +1025,20 @@
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-footer-total-wrap,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-footer-total-number,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-footer-quantity-number {
-		color: #141827;
-		font-weight: 700;
+		color: var(--tec-color-text-primary);
+		font-weight: var(--tec-font-weight-bold);
 	}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button,
 	.event-tickets .tribe-tickets__tickets-buy,
 	.entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button,
 	.entry .entry-content .event-tickets .tribe-tickets__tickets-buy {
-		color: #141827;
-		font-family: "Helvetica Neue", Helvetica, -apple-system, BlinkMacSystemFont, Roboto, Arial, sans-serif;
-		font-size: 14px;
-		line-height: 1.62;
-		font-weight: 400;
-		font-weight: 700;
+		color: var(--tec-color-text-primary);
+		font-family: var(--tec-font-family-sans-serif);
+		font-size: var(--tec-font-size-2);
+		line-height: var(--tec-line-height-3);
+		font-weight: var(--tec-font-weight-regular);
+		font-weight: var(--tec-font-weight-bold);
 		border: 0;
 		cursor: pointer;
 		display: inline-block;
@@ -1141,17 +1046,18 @@
 		padding: 0;
 		text-decoration: none;
 		width: auto;
-		border-radius: 4px;
-		color: #fff;
+		border-radius: var(--tec-border-radius-default);
+		color: var(--tec-color-background);
 		text-align: center;
-		transition: background-color 0.2s ease;
+		transition: var(--tec-transition-background-color);
+
 		margin: 0;
 		padding: 11px 14px;
 	}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn {
-			white-space: nowrap;
 			margin-left: auto;
+			white-space: nowrap;
 		}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:focus,
@@ -1162,15 +1068,16 @@
 			.entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:hover,
 			.entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:focus,
 			.entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:hover {
-				background-color: rgba(51,74,255, 0.8);
+				background-color: var(--tec-color-accent-primary-hover);
 			}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:active, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:active, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:active, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:active {
-				background-color: rgba(51,74,255, 0.9);
+				background-color: var(--tec-color-accent-primary-active);
 			}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:disabled, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:disabled, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn:disabled, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn:disabled {
-				background-color: #334aff;
+				background-color: var(--tec-color-accent-primary);
+				color: var(--tec-color-text-disabled);
 				cursor: not-allowed;
 			}
 
@@ -1186,11 +1093,11 @@
 
 .event-tickets .tribe-tickets__registration, .entry .entry-content .event-tickets .tribe-tickets__registration {
 		/* @todo: see if this is still relevant. Apparently not. */
-		border: 1px solid #e4e4e4;
+		border: 1px solid var(--tec-color-border-secondary);
 	}
 
 .event-tickets .tribe-tickets__registration-title h2, .entry .entry-content .event-tickets .tribe-tickets__registration-title h2 {
-			color: #141827;
+			color: var(--tec-color-text-primary);
 		}
 
 .event-tickets .tribe-tickets__registration-description, .entry .entry-content .event-tickets .tribe-tickets__registration-description {
@@ -1198,7 +1105,7 @@
 	}
 
 .event-tickets .tribe-ticket__tickets-heading, .entry .entry-content .event-tickets .tribe-ticket__tickets-heading { /* @todo: see if we want to have own class here, instead of a generic. */
-		margin-bottom: 16px;
+		margin-bottom: var(--tec-spacer-3);
 	}
 
 @media (min-width: 768px) {
@@ -1218,30 +1125,29 @@
 		}
 
 .event-tickets .tribe-tickets__tickets-form, .entry .entry-content .event-tickets .tribe-tickets__tickets-form {
-			padding: 24px 24px 20px
+			padding: var(--tec-spacer-5) var(--tec-spacer-5) var(--tec-spacer-4)
 	}
 
 .event-tickets .tribe-tickets__tickets-title, .entry .entry-content .event-tickets .tribe-tickets__tickets-title {
-			font-size: 20px
+			font-size: var(--tec-font-size-5)
 	}
 
 .event-tickets .tribe-tickets__tickets-item, .entry .entry-content .event-tickets .tribe-tickets__tickets-item {
 			-ms-grid-columns: 6.5fr 2fr;
-			grid-template-columns: 6.5fr 2fr;
-			-ms-grid-rows: 1fr 1.5fr 1fr
+			-ms-grid-rows: 1fr 1.5fr 1fr;
+			grid-template-columns: 6.5fr 2fr
 	}
 
 .event-tickets .tribe-tickets__tickets-item.show-optout, .entry .entry-content .event-tickets .tribe-tickets__tickets-item.show-optout {
 				-ms-grid-columns: 6.5fr 2fr 1fr;
-				grid-template-columns: 6.5fr 2fr 1fr;
-				-ms-grid-rows: 1fr 1.5fr 1fr
+				-ms-grid-rows: 1fr 1.5fr 1fr;
+				grid-template-columns: 6.5fr 2fr 1fr
 		}
 
 .event-tickets .tribe-tickets__tickets-item.tribe-tickets__tickets-item--price-suffix,
 		.event-tickets .tribe-tickets__tickets-item.tribe-tickets__tickets-item--price-suffix.show-optout,
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item.tribe-tickets__tickets-item--price-suffix,
 		.entry .entry-content .event-tickets .tribe-tickets__tickets-item.tribe-tickets__tickets-item--price-suffix.show-optout {
-				-ms-grid-columns:  5.5fr 3fr;
 				grid-template-columns: 5.5fr 3fr
 		}
 
@@ -1251,26 +1157,18 @@
 
 			.event-tickets .tribe-tickets__tickets-item-content-title.tribe-tickets--no-description, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-content-title.tribe-tickets--no-description {
 				align-self: start;
-				-ms-grid-row: 1;
-				-ms-grid-row-span: 2;
 				grid-row: 1 / span 2;
+				-ms-grid-row-span: 2;
 				padding-top: 0;
 			}
 
-.event-tickets .tribe-tickets-attendees-list-optout--wrapper, .entry .entry-content .event-tickets .tribe-tickets-attendees-list-optout--wrapper {
-			-ms-grid-row: 3;
-			grid-row: 3
-	}
-
 .event-tickets .tribe-tickets__form .tribe-tickets-attendees-list-optout--wrapper label, .entry .entry-content .event-tickets .tribe-tickets__form .tribe-tickets-attendees-list-optout--wrapper label {
-					font-size: 14px
+					font-size: var(--tec-font-size-2)
 			}
 
 .event-tickets .tribe-tickets__tickets-item-details-content, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-details-content {
 			display: block;
-			-ms-grid-column: 1;
 			grid-column: 1;
-			-ms-grid-row: 2;
 			grid-row: 2
 	}
 
@@ -1285,35 +1183,29 @@
 
 .event-tickets .tribe-tickets__tickets-item-extra, .entry .entry-content .event-tickets .tribe-tickets__tickets-item-extra {
 			align-self: start;
-			-ms-grid-column: 2;
 			grid-column: 2;
+			grid-row-end: 3;
 			-ms-grid-row-start: 1;
 			grid-row-start: 1;
-			-ms-grid-row-end: 3;
-			grid-row-end: 3;
-
-			padding: 0 12px
+			padding: 0 var(--tec-spacer-2)
 	}
 
 .event-tickets .tribe-tickets__tickets-footer-total, .entry .entry-content .event-tickets .tribe-tickets__tickets-footer-total {
-			margin-left: 24px
+			margin-left: var(--tec-spacer-5)
 	}
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn {
-				margin-left: 28px
+				margin-left: var(--tec-spacer-6)
 		}
 
 .event-tickets .tribe-ticket__tickets-heading, .entry .entry-content .event-tickets .tribe-ticket__tickets-heading {
-			margin-bottom: 20px
+			margin-bottom: var(--tec-spacer-4)
 	}
 		}
 
-@media(min-width: 400px max-width: 500px) {
-			}
-
-@media(min-width: 500px) {
+@media (min-width: 500px) {
 
 .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__attendee__fields__footer_checkout-button.tribe-common-c-btn, .entry .entry-content .event-tickets .tribe-tickets__tickets-buy.tribe-common-c-btn {
-				margin-left: 16px
+				margin-left: var(--tec-spacer-3)
 		}
 			}

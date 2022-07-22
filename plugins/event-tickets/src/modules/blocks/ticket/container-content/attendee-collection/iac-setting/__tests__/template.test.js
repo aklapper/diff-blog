@@ -5,8 +5,9 @@ import React from 'react';
 
 import IACSetting from './../template';
 
-describe.skip( 'IACSetting', () => {
-	test( 'Render the component with no errors', () => {
+describe( 'IACSetting', () => {
+	// @todo @juanfra @rafsuntaskin fix this test from failing.
+	test.skip( 'Render the component with no errors', () => {
 		const onChange = jest.fn();
 		const iacDefault = 'hello';
 		const iacOptions = [
@@ -26,7 +27,7 @@ describe.skip( 'IACSetting', () => {
 				iacDefault={ iacDefault }
 				iacOptions={ iacOptions }
 				isDisabled={ false }
-			/>
+			/>,
 		);
 		expect( component.toJSON() ).toMatchSnapshot();
 	} );

@@ -25,6 +25,7 @@ class Tribe__Tickets__Status__Manager {
 		'Tribe__Tickets__RSVP'                             => 'rsvp',
 		'Tribe__Tickets__Commerce__PayPal__Main'           => 'tpp',
 		'Tribe__Tickets_Plus__Commerce__WooCommerce__Main' => 'woo',
+		\TEC\Tickets\Commerce\Module::class                => \TEC\Tickets\Commerce::ABBR,
 	];
 	/**
 	 * Active Modules
@@ -39,10 +40,10 @@ class Tribe__Tickets__Status__Manager {
 	 * @var array
 	 */
 	protected $status_managers = [
-		'edd'  => 'Tribe__Tickets_Plus__Commerce__EDD__Status_Manager',
-		'rsvp' => 'Tribe__Tickets__RSVP__Status_Manager',
-		'tpp'  => 'Tribe__Tickets__Commerce__PayPal__Status_Manager',
-		'woo'  => 'Tribe__Tickets_Plus__Commerce__WooCommerce__Status_Manager',
+		'edd'                       => 'Tribe__Tickets_Plus__Commerce__EDD__Status_Manager',
+		'rsvp'                      => 'Tribe__Tickets__RSVP__Status_Manager',
+		'tpp'                       => 'Tribe__Tickets__Commerce__PayPal__Status_Manager',
+		'woo'                       => 'Tribe__Tickets_Plus__Commerce__WooCommerce__Status_Manager',
 	];
 
 	/**
@@ -325,6 +326,8 @@ class Tribe__Tickets__Status__Manager {
 	 *
 	 * @since 4.10.5
 	 *
+	 * @since 5.3.2 add support fot Tickets Commerce completed statuses directly, as we have changed the way statuses are handled for Tickets Commerce.
+	 *
 	 * @param string|object $provider_name an object or string of a commerce main class name
 	 *
 	 * @return array
@@ -336,25 +339,41 @@ class Tribe__Tickets__Status__Manager {
 		}
 
 		$abbreviated_name = $this->get_provider_slug( $provider_name );
+		$trigger_statuses = [];
 
-		$filtered_statuses = wp_list_filter(
-			$this->statuses[ $abbreviated_name ]->statuses,
-			[ 'count_completed' => true ]
-		);
+		if ( isset( $this->statuses[ $abbreviated_name ] ) ) {
+			$filtered_statuses = wp_list_filter(
+				$this->statuses[ $abbreviated_name ]->statuses,
+				[ 'count_completed' => true ]
+			);
 
+			foreach ( $filtered_statuses as $status ) {
+				$trigger_statuses[] = $status->provider_name;
 
-		foreach ( $filtered_statuses as $status ) {
-			$trigger_statuses[] = $status->provider_name;
-
-			if ( ! empty( $status->additional_names ) ) {
-				$trigger_statuses = $this->add_additional_names_to_array( $trigger_statuses, $status->additional_names );
+				if ( ! empty( $status->additional_names ) ) {
+					$trigger_statuses = $this->add_additional_names_to_array( $trigger_statuses, $status->additional_names );
+				}
 			}
-
 		}
 
+		// Add Completed statuses for Tickets Commerce providers.
+		if ( \TEC\Tickets\Commerce::ABBR === $abbreviated_name ) {
+			$completed_status = tribe( \TEC\Tickets\Commerce\Status\Completed::class );
+			$trigger_statuses = [
+				$completed_status::SLUG,
+				$completed_status->get_name(),
+			];
+		}
 
-		return $trigger_statuses;
-
+		/**
+		 * Filters the array of completed status slugs for the providers.
+		 *
+		 * @since 5.3.2
+		 *
+		 * @param array $trigger_statuses Array of supported statuses.
+		 * @param string|object $provider_name an object or string of a commerce main class name.
+		 */
+		return apply_filters( 'tec_tickets_completed_status_by_provider_name', $trigger_statuses, $provider_name );
 	}
 
 	/**
@@ -418,6 +437,9 @@ class Tribe__Tickets__Status__Manager {
 	 * @return string|false Provider class name or false if not found.
 	 */
 	public function get_provider_class_from_slug( $slug ) {
+		// Change \\ to \ for class namespacing.
+		$slug = str_replace( '\\\\', '\\', $slug );
+
 		if ( $slug instanceof Tribe__Tickets__Tickets ) {
 			$slug = $slug->class_name;
 		}

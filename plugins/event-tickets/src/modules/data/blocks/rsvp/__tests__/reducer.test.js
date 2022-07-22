@@ -5,7 +5,7 @@ import { actions } from '@moderntribe/tickets/data/blocks/rsvp';
 import reducer, { DEFAULT_STATE } from '@moderntribe/tickets/data/blocks/rsvp/reducer';
 
 jest.mock( 'moment', () => () => {
-	const moment = require.requireActual( 'moment' );
+	const moment = jest.requireActual( 'moment' );
 	return moment( 'July 19, 2018 7:30 pm', 'MMMM D, Y h:mm a' );
 } );
 
@@ -51,7 +51,8 @@ describe( 'RSVP block reducer', () => {
 	} );
 
 	it( 'should set the has attendee info fields', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPHasAttendeeInfoFields( true ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPHasAttendeeInfoFields( true ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the has duration error', () => {

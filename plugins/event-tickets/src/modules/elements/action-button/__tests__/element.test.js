@@ -7,23 +7,22 @@ import renderer from 'react-test-renderer';
 /**
  * Internal dependencies
  */
-import { ActionButton } from '@moderntribe/tickets/elements';
-import { positions } from '@moderntribe/tickets/elements/action-button/element';
-import { Button } from '@moderntribe/common/elements';
+import ActionButton, { positions } from '../element';
+import Button from '@moderntribe/common/elements/button';
 
 const Icon = () => ( <span role="img" aria-label="Emoji">🦖</span> );
 
 describe( 'ActionButton', () => {
 	test( 'component rendered', () => {
 		const component = renderer.create(
-			<ActionButton icon={ <Icon /> }>Custom Action</ActionButton>
+			<ActionButton icon={ <Icon /> }>Custom Action</ActionButton>,
 		);
 		expect( component.toJSON() ).toMatchSnapshot();
 	} );
 
 	test( 'component rendered with the correct class when icon is on the right', () => {
 		const component = renderer.create(
-			<ActionButton icon={ <Icon /> } position={ positions.right }>Custom Action</ActionButton>
+			<ActionButton icon={ <Icon /> } position={ positions.right }>Custom Action</ActionButton>,
 		);
 		expect( component.toJSON() ).toMatchSnapshot();
 	} );
@@ -41,7 +40,7 @@ describe( 'ActionButton', () => {
 
 	test( 'component rendered as link', () => {
 		const component = renderer.create(
-			<ActionButton asLink={ true } icon={ <Icon /> } href="#">Test Action</ActionButton>
+			<ActionButton asLink={ true } icon={ <Icon /> } href="#">Test Action</ActionButton>,
 		);
 		expect( component.toJSON() ).toMatchSnapshot();
 	} );

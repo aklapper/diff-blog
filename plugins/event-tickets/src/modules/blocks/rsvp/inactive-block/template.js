@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import InactiveBlock, { LAYOUT } from '@moderntribe/tickets/elements/inactive-block/element';
+import InactiveBlock, { LAYOUT } from '@moderntribe/tickets/elements/inactive-block';
 import { RSVPInactive } from '@moderntribe/tickets/icons';
 
 const inactiveBlockProps = {
@@ -30,7 +30,7 @@ const RSVPInactiveBlock = ( { created } ) => {
 		? __( 'Edit this block to change RSVP settings.', 'event-tickets' )
 		: __( 'Edit this block to create an RSVP form.', 'event-tickets' );
 
-	return <InactiveBlock { ...inactiveBlockProps } />
+	return <InactiveBlock { ...inactiveBlockProps } />;
 };
 
 RSVPInactiveBlock.propTypes = {

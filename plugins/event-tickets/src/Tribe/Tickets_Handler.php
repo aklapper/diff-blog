@@ -43,6 +43,15 @@ class Tribe__Tickets__Tickets_Handler {
 	public $key_start_date = '_ticket_start_date';
 
 	/**
+	 * Post meta key for the ticket start time
+	 *
+	 * @since 5.4.1
+	 *
+	 * @var    string
+	 */
+	public $key_start_time = '_ticket_start_time';
+
+	/**
 	 * Post meta key for the ticket end date
 	 *
 	 * @since  4.6
@@ -50,6 +59,15 @@ class Tribe__Tickets__Tickets_Handler {
 	 * @var    string
 	 */
 	public $key_end_date = '_ticket_end_date';
+
+	/**
+	 * Post meta key for the ticket end time
+	 *
+	 * @since 5.4.1
+	 *
+	 * @var    string
+	 */
+	public $key_end_time = '_ticket_end_time';
 
 	/**
 	 * Post meta key for the manual updated meta keys
@@ -112,6 +130,7 @@ class Tribe__Tickets__Tickets_Handler {
 
 		// Stock actions.
 		add_action( 'event_tickets_attendee_ticket_deleted', [ $this, 'maybe_increase_global_stock_data' ], 10, 2 );
+		add_action( 'event_tickets_after_update_ticket', [ $this, 'trigger_shared_cap_sync' ], 30, 3 );
 	}
 
 	/**
@@ -380,6 +399,9 @@ class Tribe__Tickets__Tickets_Handler {
 				'_tribe_tpp_event'           => 'tpp',
 				'_tribe_tpp_for_event'       => 'tpp',
 
+				// Tickets Commerce.
+				\TEC\Tickets\Commerce\Attendee::$event_relation_meta_key => 'tc',
+
 				// EDD
 				'_tribe_eddticket_event'     => 'edd',
 				'_tribe_eddticket_for_event' => 'edd',
@@ -408,6 +430,9 @@ class Tribe__Tickets__Tickets_Handler {
 				// PayPal tickets
 				'_tribe_tpp_order'       => 'tpp',
 
+				// Tickets Commerce.
+				\TEC\Tickets\Commerce\Attendee::$order_relation_meta_key => 'tc',
+
 				// EDD
 				'_tribe_eddticket_order' => 'edd',
 
@@ -418,6 +443,9 @@ class Tribe__Tickets__Tickets_Handler {
 			'order_item' => [
 				// PayPal tickets
 				'_tribe_tpp_order'            => 'tpp',
+
+				// Tickets Commerce.
+				\TEC\Tickets\Commerce\Attendee::$order_relation_meta_key => 'tc',
 
 				// Woo
 				'_tribe_wooticket_order_item' => 'woo',
@@ -528,26 +556,44 @@ class Tribe__Tickets__Tickets_Handler {
 			return false;
 		}
 
+		return $this->sync_shared_capacity( $object_id, $event_capacity );
+	}
+
+	/**
+	 * Sync shared capacity for the given Post/Event object.
+	 *
+	 * @since 5.2.3
+	 *
+	 * @param int    $object_id      Which Post we are dealing with.
+	 * @param string $event_capacity To which value the event Capacity was update to.
+	 *
+	 * @return bool
+	 */
+	public function sync_shared_capacity( $object_id, $event_capacity ) {
+
 		// We don't accept any non-numeric values here.
 		if ( ! is_numeric( $event_capacity ) ) {
 			return false;
 		}
 
-		// Make sure we are updating the Shared Stock when we update it's capacity
+		// Make sure we are updating the Shared Stock when we update it's capacity.
 		$object_stock = new Tribe__Tickets__Global_Stock( $object_id );
 
-		// Make sure that we have stock enabled (backwards compatibility)
+		// Make sure that we have stock enabled (backwards compatibility).
 		$object_stock->enable();
 
-		$completes = array();
+		$completes = [];
 
-		// Get all Tickets
+		// Get all Tickets.
 		$tickets = $this->get_tickets_ids( $object_id );
+
+		// If no tickets are available and capacity is set then it should be true.
+		$has_shared_cap_tickets = empty( $tickets );
 
 		foreach ( $tickets as $ticket ) {
 			$mode = get_post_meta( $ticket, Tribe__Tickets__Global_Stock::TICKET_STOCK_MODE, true );
 
-			// Skip any tickets that are not Shared
+			// Skip any tickets that are not Shared.
 			if (
 				Tribe__Tickets__Global_Stock::GLOBAL_STOCK_MODE !== $mode
 				&& Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE !== $mode
@@ -555,9 +601,11 @@ class Tribe__Tickets__Tickets_Handler {
 				continue;
 			}
 
+			$has_shared_cap_tickets = true;
+
 			$capacity = tribe_tickets_get_capacity( $ticket );
 
-			// When Global Capacity is higher than local ticket one's we bail
+			// When Global Capacity is higher than local ticket one's we bail.
 			if (
 				Tribe__Tickets__Global_Stock::CAPPED_STOCK_MODE === $mode
 			) {
@@ -566,7 +614,7 @@ class Tribe__Tickets__Tickets_Handler {
 					$capped_capacity = $event_capacity;
 				}
 
-				// Otherwise we update tickets required
+				// Otherwise we update tickets required.
 				tribe_tickets_update_capacity( $ticket, $capped_capacity );
 			}
 
@@ -576,17 +624,50 @@ class Tribe__Tickets__Tickets_Handler {
 			$stock = $event_capacity - $complete;
 			update_post_meta( $ticket, '_stock', $stock );
 
-			// Makes sure we mark it as in Stock for the status
+			// Makes sure we mark it as in Stock for the status.
 			if ( 0 !== $stock ) {
 				update_post_meta( $ticket, '_stock_status', 'instock' );
 			}
 		}
 
-		// Setup the Stock level
+		// Setup the Stock level.
 		$new_object_stock = $event_capacity - array_sum( $completes );
 		$object_stock->set_stock_level( $new_object_stock );
 
+		if ( ! $has_shared_cap_tickets ) {
+			$object_stock->disable();
+			$object_stock->set_stock_level( 0 );
+			tribe_tickets_delete_capacity( $object_id );
+		}
+
 		return true;
+	}
+
+	/**
+	 * Trigger shared cap sync on ticket updates.
+	 *
+	 * @since 5.2.3
+	 *
+	 * @param $post_id  int                     Target post/Event ID.
+	 * @param $ticket   Tribe__Tickets__Tickets Ticket Object.
+	 * @param $raw_data array                   Raw data from Ticket update.
+	 *
+	 * @return bool|WP_Error
+	 */
+	public function trigger_shared_cap_sync( $post_id, $ticket, $raw_data ) {
+		$ticket_capacity_data = Tribe__Utils__Array::get( $raw_data, 'tribe-ticket', [] );
+		$ticket_capacity      = Tribe__Utils__Array::get( $ticket_capacity_data, 'capacity', false );
+		$capacity_mode        = Tribe__Utils__Array::get( $ticket_capacity_data, 'mode', false );
+
+		if ( Tribe__Tickets__Global_Stock::OWN_STOCK_MODE === $capacity_mode ) {
+			return false;
+		}
+
+		if ( empty( $ticket_capacity_data ) || ! $ticket_capacity ) {
+			return new WP_Error( 'invalid_capacity', __( 'Invalid ticket capacity data.', 'event-tickets' ), $raw_data );
+		}
+
+		return $this->sync_shared_capacity( $post_id, $ticket_capacity );
 	}
 
 	/**

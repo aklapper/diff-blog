@@ -82,7 +82,7 @@ var tribe = typeof tribe === "object" ? tribe : {}; tribe["tickets"] = tribe["ti
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 324);
+/******/ 	return __webpack_require__(__webpack_require__.s = 243);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -105,10 +105,10 @@ __webpack_require__.d(__webpack_exports__, "i", function() { return /* reexport 
 // UNUSED EXPORTS: takem, race, apply, cps, spawn, join, actionChannel, cancelled, flush, getContext, setContext, throttle
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/io.js
-var io = __webpack_require__(17);
+var io = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/index.js + 4 modules
-var sagaHelpers = __webpack_require__(59);
+var sagaHelpers = __webpack_require__(41);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/io-helpers.js
 
@@ -223,110 +223,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_TICKET", function() { return DELETE_TICKET; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_TICKET_INITIAL_STATE", function() { return SET_TICKET_INITIAL_STATE; });
 /* harmony import */ var _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* eslint-disable max-len */
+
 /**
  * Internal dependencies
  */
-
-
-//
+ //
 // ─── TICKETS TYPES ──────────────────────────────────────────────────────────────
 //
 
-var SET_TICKETS_INITIAL_STATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_INITIAL_STATE';
-var RESET_TICKETS_BLOCK = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/RESET_TICKETS_BLOCK';
-
-var SET_TICKETS_HEADER_IMAGE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_HEADER_IMAGE';
-var SET_TICKETS_IS_SELECTED = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_IS_SELECTED';
-var SET_TICKETS_IS_SETTINGS_OPEN = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_IS_SETTINGS_OPEN';
-var SET_TICKETS_IS_SETTINGS_LOADING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_IS_SETTINGS_LOADING';
-var SET_TICKETS_PROVIDER = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_PROVIDER';
-var SET_TICKETS_SHARED_CAPACITY = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_SHARED_CAPACITY';
-var SET_TICKETS_TEMP_SHARED_CAPACITY = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKETS_TEMP_SHARED_CAPACITY';
-
-//
+const SET_TICKETS_INITIAL_STATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_INITIAL_STATE`;
+const RESET_TICKETS_BLOCK = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/RESET_TICKETS_BLOCK`;
+const SET_TICKETS_HEADER_IMAGE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_HEADER_IMAGE`;
+const SET_TICKETS_IS_SELECTED = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_IS_SELECTED`;
+const SET_TICKETS_IS_SETTINGS_OPEN = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_IS_SETTINGS_OPEN`;
+const SET_TICKETS_IS_SETTINGS_LOADING = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_IS_SETTINGS_LOADING`;
+const SET_TICKETS_PROVIDER = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_PROVIDER`;
+const SET_TICKETS_SHARED_CAPACITY = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_SHARED_CAPACITY`;
+const SET_TICKETS_TEMP_SHARED_CAPACITY = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKETS_TEMP_SHARED_CAPACITY`; //
 // ─── HEADER IMAGE SAGA TYPES ────────────────────────────────────────────────────
 //
 
-var FETCH_TICKETS_HEADER_IMAGE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_TICKETS_HEADER_IMAGE';
-var UPDATE_TICKETS_HEADER_IMAGE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/UPDATE_TICKETS_HEADER_IMAGE';
-var DELETE_TICKETS_HEADER_IMAGE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/DELETE_TICKETS_HEADER_IMAGE';
-
-//
+const FETCH_TICKETS_HEADER_IMAGE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_TICKETS_HEADER_IMAGE`;
+const UPDATE_TICKETS_HEADER_IMAGE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/UPDATE_TICKETS_HEADER_IMAGE`;
+const DELETE_TICKETS_HEADER_IMAGE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/DELETE_TICKETS_HEADER_IMAGE`; //
 // ─── CHILD TICKET TYPES ─────────────────────────────────────────────────────────
 //
 
-var REGISTER_TICKET_BLOCK = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/REGISTER_TICKET_BLOCK';
-var REMOVE_TICKET_BLOCK = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/REMOVE_TICKET_BLOCK';
-var REMOVE_TICKET_BLOCKS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/REMOVE_TICKET_BLOCKS';
-
-var SET_TICKET_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TITLE';
-var SET_TICKET_DESCRIPTION = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_DESCRIPTION';
-var SET_TICKET_PRICE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_PRICE';
-var SET_TICKET_SKU = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_SKU';
-var SET_TICKET_IAC_SETTING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_IAC_SETTING';
-var SET_TICKET_START_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE';
-var SET_TICKET_START_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE_INPUT';
-var SET_TICKET_START_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_DATE_MOMENT';
-var SET_TICKET_END_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_END_DATE';
-var SET_TICKET_END_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_END_DATE_INPUT';
-var SET_TICKET_END_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_END_DATE_MOMENT';
-var SET_TICKET_START_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_TIME';
-var SET_TICKET_END_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_END_TIME';
-var SET_TICKET_START_TIME_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_START_TIME_INPUT';
-var SET_TICKET_END_TIME_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_END_TIME_INPUT';
-var SET_TICKET_CAPACITY_TYPE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_CAPACITY_TYPE';
-var SET_TICKET_CAPACITY = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_CAPACITY';
-
-var SET_TICKET_TEMP_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_TITLE';
-var SET_TICKET_TEMP_DESCRIPTION = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_DESCRIPTION';
-var SET_TICKET_TEMP_PRICE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_PRICE';
-var SET_TICKET_TEMP_SKU = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_SKU';
-var SET_TICKET_TEMP_IAC_SETTING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_IAC_SETTING';
-var SET_TICKET_TEMP_START_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE';
-var SET_TICKET_TEMP_START_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE_INPUT';
-var SET_TICKET_TEMP_START_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_DATE_MOMENT';
-var SET_TICKET_TEMP_END_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_END_DATE';
-var SET_TICKET_TEMP_END_DATE_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_END_DATE_INPUT';
-var SET_TICKET_TEMP_END_DATE_MOMENT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_END_DATE_MOMENT';
-var SET_TICKET_TEMP_START_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_TIME';
-var SET_TICKET_TEMP_END_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_END_TIME';
-var SET_TICKET_TEMP_START_TIME_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_START_TIME_INPUT';
-var SET_TICKET_TEMP_END_TIME_INPUT = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_END_TIME_INPUT';
-var SET_TICKET_TEMP_CAPACITY_TYPE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_CAPACITY_TYPE';
-var SET_TICKET_TEMP_CAPACITY = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_CAPACITY';
-
-var SET_TICKET_SOLD = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_SOLD';
-var SET_TICKET_AVAILABLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_AVAILABLE';
-var SET_TICKET_ID = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_ID';
-var SET_TICKET_CURRENCY_SYMBOL = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_CURRENCY_SYMBOL';
-var SET_TICKET_CURRENCY_POSITION = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_CURRENCY_POSITION';
-var SET_TICKET_PROVIDER = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_PROVIDER';
-var SET_TICKET_HAS_ATTENDEE_INFO_FIELDS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_HAS_ATTENDEE_INFO_FIELDS';
-var SET_TICKET_IS_LOADING = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_IS_LOADING';
-var SET_TICKET_IS_MODAL_OPEN = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_IS_MODAL_OPEN';
-var SET_TICKET_HAS_BEEN_CREATED = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_HAS_BEEN_CREATED';
-var SET_TICKET_HAS_CHANGES = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_HAS_CHANGES';
-var SET_TICKET_HAS_DURATION_ERROR = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_HAS_DURATION_ERROR';
-var SET_TICKET_IS_SELECTED = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_IS_SELECTED';
-
-//
+const REGISTER_TICKET_BLOCK = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/REGISTER_TICKET_BLOCK`;
+const REMOVE_TICKET_BLOCK = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/REMOVE_TICKET_BLOCK`;
+const REMOVE_TICKET_BLOCKS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/REMOVE_TICKET_BLOCKS`;
+const SET_TICKET_TITLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TITLE`;
+const SET_TICKET_DESCRIPTION = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_DESCRIPTION`;
+const SET_TICKET_PRICE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_PRICE`;
+const SET_TICKET_SKU = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_SKU`;
+const SET_TICKET_IAC_SETTING = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_IAC_SETTING`;
+const SET_TICKET_START_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_START_DATE`;
+const SET_TICKET_START_DATE_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_START_DATE_INPUT`;
+const SET_TICKET_START_DATE_MOMENT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_START_DATE_MOMENT`;
+const SET_TICKET_END_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_END_DATE`;
+const SET_TICKET_END_DATE_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_END_DATE_INPUT`;
+const SET_TICKET_END_DATE_MOMENT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_END_DATE_MOMENT`;
+const SET_TICKET_START_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_START_TIME`;
+const SET_TICKET_END_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_END_TIME`;
+const SET_TICKET_START_TIME_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_START_TIME_INPUT`;
+const SET_TICKET_END_TIME_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_END_TIME_INPUT`;
+const SET_TICKET_CAPACITY_TYPE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_CAPACITY_TYPE`;
+const SET_TICKET_CAPACITY = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_CAPACITY`;
+const SET_TICKET_TEMP_TITLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_TITLE`;
+const SET_TICKET_TEMP_DESCRIPTION = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_DESCRIPTION`;
+const SET_TICKET_TEMP_PRICE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_PRICE`;
+const SET_TICKET_TEMP_SKU = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_SKU`;
+const SET_TICKET_TEMP_IAC_SETTING = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_IAC_SETTING`;
+const SET_TICKET_TEMP_START_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_START_DATE`;
+const SET_TICKET_TEMP_START_DATE_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_START_DATE_INPUT`;
+const SET_TICKET_TEMP_START_DATE_MOMENT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_START_DATE_MOMENT`;
+const SET_TICKET_TEMP_END_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_END_DATE`;
+const SET_TICKET_TEMP_END_DATE_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_END_DATE_INPUT`;
+const SET_TICKET_TEMP_END_DATE_MOMENT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_END_DATE_MOMENT`;
+const SET_TICKET_TEMP_START_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_START_TIME`;
+const SET_TICKET_TEMP_END_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_END_TIME`;
+const SET_TICKET_TEMP_START_TIME_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_START_TIME_INPUT`;
+const SET_TICKET_TEMP_END_TIME_INPUT = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_END_TIME_INPUT`;
+const SET_TICKET_TEMP_CAPACITY_TYPE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_CAPACITY_TYPE`;
+const SET_TICKET_TEMP_CAPACITY = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_CAPACITY`;
+const SET_TICKET_SOLD = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_SOLD`;
+const SET_TICKET_AVAILABLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_AVAILABLE`;
+const SET_TICKET_ID = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_ID`;
+const SET_TICKET_CURRENCY_SYMBOL = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_CURRENCY_SYMBOL`;
+const SET_TICKET_CURRENCY_POSITION = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_CURRENCY_POSITION`;
+const SET_TICKET_PROVIDER = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_PROVIDER`;
+const SET_TICKET_HAS_ATTENDEE_INFO_FIELDS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_HAS_ATTENDEE_INFO_FIELDS`;
+const SET_TICKET_IS_LOADING = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_IS_LOADING`;
+const SET_TICKET_IS_MODAL_OPEN = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_IS_MODAL_OPEN`;
+const SET_TICKET_HAS_BEEN_CREATED = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_HAS_BEEN_CREATED`;
+const SET_TICKET_HAS_CHANGES = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_HAS_CHANGES`;
+const SET_TICKET_HAS_DURATION_ERROR = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_HAS_DURATION_ERROR`;
+const SET_TICKET_IS_SELECTED = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_IS_SELECTED`; //
 // ─── CHILD TICKET SAGA TYPES ────────────────────────────────────────────────────
 //
 
-var SET_TICKET_DETAILS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_DETAILS';
-var SET_TICKET_TEMP_DETAILS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_TEMP_DETAILS';
-
-var HANDLE_TICKET_START_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/HANDLE_TICKET_START_DATE';
-var HANDLE_TICKET_END_DATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/HANDLE_TICKET_END_DATE';
-var HANDLE_TICKET_START_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/HANDLE_TICKET_START_TIME';
-var HANDLE_TICKET_END_TIME = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/HANDLE_TICKET_END_TIME';
-
-var FETCH_TICKET = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_TICKET';
-var CREATE_NEW_TICKET = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/CREATE_NEW_TICKET';
-var UPDATE_TICKET = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/UPDATE_TICKET';
-var DELETE_TICKET = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/DELETE_TICKET';
-
-var SET_TICKET_INITIAL_STATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_TICKET_INITIAL_STATE';
+const SET_TICKET_DETAILS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_DETAILS`;
+const SET_TICKET_TEMP_DETAILS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_TEMP_DETAILS`;
+const HANDLE_TICKET_START_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/HANDLE_TICKET_START_DATE`;
+const HANDLE_TICKET_END_DATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/HANDLE_TICKET_END_DATE`;
+const HANDLE_TICKET_START_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/HANDLE_TICKET_START_TIME`;
+const HANDLE_TICKET_END_TIME = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/HANDLE_TICKET_END_TIME`;
+const FETCH_TICKET = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_TICKET`;
+const CREATE_NEW_TICKET = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/CREATE_NEW_TICKET`;
+const UPDATE_TICKET = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/UPDATE_TICKET`;
+const DELETE_TICKET = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/DELETE_TICKET`;
+const SET_TICKET_INITIAL_STATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_TICKET_INITIAL_STATE`;
 
 /***/ }),
 /* 3 */
@@ -336,3753 +323,6 @@ module.exports = tribe.common.utils;
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ constants; });
-__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ options_namespaceObject; });
-__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ types; });
-__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ actions; });
-__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ selectors_namespaceObject; });
-__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ watchers; });
-
-// UNUSED EXPORTS: utils
-
-// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/options.js
-var options_namespaceObject = {};
-__webpack_require__.r(options_namespaceObject);
-__webpack_require__.d(options_namespaceObject, "CAPACITY_TYPE_OPTIONS", function() { return CAPACITY_TYPE_OPTIONS; });
-
-// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/selectors.js
-var selectors_namespaceObject = {};
-__webpack_require__.r(selectors_namespaceObject);
-__webpack_require__.d(selectors_namespaceObject, "getState", function() { return getState; });
-__webpack_require__.d(selectors_namespaceObject, "getBlock", function() { return getBlock; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSelected", function() { return getTicketsIsSelected; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsOpen", function() { return getTicketsIsSettingsOpen; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsLoading", function() { return getTicketsIsSettingsLoading; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsProvider", function() { return getTicketsProvider; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacity", function() { return getTicketsSharedCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacityInt", function() { return getTicketsSharedCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacity", function() { return getTicketsTempSharedCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacityInt", function() { return getTicketsTempSharedCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImage", function() { return getTicketsHeaderImage; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageId", function() { return getTicketsHeaderImageId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageSrc", function() { return getTicketsHeaderImageSrc; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageAlt", function() { return getTicketsHeaderImageAlt; });
-__webpack_require__.d(selectors_namespaceObject, "getTickets", function() { return getTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsAllClientIds", function() { return getTicketsAllClientIds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsByClientId", function() { return getTicketsByClientId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsArray", function() { return getTicketsArray; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsCount", function() { return getTicketsCount; });
-__webpack_require__.d(selectors_namespaceObject, "hasTickets", function() { return hasTickets; });
-__webpack_require__.d(selectors_namespaceObject, "hasCreatedTickets", function() { return selectors_hasCreatedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTickets", function() { return getIndependentTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTickets", function() { return getSharedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsCount", function() { return getSharedTicketsCount; });
-__webpack_require__.d(selectors_namespaceObject, "getUnlimitedTickets", function() { return getUnlimitedTickets; });
-__webpack_require__.d(selectors_namespaceObject, "hasATicketSelected", function() { return hasATicketSelected; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketsIdsInBlocks", function() { return getTicketsIdsInBlocks; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketClientId", function() { return getTicketClientId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicket", function() { return getTicket; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketSold", function() { return getTicketSold; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketAvailable", function() { return getTicketAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketId", function() { return getTicketId; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencySymbol", function() { return getTicketCurrencySymbol; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencyPosition", function() { return getTicketCurrencyPosition; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketProvider", function() { return getTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasAttendeeInfoFields", function() { return getTicketHasAttendeeInfoFields; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsLoading", function() { return getTicketIsLoading; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsModalOpen", function() { return getTicketIsModalOpen; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasBeenCreated", function() { return getTicketHasBeenCreated; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasChanges", function() { return getTicketHasChanges; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketHasDurationError", function() { return getTicketHasDurationError; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIsSelected", function() { return getTicketIsSelected; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketDisabled", function() { return isTicketDisabled; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketDetails", function() { return getTicketDetails; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTitle", function() { return getTicketTitle; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketDescription", function() { return getTicketDescription; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketPrice", function() { return getTicketPrice; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketSku", function() { return getTicketSku; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketIACSetting", function() { return getTicketIACSetting; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDate", function() { return getTicketStartDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateInput", function() { return getTicketStartDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateMoment", function() { return getTicketStartDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDate", function() { return getTicketEndDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateInput", function() { return getTicketEndDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateMoment", function() { return getTicketEndDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTime", function() { return getTicketStartTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeNoSeconds", function() { return getTicketStartTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTime", function() { return getTicketEndTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeNoSeconds", function() { return getTicketEndTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeInput", function() { return getTicketStartTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeInput", function() { return getTicketEndTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityType", function() { return getTicketCapacityType; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacity", function() { return getTicketCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityInt", function() { return getTicketCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "isUnlimitedTicket", function() { return isUnlimitedTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isSharedTicket", function() { return isSharedTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isIndependentTicket", function() { return isIndependentTicket; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketPast", function() { return isTicketPast; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketFuture", function() { return isTicketFuture; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketOnSale", function() { return isTicketOnSale; });
-__webpack_require__.d(selectors_namespaceObject, "hasTicketOnSale", function() { return hasTicketOnSale; });
-__webpack_require__.d(selectors_namespaceObject, "allTicketsPast", function() { return allTicketsPast; });
-__webpack_require__.d(selectors_namespaceObject, "allTicketsFuture", function() { return allTicketsFuture; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempDetails", function() { return getTicketTempDetails; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempTitle", function() { return getTicketTempTitle; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempDescription", function() { return getTicketTempDescription; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempPrice", function() { return getTicketTempPrice; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempSku", function() { return getTicketTempSku; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempIACSetting", function() { return getTicketTempIACSetting; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDate", function() { return getTicketTempStartDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateInput", function() { return getTicketTempStartDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateMoment", function() { return getTicketTempStartDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDate", function() { return getTicketTempEndDate; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateInput", function() { return getTicketTempEndDateInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateMoment", function() { return getTicketTempEndDateMoment; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTime", function() { return getTicketTempStartTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeNoSeconds", function() { return getTicketTempStartTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTime", function() { return getTicketTempEndTime; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeNoSeconds", function() { return getTicketTempEndTimeNoSeconds; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeInput", function() { return getTicketTempStartTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeInput", function() { return getTicketTempEndTimeInput; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityType", function() { return getTicketTempCapacityType; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacity", function() { return getTicketTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityInt", function() { return getTicketTempCapacityInt; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityTypeOption", function() { return getTicketTempCapacityTypeOption; });
-__webpack_require__.d(selectors_namespaceObject, "isTempTitleValid", function() { return isTempTitleValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTempCapacityValid", function() { return isTempCapacityValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTempSharedCapacityValid", function() { return isTempSharedCapacityValid; });
-__webpack_require__.d(selectors_namespaceObject, "isZeroPriceValid", function() { return isZeroPriceValid; });
-__webpack_require__.d(selectors_namespaceObject, "isTicketValid", function() { return isTicketValid; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalCapacity", function() { return _getTotalCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalTempCapacity", function() { return _getTotalTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalSold", function() { return _getTotalSold; });
-__webpack_require__.d(selectors_namespaceObject, "_getTotalAvailable", function() { return _getTotalAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsCapacity", function() { return getIndependentTicketsCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsTempCapacity", function() { return getIndependentTicketsTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsSold", function() { return getIndependentTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsAvailable", function() { return getIndependentTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsSold", function() { return getSharedTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsAvailable", function() { return getSharedTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsCapacity", function() { return getIndependentAndSharedTicketsCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsTempCapacity", function() { return getIndependentAndSharedTicketsTempCapacity; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsSold", function() { return getIndependentAndSharedTicketsSold; });
-__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsAvailable", function() { return getIndependentAndSharedTicketsAvailable; });
-__webpack_require__.d(selectors_namespaceObject, "getTicketProviders", function() { return getTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "getDefaultTicketProvider", function() { return getDefaultTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "hasValidTicketProvider", function() { return selectors_hasValidTicketProvider; });
-__webpack_require__.d(selectors_namespaceObject, "hasMultipleTicketProviders", function() { return hasMultipleTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "hasTicketProviders", function() { return hasTicketProviders; });
-__webpack_require__.d(selectors_namespaceObject, "canCreateTickets", function() { return canCreateTickets; });
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
-var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(263);
-var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(25);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
-
-// EXTERNAL MODULE: ./node_modules/redux/es/redux.js
-var redux = __webpack_require__(16);
-
-// EXTERNAL MODULE: ./node_modules/lodash/omit.js
-var omit = __webpack_require__(321);
-var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/types.js
-var types = __webpack_require__(2);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(45);
-var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
-
-// EXTERNAL MODULE: external "tribe.common.utils"
-var external_tribe_common_utils_ = __webpack_require__(3);
-
-// EXTERNAL MODULE: ./node_modules/lodash/trim.js
-var trim = __webpack_require__(87);
-var trim_default = /*#__PURE__*/__webpack_require__.n(trim);
-
-// EXTERNAL MODULE: ./node_modules/lodash/find.js
-var find = __webpack_require__(86);
-var find_default = /*#__PURE__*/__webpack_require__.n(find);
-
-// EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
-var lib = __webpack_require__(6);
-
-// EXTERNAL MODULE: ./node_modules/moment/moment.js
-var moment = __webpack_require__(5);
-var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/constants.js
-var constants = __webpack_require__(23);
-
-// EXTERNAL MODULE: external {"var":"wp.i18n","root":["wp","i18n"]}
-var external_var_wp_i18n_root_wp_i18n_ = __webpack_require__(15);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/options.js
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-var CAPACITY_TYPE_OPTIONS = [{
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Share capacity with other tickets', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["SHARED"]]
-}, {
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Set capacity for this ticket only', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["INDEPENDENT"]]
-}, {
-	label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Unlimited', 'event-tickets'),
-	value: constants["TICKET_TYPES"][constants["UNLIMITED"]]
-}];
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/selectors.js
-
-
-/**
- * External dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var UNLIMITED = constants["UNLIMITED"],
-    INDEPENDENT = constants["INDEPENDENT"],
-    SHARED = constants["SHARED"],
-    TICKET_TYPES = constants["TICKET_TYPES"];
-var ticketsConfig = external_tribe_common_utils_["globals"].tickets;
-
-
-var getState = function getState(state) {
-	return state;
-};
-var getBlock = function getBlock(state) {
-	return state.tickets.blocks.ticket;
-};
-
-//
-// ─── BLOCK SELECTORS ────────────────────────────────────────────────────────────
-//
-
-var getTicketsIsSelected = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSelected;
-});
-
-var getTicketsIsSettingsOpen = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSettingsOpen;
-});
-
-var getTicketsIsSettingsLoading = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.isSettingsLoading;
-});
-
-var getTicketsProvider = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.provider;
-});
-
-var getTicketsSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.sharedCapacity;
-});
-
-var getTicketsSharedCapacityInt = Object(lib["createSelector"])([getTicketsSharedCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var getTicketsTempSharedCapacity = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.tempSharedCapacity;
-});
-
-var getTicketsTempSharedCapacityInt = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-//
-// ─── HEADER IMAGE SELECTORS ─────────────────────────────────────────────────────
-//
-
-var getTicketsHeaderImage = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.headerImage;
-});
-
-var getTicketsHeaderImageId = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.id;
-});
-
-var getTicketsHeaderImageSrc = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.src;
-});
-
-var getTicketsHeaderImageAlt = Object(lib["createSelector"])([getTicketsHeaderImage], function (headerImage) {
-	return headerImage.alt;
-});
-
-//
-// ─── TICKETS SELECTORS ──────────────────────────────────────────────────────────
-//
-
-var getTickets = Object(lib["createSelector"])([getBlock], function (block) {
-	return block.tickets;
-});
-
-var getTicketsAllClientIds = Object(lib["createSelector"])([getTickets], function (tickets) {
-	return tickets.allClientIds;
-});
-
-var getTicketsByClientId = Object(lib["createSelector"])([getTickets], function (tickets) {
-	return tickets.byClientId;
-});
-
-var getTicketsArray = Object(lib["createSelector"])([getTicketsAllClientIds, getTicketsByClientId], function (ids, tickets) {
-	return ids.map(function (id) {
-		return tickets[id];
-	});
-});
-
-var getTicketsCount = Object(lib["createSelector"])([getTicketsAllClientIds], function (allClientIds) {
-	return allClientIds.length;
-});
-
-var hasTickets = Object(lib["createSelector"])([getTicketsCount], function (count) {
-	return count > 0;
-});
-
-var selectors_hasCreatedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (hasCreated, ticket) {
-		return hasCreated || ticket.hasBeenCreated;
-	}, false);
-});
-
-var getIndependentTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[INDEPENDENT];
-	});
-});
-
-var getSharedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[SHARED];
-	});
-});
-
-var getSharedTicketsCount = Object(lib["createSelector"])([getSharedTickets], function (tickets) {
-	return tickets.length;
-});
-
-var getUnlimitedTickets = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.filter(function (ticket) {
-		return ticket.details.capacityType === TICKET_TYPES[UNLIMITED];
-	});
-});
-
-var hasATicketSelected = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (selected, ticket) {
-		return selected || ticket.isSelected;
-	}, false);
-});
-
-var getTicketsIdsInBlocks = Object(lib["createSelector"])([getTicketsArray], function (tickets) {
-	return tickets.reduce(function (accumulator, ticket) {
-		if (ticket.ticketId !== 0) {
-			accumulator.push(ticket.ticketId);
-		}
-		return accumulator;
-	}, []);
-});
-
-//
-// ─── TICKET SELECTORS ───────────────────────────────────────────────────────────
-//
-
-var getTicketClientId = function getTicketClientId(state, ownProps) {
-	return ownProps.clientId;
-};
-
-var getTicket = Object(lib["createSelector"])([getTicketsByClientId, getTicketClientId], function (tickets, clientId) {
-	return tickets[clientId] || {};
-});
-
-var getTicketSold = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.sold;
-});
-
-var getTicketAvailable = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.available;
-});
-
-var getTicketId = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.ticketId;
-});
-
-var getTicketCurrencySymbol = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.currencySymbol;
-});
-
-var getTicketCurrencyPosition = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.currencyPosition;
-});
-
-var getTicketProvider = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.provider;
-});
-
-var getTicketHasAttendeeInfoFields = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasAttendeeInfoFields;
-});
-
-var getTicketIsLoading = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isLoading;
-});
-
-var getTicketIsModalOpen = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isModalOpen;
-});
-
-var getTicketHasBeenCreated = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasBeenCreated;
-});
-
-var getTicketHasChanges = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasChanges;
-});
-
-var getTicketHasDurationError = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.hasDurationError;
-});
-
-var getTicketIsSelected = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.isSelected;
-});
-
-var isTicketDisabled = Object(lib["createSelector"])([hasATicketSelected, getTicketIsSelected, getTicketIsLoading, getTicketsIsSettingsOpen], function (hasSelected, isSelected, isLoading, isSettingsOpen) {
-	return hasSelected && !isSelected || isLoading || isSettingsOpen;
-});
-
-//
-// ─── TICKET DETAILS SELECTORS ───────────────────────────────────────────────────
-//
-
-var getTicketDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.details || {};
-});
-
-var getTicketTitle = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.title;
-});
-
-var getTicketDescription = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.description;
-});
-
-var getTicketPrice = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.price;
-});
-
-var getTicketSku = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.sku;
-});
-
-var getTicketIACSetting = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.iac;
-});
-
-var getTicketStartDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDate;
-});
-
-var getTicketStartDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDateInput;
-});
-
-var getTicketStartDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startDateMoment;
-});
-
-var getTicketEndDate = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDate;
-});
-
-var getTicketEndDateInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDateInput;
-});
-
-var getTicketEndDateMoment = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endDateMoment;
-});
-
-var getTicketStartTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startTime || '';
-});
-
-var getTicketStartTimeNoSeconds = Object(lib["createSelector"])([getTicketStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getTicketEndTime = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endTime || '';
-});
-
-var getTicketEndTimeNoSeconds = Object(lib["createSelector"])([getTicketEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getTicketStartTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.startTimeInput;
-});
-
-var getTicketEndTimeInput = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.endTimeInput;
-});
-
-var getTicketCapacityType = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType;
-});
-
-var getTicketCapacity = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacity;
-});
-
-var getTicketCapacityInt = Object(lib["createSelector"])([getTicketCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var isUnlimitedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[UNLIMITED];
-});
-
-var isSharedTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[SHARED];
-});
-
-var isIndependentTicket = Object(lib["createSelector"])([getTicketDetails], function (details) {
-	return details.capacityType === TICKET_TYPES[INDEPENDENT];
-});
-
-var isTicketPast = Object(lib["createSelector"])([getTicketEndDateMoment], function (endDate) {
-	return moment_default()().isAfter(endDate);
-});
-
-var isTicketFuture = Object(lib["createSelector"])([getTicketStartDateMoment], function (startDate) {
-	return moment_default()().isBefore(startDate);
-});
-
-var isTicketOnSale = Object(lib["createSelector"])([getTicketHasBeenCreated, isTicketPast, isTicketFuture], function (hasBeenCreated, isPast, isFuture) {
-	return hasBeenCreated && !isPast && !isFuture;
-});
-
-var hasTicketOnSale = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (onSale, clientId) {
-		return onSale || isTicketOnSale(state, { clientId: clientId });
-	}, false);
-});
-
-var allTicketsPast = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (isPast, clientId) {
-		var props = { clientId: clientId };
-		return getTicketHasBeenCreated(state, props) ? isPast && isTicketPast(state, props) : isPast;
-	}, true);
-});
-
-var allTicketsFuture = Object(lib["createSelector"])([getTicketsAllClientIds, getState], function (allClientIds, state) {
-	return allClientIds.reduce(function (isFuture, clientId) {
-		var props = { clientId: clientId };
-		return getTicketHasBeenCreated(state, props) ? isFuture && isTicketFuture(state, props) : isFuture;
-	}, true);
-});
-
-//
-// ─── TICKET TEMP DETAILS SELECTORS ──────────────────────────────────────────────
-//
-
-var getTicketTempDetails = Object(lib["createSelector"])([getTicket], function (ticket) {
-	return ticket.tempDetails || {};
-});
-
-var getTicketTempTitle = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.title;
-});
-
-var getTicketTempDescription = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.description;
-});
-
-var getTicketTempPrice = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.price;
-});
-
-var getTicketTempSku = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.sku;
-});
-
-var getTicketTempIACSetting = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.iac;
-});
-
-var getTicketTempStartDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDate;
-});
-
-var getTicketTempStartDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDateInput;
-});
-
-var getTicketTempStartDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startDateMoment;
-});
-
-var getTicketTempEndDate = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDate;
-});
-
-var getTicketTempEndDateInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDateInput;
-});
-
-var getTicketTempEndDateMoment = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endDateMoment;
-});
-
-var getTicketTempStartTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startTime || '';
-});
-
-var getTicketTempStartTimeNoSeconds = Object(lib["createSelector"])([getTicketTempStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getTicketTempEndTime = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endTime || '';
-});
-
-var getTicketTempEndTimeNoSeconds = Object(lib["createSelector"])([getTicketTempEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getTicketTempStartTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.startTimeInput;
-});
-
-var getTicketTempEndTimeInput = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.endTimeInput;
-});
-
-var getTicketTempCapacityType = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.capacityType;
-});
-
-var getTicketTempCapacity = Object(lib["createSelector"])([getTicketTempDetails], function (tempDetails) {
-	return tempDetails.capacity;
-});
-
-var getTicketTempCapacityInt = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
-	return parseInt(capacity, 10) || 0;
-});
-
-var getTicketTempCapacityTypeOption = Object(lib["createSelector"])([getTicketTempCapacityType], function (capacityType) {
-	return find_default()(CAPACITY_TYPE_OPTIONS, { value: capacityType }) || {};
-});
-
-var isTempTitleValid = Object(lib["createSelector"])([getTicketTempTitle], function (title) {
-	return trim_default()(title) !== '';
-});
-
-var isTempCapacityValid = Object(lib["createSelector"])([getTicketTempCapacity], function (capacity) {
-	return trim_default()(capacity) !== '' && !isNaN(capacity);
-});
-
-var isTempSharedCapacityValid = Object(lib["createSelector"])([getTicketsTempSharedCapacity], function (capacity) {
-	return trim_default()(capacity) !== '' && !isNaN(capacity);
-});
-
-var isZeroPriceValid = Object(lib["createSelector"])([getTicketTempPrice, getTicketsProvider], function (price, provider) {
-	return 0 < parseInt(price, 10) || provider !== constants["TC_CLASS"];
-});
-
-var isTicketValid = Object(lib["createSelector"])([getTicketTempCapacityType, isTempTitleValid, isTempCapacityValid, isTempSharedCapacityValid, isZeroPriceValid], function (capacityType, titleValid, capacityValid, sharedCapacityValid, zeroPriceValid) {
-	if (capacityType === TICKET_TYPES[UNLIMITED]) {
-		return titleValid && zeroPriceValid;
-	} else if (capacityType === TICKET_TYPES[SHARED]) {
-		return titleValid && sharedCapacityValid && zeroPriceValid;
-	}
-	return titleValid && capacityValid && zeroPriceValid;
-});
-
-//
-// ─── AMOUNT REDUCERS ────────────────────────────────────────────────────────────
-//
-
-var _getTotalCapacity = function _getTotalCapacity(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var capacity = parseInt(ticket.details.capacity, 10) || 0;
-		return total + capacity;
-	}, 0);
-};
-
-var _getTotalTempCapacity = function _getTotalTempCapacity(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var tempCapacity = parseInt(ticket.tempDetails.capacity, 10) || 0;
-		return total + tempCapacity;
-	}, 0);
-};
-
-var _getTotalSold = function _getTotalSold(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var sold = parseInt(ticket.sold, 10) || 0;
-		return total + sold;
-	}, 0);
-};
-
-var _getTotalAvailable = function _getTotalAvailable(tickets) {
-	return tickets.reduce(function (total, ticket) {
-		var available = parseInt(ticket.available, 10) || 0;
-		return total + available;
-	}, 0);
-};
-
-var getIndependentTicketsCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalCapacity);
-var getIndependentTicketsTempCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalTempCapacity);
-var getIndependentTicketsSold = Object(lib["createSelector"])(getIndependentTickets, _getTotalSold);
-var getIndependentTicketsAvailable = Object(lib["createSelector"])(getIndependentTickets, _getTotalAvailable);
-
-var getSharedTicketsSold = Object(lib["createSelector"])(getSharedTickets, _getTotalSold);
-var getSharedTicketsAvailable = Object(lib["createSelector"])([getTicketsSharedCapacityInt, getSharedTicketsSold], function (sharedCapacity, sharedSold) {
-	return Math.max(sharedCapacity - sharedSold, 0);
-});
-
-var getIndependentAndSharedTicketsCapacity = Object(lib["createSelector"])([getIndependentTicketsCapacity, getTicketsSharedCapacityInt], function (independentCapacity, sharedCapacity) {
-	return independentCapacity + sharedCapacity;
-});
-var getIndependentAndSharedTicketsTempCapacity = Object(lib["createSelector"])([getIndependentTicketsTempCapacity, getTicketsTempSharedCapacityInt], function (independentTempCapacity, tempSharedCapacity) {
-	return independentTempCapacity + tempSharedCapacity;
-});
-var getIndependentAndSharedTicketsSold = Object(lib["createSelector"])([getIndependentTicketsSold, getSharedTicketsSold], function (independentSold, sharedSold) {
-	return independentSold + sharedSold;
-});
-var getIndependentAndSharedTicketsAvailable = Object(lib["createSelector"])([getIndependentTicketsAvailable, getSharedTicketsAvailable], function (independentAvailable, sharedAvailable) {
-	return independentAvailable + sharedAvailable;
-});
-
-//
-// ─── MISC SELECTORS ─────────────────────────────────────────────────────────────
-//
-
-var getTicketProviders = function getTicketProviders() {
-	var tickets = ticketsConfig();
-	return tickets.providers || [];
-};
-
-var getDefaultTicketProvider = function getDefaultTicketProvider() {
-	var tickets = ticketsConfig();
-	return tickets.default_provider || '';
-};
-
-var selectors_hasValidTicketProvider = function hasValidTicketProvider() {
-	var provider = getDefaultTicketProvider();
-	return provider !== '' && provider !== constants["RSVP_CLASS"];
-};
-
-var hasMultipleTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
-	return providers.length > 1;
-});
-
-var hasTicketProviders = Object(lib["createSelector"])([getTicketProviders], function (providers) {
-	return providers.length > 0;
-});
-
-var canCreateTickets = Object(lib["createSelector"])([hasTicketProviders, selectors_hasValidTicketProvider], function (providers, validDefaultProvider) {
-	return providers && validDefaultProvider;
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/utils.js
-
-/**
- * External dependencies
- */
-
-
-var settings = external_tribe_common_utils_["globals"].settings,
-    priceSettings = external_tribe_common_utils_["globals"].priceSettings,
-    utils_ticketsConfig = external_tribe_common_utils_["globals"].tickets;
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Get currency symbol by provider
- */
-var utils_getProviderCurrency = function getProviderCurrency(provider) {
-	var tickets = utils_ticketsConfig();
-	var providers = getTicketProviders();
-
-	// if we don't get the provider, return the default one
-	if ('' === provider) {
-		return tickets.default_currency;
-	}
-
-	var _providers$filter = providers.filter(function (el) {
-		return el.class === provider;
-	}),
-	    _providers$filter2 = slicedToArray_default()(_providers$filter, 1),
-	    result = _providers$filter2[0];
-
-	return result ? result.currency : tickets.default_currency;
-};
-
-/**
- * Get the default provider's currency symbol
- */
-var utils_getDefaultProviderCurrency = function getDefaultProviderCurrency() {
-	return utils_getProviderCurrency(getDefaultTicketProvider());
-};
-
-/**
- * Get currency position
- */
-var utils_getDefaultCurrencyPosition = function getDefaultCurrencyPosition() {
-	var position = external_tribe_common_utils_["string"].isTruthy(settings() && settings().reverseCurrencyPosition) ? 'suffix' : 'prefix';
-
-	return priceSettings() && priceSettings().defaultCurrencyPosition ? priceSettings().defaultCurrencyPosition : position;
-};
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/details.js
-
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-var currentMoment = moment_default()();
-var bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
-var bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
-var details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
-
-var details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
-var details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
-var details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
-
-var DEFAULT_STATE = {
-	title: '',
-	description: '',
-	price: '',
-	sku: '',
-	iac: details_iac,
-	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
-	startDateInput: details_startDateInput,
-	startDateMoment: currentMoment,
-	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
-	endDateInput: details_endDateInput,
-	endDateMoment: details_endMoment,
-	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
-	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
-	startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
-	endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment),
-	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
-	capacity: ''
-};
-
-/* harmony default export */ var ticket_details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types["SET_TICKET_DESCRIPTION"]:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types["SET_TICKET_PRICE"]:
-			return extends_default()({}, state, {
-				price: action.payload.price
-			});
-		case types["SET_TICKET_SKU"]:
-			return extends_default()({}, state, {
-				sku: action.payload.sku
-			});
-		case types["SET_TICKET_IAC_SETTING"]:
-			return extends_default()({}, state, {
-				iac: action.payload.iac
-			});
-		case types["SET_TICKET_START_DATE"]:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types["SET_TICKET_START_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types["SET_TICKET_END_DATE"]:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types["SET_TICKET_END_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types["SET_TICKET_START_TIME"]:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types["SET_TICKET_END_TIME"]:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types["SET_TICKET_START_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types["SET_TICKET_END_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-			return extends_default()({}, state, {
-				capacityType: action.payload.capacityType
-			});
-		case types["SET_TICKET_CAPACITY"]:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/temp-details.js
-
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var temp_details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-var temp_details_currentMoment = moment_default()();
-var temp_details_bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
-var temp_details_bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
-var temp_details_endMoment = temp_details_currentMoment.clone().add(temp_details_bufferDuration, 'hours').add(temp_details_bufferYears, 'years');
-
-var temp_details_startDateInput = temp_details_datePickerFormat ? temp_details_currentMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_currentMoment);
-var temp_details_endDateInput = temp_details_datePickerFormat ? temp_details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_endMoment);
-var temp_details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
-
-var temp_details_DEFAULT_STATE = {
-	title: '',
-	description: '',
-	price: '',
-	sku: '',
-	iac: temp_details_iac,
-	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_currentMoment),
-	startDateInput: temp_details_startDateInput,
-	startDateMoment: temp_details_currentMoment,
-	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_endMoment),
-	endDateInput: temp_details_endDateInput,
-	endDateMoment: temp_details_endMoment,
-	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_currentMoment),
-	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_endMoment),
-	startTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_currentMoment),
-	endTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_endMoment),
-	capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
-	capacity: ''
-};
-
-/* harmony default export */ var temp_details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : temp_details_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TEMP_TITLE"]:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types["SET_TICKET_TEMP_PRICE"]:
-			return extends_default()({}, state, {
-				price: action.payload.price
-			});
-		case types["SET_TICKET_TEMP_SKU"]:
-			return extends_default()({}, state, {
-				sku: action.payload.sku
-			});
-		case types["SET_TICKET_TEMP_IAC_SETTING"]:
-			return extends_default()({}, state, {
-				iac: action.payload.iac
-			});
-		case types["SET_TICKET_TEMP_START_DATE"]:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types["SET_TICKET_TEMP_END_DATE"]:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types["SET_TICKET_TEMP_START_TIME"]:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types["SET_TICKET_TEMP_END_TIME"]:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-			return extends_default()({}, state, {
-				capacityType: action.payload.capacityType
-			});
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket.js
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-var ticket_DEFAULT_STATE = {
-	details: DEFAULT_STATE,
-	tempDetails: temp_details_DEFAULT_STATE,
-	sold: 0,
-	available: 0,
-	ticketId: 0,
-	currencySymbol: utils_getDefaultProviderCurrency(),
-	currencyPosition: utils_getDefaultCurrencyPosition(),
-	provider: '',
-	hasAttendeeInfoFields: false,
-	isLoading: false,
-	isModalOpen: false,
-	hasBeenCreated: false,
-	hasChanges: false,
-	hasDurationError: false,
-	isSelected: false
-};
-
-/* harmony default export */ var tickets_ticket = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ticket_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_IAC_SETTING"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-			return extends_default()({}, state, {
-				details: ticket_details(state.details, action)
-			});
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_IAC_SETTING"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-			return extends_default()({}, state, {
-				tempDetails: temp_details(state.tempDetails, action)
-			});
-		case types["SET_TICKET_SOLD"]:
-			return extends_default()({}, state, {
-				sold: action.payload.sold
-			});
-		case types["SET_TICKET_AVAILABLE"]:
-			return extends_default()({}, state, {
-				available: action.payload.available
-			});
-		case types["SET_TICKET_ID"]:
-			return extends_default()({}, state, {
-				ticketId: action.payload.ticketId
-			});
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-			return extends_default()({}, state, {
-				currencySymbol: action.payload.currencySymbol
-			});
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-			return extends_default()({}, state, {
-				currencyPosition: action.payload.currencyPosition
-			});
-		case types["SET_TICKET_PROVIDER"]:
-			return extends_default()({}, state, {
-				provider: action.payload.provider
-			});
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-			return extends_default()({}, state, {
-				hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
-			});
-		case types["SET_TICKET_IS_LOADING"]:
-			return extends_default()({}, state, {
-				isLoading: action.payload.isLoading
-			});
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-			return extends_default()({}, state, {
-				isModalOpen: action.payload.isModalOpen
-			});
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-			return extends_default()({}, state, {
-				hasBeenCreated: action.payload.hasBeenCreated
-			});
-		case types["SET_TICKET_HAS_CHANGES"]:
-			return extends_default()({}, state, {
-				hasChanges: action.payload.hasChanges
-			});
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-			return extends_default()({}, state, {
-				hasDurationError: action.payload.hasDurationError
-			});
-		case types["SET_TICKET_IS_SELECTED"]:
-			return extends_default()({}, state, {
-				isSelected: action.payload.isSelected
-			});
-		default:
-			return state;
-	}
-});
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets.js
-
-
-
-/**
- * External dependencies
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-var tickets_byClientId = function byClientId() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_IAC_SETTING"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_IAC_SETTING"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-		case types["SET_TICKET_SOLD"]:
-		case types["SET_TICKET_AVAILABLE"]:
-		case types["SET_TICKET_ID"]:
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-		case types["SET_TICKET_PROVIDER"]:
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-		case types["SET_TICKET_IS_LOADING"]:
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-		case types["SET_TICKET_HAS_CHANGES"]:
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-		case types["SET_TICKET_IS_SELECTED"]:
-		case types["REGISTER_TICKET_BLOCK"]:
-			return extends_default()({}, state, defineProperty_default()({}, action.payload.clientId, tickets_ticket(state[action.payload.clientId], action)));
-		case types["REMOVE_TICKET_BLOCK"]:
-			return omit_default()(state, [action.payload.clientId]);
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return {};
-		default:
-			return state;
-	}
-};
-
-var tickets_allClientIds = function allClientIds() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["REGISTER_TICKET_BLOCK"]:
-			return [].concat(toConsumableArray_default()(state), [action.payload.clientId]);
-		case types["REMOVE_TICKET_BLOCK"]:
-			return state.filter(function (clientId) {
-				return action.payload.clientId !== clientId;
-			});
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return [];
-		default:
-			return state;
-	}
-};
-
-/* harmony default export */ var reducers_tickets = (Object(redux["b" /* combineReducers */])({
-	byClientId: tickets_byClientId,
-	allClientIds: tickets_allClientIds
-}));
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
-var header_image = __webpack_require__(62);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducer.js
-
-/**
- * Internal dependencies
- */
-
-
-
-
-var reducer_DEFAULT_STATE = {
-	headerImage: header_image["a" /* DEFAULT_STATE */],
-	isSelected: false,
-	isSettingsOpen: false,
-	isSettingsLoading: false,
-	provider: '',
-	sharedCapacity: '',
-	tempSharedCapacity: '',
-	tickets: reducers_tickets(undefined, {})
-};
-
-/* harmony default export */ var reducer = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case types["SET_TICKETS_HEADER_IMAGE"]:
-			return extends_default()({}, state, {
-				headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
-			});
-		case types["SET_TICKETS_IS_SELECTED"]:
-			return extends_default()({}, state, {
-				isSelected: action.payload.isSelected
-			});
-		case types["SET_TICKETS_IS_SETTINGS_OPEN"]:
-			return extends_default()({}, state, {
-				isSettingsOpen: action.payload.isSettingsOpen
-			});
-		case types["SET_TICKETS_IS_SETTINGS_LOADING"]:
-			return extends_default()({}, state, {
-				isSettingsLoading: action.payload.isSettingsLoading
-			});
-		case types["SET_TICKETS_PROVIDER"]:
-			return extends_default()({}, state, {
-				provider: action.payload.provider
-			});
-		case types["SET_TICKETS_SHARED_CAPACITY"]:
-			return extends_default()({}, state, {
-				sharedCapacity: action.payload.sharedCapacity
-			});
-		case types["SET_TICKETS_TEMP_SHARED_CAPACITY"]:
-			return extends_default()({}, state, {
-				tempSharedCapacity: action.payload.tempSharedCapacity
-			});
-		case types["SET_TICKET_TITLE"]:
-		case types["SET_TICKET_DESCRIPTION"]:
-		case types["SET_TICKET_PRICE"]:
-		case types["SET_TICKET_SKU"]:
-		case types["SET_TICKET_IAC_SETTING"]:
-		case types["SET_TICKET_START_DATE"]:
-		case types["SET_TICKET_START_DATE_INPUT"]:
-		case types["SET_TICKET_START_DATE_MOMENT"]:
-		case types["SET_TICKET_END_DATE"]:
-		case types["SET_TICKET_END_DATE_INPUT"]:
-		case types["SET_TICKET_END_DATE_MOMENT"]:
-		case types["SET_TICKET_START_TIME"]:
-		case types["SET_TICKET_END_TIME"]:
-		case types["SET_TICKET_START_TIME_INPUT"]:
-		case types["SET_TICKET_END_TIME_INPUT"]:
-		case types["SET_TICKET_CAPACITY_TYPE"]:
-		case types["SET_TICKET_CAPACITY"]:
-		case types["SET_TICKET_TEMP_TITLE"]:
-		case types["SET_TICKET_TEMP_DESCRIPTION"]:
-		case types["SET_TICKET_TEMP_PRICE"]:
-		case types["SET_TICKET_TEMP_SKU"]:
-		case types["SET_TICKET_TEMP_IAC_SETTING"]:
-		case types["SET_TICKET_TEMP_START_DATE"]:
-		case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_END_DATE"]:
-		case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
-		case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
-		case types["SET_TICKET_TEMP_START_TIME"]:
-		case types["SET_TICKET_TEMP_END_TIME"]:
-		case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
-		case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
-		case types["SET_TICKET_TEMP_CAPACITY"]:
-		case types["SET_TICKET_SOLD"]:
-		case types["SET_TICKET_AVAILABLE"]:
-		case types["SET_TICKET_ID"]:
-		case types["SET_TICKET_CURRENCY_SYMBOL"]:
-		case types["SET_TICKET_CURRENCY_POSITION"]:
-		case types["SET_TICKET_PROVIDER"]:
-		case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
-		case types["SET_TICKET_IS_LOADING"]:
-		case types["SET_TICKET_IS_MODAL_OPEN"]:
-		case types["SET_TICKET_HAS_BEEN_CREATED"]:
-		case types["SET_TICKET_HAS_CHANGES"]:
-		case types["SET_TICKET_HAS_DURATION_ERROR"]:
-		case types["SET_TICKET_IS_SELECTED"]:
-		case types["REGISTER_TICKET_BLOCK"]:
-		case types["REMOVE_TICKET_BLOCK"]:
-		case types["REMOVE_TICKET_BLOCKS"]:
-			return extends_default()({}, state, {
-				tickets: reducers_tickets(state.tickets, action)
-			});
-		default:
-			return state;
-	}
-});
-// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/actions.js
-var actions = __webpack_require__(10);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
-var regenerator = __webpack_require__(12);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-
-// EXTERNAL MODULE: ./node_modules/lodash/includes.js
-var includes = __webpack_require__(111);
-var includes_default = /*#__PURE__*/__webpack_require__.n(includes);
-
-// EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
-var effects = __webpack_require__(0);
-
-// EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
-var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
-
-// EXTERNAL MODULE: external {"var":"wp.blocks","root":["wp","blocks"]}
-var external_var_wp_blocks_root_wp_blocks_ = __webpack_require__(110);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/actions.js
-var rsvp_actions = __webpack_require__(14);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
-var reducers_header_image = __webpack_require__(60);
-
-// EXTERNAL MODULE: ./src/modules/data/utils.js
-var utils = __webpack_require__(8);
-
-// EXTERNAL MODULE: external "tribe.common.data"
-var external_tribe_common_data_ = __webpack_require__(35);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var move_types = __webpack_require__(19);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var selectors = __webpack_require__(29);
-
-// EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
-var sagas = __webpack_require__(27);
-
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/sagas.js
-
-
-
-
-
-
-var _marked = /*#__PURE__*/regenerator_default.a.mark(createMissingTicketBlocks),
-    _marked2 = /*#__PURE__*/regenerator_default.a.mark(setTicketsInitialState),
-    _marked3 = /*#__PURE__*/regenerator_default.a.mark(resetTicketsBlock),
-    _marked4 = /*#__PURE__*/regenerator_default.a.mark(setTicketInitialState),
-    _marked5 = /*#__PURE__*/regenerator_default.a.mark(setBodyDetails),
-    _marked6 = /*#__PURE__*/regenerator_default.a.mark(removeTicketBlock),
-    _marked7 = /*#__PURE__*/regenerator_default.a.mark(fetchTicket),
-    _marked8 = /*#__PURE__*/regenerator_default.a.mark(createNewTicket),
-    _marked9 = /*#__PURE__*/regenerator_default.a.mark(updateTicket),
-    _marked10 = /*#__PURE__*/regenerator_default.a.mark(deleteTicket),
-    _marked11 = /*#__PURE__*/regenerator_default.a.mark(fetchTicketsHeaderImage),
-    _marked12 = /*#__PURE__*/regenerator_default.a.mark(updateTicketsHeaderImage),
-    _marked13 = /*#__PURE__*/regenerator_default.a.mark(deleteTicketsHeaderImage),
-    _marked14 = /*#__PURE__*/regenerator_default.a.mark(setTicketDetails),
-    _marked15 = /*#__PURE__*/regenerator_default.a.mark(setTicketTempDetails),
-    _marked16 = /*#__PURE__*/regenerator_default.a.mark(saveTicketWithPostSave),
-    _marked17 = /*#__PURE__*/regenerator_default.a.mark(syncTicketsSaleEndWithEventStart),
-    _marked18 = /*#__PURE__*/regenerator_default.a.mark(syncTicketSaleEndWithEventStart),
-    _marked19 = /*#__PURE__*/regenerator_default.a.mark(handleEventStartDateChanges),
-    _marked20 = /*#__PURE__*/regenerator_default.a.mark(handleTicketDurationError),
-    _marked21 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartDate),
-    _marked22 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndDate),
-    _marked23 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTime),
-    _marked24 = /*#__PURE__*/regenerator_default.a.mark(handleTicketStartTimeInput),
-    _marked25 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTime),
-    _marked26 = /*#__PURE__*/regenerator_default.a.mark(handleTicketEndTimeInput),
-    _marked27 = /*#__PURE__*/regenerator_default.a.mark(handleTicketMove),
-    _marked28 = /*#__PURE__*/regenerator_default.a.mark(handler),
-    _marked29 = /*#__PURE__*/regenerator_default.a.mark(watchers);
-
-/**
- * External Dependencies
- */
-
-
-
-/**
- * Wordpress dependencies
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var sagas_UNLIMITED = constants["UNLIMITED"],
-    sagas_SHARED = constants["SHARED"],
-    sagas_TICKET_TYPES = constants["TICKET_TYPES"],
-    PROVIDER_CLASS_TO_PROVIDER_MAPPING = constants["PROVIDER_CLASS_TO_PROVIDER_MAPPING"];
-var sagas_ticketsConfig = external_tribe_common_utils_["globals"].tickets,
-    restNonce = external_tribe_common_utils_["globals"].restNonce,
-    tecDateSettings = external_tribe_common_utils_["globals"].tecDateSettings;
-var wpREST = external_tribe_common_utils_["api"].wpREST;
-
-
-function createMissingTicketBlocks(tickets) {
-	var _ref, insertBlock, _ref2, getBlockCount, getBlocks, ticketsBlocks;
-
-	return regenerator_default.a.wrap(function createMissingTicketBlocks$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_context.next = 2;
-					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["dispatch"], 'core/editor');
-
-				case 2:
-					_ref = _context.sent;
-					insertBlock = _ref.insertBlock;
-					_context.next = 6;
-					return Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["select"], 'core/editor');
-
-				case 6:
-					_ref2 = _context.sent;
-					getBlockCount = _ref2.getBlockCount;
-					getBlocks = _ref2.getBlocks;
-					_context.next = 11;
-					return Object(effects["b" /* call */])([getBlocks(), 'filter'], function (block) {
-						return block.name === 'tribe/tickets';
-					});
-
-				case 11:
-					ticketsBlocks = _context.sent;
-
-
-					ticketsBlocks.forEach(function (_ref3) {
-						var clientId = _ref3.clientId;
-
-						tickets.forEach(function (ticketId) {
-							var attributes = {
-								hasBeenCreated: true,
-								ticketId: ticketId
-							};
-							var nextChildPosition = getBlockCount(clientId);
-							var block = Object(external_var_wp_blocks_root_wp_blocks_["createBlock"])('tribe/tickets-item', attributes);
-							insertBlock(block, nextChildPosition, clientId, false);
-						});
-					});
-
-				case 13:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
-}
-
-function setTicketsInitialState(action) {
-	var get, header, sharedCapacity, ticketsList, ticketsInBlock, ticketsDiff, provider, defaultProvider;
-	return regenerator_default.a.wrap(function setTicketsInitialState$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					get = action.payload.get;
-					header = parseInt(get('header', header_image["a" /* DEFAULT_STATE */].id), 10);
-					sharedCapacity = get('sharedCapacity');
-					ticketsList = get('tickets', []);
-					_context2.next = 6;
-					return Object(effects["f" /* select */])(getTicketsIdsInBlocks);
-
-				case 6:
-					ticketsInBlock = _context2.sent;
-
-					// Get only the IDs of the tickets that are not in the block list already
-					ticketsDiff = ticketsList.filter(function (item) {
-						return !includes_default()(ticketsInBlock, item);
-					});
-
-					if (!(ticketsDiff.length >= 1)) {
-						_context2.next = 11;
-						break;
-					}
-
-					_context2.next = 11;
-					return Object(effects["b" /* call */])(createMissingTicketBlocks, ticketsDiff);
-
-				case 11:
-					if (!(sharedCapacity !== '0')) {
-						_context2.next = 14;
-						break;
-					}
-
-					_context2.next = 14;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](sharedCapacity))]);
-
-				case 14:
-					if (!(!isNaN(header) && header !== 0)) {
-						_context2.next = 17;
-						break;
-					}
-
-					_context2.next = 17;
-					return Object(effects["e" /* put */])(actions["fetchTicketsHeaderImage"](header));
-
-				case 17:
-					provider = get('provider', reducer_DEFAULT_STATE.provider);
-
-					if (!(provider === constants["RSVP_CLASS"] || !provider)) {
-						_context2.next = 23;
-						break;
-					}
-
-					_context2.next = 21;
-					return Object(effects["f" /* select */])(getDefaultTicketProvider);
-
-				case 21:
-					defaultProvider = _context2.sent;
-
-					provider = defaultProvider === constants["RSVP_CLASS"] ? '' : defaultProvider;
-
-				case 23:
-					_context2.next = 25;
-					return Object(effects["e" /* put */])(actions["setTicketsProvider"](provider));
-
-				case 25:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
-}
-
-function resetTicketsBlock() {
-	var hasCreatedTickets, currentMeta, newMeta;
-	return regenerator_default.a.wrap(function resetTicketsBlock$(_context3) {
-		while (1) {
-			switch (_context3.prev = _context3.next) {
-				case 0:
-					_context3.next = 2;
-					return Object(effects["f" /* select */])(selectors_hasCreatedTickets);
-
-				case 2:
-					hasCreatedTickets = _context3.sent;
-					_context3.next = 5;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlocks"]()), Object(effects["e" /* put */])(actions["setTicketsIsSettingsOpen"](false))]);
-
-				case 5:
-					if (hasCreatedTickets) {
-						_context3.next = 14;
-						break;
-					}
-
-					_context3.next = 8;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostAttribute'], 'meta');
-
-				case 8:
-					currentMeta = _context3.sent;
-					newMeta = extends_default()({}, currentMeta, defineProperty_default()({}, utils["d" /* KEY_TICKET_CAPACITY */], ''));
-					_context3.next = 12;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'editPost'], { meta: newMeta });
-
-				case 12:
-					_context3.next = 14;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"]('')), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](''))]);
-
-				case 14:
-				case 'end':
-					return _context3.stop();
-			}
-		}
-	}, _marked3, this);
-}
-
-function setTicketInitialState(action) {
-	var _action$payload, clientId, get, ticketId, hasBeenCreated, datePickerFormat, publishDate, startMoment, startDate, startDateInput, startTime, startTimeInput, isEvent, eventStart, endMoment, endDate, endDateInput, endTime, endTimeInput, hasTicketsPlus, sharedCapacity;
-
-	return regenerator_default.a.wrap(function setTicketInitialState$(_context4) {
-		while (1) {
-			switch (_context4.prev = _context4.next) {
-				case 0:
-					_action$payload = action.payload, clientId = _action$payload.clientId, get = _action$payload.get;
-					ticketId = get('ticketId', ticket_DEFAULT_STATE.ticketId);
-					hasBeenCreated = get('hasBeenCreated', ticket_DEFAULT_STATE.hasBeenCreated);
-					datePickerFormat = tecDateSettings().datepickerFormat;
-					_context4.next = 6;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
-
-				case 6:
-					publishDate = _context4.sent;
-					_context4.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, publishDate);
-
-				case 9:
-					startMoment = _context4.sent;
-					_context4.next = 12;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
-
-				case 12:
-					startDate = _context4.sent;
-					_context4.next = 15;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
-
-				case 15:
-					startDateInput = _context4.sent;
-					_context4.next = 18;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
-
-				case 18:
-					startTime = _context4.sent;
-					_context4.next = 21;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
-
-				case 21:
-					startTimeInput = _context4.sent;
-					_context4.next = 24;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, hasBeenCreated))]);
-
-				case 24:
-					_context4.next = 26;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
-
-				case 26:
-					isEvent = _context4.sent;
-
-					if (!(isEvent && window.tribe.events)) {
-						_context4.next = 54;
-						break;
-					}
-
-					_context4.prev = 28;
-					_context4.next = 31;
-					return Object(effects["f" /* select */])(tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 31:
-					eventStart = _context4.sent;
-					_context4.next = 34;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, eventStart);
-
-				case 34:
-					endMoment = _context4.sent;
-					_context4.next = 37;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
-
-				case 37:
-					endDate = _context4.sent;
-					_context4.next = 40;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
-
-				case 40:
-					endDateInput = _context4.sent;
-					_context4.next = 43;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
-
-				case 43:
-					endTime = _context4.sent;
-					_context4.next = 46;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
-
-				case 46:
-					endTimeInput = _context4.sent;
-					_context4.next = 49;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput))]);
-
-				case 49:
-					_context4.next = 54;
-					break;
-
-				case 51:
-					_context4.prev = 51;
-					_context4.t0 = _context4['catch'](28);
-
-					console.error(_context4.t0);
-					// ¯\_(ツ)_/¯
-
-				case 54:
-					_context4.next = 56;
-					return Object(effects["f" /* select */])(external_tribe_common_data_["plugins"].selectors.hasPlugin, external_tribe_common_data_["plugins"].constants.TICKETS_PLUS);
-
-				case 56:
-					hasTicketsPlus = _context4.sent;
-
-					if (!hasTicketsPlus) {
-						_context4.next = 60;
-						break;
-					}
-
-					_context4.next = 60;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]])), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]]))]);
-
-				case 60:
-					_context4.next = 62;
-					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
-
-				case 62:
-					sharedCapacity = _context4.sent;
-
-					if (!sharedCapacity) {
-						_context4.next = 66;
-						break;
-					}
-
-					_context4.next = 66;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, sharedCapacity))]);
-
-				case 66:
-					if (!(ticketId !== 0)) {
-						_context4.next = 69;
-						break;
-					}
-
-					_context4.next = 69;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticketId)), Object(effects["b" /* call */])(fetchTicket, { payload: { clientId: clientId, ticketId: ticketId } })]);
-
-				case 69:
-					_context4.next = 71;
-					return Object(effects["b" /* call */])(handleTicketDurationError, clientId);
-
-				case 71:
-					_context4.next = 73;
-					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
-
-				case 73:
-				case 'end':
-					return _context4.stop();
-			}
-		}
-	}, _marked4, this, [[28, 51]]);
-}
-
-function setBodyDetails(clientId) {
-	var body, props, rootClientId, ticketProvider, ticketsProvider, capacityType, capacity, isUnlimited;
-	return regenerator_default.a.wrap(function setBodyDetails$(_context5) {
-		while (1) {
-			switch (_context5.prev = _context5.next) {
-				case 0:
-					body = new FormData();
-					props = { clientId: clientId };
-					_context5.next = 4;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockRootClientId'], clientId);
-
-				case 4:
-					rootClientId = _context5.sent;
-					_context5.next = 7;
-					return Object(effects["f" /* select */])(getTicketProvider, props);
-
-				case 7:
-					ticketProvider = _context5.sent;
-					_context5.next = 10;
-					return Object(effects["f" /* select */])(getTicketsProvider);
-
-				case 10:
-					ticketsProvider = _context5.sent;
-					_context5.t0 = body;
-					_context5.next = 14;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 14:
-					_context5.t1 = _context5.sent;
-
-					_context5.t0.append.call(_context5.t0, 'post_id', _context5.t1);
-
-					body.append('provider', ticketProvider || ticketsProvider);
-					_context5.t2 = body;
-					_context5.next = 20;
-					return Object(effects["f" /* select */])(getTicketTempTitle, props);
-
-				case 20:
-					_context5.t3 = _context5.sent;
-
-					_context5.t2.append.call(_context5.t2, 'name', _context5.t3);
-
-					_context5.t4 = body;
-					_context5.next = 25;
-					return Object(effects["f" /* select */])(getTicketTempDescription, props);
-
-				case 25:
-					_context5.t5 = _context5.sent;
-
-					_context5.t4.append.call(_context5.t4, 'description', _context5.t5);
-
-					_context5.t6 = body;
-					_context5.next = 30;
-					return Object(effects["f" /* select */])(getTicketTempPrice, props);
-
-				case 30:
-					_context5.t7 = _context5.sent;
-
-					_context5.t6.append.call(_context5.t6, 'price', _context5.t7);
-
-					_context5.t8 = body;
-					_context5.next = 35;
-					return Object(effects["f" /* select */])(getTicketTempStartDate, props);
-
-				case 35:
-					_context5.t9 = _context5.sent;
-
-					_context5.t8.append.call(_context5.t8, 'start_date', _context5.t9);
-
-					_context5.t10 = body;
-					_context5.next = 40;
-					return Object(effects["f" /* select */])(getTicketTempStartTime, props);
-
-				case 40:
-					_context5.t11 = _context5.sent;
-
-					_context5.t10.append.call(_context5.t10, 'start_time', _context5.t11);
-
-					_context5.t12 = body;
-					_context5.next = 45;
-					return Object(effects["f" /* select */])(getTicketTempEndDate, props);
-
-				case 45:
-					_context5.t13 = _context5.sent;
-
-					_context5.t12.append.call(_context5.t12, 'end_date', _context5.t13);
-
-					_context5.t14 = body;
-					_context5.next = 50;
-					return Object(effects["f" /* select */])(getTicketTempEndTime, props);
-
-				case 50:
-					_context5.t15 = _context5.sent;
-
-					_context5.t14.append.call(_context5.t14, 'end_time', _context5.t15);
-
-					_context5.t16 = body;
-					_context5.next = 55;
-					return Object(effects["f" /* select */])(getTicketTempSku, props);
-
-				case 55:
-					_context5.t17 = _context5.sent;
-
-					_context5.t16.append.call(_context5.t16, 'sku', _context5.t17);
-
-					_context5.t18 = body;
-					_context5.next = 60;
-					return Object(effects["f" /* select */])(getTicketTempIACSetting, props);
-
-				case 60:
-					_context5.t19 = _context5.sent;
-
-					_context5.t18.append.call(_context5.t18, 'iac', _context5.t19);
-
-					_context5.t20 = body;
-					_context5.next = 65;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockIndex'], clientId, rootClientId);
-
-				case 65:
-					_context5.t21 = _context5.sent;
-
-					_context5.t20.append.call(_context5.t20, 'menu_order', _context5.t21);
-
-					_context5.next = 69;
-					return Object(effects["f" /* select */])(getTicketTempCapacityType, props);
-
-				case 69:
-					capacityType = _context5.sent;
-					_context5.next = 72;
-					return Object(effects["f" /* select */])(getTicketTempCapacity, props);
-
-				case 72:
-					capacity = _context5.sent;
-					isUnlimited = capacityType === sagas_TICKET_TYPES[sagas_UNLIMITED];
-
-					body.append('ticket[mode]', isUnlimited ? '' : capacityType);
-					body.append('ticket[capacity]', isUnlimited ? '' : capacity);
-
-					if (!(capacityType === sagas_TICKET_TYPES[sagas_SHARED])) {
-						_context5.next = 82;
-						break;
-					}
-
-					_context5.t22 = body;
-					_context5.next = 80;
-					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
-
-				case 80:
-					_context5.t23 = _context5.sent;
-
-					_context5.t22.append.call(_context5.t22, 'ticket[event_capacity]', _context5.t23);
-
-				case 82:
-					return _context5.abrupt('return', body);
-
-				case 83:
-				case 'end':
-					return _context5.stop();
-			}
-		}
-	}, _marked5, this);
-}
-
-function removeTicketBlock(clientId) {
-	var _wpDispatch, removeBlock;
-
-	return regenerator_default.a.wrap(function removeTicketBlock$(_context6) {
-		while (1) {
-			switch (_context6.prev = _context6.next) {
-				case 0:
-					_wpDispatch = Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), removeBlock = _wpDispatch.removeBlock;
-					_context6.next = 3;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId)), Object(effects["b" /* call */])(removeBlock, clientId)]);
-
-				case 3:
-				case 'end':
-					return _context6.stop();
-			}
-		}
-	}, _marked6, this);
-}
-
-function fetchTicket(action) {
-	var _action$payload2, ticketId, clientId, _ref4, response, ticket, _ticket$status, status, provider, _ticket$totals, totals, available_from, available_until, cost_details, title, description, sku, iac, capacity_type, capacity, supports_attendee_information, datePickerFormat, startMoment, startDate, startDateInput, startTime, startTimeInput, endMoment, endDate, endDateInput, endTime, endTimeInput, details;
-
-	return regenerator_default.a.wrap(function fetchTicket$(_context7) {
-		while (1) {
-			switch (_context7.prev = _context7.next) {
-				case 0:
-					_action$payload2 = action.payload, ticketId = _action$payload2.ticketId, clientId = _action$payload2.clientId;
-
-					if (!(ticketId === 0)) {
-						_context7.next = 3;
-						break;
-					}
-
-					return _context7.abrupt('return');
-
-				case 3:
-					_context7.next = 5;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 5:
-					_context7.prev = 5;
-					_context7.next = 8;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1'
-					});
-
-				case 8:
-					_ref4 = _context7.sent;
-					response = _ref4.response;
-					ticket = _ref4.data;
-					_ticket$status = ticket.status, status = _ticket$status === undefined ? '' : _ticket$status, provider = ticket.provider;
-
-					if (!(response.status === 404 || status === 'trash' || provider === constants["RSVP"])) {
-						_context7.next = 16;
-						break;
-					}
-
-					_context7.next = 15;
-					return Object(effects["b" /* call */])(removeTicketBlock, clientId);
-
-				case 15:
-					return _context7.abrupt('return');
-
-				case 16:
-					if (!response.ok) {
-						_context7.next = 60;
-						break;
-					}
-
-					_ticket$totals = ticket.totals, totals = _ticket$totals === undefined ? {} : _ticket$totals, available_from = ticket.available_from, available_until = ticket.available_until, cost_details = ticket.cost_details, title = ticket.title, description = ticket.description, sku = ticket.sku, iac = ticket.iac, capacity_type = ticket.capacity_type, capacity = ticket.capacity, supports_attendee_information = ticket.supports_attendee_information;
-					datePickerFormat = tecDateSettings().datepickerFormat;
-					_context7.next = 21;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_from);
-
-				case 21:
-					startMoment = _context7.sent;
-					_context7.next = 24;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
-
-				case 24:
-					startDate = _context7.sent;
-					_context7.next = 27;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
-
-				case 27:
-					startDateInput = _context7.sent;
-					_context7.next = 30;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
-
-				case 30:
-					startTime = _context7.sent;
-					_context7.next = 33;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
-
-				case 33:
-					startTimeInput = _context7.sent;
-					_context7.next = 36;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, '');
-
-				case 36:
-					endMoment = _context7.sent;
-					endDate = '';
-					endDateInput = '';
-					endTime = '';
-					endTimeInput = '';
-
-					if (!available_until) {
-						_context7.next = 57;
-						break;
-					}
-
-					_context7.next = 44;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_until);
-
-				case 44:
-					endMoment = _context7.sent;
-					_context7.next = 47;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
-
-				case 47:
-					endDate = _context7.sent;
-					_context7.next = 50;
-					return datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
-
-				case 50:
-					endDateInput = _context7.sent;
-					_context7.next = 53;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
-
-				case 53:
-					endTime = _context7.sent;
-					_context7.next = 56;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
-
-				case 56:
-					endTimeInput = _context7.sent;
-
-				case 57:
-					details = {
-						title: title,
-						description: description,
-						price: cost_details.values[0],
-						sku: sku,
-						iac: iac,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacity_type,
-						capacity: capacity
-					};
-					_context7.next = 60;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketTempDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, totals.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, totals.stock)), Object(effects["e" /* put */])(actions["setTicketCurrencySymbol"](clientId, cost_details.currency_symbol)), Object(effects["e" /* put */])(actions["setTicketCurrencyPosition"](clientId, cost_details.currency_position)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, provider)), Object(effects["e" /* put */])(actions["setTicketHasAttendeeInfoFields"](clientId, supports_attendee_information)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true))]);
-
-				case 60:
-					_context7.next = 65;
-					break;
-
-				case 62:
-					_context7.prev = 62;
-					_context7.t0 = _context7['catch'](5);
-
-					console.error(_context7.t0);
-					/**
-      * @todo handle error scenario
-      */
-
-				case 65:
-					_context7.next = 67;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 67:
-				case 'end':
-					return _context7.stop();
-			}
-		}
-	}, _marked7, this, [[5, 62]]);
-}
-
-function createNewTicket(action) {
-	var clientId, props, _restNonce, _restNonce$add_ticket, add_ticket_nonce, body, _ref5, response, ticket, sharedCapacity, tempSharedCapacity, available, _ref6, _ref7, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function createNewTicket$(_context8) {
-		while (1) {
-			switch (_context8.prev = _context8.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_restNonce = restNonce(), _restNonce$add_ticket = _restNonce.add_ticket_nonce, add_ticket_nonce = _restNonce$add_ticket === undefined ? '' : _restNonce$add_ticket;
-					_context8.next = 5;
-					return Object(effects["b" /* call */])(setBodyDetails, clientId);
-
-				case 5:
-					body = _context8.sent;
-
-					body.append('add_ticket_nonce', add_ticket_nonce);
-
-					_context8.prev = 7;
-					_context8.next = 10;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 10:
-					_context8.next = 12;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/',
-						namespace: 'tribe/tickets/v1',
-						initParams: {
-							method: 'POST',
-							body: body
-						}
-					});
-
-				case 12:
-					_ref5 = _context8.sent;
-					response = _ref5.response;
-					ticket = _ref5.data;
-
-					if (!response.ok) {
-						_context8.next = 51;
-						break;
-					}
-
-					_context8.next = 18;
-					return Object(effects["f" /* select */])(getTicketsSharedCapacity);
-
-				case 18:
-					sharedCapacity = _context8.sent;
-					_context8.next = 21;
-					return Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
-
-				case 21:
-					tempSharedCapacity = _context8.sent;
-
-					if (!(sharedCapacity === '' && !isNaN(tempSharedCapacity) && tempSharedCapacity > 0)) {
-						_context8.next = 25;
-						break;
-					}
-
-					_context8.next = 25;
-					return Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](tempSharedCapacity));
-
-				case 25:
-					available = ticket.capacity_details.available === -1 ? 0 : ticket.capacity_details.available;
-					_context8.next = 28;
-					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
-
-				case 28:
-					_ref6 = _context8.sent;
-					_ref7 = slicedToArray_default()(_ref6, 17);
-					title = _ref7[0];
-					description = _ref7[1];
-					price = _ref7[2];
-					sku = _ref7[3];
-					iac = _ref7[4];
-					startDate = _ref7[5];
-					startDateInput = _ref7[6];
-					startDateMoment = _ref7[7];
-					endDate = _ref7[8];
-					endDateInput = _ref7[9];
-					endDateMoment = _ref7[10];
-					startTime = _ref7[11];
-					endTime = _ref7[12];
-					startTimeInput = _ref7[13];
-					endTimeInput = _ref7[14];
-					capacityType = _ref7[15];
-					capacity = _ref7[16];
-					_context8.next = 49;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
-						title: title,
-						description: description,
-						price: price,
-						sku: sku,
-						iac: iac,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startDateMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endDateMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacityType,
-						capacity: capacity
-					})), Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticket.id)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, PROVIDER_CLASS_TO_PROVIDER_MAPPING[ticket.provider_class])), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
-
-				case 49:
-					_context8.next = 51;
-					return Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
-
-				case 51:
-					_context8.next = 56;
-					break;
-
-				case 53:
-					_context8.prev = 53;
-					_context8.t0 = _context8['catch'](7);
-
-					console.error(_context8.t0);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 56:
-					_context8.prev = 56;
-					_context8.next = 59;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 59:
-					return _context8.finish(56);
-
-				case 60:
-				case 'end':
-					return _context8.stop();
-			}
-		}
-	}, _marked8, this, [[7, 53, 56, 60]]);
-}
-
-function updateTicket(action) {
-	var clientId, props, _restNonce2, _restNonce2$edit_tick, edit_ticket_nonce, body, ticketId, data, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _ref8, _ref9, key, value, _ref10, response, ticket, capacity_details, available, _ref11, _ref12, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function updateTicket$(_context9) {
-		while (1) {
-			switch (_context9.prev = _context9.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_restNonce2 = restNonce(), _restNonce2$edit_tick = _restNonce2.edit_ticket_nonce, edit_ticket_nonce = _restNonce2$edit_tick === undefined ? '' : _restNonce2$edit_tick;
-					_context9.next = 5;
-					return Object(effects["b" /* call */])(setBodyDetails, clientId);
-
-				case 5:
-					body = _context9.sent;
-
-					body.append('edit_ticket_nonce', edit_ticket_nonce);
-
-					_context9.next = 9;
-					return Object(effects["f" /* select */])(getTicketId, props);
-
-				case 9:
-					ticketId = _context9.sent;
-					_context9.prev = 10;
-					data = [];
-					_iteratorNormalCompletion = true;
-					_didIteratorError = false;
-					_iteratorError = undefined;
-					_context9.prev = 15;
-
-					for (_iterator = body.entries()[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-						_ref8 = _step.value;
-						_ref9 = slicedToArray_default()(_ref8, 2);
-						key = _ref9[0];
-						value = _ref9[1];
-
-						data.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-					}
-
-					_context9.next = 23;
-					break;
-
-				case 19:
-					_context9.prev = 19;
-					_context9.t0 = _context9['catch'](15);
-					_didIteratorError = true;
-					_iteratorError = _context9.t0;
-
-				case 23:
-					_context9.prev = 23;
-					_context9.prev = 24;
-
-					if (!_iteratorNormalCompletion && _iterator.return) {
-						_iterator.return();
-					}
-
-				case 26:
-					_context9.prev = 26;
-
-					if (!_didIteratorError) {
-						_context9.next = 29;
-						break;
-					}
-
-					throw _iteratorError;
-
-				case 29:
-					return _context9.finish(26);
-
-				case 30:
-					return _context9.finish(23);
-
-				case 31:
-					_context9.next = 33;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
-
-				case 33:
-					_context9.next = 35;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-						},
-						initParams: {
-							method: 'PUT',
-							body: data.join('&')
-						}
-					});
-
-				case 35:
-					_ref10 = _context9.sent;
-					response = _ref10.response;
-					ticket = _ref10.data;
-
-					if (!response.ok) {
-						_context9.next = 64;
-						break;
-					}
-
-					capacity_details = ticket.capacity_details;
-					available = capacity_details.available === -1 ? 0 : capacity_details.available;
-					_context9.next = 43;
-					return Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
-
-				case 43:
-					_ref11 = _context9.sent;
-					_ref12 = slicedToArray_default()(_ref11, 17);
-					title = _ref12[0];
-					description = _ref12[1];
-					price = _ref12[2];
-					sku = _ref12[3];
-					iac = _ref12[4];
-					startDate = _ref12[5];
-					startDateInput = _ref12[6];
-					startDateMoment = _ref12[7];
-					endDate = _ref12[8];
-					endDateInput = _ref12[9];
-					endDateMoment = _ref12[10];
-					startTime = _ref12[11];
-					endTime = _ref12[12];
-					startTimeInput = _ref12[13];
-					endTimeInput = _ref12[14];
-					capacityType = _ref12[15];
-					capacity = _ref12[16];
-					_context9.next = 64;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
-						title: title,
-						description: description,
-						price: price,
-						sku: sku,
-						iac: iac,
-						startDate: startDate,
-						startDateInput: startDateInput,
-						startDateMoment: startDateMoment,
-						endDate: endDate,
-						endDateInput: endDateInput,
-						endDateMoment: endDateMoment,
-						startTime: startTime,
-						endTime: endTime,
-						startTimeInput: startTimeInput,
-						endTimeInput: endTimeInput,
-						capacityType: capacityType,
-						capacity: capacity
-					})), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, capacity_details.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
-
-				case 64:
-					_context9.next = 69;
-					break;
-
-				case 66:
-					_context9.prev = 66;
-					_context9.t1 = _context9['catch'](10);
-
-					console.error(_context9.t1);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 69:
-					_context9.prev = 69;
-					_context9.next = 72;
-					return Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
-
-				case 72:
-					return _context9.finish(69);
-
-				case 73:
-				case 'end':
-					return _context9.stop();
-			}
-		}
-	}, _marked9, this, [[10, 66, 69, 73], [15, 19, 23, 31], [24,, 26, 30]]);
-}
-
-function deleteTicket(action) {
-	var clientId, props, shouldDelete, ticketId, hasBeenCreated, _restNonce3, _restNonce3$remove_ti, remove_ticket_nonce, postId, body;
-
-	return regenerator_default.a.wrap(function deleteTicket$(_context10) {
-		while (1) {
-			switch (_context10.prev = _context10.next) {
-				case 0:
-					clientId = action.payload.clientId;
-					props = { clientId: clientId };
-					_context10.next = 4;
-					return Object(effects["b" /* call */])([window, 'confirm'], Object(external_var_wp_i18n_root_wp_i18n_["__"])('Are you sure you want to delete this ticket? It cannot be undone.'));
-
-				case 4:
-					shouldDelete = _context10.sent;
-
-					if (!shouldDelete) {
-						_context10.next = 33;
-						break;
-					}
-
-					_context10.next = 8;
-					return Object(effects["f" /* select */])(getTicketId, props);
-
-				case 8:
-					ticketId = _context10.sent;
-					_context10.next = 11;
-					return Object(effects["f" /* select */])(getTicketHasBeenCreated, props);
-
-				case 11:
-					hasBeenCreated = _context10.sent;
-					_context10.next = 14;
-					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](clientId, false));
-
-				case 14:
-					_context10.next = 16;
-					return Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId));
-
-				case 16:
-					_context10.next = 18;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'clearSelectedBlock']);
-
-				case 18:
-					_context10.next = 20;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
-
-				case 20:
-					if (!hasBeenCreated) {
-						_context10.next = 33;
-						break;
-					}
-
-					_restNonce3 = restNonce(), _restNonce3$remove_ti = _restNonce3.remove_ticket_nonce, remove_ticket_nonce = _restNonce3$remove_ti === undefined ? '' : _restNonce3$remove_ti;
-					_context10.next = 24;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 24:
-					postId = _context10.sent;
-
-
-					/**
-      * Encode params to be passed into the DELETE request as PHP doesn’t transform the request body
-      * of a DELETE request into a super global.
-      */
-					body = [encodeURIComponent('post_id') + '=' + encodeURIComponent(postId), encodeURIComponent('remove_ticket_nonce') + '=' + encodeURIComponent(remove_ticket_nonce)];
-					_context10.prev = 26;
-					_context10.next = 29;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: 'tickets/' + ticketId,
-						namespace: 'tribe/tickets/v1',
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-						},
-						initParams: {
-							method: 'DELETE',
-							body: body.join('&')
-						}
-					});
-
-				case 29:
-					_context10.next = 33;
-					break;
-
-				case 31:
-					_context10.prev = 31;
-					_context10.t0 = _context10['catch'](26);
-
-				case 33:
-				case 'end':
-					return _context10.stop();
-			}
-		}
-	}, _marked10, this, [[26, 31]]);
-}
-
-function fetchTicketsHeaderImage(action) {
-	var id, _ref13, response, media, headerImage;
-
-	return regenerator_default.a.wrap(function fetchTicketsHeaderImage$(_context11) {
-		while (1) {
-			switch (_context11.prev = _context11.next) {
-				case 0:
-					id = action.payload.id;
-					_context11.next = 3;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 3:
-					_context11.prev = 3;
-					_context11.next = 6;
-					return Object(effects["b" /* call */])(wpREST, { path: 'media/' + id });
-
-				case 6:
-					_ref13 = _context11.sent;
-					response = _ref13.response;
-					media = _ref13.data;
-
-					if (!response.ok) {
-						_context11.next = 13;
-						break;
-					}
-
-					headerImage = {
-						id: media.id,
-						alt: media.alt_text,
-						src: media.media_details.sizes.medium.source_url
-					};
-					_context11.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
-
-				case 13:
-					_context11.next = 18;
-					break;
-
-				case 15:
-					_context11.prev = 15;
-					_context11.t0 = _context11['catch'](3);
-
-					console.error(_context11.t0);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 18:
-					_context11.prev = 18;
-					_context11.next = 21;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 21:
-					return _context11.finish(18);
-
-				case 22:
-				case 'end':
-					return _context11.stop();
-			}
-		}
-	}, _marked11, this, [[3, 15, 18, 22]]);
-}
-
-function updateTicketsHeaderImage(action) {
-	var image, postId, body, slug, postType, restBase, _ref14, response, headerImage;
-
-	return regenerator_default.a.wrap(function updateTicketsHeaderImage$(_context12) {
-		while (1) {
-			switch (_context12.prev = _context12.next) {
-				case 0:
-					image = action.payload.image;
-					_context12.next = 3;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 3:
-					postId = _context12.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], '' + image.id)
-					};
-					_context12.prev = 5;
-					_context12.next = 8;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 8:
-					_context12.next = 10;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
-
-				case 10:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context12.next = 15;
-					return Object(effects["b" /* call */])(wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 15:
-					_ref14 = _context12.sent;
-					response = _ref14.response;
-
-					if (!response.ok) {
-						_context12.next = 23;
-						break;
-					}
-
-					headerImage = {
-						id: image.id,
-						alt: image.alt,
-						src: image.sizes.medium.url
-					};
-					/**
-      * @todo: until rsvp and tickets header image can be separated, they need to be linked
-      */
-
-					_context12.next = 21;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
-
-				case 21:
-					_context12.next = 23;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](headerImage));
-
-				case 23:
-					_context12.next = 27;
-					break;
-
-				case 25:
-					_context12.prev = 25;
-					_context12.t0 = _context12['catch'](5);
-
-				case 27:
-					_context12.prev = 27;
-					_context12.next = 30;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 30:
-					_context12.next = 32;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
-
-				case 32:
-					return _context12.finish(27);
-
-				case 33:
-				case 'end':
-					return _context12.stop();
-			}
-		}
-	}, _marked12, this, [[5, 25, 27, 33]]);
-}
-
-function deleteTicketsHeaderImage() {
-	var postId, body, slug, postType, restBase, _ref15, response;
-
-	return regenerator_default.a.wrap(function deleteTicketsHeaderImage$(_context13) {
-		while (1) {
-			switch (_context13.prev = _context13.next) {
-				case 0:
-					_context13.next = 2;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 2:
-					postId = _context13.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], null)
-					};
-					_context13.prev = 4;
-					_context13.next = 7;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
-
-				case 7:
-					_context13.next = 9;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
-
-				case 9:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context13.next = 14;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 14:
-					_ref15 = _context13.sent;
-					response = _ref15.response;
-
-					if (!response.ok) {
-						_context13.next = 21;
-						break;
-					}
-
-					_context13.next = 19;
-					return Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
-
-				case 19:
-					_context13.next = 21;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
-
-				case 21:
-					_context13.next = 25;
-					break;
-
-				case 23:
-					_context13.prev = 23;
-					_context13.t0 = _context13['catch'](4);
-
-				case 25:
-					_context13.prev = 25;
-					_context13.next = 28;
-					return Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
-
-				case 28:
-					_context13.next = 30;
-					return Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
-
-				case 30:
-					return _context13.finish(25);
-
-				case 31:
-				case 'end':
-					return _context13.stop();
-			}
-		}
-	}, _marked13, this, [[4, 23, 25, 31]]);
-}
-
-function setTicketDetails(action) {
-	var _action$payload3, clientId, details, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function setTicketDetails$(_context14) {
-		while (1) {
-			switch (_context14.prev = _context14.next) {
-				case 0:
-					_action$payload3 = action.payload, clientId = _action$payload3.clientId, details = _action$payload3.details;
-					title = details.title, description = details.description, price = details.price, sku = details.sku, iac = details.iac, startDate = details.startDate, startDateInput = details.startDateInput, startDateMoment = details.startDateMoment, endDate = details.endDate, endDateInput = details.endDateInput, endDateMoment = details.endDateMoment, startTime = details.startTime, endTime = details.endTime, startTimeInput = details.startTimeInput, endTimeInput = details.endTimeInput, capacityType = details.capacityType, capacity = details.capacity;
-					_context14.next = 4;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, capacity))]);
-
-				case 4:
-				case 'end':
-					return _context14.stop();
-			}
-		}
-	}, _marked14, this);
-}
-
-function setTicketTempDetails(action) {
-	var _action$payload4, clientId, tempDetails, title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity;
-
-	return regenerator_default.a.wrap(function setTicketTempDetails$(_context15) {
-		while (1) {
-			switch (_context15.prev = _context15.next) {
-				case 0:
-					_action$payload4 = action.payload, clientId = _action$payload4.clientId, tempDetails = _action$payload4.tempDetails;
-					title = tempDetails.title, description = tempDetails.description, price = tempDetails.price, sku = tempDetails.sku, iac = tempDetails.iac, startDate = tempDetails.startDate, startDateInput = tempDetails.startDateInput, startDateMoment = tempDetails.startDateMoment, endDate = tempDetails.endDate, endDateInput = tempDetails.endDateInput, endDateMoment = tempDetails.endDateMoment, startTime = tempDetails.startTime, endTime = tempDetails.endTime, startTimeInput = tempDetails.startTimeInput, endTimeInput = tempDetails.endTimeInput, capacityType = tempDetails.capacityType, capacity = tempDetails.capacity;
-					_context15.next = 4;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketTempDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketTempPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketTempSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketTempIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, capacity))]);
-
-				case 4:
-				case 'end':
-					return _context15.stop();
-			}
-		}
-	}, _marked15, this);
-}
-
-/**
- * Allows the Ticket to be saved at the same time a post is being saved.
- * Avoids the user having to open up the Ticket block, and then click update again there, when changing the event start date.
- *
- * @export
- */
-function saveTicketWithPostSave(clientId) {
-	var savingChannel, notSavingChannel;
-	return regenerator_default.a.wrap(function saveTicketWithPostSave$(_context16) {
-		while (1) {
-			switch (_context16.prev = _context16.next) {
-				case 0:
-					savingChannel = void 0, notSavingChannel = void 0;
-					_context16.prev = 1;
-					_context16.next = 4;
-					return Object(effects["f" /* select */])(getTicketHasBeenCreated, { clientId: clientId });
-
-				case 4:
-					if (!_context16.sent) {
-						_context16.next = 20;
-						break;
-					}
-
-					_context16.next = 7;
-					return Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]);
-
-				case 7:
-					savingChannel = _context16.sent;
-					_context16.next = 10;
-					return Object(effects["b" /* call */])(sagas["b" /* createWPEditorNotSavingChannel */]);
-
-				case 10:
-					notSavingChannel = _context16.sent;
-
-				case 11:
-					if (false) {}
-
-					_context16.next = 14;
-					return Object(effects["g" /* take */])(savingChannel);
-
-				case 14:
-					_context16.next = 16;
-					return Object(effects["b" /* call */])(updateTicket, { payload: { clientId: clientId } });
-
-				case 16:
-					_context16.next = 18;
-					return Object(effects["g" /* take */])(notSavingChannel);
-
-				case 18:
-					_context16.next = 11;
-					break;
-
-				case 20:
-					_context16.next = 25;
-					break;
-
-				case 22:
-					_context16.prev = 22;
-					_context16.t0 = _context16['catch'](1);
-
-					console.error(_context16.t0);
-
-				case 25:
-					_context16.prev = 25;
-
-					if (!savingChannel) {
-						_context16.next = 29;
-						break;
-					}
-
-					_context16.next = 29;
-					return Object(effects["b" /* call */])([savingChannel, 'close']);
-
-				case 29:
-					if (!notSavingChannel) {
-						_context16.next = 32;
-						break;
-					}
-
-					_context16.next = 32;
-					return Object(effects["b" /* call */])([notSavingChannel, 'close']);
-
-				case 32:
-					return _context16.finish(25);
-
-				case 33:
-				case 'end':
-					return _context16.stop();
-			}
-		}
-	}, _marked16, this, [[1, 22, 25, 33]]);
-}
-
-/**
- * Will sync all tickets
- * @param {String} prevStartDate Previous start date before latest set date time changes
- * @export
- */
-function syncTicketsSaleEndWithEventStart(prevStartDate) {
-	var ticketIds, index, clientId;
-	return regenerator_default.a.wrap(function syncTicketsSaleEndWithEventStart$(_context17) {
-		while (1) {
-			switch (_context17.prev = _context17.next) {
-				case 0:
-					_context17.next = 2;
-					return Object(effects["f" /* select */])(getTicketsAllClientIds);
-
-				case 2:
-					ticketIds = _context17.sent;
-					index = 0;
-
-				case 4:
-					if (!(index < ticketIds.length)) {
-						_context17.next = 11;
-						break;
-					}
-
-					clientId = ticketIds[index];
-					_context17.next = 8;
-					return Object(effects["b" /* call */])(syncTicketSaleEndWithEventStart, prevStartDate, clientId);
-
-				case 8:
-					index++;
-					_context17.next = 4;
-					break;
-
-				case 11:
-				case 'end':
-					return _context17.stop();
-			}
-		}
-	}, _marked17, this);
-}
-
-/**
- * Will sync Tickets sale end to be the same as event start date and time, if field has not been manually edited
- * @borrows TEC - Functionality requires TEC to be enabled
- * @param {String} prevStartDate Previous start date before latest set date time changes
- * @export
- */
-function syncTicketSaleEndWithEventStart(prevStartDate, clientId) {
-	var tempEndMoment, endMoment, _ref16, prevEventStartMoment, isNotManuallyEdited, isSyncedToEventStart, isEvent, eventStart, _ref17, endDateMoment, endDate, endDateInput, endTime, endTimeInput;
-
-	return regenerator_default.a.wrap(function syncTicketSaleEndWithEventStart$(_context18) {
-		while (1) {
-			switch (_context18.prev = _context18.next) {
-				case 0:
-					_context18.prev = 0;
-					_context18.next = 3;
-					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
-
-				case 3:
-					tempEndMoment = _context18.sent;
-					_context18.next = 6;
-					return Object(effects["f" /* select */])(getTicketEndDateMoment, { clientId: clientId });
-
-				case 6:
-					endMoment = _context18.sent;
-					_context18.next = 9;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate);
-
-				case 9:
-					_ref16 = _context18.sent;
-					prevEventStartMoment = _ref16.moment;
-					_context18.next = 13;
-					return Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]);
-
-				case 13:
-					_context18.next = 15;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
-
-				case 15:
-					isNotManuallyEdited = _context18.sent;
-					_context18.next = 18;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
-
-				case 18:
-					isSyncedToEventStart = _context18.sent;
-					_context18.next = 21;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
-
-				case 21:
-					isEvent = _context18.sent;
-
-					if (!(isEvent && window.tribe.events && isNotManuallyEdited && isSyncedToEventStart)) {
-						_context18.next = 36;
-						break;
-					}
-
-					_context18.next = 25;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 25:
-					eventStart = _context18.sent;
-					_context18.next = 28;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
-
-				case 28:
-					_ref17 = _context18.sent;
-					endDateMoment = _ref17.moment;
-					endDate = _ref17.date;
-					endDateInput = _ref17.dateInput;
-					endTime = _ref17.time;
-					endTimeInput = _ref17.timeInput;
-					_context18.next = 36;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)),
-
-					// Sync Ticket end items as well so as not to make state 'manually edited'
-					Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)),
-
-					// Trigger UI button
-					Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, true)),
-
-					// Handle ticket duration error
-					Object(effects["b" /* call */])(handleTicketDurationError, clientId)]);
-
-				case 36:
-					_context18.next = 41;
-					break;
-
-				case 38:
-					_context18.prev = 38;
-					_context18.t0 = _context18['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context18.t0);
-
-				case 41:
-				case 'end':
-					return _context18.stop();
-			}
-		}
-	}, _marked18, this, [[0, 38]]);
-}
-
-/**
- * Listens for event start date and time changes after RSVP block is loaded.
- * @borrows TEC - Functionality requires TEC to be enabled and post type to be event
- * @export
- */
-function handleEventStartDateChanges() {
-	var postTypeChannel, isEvent, _window$tribe$events$, SET_START_DATE_TIME, SET_START_TIME, syncTask, eventStart;
-
-	return regenerator_default.a.wrap(function handleEventStartDateChanges$(_context19) {
-		while (1) {
-			switch (_context19.prev = _context19.next) {
-				case 0:
-					_context19.prev = 0;
-					_context19.next = 3;
-					return Object(effects["b" /* call */])(sagas["d" /* hasPostTypeChannel */]);
-
-				case 3:
-					postTypeChannel = _context19.sent;
-					_context19.next = 6;
-					return Object(effects["g" /* take */])(postTypeChannel);
-
-				case 6:
-					_context19.next = 8;
-					return Object(effects["b" /* call */])([postTypeChannel, 'close']);
-
-				case 8:
-					_context19.next = 10;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
-
-				case 10:
-					isEvent = _context19.sent;
-
-					if (!(isEvent && window.tribe.events)) {
-						_context19.next = 28;
-						break;
-					}
-
-					_window$tribe$events$ = window.tribe.events.data.blocks.datetime.types, SET_START_DATE_TIME = _window$tribe$events$.SET_START_DATE_TIME, SET_START_TIME = _window$tribe$events$.SET_START_TIME;
-					syncTask = void 0;
-
-				case 14:
-					if (false) {}
-
-					_context19.next = 17;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 17:
-					eventStart = _context19.sent;
-					_context19.next = 20;
-					return Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]);
-
-				case 20:
-					if (!syncTask) {
-						_context19.next = 23;
-						break;
-					}
-
-					_context19.next = 23;
-					return Object(effects["c" /* cancel */])(syncTask);
-
-				case 23:
-					_context19.next = 25;
-					return Object(effects["d" /* fork */])(syncTicketsSaleEndWithEventStart, eventStart);
-
-				case 25:
-					syncTask = _context19.sent;
-					_context19.next = 14;
-					break;
-
-				case 28:
-					_context19.next = 33;
-					break;
-
-				case 30:
-					_context19.prev = 30;
-					_context19.t0 = _context19['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context19.t0);
-
-				case 33:
-				case 'end':
-					return _context19.stop();
-			}
-		}
-	}, _marked19, this, [[0, 30]]);
-}
-
-function handleTicketDurationError(clientId) {
-	var hasDurationError, startDateMoment, endDateMoment, startTime, endTime, startTimeSeconds, endTimeSeconds, startDateTimeMoment, endDateTimeMoment, durationHasError;
-	return regenerator_default.a.wrap(function handleTicketDurationError$(_context20) {
-		while (1) {
-			switch (_context20.prev = _context20.next) {
-				case 0:
-					hasDurationError = false;
-					_context20.next = 3;
-					return Object(effects["f" /* select */])(getTicketTempStartDateMoment, { clientId: clientId });
-
-				case 3:
-					startDateMoment = _context20.sent;
-					_context20.next = 6;
-					return Object(effects["f" /* select */])(getTicketTempEndDateMoment, { clientId: clientId });
-
-				case 6:
-					endDateMoment = _context20.sent;
-
-					if (!(!startDateMoment || !endDateMoment)) {
-						_context20.next = 11;
-						break;
-					}
-
-					hasDurationError = true;
-					_context20.next = 33;
-					break;
-
-				case 11:
-					_context20.next = 13;
-					return Object(effects["f" /* select */])(getTicketTempStartTime, { clientId: clientId });
-
-				case 13:
-					startTime = _context20.sent;
-					_context20.next = 16;
-					return Object(effects["f" /* select */])(getTicketTempEndTime, { clientId: clientId });
-
-				case 16:
-					endTime = _context20.sent;
-					_context20.next = 19;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 19:
-					startTimeSeconds = _context20.sent;
-					_context20.next = 22;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 22:
-					endTimeSeconds = _context20.sent;
-					_context20.next = 25;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
-
-				case 25:
-					startDateTimeMoment = _context20.sent;
-					_context20.next = 28;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
-
-				case 28:
-					endDateTimeMoment = _context20.sent;
-					_context20.next = 31;
-					return Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
-
-				case 31:
-					durationHasError = _context20.sent;
-
-
-					if (durationHasError) {
-						hasDurationError = true;
-					}
-
-				case 33:
-					_context20.next = 35;
-					return Object(effects["e" /* put */])(actions["setTicketHasDurationError"](clientId, hasDurationError));
-
-				case 35:
-				case 'end':
-					return _context20.stop();
-			}
-		}
-	}, _marked20, this);
-}
-
-function handleTicketStartDate(action) {
-	var _action$payload5, clientId, date, dayPickerInput, startDateMoment, startDate;
-
-	return regenerator_default.a.wrap(function handleTicketStartDate$(_context21) {
-		while (1) {
-			switch (_context21.prev = _context21.next) {
-				case 0:
-					_action$payload5 = action.payload, clientId = _action$payload5.clientId, date = _action$payload5.date, dayPickerInput = _action$payload5.dayPickerInput;
-					_context21.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					startDateMoment = _context21.sent;
-					_context21.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
-
-				case 6:
-					startDate = _context21.sent;
-					_context21.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate));
-
-				case 9:
-					_context21.next = 11;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, dayPickerInput.state.value));
-
-				case 11:
-					_context21.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment));
-
-				case 13:
-				case 'end':
-					return _context21.stop();
-			}
-		}
-	}, _marked21, this);
-}
-
-function handleTicketEndDate(action) {
-	var _action$payload6, clientId, date, dayPickerInput, endDateMoment, endDate;
-
-	return regenerator_default.a.wrap(function handleTicketEndDate$(_context22) {
-		while (1) {
-			switch (_context22.prev = _context22.next) {
-				case 0:
-					_action$payload6 = action.payload, clientId = _action$payload6.clientId, date = _action$payload6.date, dayPickerInput = _action$payload6.dayPickerInput;
-					_context22.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					endDateMoment = _context22.sent;
-					_context22.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
-
-				case 6:
-					endDate = _context22.sent;
-					_context22.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate));
-
-				case 9:
-					_context22.next = 11;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, dayPickerInput.state.value));
-
-				case 11:
-					_context22.next = 13;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment));
-
-				case 13:
-				case 'end':
-					return _context22.stop();
-			}
-		}
-	}, _marked22, this);
-}
-
-function handleTicketStartTime(action) {
-	var _action$payload7, clientId, seconds, startTime;
-
-	return regenerator_default.a.wrap(function handleTicketStartTime$(_context23) {
-		while (1) {
-			switch (_context23.prev = _context23.next) {
-				case 0:
-					_action$payload7 = action.payload, clientId = _action$payload7.clientId, seconds = _action$payload7.seconds;
-					_context23.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					startTime = _context23.sent;
-					_context23.next = 6;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime + ':00'));
-
-				case 6:
-				case 'end':
-					return _context23.stop();
-			}
-		}
-	}, _marked23, this);
-}
-
-function handleTicketStartTimeInput(action) {
-	var _action$payload8, clientId, seconds, startTime, startTimeMoment, startTimeInput;
-
-	return regenerator_default.a.wrap(function handleTicketStartTimeInput$(_context24) {
-		while (1) {
-			switch (_context24.prev = _context24.next) {
-				case 0:
-					_action$payload8 = action.payload, clientId = _action$payload8.clientId, seconds = _action$payload8.seconds;
-					_context24.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					startTime = _context24.sent;
-					_context24.next = 6;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 6:
-					startTimeMoment = _context24.sent;
-					_context24.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
-
-				case 9:
-					startTimeInput = _context24.sent;
-					_context24.next = 12;
-					return Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput));
-
-				case 12:
-				case 'end':
-					return _context24.stop();
-			}
-		}
-	}, _marked24, this);
-}
-
-function handleTicketEndTime(action) {
-	var _action$payload9, clientId, seconds, endTime;
-
-	return regenerator_default.a.wrap(function handleTicketEndTime$(_context25) {
-		while (1) {
-			switch (_context25.prev = _context25.next) {
-				case 0:
-					_action$payload9 = action.payload, clientId = _action$payload9.clientId, seconds = _action$payload9.seconds;
-					_context25.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					endTime = _context25.sent;
-					_context25.next = 6;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime + ':00'));
-
-				case 6:
-				case 'end':
-					return _context25.stop();
-			}
-		}
-	}, _marked25, this);
-}
-
-function handleTicketEndTimeInput(action) {
-	var _action$payload10, clientId, seconds, endTime, endTimeMoment, endTimeInput;
-
-	return regenerator_default.a.wrap(function handleTicketEndTimeInput$(_context26) {
-		while (1) {
-			switch (_context26.prev = _context26.next) {
-				case 0:
-					_action$payload10 = action.payload, clientId = _action$payload10.clientId, seconds = _action$payload10.seconds;
-					_context26.next = 3;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 3:
-					endTime = _context26.sent;
-					_context26.next = 6;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 6:
-					endTimeMoment = _context26.sent;
-					_context26.next = 9;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
-
-				case 9:
-					endTimeInput = _context26.sent;
-					_context26.next = 12;
-					return Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput));
-
-				case 12:
-				case 'end':
-					return _context26.stop();
-			}
-		}
-	}, _marked26, this);
-}
-
-function handleTicketMove() {
-	var ticketClientIds, modalClientId;
-	return regenerator_default.a.wrap(function handleTicketMove$(_context27) {
-		while (1) {
-			switch (_context27.prev = _context27.next) {
-				case 0:
-					_context27.next = 2;
-					return Object(effects["f" /* select */])(getTicketsAllClientIds);
-
-				case 2:
-					ticketClientIds = _context27.sent;
-					_context27.next = 5;
-					return Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
-
-				case 5:
-					modalClientId = _context27.sent;
-
-					if (!ticketClientIds.includes(modalClientId)) {
-						_context27.next = 13;
-						break;
-					}
-
-					_context27.next = 9;
-					return Object(effects["e" /* put */])(actions["setTicketIsSelected"](modalClientId, false));
-
-				case 9:
-					_context27.next = 11;
-					return Object(effects["e" /* put */])(actions["removeTicketBlock"](modalClientId));
-
-				case 11:
-					_context27.next = 13;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [modalClientId]);
-
-				case 13:
-				case 'end':
-					return _context27.stop();
-			}
-		}
-	}, _marked27, this);
-}
-
-function handler(action) {
-	return regenerator_default.a.wrap(function handler$(_context28) {
-		while (1) {
-			switch (_context28.prev = _context28.next) {
-				case 0:
-					_context28.t0 = action.type;
-					_context28.next = _context28.t0 === types["SET_TICKETS_INITIAL_STATE"] ? 3 : _context28.t0 === types["RESET_TICKETS_BLOCK"] ? 6 : _context28.t0 === types["SET_TICKET_INITIAL_STATE"] ? 9 : _context28.t0 === types["FETCH_TICKET"] ? 12 : _context28.t0 === types["CREATE_NEW_TICKET"] ? 15 : _context28.t0 === types["UPDATE_TICKET"] ? 18 : _context28.t0 === types["DELETE_TICKET"] ? 21 : _context28.t0 === types["FETCH_TICKETS_HEADER_IMAGE"] ? 24 : _context28.t0 === types["UPDATE_TICKETS_HEADER_IMAGE"] ? 27 : _context28.t0 === types["DELETE_TICKETS_HEADER_IMAGE"] ? 30 : _context28.t0 === types["SET_TICKET_DETAILS"] ? 33 : _context28.t0 === types["SET_TICKET_TEMP_DETAILS"] ? 36 : _context28.t0 === types["HANDLE_TICKET_START_DATE"] ? 39 : _context28.t0 === types["HANDLE_TICKET_END_DATE"] ? 46 : _context28.t0 === types["HANDLE_TICKET_START_TIME"] ? 53 : _context28.t0 === types["HANDLE_TICKET_END_TIME"] ? 62 : _context28.t0 === move_types["k" /* MOVE_TICKET_SUCCESS */] ? 71 : 74;
-					break;
-
-				case 3:
-					_context28.next = 5;
-					return Object(effects["b" /* call */])(setTicketsInitialState, action);
-
-				case 5:
-					return _context28.abrupt('break', 75);
-
-				case 6:
-					_context28.next = 8;
-					return Object(effects["b" /* call */])(resetTicketsBlock);
-
-				case 8:
-					return _context28.abrupt('break', 75);
-
-				case 9:
-					_context28.next = 11;
-					return Object(effects["b" /* call */])(setTicketInitialState, action);
-
-				case 11:
-					return _context28.abrupt('break', 75);
-
-				case 12:
-					_context28.next = 14;
-					return Object(effects["b" /* call */])(fetchTicket, action);
-
-				case 14:
-					return _context28.abrupt('break', 75);
-
-				case 15:
-					_context28.next = 17;
-					return Object(effects["b" /* call */])(createNewTicket, action);
-
-				case 17:
-					return _context28.abrupt('break', 75);
-
-				case 18:
-					_context28.next = 20;
-					return Object(effects["b" /* call */])(updateTicket, action);
-
-				case 20:
-					return _context28.abrupt('break', 75);
-
-				case 21:
-					_context28.next = 23;
-					return Object(effects["b" /* call */])(deleteTicket, action);
-
-				case 23:
-					return _context28.abrupt('break', 75);
-
-				case 24:
-					_context28.next = 26;
-					return Object(effects["b" /* call */])(fetchTicketsHeaderImage, action);
-
-				case 26:
-					return _context28.abrupt('break', 75);
-
-				case 27:
-					_context28.next = 29;
-					return Object(effects["b" /* call */])(updateTicketsHeaderImage, action);
-
-				case 29:
-					return _context28.abrupt('break', 75);
-
-				case 30:
-					_context28.next = 32;
-					return Object(effects["b" /* call */])(deleteTicketsHeaderImage);
-
-				case 32:
-					return _context28.abrupt('break', 75);
-
-				case 33:
-					_context28.next = 35;
-					return Object(effects["b" /* call */])(setTicketDetails, action);
-
-				case 35:
-					return _context28.abrupt('break', 75);
-
-				case 36:
-					_context28.next = 38;
-					return Object(effects["b" /* call */])(setTicketTempDetails, action);
-
-				case 38:
-					return _context28.abrupt('break', 75);
-
-				case 39:
-					_context28.next = 41;
-					return Object(effects["b" /* call */])(handleTicketStartDate, action);
-
-				case 41:
-					_context28.next = 43;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 43:
-					_context28.next = 45;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 45:
-					return _context28.abrupt('break', 75);
-
-				case 46:
-					_context28.next = 48;
-					return Object(effects["b" /* call */])(handleTicketEndDate, action);
-
-				case 48:
-					_context28.next = 50;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 50:
-					_context28.next = 52;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 52:
-					return _context28.abrupt('break', 75);
-
-				case 53:
-					_context28.next = 55;
-					return Object(effects["b" /* call */])(handleTicketStartTime, action);
-
-				case 55:
-					_context28.next = 57;
-					return Object(effects["b" /* call */])(handleTicketStartTimeInput, action);
-
-				case 57:
-					_context28.next = 59;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 59:
-					_context28.next = 61;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 61:
-					return _context28.abrupt('break', 75);
-
-				case 62:
-					_context28.next = 64;
-					return Object(effects["b" /* call */])(handleTicketEndTime, action);
-
-				case 64:
-					_context28.next = 66;
-					return Object(effects["b" /* call */])(handleTicketEndTimeInput, action);
-
-				case 66:
-					_context28.next = 68;
-					return Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
-
-				case 68:
-					_context28.next = 70;
-					return Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
-
-				case 70:
-					return _context28.abrupt('break', 75);
-
-				case 71:
-					_context28.next = 73;
-					return Object(effects["b" /* call */])(handleTicketMove);
-
-				case 73:
-					return _context28.abrupt('break', 75);
-
-				case 74:
-					return _context28.abrupt('break', 75);
-
-				case 75:
-				case 'end':
-					return _context28.stop();
-			}
-		}
-	}, _marked28, this);
-}
-
-function watchers() {
-	return regenerator_default.a.wrap(function watchers$(_context29) {
-		while (1) {
-			switch (_context29.prev = _context29.next) {
-				case 0:
-					_context29.next = 2;
-					return Object(effects["h" /* takeEvery */])([types["SET_TICKETS_INITIAL_STATE"], types["RESET_TICKETS_BLOCK"], types["SET_TICKET_INITIAL_STATE"], types["FETCH_TICKET"], types["CREATE_NEW_TICKET"], types["UPDATE_TICKET"], types["DELETE_TICKET"], types["FETCH_TICKETS_HEADER_IMAGE"], types["UPDATE_TICKETS_HEADER_IMAGE"], types["DELETE_TICKETS_HEADER_IMAGE"], types["SET_TICKET_DETAILS"], types["SET_TICKET_TEMP_DETAILS"], types["HANDLE_TICKET_START_DATE"], types["HANDLE_TICKET_END_DATE"], types["HANDLE_TICKET_START_TIME"], types["HANDLE_TICKET_END_TIME"], move_types["k" /* MOVE_TICKET_SUCCESS */]], handler);
-
-				case 2:
-					_context29.next = 4;
-					return Object(effects["d" /* fork */])(handleEventStartDateChanges);
-
-				case 4:
-				case 'end':
-					return _context29.stop();
-			}
-		}
-	}, _marked29, this);
-}
-// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/index.js
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-
-
-
-/* harmony default export */ var blocks_ticket = __webpack_exports__["c"] = (reducer);
-
-
-
-/***/ }),
-/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var require;//! moment.js
@@ -5928,7 +2168,7 @@ function loadLocale(name) {
         try {
             oldLocale = globalLocale._abbr;
             var aliasedRequire = require;
-            __webpack_require__(277)("./" + name);
+            __webpack_require__(214)("./" + name);
             getSetGlobalLocale(oldLocale);
         } catch (e) {}
     }
@@ -8600,7 +4840,2229 @@ return hooks;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54)(module)))
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* reexport */ constants; });
+__webpack_require__.d(__webpack_exports__, "d", function() { return /* reexport */ options_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "g", function() { return /* reexport */ types; });
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport */ actions; });
+__webpack_require__.d(__webpack_exports__, "f", function() { return /* reexport */ selectors_namespaceObject; });
+__webpack_require__.d(__webpack_exports__, "e", function() { return /* reexport */ watchers; });
+
+// UNUSED EXPORTS: utils
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/options.js
+var options_namespaceObject = {};
+__webpack_require__.r(options_namespaceObject);
+__webpack_require__.d(options_namespaceObject, "CAPACITY_TYPE_OPTIONS", function() { return CAPACITY_TYPE_OPTIONS; });
+
+// NAMESPACE OBJECT: ./src/modules/data/blocks/ticket/selectors.js
+var selectors_namespaceObject = {};
+__webpack_require__.r(selectors_namespaceObject);
+__webpack_require__.d(selectors_namespaceObject, "getState", function() { return getState; });
+__webpack_require__.d(selectors_namespaceObject, "getBlock", function() { return getBlock; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSelected", function() { return getTicketsIsSelected; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsOpen", function() { return getTicketsIsSettingsOpen; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIsSettingsLoading", function() { return getTicketsIsSettingsLoading; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsProvider", function() { return getTicketsProvider; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacity", function() { return getTicketsSharedCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsSharedCapacityInt", function() { return getTicketsSharedCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacity", function() { return getTicketsTempSharedCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsTempSharedCapacityInt", function() { return getTicketsTempSharedCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImage", function() { return getTicketsHeaderImage; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageId", function() { return getTicketsHeaderImageId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageSrc", function() { return getTicketsHeaderImageSrc; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsHeaderImageAlt", function() { return getTicketsHeaderImageAlt; });
+__webpack_require__.d(selectors_namespaceObject, "getTickets", function() { return getTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsAllClientIds", function() { return getTicketsAllClientIds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsByClientId", function() { return getTicketsByClientId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsArray", function() { return getTicketsArray; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsCount", function() { return getTicketsCount; });
+__webpack_require__.d(selectors_namespaceObject, "hasTickets", function() { return hasTickets; });
+__webpack_require__.d(selectors_namespaceObject, "hasCreatedTickets", function() { return selectors_hasCreatedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTickets", function() { return getIndependentTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTickets", function() { return getSharedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsCount", function() { return getSharedTicketsCount; });
+__webpack_require__.d(selectors_namespaceObject, "getUnlimitedTickets", function() { return getUnlimitedTickets; });
+__webpack_require__.d(selectors_namespaceObject, "hasATicketSelected", function() { return hasATicketSelected; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketsIdsInBlocks", function() { return getTicketsIdsInBlocks; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketClientId", function() { return getTicketClientId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicket", function() { return getTicket; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketSold", function() { return getTicketSold; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketAvailable", function() { return getTicketAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketId", function() { return getTicketId; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencySymbol", function() { return getTicketCurrencySymbol; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCurrencyPosition", function() { return getTicketCurrencyPosition; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketProvider", function() { return getTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasAttendeeInfoFields", function() { return getTicketHasAttendeeInfoFields; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsLoading", function() { return getTicketIsLoading; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsModalOpen", function() { return getTicketIsModalOpen; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasBeenCreated", function() { return getTicketHasBeenCreated; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasChanges", function() { return getTicketHasChanges; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketHasDurationError", function() { return getTicketHasDurationError; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIsSelected", function() { return getTicketIsSelected; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketDisabled", function() { return isTicketDisabled; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketDetails", function() { return getTicketDetails; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTitle", function() { return getTicketTitle; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketDescription", function() { return getTicketDescription; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketPrice", function() { return getTicketPrice; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketSku", function() { return getTicketSku; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketIACSetting", function() { return getTicketIACSetting; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDate", function() { return getTicketStartDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateInput", function() { return getTicketStartDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartDateMoment", function() { return getTicketStartDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDate", function() { return getTicketEndDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateInput", function() { return getTicketEndDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndDateMoment", function() { return getTicketEndDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTime", function() { return getTicketStartTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeNoSeconds", function() { return getTicketStartTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTime", function() { return getTicketEndTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeNoSeconds", function() { return getTicketEndTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketStartTimeInput", function() { return getTicketStartTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketEndTimeInput", function() { return getTicketEndTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityType", function() { return getTicketCapacityType; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacity", function() { return getTicketCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketCapacityInt", function() { return getTicketCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "isUnlimitedTicket", function() { return isUnlimitedTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isSharedTicket", function() { return isSharedTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isIndependentTicket", function() { return isIndependentTicket; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketPast", function() { return isTicketPast; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketFuture", function() { return isTicketFuture; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketOnSale", function() { return isTicketOnSale; });
+__webpack_require__.d(selectors_namespaceObject, "hasTicketOnSale", function() { return hasTicketOnSale; });
+__webpack_require__.d(selectors_namespaceObject, "allTicketsPast", function() { return allTicketsPast; });
+__webpack_require__.d(selectors_namespaceObject, "allTicketsFuture", function() { return allTicketsFuture; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempDetails", function() { return getTicketTempDetails; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempTitle", function() { return getTicketTempTitle; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempDescription", function() { return getTicketTempDescription; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempPrice", function() { return getTicketTempPrice; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempSku", function() { return getTicketTempSku; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempIACSetting", function() { return getTicketTempIACSetting; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDate", function() { return getTicketTempStartDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateInput", function() { return getTicketTempStartDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartDateMoment", function() { return getTicketTempStartDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDate", function() { return getTicketTempEndDate; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateInput", function() { return getTicketTempEndDateInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndDateMoment", function() { return getTicketTempEndDateMoment; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTime", function() { return getTicketTempStartTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeNoSeconds", function() { return getTicketTempStartTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTime", function() { return getTicketTempEndTime; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeNoSeconds", function() { return getTicketTempEndTimeNoSeconds; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempStartTimeInput", function() { return getTicketTempStartTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempEndTimeInput", function() { return getTicketTempEndTimeInput; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityType", function() { return getTicketTempCapacityType; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacity", function() { return getTicketTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityInt", function() { return getTicketTempCapacityInt; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketTempCapacityTypeOption", function() { return getTicketTempCapacityTypeOption; });
+__webpack_require__.d(selectors_namespaceObject, "isTempTitleValid", function() { return isTempTitleValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTempCapacityValid", function() { return isTempCapacityValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTempSharedCapacityValid", function() { return isTempSharedCapacityValid; });
+__webpack_require__.d(selectors_namespaceObject, "isZeroPriceValid", function() { return isZeroPriceValid; });
+__webpack_require__.d(selectors_namespaceObject, "isTicketValid", function() { return isTicketValid; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalCapacity", function() { return _getTotalCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalTempCapacity", function() { return _getTotalTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalSold", function() { return _getTotalSold; });
+__webpack_require__.d(selectors_namespaceObject, "_getTotalAvailable", function() { return _getTotalAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsCapacity", function() { return getIndependentTicketsCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsTempCapacity", function() { return getIndependentTicketsTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsSold", function() { return getIndependentTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentTicketsAvailable", function() { return getIndependentTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsSold", function() { return getSharedTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getSharedTicketsAvailable", function() { return getSharedTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsCapacity", function() { return getIndependentAndSharedTicketsCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsTempCapacity", function() { return getIndependentAndSharedTicketsTempCapacity; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsSold", function() { return getIndependentAndSharedTicketsSold; });
+__webpack_require__.d(selectors_namespaceObject, "getIndependentAndSharedTicketsAvailable", function() { return getIndependentAndSharedTicketsAvailable; });
+__webpack_require__.d(selectors_namespaceObject, "getTicketProviders", function() { return getTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "getDefaultTicketProvider", function() { return getDefaultTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "hasValidTicketProvider", function() { return hasValidTicketProvider; });
+__webpack_require__.d(selectors_namespaceObject, "hasMultipleTicketProviders", function() { return hasMultipleTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "hasTicketProviders", function() { return hasTicketProviders; });
+__webpack_require__.d(selectors_namespaceObject, "canCreateTickets", function() { return canCreateTickets; });
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(14);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
+
+// EXTERNAL MODULE: ./node_modules/redux/es/redux.js + 2 modules
+var redux = __webpack_require__(15);
+
+// EXTERNAL MODULE: ./node_modules/lodash/omit.js
+var omit = __webpack_require__(241);
+var omit_default = /*#__PURE__*/__webpack_require__.n(omit);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/types.js
+var types = __webpack_require__(2);
+
+// EXTERNAL MODULE: external "tribe.common.utils"
+var external_tribe_common_utils_ = __webpack_require__(3);
+
+// EXTERNAL MODULE: ./node_modules/lodash/trim.js
+var trim = __webpack_require__(58);
+var trim_default = /*#__PURE__*/__webpack_require__.n(trim);
+
+// EXTERNAL MODULE: ./node_modules/lodash/find.js
+var find = __webpack_require__(57);
+var find_default = /*#__PURE__*/__webpack_require__.n(find);
+
+// EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
+var lib = __webpack_require__(6);
+
+// EXTERNAL MODULE: ./node_modules/moment/moment.js
+var moment = __webpack_require__(4);
+var moment_default = /*#__PURE__*/__webpack_require__.n(moment);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/constants.js
+var constants = __webpack_require__(22);
+
+// EXTERNAL MODULE: external {"var":"wp.i18n","root":["wp","i18n"]}
+var external_var_wp_i18n_root_wp_i18n_ = __webpack_require__(13);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/options.js
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+const CAPACITY_TYPE_OPTIONS = [{
+  label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Share capacity with other tickets', 'event-tickets'),
+  value: constants["TICKET_TYPES"][constants["SHARED"]]
+}, {
+  label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Set capacity for this ticket only', 'event-tickets'),
+  value: constants["TICKET_TYPES"][constants["INDEPENDENT"]]
+}, {
+  label: Object(external_var_wp_i18n_root_wp_i18n_["__"])('Unlimited', 'event-tickets'),
+  value: constants["TICKET_TYPES"][constants["UNLIMITED"]]
+}];
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/selectors.js
+
+
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const {
+  UNLIMITED,
+  INDEPENDENT,
+  SHARED,
+  TICKET_TYPES
+} = constants;
+const {
+  tickets: ticketsConfig
+} = external_tribe_common_utils_["globals"];
+const getState = state => state;
+const getBlock = state => state.tickets.blocks.ticket; //
+// ─── BLOCK SELECTORS ────────────────────────────────────────────────────────────
+//
+
+const getTicketsIsSelected = Object(lib["createSelector"])([getBlock], block => block.isSelected);
+const getTicketsIsSettingsOpen = Object(lib["createSelector"])([getBlock], block => block.isSettingsOpen);
+const getTicketsIsSettingsLoading = Object(lib["createSelector"])([getBlock], block => block.isSettingsLoading);
+const getTicketsProvider = Object(lib["createSelector"])([getBlock], block => block.provider);
+const getTicketsSharedCapacity = Object(lib["createSelector"])([getBlock], block => block.sharedCapacity);
+const getTicketsSharedCapacityInt = Object(lib["createSelector"])([getTicketsSharedCapacity], capacity => parseInt(capacity, 10) || 0);
+const getTicketsTempSharedCapacity = Object(lib["createSelector"])([getBlock], block => block.tempSharedCapacity);
+const getTicketsTempSharedCapacityInt = Object(lib["createSelector"])([getTicketsTempSharedCapacity], capacity => parseInt(capacity, 10) || 0); //
+// ─── HEADER IMAGE SELECTORS ─────────────────────────────────────────────────────
+//
+
+const getTicketsHeaderImage = Object(lib["createSelector"])([getBlock], block => block.headerImage);
+const getTicketsHeaderImageId = Object(lib["createSelector"])([getTicketsHeaderImage], headerImage => headerImage.id);
+const getTicketsHeaderImageSrc = Object(lib["createSelector"])([getTicketsHeaderImage], headerImage => headerImage.src);
+const getTicketsHeaderImageAlt = Object(lib["createSelector"])([getTicketsHeaderImage], headerImage => headerImage.alt); //
+// ─── TICKETS SELECTORS ──────────────────────────────────────────────────────────
+//
+
+const getTickets = Object(lib["createSelector"])([getBlock], block => block.tickets);
+const getTicketsAllClientIds = Object(lib["createSelector"])([getTickets], tickets => tickets.allClientIds);
+const getTicketsByClientId = Object(lib["createSelector"])([getTickets], tickets => tickets.byClientId);
+const getTicketsArray = Object(lib["createSelector"])([getTicketsAllClientIds, getTicketsByClientId], (ids, tickets) => ids.map(id => tickets[id]));
+const getTicketsCount = Object(lib["createSelector"])([getTicketsAllClientIds], allClientIds => allClientIds.length);
+const hasTickets = Object(lib["createSelector"])([getTicketsCount], count => count > 0);
+const selectors_hasCreatedTickets = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.reduce((hasCreated, ticket) => hasCreated || ticket.hasBeenCreated, false));
+const getIndependentTickets = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.filter(ticket => ticket.details.capacityType === TICKET_TYPES[INDEPENDENT]));
+const getSharedTickets = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.filter(ticket => ticket.details.capacityType === TICKET_TYPES[SHARED]));
+const getSharedTicketsCount = Object(lib["createSelector"])([getSharedTickets], tickets => tickets.length);
+const getUnlimitedTickets = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.filter(ticket => ticket.details.capacityType === TICKET_TYPES[UNLIMITED]));
+const hasATicketSelected = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.reduce((selected, ticket) => selected || ticket.isSelected, false));
+const getTicketsIdsInBlocks = Object(lib["createSelector"])([getTicketsArray], tickets => tickets.reduce((accumulator, ticket) => {
+  if (ticket.ticketId !== 0) {
+    accumulator.push(ticket.ticketId);
+  }
+
+  return accumulator;
+}, [])); //
+// ─── TICKET SELECTORS ───────────────────────────────────────────────────────────
+//
+
+const getTicketClientId = (state, ownProps) => ownProps.clientId;
+const getTicket = Object(lib["createSelector"])([getTicketsByClientId, getTicketClientId], (tickets, clientId) => tickets[clientId] || {});
+const getTicketSold = Object(lib["createSelector"])([getTicket], ticket => ticket.sold);
+const getTicketAvailable = Object(lib["createSelector"])([getTicket], ticket => ticket.available);
+const getTicketId = Object(lib["createSelector"])([getTicket], ticket => ticket.ticketId);
+const getTicketCurrencySymbol = Object(lib["createSelector"])([getTicket], ticket => ticket.currencySymbol);
+const getTicketCurrencyPosition = Object(lib["createSelector"])([getTicket], ticket => ticket.currencyPosition);
+const getTicketProvider = Object(lib["createSelector"])([getTicket], ticket => ticket.provider);
+const getTicketHasAttendeeInfoFields = Object(lib["createSelector"])([getTicket], ticket => ticket.hasAttendeeInfoFields);
+const getTicketIsLoading = Object(lib["createSelector"])([getTicket], ticket => ticket.isLoading);
+const getTicketIsModalOpen = Object(lib["createSelector"])([getTicket], ticket => ticket.isModalOpen);
+const getTicketHasBeenCreated = Object(lib["createSelector"])([getTicket], ticket => ticket.hasBeenCreated);
+const getTicketHasChanges = Object(lib["createSelector"])([getTicket], ticket => ticket.hasChanges);
+const getTicketHasDurationError = Object(lib["createSelector"])([getTicket], ticket => ticket.hasDurationError);
+const getTicketIsSelected = Object(lib["createSelector"])([getTicket], ticket => ticket.isSelected);
+const isTicketDisabled = Object(lib["createSelector"])([hasATicketSelected, getTicketIsSelected, getTicketIsLoading, getTicketsIsSettingsOpen], (hasSelected, isSelected, isLoading, isSettingsOpen) => hasSelected && !isSelected || isLoading || isSettingsOpen); //
+// ─── TICKET DETAILS SELECTORS ───────────────────────────────────────────────────
+//
+
+const getTicketDetails = Object(lib["createSelector"])([getTicket], ticket => ticket.details || {});
+const getTicketTitle = Object(lib["createSelector"])([getTicketDetails], details => details.title);
+const getTicketDescription = Object(lib["createSelector"])([getTicketDetails], details => details.description);
+const getTicketPrice = Object(lib["createSelector"])([getTicketDetails], details => details.price);
+const getTicketSku = Object(lib["createSelector"])([getTicketDetails], details => details.sku);
+const getTicketIACSetting = Object(lib["createSelector"])([getTicketDetails], details => details.iac);
+const getTicketStartDate = Object(lib["createSelector"])([getTicketDetails], details => details.startDate);
+const getTicketStartDateInput = Object(lib["createSelector"])([getTicketDetails], details => details.startDateInput);
+const getTicketStartDateMoment = Object(lib["createSelector"])([getTicketDetails], details => details.startDateMoment);
+const getTicketEndDate = Object(lib["createSelector"])([getTicketDetails], details => details.endDate);
+const getTicketEndDateInput = Object(lib["createSelector"])([getTicketDetails], details => details.endDateInput);
+const getTicketEndDateMoment = Object(lib["createSelector"])([getTicketDetails], details => details.endDateMoment);
+const getTicketStartTime = Object(lib["createSelector"])([getTicketDetails], details => details.startTime || '');
+const getTicketStartTimeNoSeconds = Object(lib["createSelector"])([getTicketStartTime], startTime => startTime.slice(0, -3));
+const getTicketEndTime = Object(lib["createSelector"])([getTicketDetails], details => details.endTime || '');
+const getTicketEndTimeNoSeconds = Object(lib["createSelector"])([getTicketEndTime], endTime => endTime.slice(0, -3));
+const getTicketStartTimeInput = Object(lib["createSelector"])([getTicketDetails], details => details.startTimeInput);
+const getTicketEndTimeInput = Object(lib["createSelector"])([getTicketDetails], details => details.endTimeInput);
+const getTicketCapacityType = Object(lib["createSelector"])([getTicketDetails], details => details.capacityType);
+const getTicketCapacity = Object(lib["createSelector"])([getTicketDetails], details => details.capacity);
+const getTicketCapacityInt = Object(lib["createSelector"])([getTicketCapacity], capacity => parseInt(capacity, 10) || 0);
+const isUnlimitedTicket = Object(lib["createSelector"])([getTicketDetails], details => details.capacityType === TICKET_TYPES[UNLIMITED]);
+const isSharedTicket = Object(lib["createSelector"])([getTicketDetails], details => details.capacityType === TICKET_TYPES[SHARED]);
+const isIndependentTicket = Object(lib["createSelector"])([getTicketDetails], details => details.capacityType === TICKET_TYPES[INDEPENDENT]);
+const isTicketPast = Object(lib["createSelector"])([getTicketEndDateMoment], endDate => moment_default()().isAfter(endDate));
+const isTicketFuture = Object(lib["createSelector"])([getTicketStartDateMoment], startDate => moment_default()().isBefore(startDate));
+const isTicketOnSale = Object(lib["createSelector"])([getTicketHasBeenCreated, isTicketPast, isTicketFuture], (hasBeenCreated, isPast, isFuture) => hasBeenCreated && !isPast && !isFuture);
+const hasTicketOnSale = Object(lib["createSelector"])([getTicketsAllClientIds, getState], (allClientIds, state) => allClientIds.reduce((onSale, clientId) => onSale || isTicketOnSale(state, {
+  clientId
+}), false));
+const allTicketsPast = Object(lib["createSelector"])([getTicketsAllClientIds, getState], (allClientIds, state) => allClientIds.reduce((isPast, clientId) => {
+  const props = {
+    clientId
+  };
+  return getTicketHasBeenCreated(state, props) ? isPast && isTicketPast(state, props) : isPast;
+}, true));
+const allTicketsFuture = Object(lib["createSelector"])([getTicketsAllClientIds, getState], (allClientIds, state) => allClientIds.reduce((isFuture, clientId) => {
+  const props = {
+    clientId
+  };
+  return getTicketHasBeenCreated(state, props) ? isFuture && isTicketFuture(state, props) : isFuture;
+}, true)); //
+// ─── TICKET TEMP DETAILS SELECTORS ──────────────────────────────────────────────
+//
+
+const getTicketTempDetails = Object(lib["createSelector"])([getTicket], ticket => ticket.tempDetails || {});
+const getTicketTempTitle = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.title);
+const getTicketTempDescription = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.description);
+const getTicketTempPrice = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.price);
+const getTicketTempSku = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.sku);
+const getTicketTempIACSetting = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.iac);
+const getTicketTempStartDate = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.startDate);
+const getTicketTempStartDateInput = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.startDateInput);
+const getTicketTempStartDateMoment = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.startDateMoment);
+const getTicketTempEndDate = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.endDate);
+const getTicketTempEndDateInput = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.endDateInput);
+const getTicketTempEndDateMoment = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.endDateMoment);
+const getTicketTempStartTime = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.startTime || '');
+const getTicketTempStartTimeNoSeconds = Object(lib["createSelector"])([getTicketTempStartTime], startTime => startTime.slice(0, -3));
+const getTicketTempEndTime = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.endTime || '');
+const getTicketTempEndTimeNoSeconds = Object(lib["createSelector"])([getTicketTempEndTime], endTime => endTime.slice(0, -3));
+const getTicketTempStartTimeInput = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.startTimeInput);
+const getTicketTempEndTimeInput = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.endTimeInput);
+const getTicketTempCapacityType = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.capacityType);
+const getTicketTempCapacity = Object(lib["createSelector"])([getTicketTempDetails], tempDetails => tempDetails.capacity);
+const getTicketTempCapacityInt = Object(lib["createSelector"])([getTicketTempCapacity], capacity => parseInt(capacity, 10) || 0);
+const getTicketTempCapacityTypeOption = Object(lib["createSelector"])([getTicketTempCapacityType], capacityType => find_default()(CAPACITY_TYPE_OPTIONS, {
+  value: capacityType
+}) || {});
+const isTempTitleValid = Object(lib["createSelector"])([getTicketTempTitle], title => trim_default()(title) !== '');
+const isTempCapacityValid = Object(lib["createSelector"])([getTicketTempCapacity], capacity => trim_default()(capacity) !== '' && !isNaN(capacity));
+const isTempSharedCapacityValid = Object(lib["createSelector"])([getTicketsTempSharedCapacity], capacity => trim_default()(capacity) !== '' && !isNaN(capacity));
+const isZeroPriceValid = Object(lib["createSelector"])([getTicketTempPrice, getTicketsProvider], (price, provider) => 0 < parseInt(price, 10) || provider !== constants["TC_CLASS"]);
+const isTicketValid = Object(lib["createSelector"])([getTicketTempCapacityType, isTempTitleValid, isTempCapacityValid, isTempSharedCapacityValid, isZeroPriceValid], (capacityType, titleValid, capacityValid, sharedCapacityValid, zeroPriceValid) => {
+  if (capacityType === TICKET_TYPES[UNLIMITED]) {
+    return titleValid && zeroPriceValid;
+  } else if (capacityType === TICKET_TYPES[SHARED]) {
+    return titleValid && sharedCapacityValid && zeroPriceValid;
+  }
+
+  return titleValid && capacityValid && zeroPriceValid;
+}); //
+// ─── AMOUNT REDUCERS ────────────────────────────────────────────────────────────
+//
+
+const _getTotalCapacity = tickets => tickets.reduce((total, ticket) => {
+  const capacity = parseInt(ticket.details.capacity, 10) || 0;
+  return total + capacity;
+}, 0);
+const _getTotalTempCapacity = tickets => tickets.reduce((total, ticket) => {
+  const tempCapacity = parseInt(ticket.tempDetails.capacity, 10) || 0;
+  return total + tempCapacity;
+}, 0);
+const _getTotalSold = tickets => tickets.reduce((total, ticket) => {
+  const sold = parseInt(ticket.sold, 10) || 0;
+  return total + sold;
+}, 0);
+const _getTotalAvailable = tickets => tickets.reduce((total, ticket) => {
+  const available = parseInt(ticket.available, 10) || 0;
+  return total + available;
+}, 0);
+const getIndependentTicketsCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalCapacity);
+const getIndependentTicketsTempCapacity = Object(lib["createSelector"])(getIndependentTickets, _getTotalTempCapacity);
+const getIndependentTicketsSold = Object(lib["createSelector"])(getIndependentTickets, _getTotalSold);
+const getIndependentTicketsAvailable = Object(lib["createSelector"])(getIndependentTickets, _getTotalAvailable);
+const getSharedTicketsSold = Object(lib["createSelector"])(getSharedTickets, _getTotalSold);
+const getSharedTicketsAvailable = Object(lib["createSelector"])([getTicketsSharedCapacityInt, getSharedTicketsSold], (sharedCapacity, sharedSold) => Math.max(sharedCapacity - sharedSold, 0));
+const getIndependentAndSharedTicketsCapacity = Object(lib["createSelector"])([getIndependentTicketsCapacity, getTicketsSharedCapacityInt], (independentCapacity, sharedCapacity) => independentCapacity + sharedCapacity);
+const getIndependentAndSharedTicketsTempCapacity = Object(lib["createSelector"])([getIndependentTicketsTempCapacity, getTicketsTempSharedCapacityInt], (independentTempCapacity, tempSharedCapacity) => independentTempCapacity + tempSharedCapacity);
+const getIndependentAndSharedTicketsSold = Object(lib["createSelector"])([getIndependentTicketsSold, getSharedTicketsSold], (independentSold, sharedSold) => independentSold + sharedSold);
+const getIndependentAndSharedTicketsAvailable = Object(lib["createSelector"])([getIndependentTicketsAvailable, getSharedTicketsAvailable], (independentAvailable, sharedAvailable) => independentAvailable + sharedAvailable); //
+// ─── MISC SELECTORS ─────────────────────────────────────────────────────────────
+//
+
+const getTicketProviders = () => {
+  const tickets = ticketsConfig();
+  return tickets.providers || [];
+};
+const getDefaultTicketProvider = () => {
+  const tickets = ticketsConfig();
+  return tickets.default_provider || '';
+};
+const hasValidTicketProvider = () => {
+  const provider = getDefaultTicketProvider();
+  return provider !== '' && provider !== constants["RSVP_CLASS"];
+};
+const hasMultipleTicketProviders = Object(lib["createSelector"])([getTicketProviders], providers => providers.length > 1);
+const hasTicketProviders = Object(lib["createSelector"])([getTicketProviders], providers => providers.length > 0);
+const canCreateTickets = Object(lib["createSelector"])([hasTicketProviders, hasValidTicketProvider], (providers, validDefaultProvider) => providers && validDefaultProvider);
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/utils.js
+/**
+ * External dependencies
+ */
+
+const {
+  settings,
+  priceSettings,
+  tickets: utils_ticketsConfig
+} = external_tribe_common_utils_["globals"];
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Get currency symbol by provider
+ *
+ * @param provider The tickets provider class
+ */
+
+const getProviderCurrency = provider => {
+  const tickets = utils_ticketsConfig();
+  const providers = getTicketProviders(); // if we don't get the provider, return the default one
+
+  if ('' === provider) {
+    return tickets.default_currency;
+  }
+
+  const [result] = providers.filter(el => el.class === provider);
+  return result ? result.currency : tickets.default_currency;
+};
+/**
+ * Get the default provider's currency symbol
+ */
+
+const getDefaultProviderCurrency = () => {
+  return getProviderCurrency(getDefaultTicketProvider());
+};
+/**
+ * Get currency position
+ */
+
+const getDefaultCurrencyPosition = () => {
+  const position = external_tribe_common_utils_["string"].isTruthy(settings() && settings().reverseCurrencyPosition) ? 'suffix' : 'prefix';
+  return priceSettings() && priceSettings().defaultCurrencyPosition ? priceSettings().defaultCurrencyPosition : position;
+};
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/details.js
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+const currentMoment = moment_default()();
+const bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+const bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+const details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
+const details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
+const details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
+const details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
+const DEFAULT_STATE = {
+  title: '',
+  description: '',
+  price: '',
+  sku: '',
+  iac: details_iac,
+  startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
+  startDateInput: details_startDateInput,
+  startDateMoment: currentMoment,
+  endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
+  endDateInput: details_endDateInput,
+  endDateMoment: details_endMoment,
+  startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
+  endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
+  startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
+  endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment),
+  capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
+  capacity: ''
+};
+/* harmony default export */ var ticket_details = (function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["SET_TICKET_TITLE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        title: action.payload.title
+      });
+
+    case types["SET_TICKET_DESCRIPTION"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        description: action.payload.description
+      });
+
+    case types["SET_TICKET_PRICE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        price: action.payload.price
+      });
+
+    case types["SET_TICKET_SKU"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        sku: action.payload.sku
+      });
+
+    case types["SET_TICKET_IAC_SETTING"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        iac: action.payload.iac
+      });
+
+    case types["SET_TICKET_START_DATE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDate: action.payload.startDate
+      });
+
+    case types["SET_TICKET_START_DATE_INPUT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDateInput: action.payload.startDateInput
+      });
+
+    case types["SET_TICKET_START_DATE_MOMENT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDateMoment: action.payload.startDateMoment
+      });
+
+    case types["SET_TICKET_END_DATE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDate: action.payload.endDate
+      });
+
+    case types["SET_TICKET_END_DATE_INPUT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDateInput: action.payload.endDateInput
+      });
+
+    case types["SET_TICKET_END_DATE_MOMENT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDateMoment: action.payload.endDateMoment
+      });
+
+    case types["SET_TICKET_START_TIME"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startTime: action.payload.startTime
+      });
+
+    case types["SET_TICKET_END_TIME"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endTime: action.payload.endTime
+      });
+
+    case types["SET_TICKET_START_TIME_INPUT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startTimeInput: action.payload.startTimeInput
+      });
+
+    case types["SET_TICKET_END_TIME_INPUT"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endTimeInput: action.payload.endTimeInput
+      });
+
+    case types["SET_TICKET_CAPACITY_TYPE"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        capacityType: action.payload.capacityType
+      });
+
+    case types["SET_TICKET_CAPACITY"]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        capacity: action.payload.capacity
+      });
+
+    default:
+      return state;
+  }
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket/temp-details.js
+
+
+function temp_details_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function temp_details_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { temp_details_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { temp_details_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * External dependencies
+ */
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const temp_details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+const temp_details_currentMoment = moment_default()();
+const temp_details_bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+const temp_details_bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+const temp_details_endMoment = temp_details_currentMoment.clone().add(temp_details_bufferDuration, 'hours').add(temp_details_bufferYears, 'years');
+const temp_details_startDateInput = temp_details_datePickerFormat ? temp_details_currentMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_currentMoment);
+const temp_details_endDateInput = temp_details_datePickerFormat ? temp_details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(temp_details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(temp_details_endMoment);
+const temp_details_iac = external_tribe_common_utils_["globals"].iacVars().iacDefault ? external_tribe_common_utils_["globals"].iacVars().iacDefault : 'none';
+const temp_details_DEFAULT_STATE = {
+  title: '',
+  description: '',
+  price: '',
+  sku: '',
+  iac: temp_details_iac,
+  startDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_currentMoment),
+  startDateInput: temp_details_startDateInput,
+  startDateMoment: temp_details_currentMoment,
+  endDate: external_tribe_common_utils_["moment"].toDatabaseDate(temp_details_endMoment),
+  endDateInput: temp_details_endDateInput,
+  endDateMoment: temp_details_endMoment,
+  startTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_currentMoment),
+  endTime: external_tribe_common_utils_["moment"].toDatabaseTime(temp_details_endMoment),
+  startTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_currentMoment),
+  endTimeInput: external_tribe_common_utils_["moment"].toTime(temp_details_endMoment),
+  capacityType: constants["TICKET_TYPES"][constants["UNLIMITED"]],
+  capacity: ''
+};
+/* harmony default export */ var temp_details = (function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : temp_details_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["SET_TICKET_TEMP_TITLE"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        title: action.payload.title
+      });
+
+    case types["SET_TICKET_TEMP_DESCRIPTION"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        description: action.payload.description
+      });
+
+    case types["SET_TICKET_TEMP_PRICE"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        price: action.payload.price
+      });
+
+    case types["SET_TICKET_TEMP_SKU"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        sku: action.payload.sku
+      });
+
+    case types["SET_TICKET_TEMP_IAC_SETTING"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        iac: action.payload.iac
+      });
+
+    case types["SET_TICKET_TEMP_START_DATE"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDate: action.payload.startDate
+      });
+
+    case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDateInput: action.payload.startDateInput
+      });
+
+    case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDateMoment: action.payload.startDateMoment
+      });
+
+    case types["SET_TICKET_TEMP_END_DATE"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDate: action.payload.endDate
+      });
+
+    case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDateInput: action.payload.endDateInput
+      });
+
+    case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDateMoment: action.payload.endDateMoment
+      });
+
+    case types["SET_TICKET_TEMP_START_TIME"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startTime: action.payload.startTime
+      });
+
+    case types["SET_TICKET_TEMP_END_TIME"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endTime: action.payload.endTime
+      });
+
+    case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startTimeInput: action.payload.startTimeInput
+      });
+
+    case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endTimeInput: action.payload.endTimeInput
+      });
+
+    case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        capacityType: action.payload.capacityType
+      });
+
+    case types["SET_TICKET_TEMP_CAPACITY"]:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        capacity: action.payload.capacity
+      });
+
+    default:
+      return state;
+  }
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets/ticket.js
+
+
+function ticket_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function ticket_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ticket_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ticket_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+const ticket_DEFAULT_STATE = {
+  details: DEFAULT_STATE,
+  tempDetails: temp_details_DEFAULT_STATE,
+  sold: 0,
+  available: 0,
+  ticketId: 0,
+  currencySymbol: getDefaultProviderCurrency(),
+  currencyPosition: getDefaultCurrencyPosition(),
+  provider: '',
+  hasAttendeeInfoFields: false,
+  isLoading: false,
+  isModalOpen: false,
+  hasBeenCreated: false,
+  hasChanges: false,
+  hasDurationError: false,
+  isSelected: false
+};
+/* harmony default export */ var tickets_ticket = (function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ticket_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["SET_TICKET_TITLE"]:
+    case types["SET_TICKET_DESCRIPTION"]:
+    case types["SET_TICKET_PRICE"]:
+    case types["SET_TICKET_SKU"]:
+    case types["SET_TICKET_IAC_SETTING"]:
+    case types["SET_TICKET_START_DATE"]:
+    case types["SET_TICKET_START_DATE_INPUT"]:
+    case types["SET_TICKET_START_DATE_MOMENT"]:
+    case types["SET_TICKET_END_DATE"]:
+    case types["SET_TICKET_END_DATE_INPUT"]:
+    case types["SET_TICKET_END_DATE_MOMENT"]:
+    case types["SET_TICKET_START_TIME"]:
+    case types["SET_TICKET_END_TIME"]:
+    case types["SET_TICKET_START_TIME_INPUT"]:
+    case types["SET_TICKET_END_TIME_INPUT"]:
+    case types["SET_TICKET_CAPACITY_TYPE"]:
+    case types["SET_TICKET_CAPACITY"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        details: ticket_details(state.details, action)
+      });
+
+    case types["SET_TICKET_TEMP_TITLE"]:
+    case types["SET_TICKET_TEMP_DESCRIPTION"]:
+    case types["SET_TICKET_TEMP_PRICE"]:
+    case types["SET_TICKET_TEMP_SKU"]:
+    case types["SET_TICKET_TEMP_IAC_SETTING"]:
+    case types["SET_TICKET_TEMP_START_DATE"]:
+    case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_END_DATE"]:
+    case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_START_TIME"]:
+    case types["SET_TICKET_TEMP_END_TIME"]:
+    case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+    case types["SET_TICKET_TEMP_CAPACITY"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        tempDetails: temp_details(state.tempDetails, action)
+      });
+
+    case types["SET_TICKET_SOLD"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        sold: action.payload.sold
+      });
+
+    case types["SET_TICKET_AVAILABLE"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        available: action.payload.available
+      });
+
+    case types["SET_TICKET_ID"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        ticketId: action.payload.ticketId
+      });
+
+    case types["SET_TICKET_CURRENCY_SYMBOL"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        currencySymbol: action.payload.currencySymbol
+      });
+
+    case types["SET_TICKET_CURRENCY_POSITION"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        currencyPosition: action.payload.currencyPosition
+      });
+
+    case types["SET_TICKET_PROVIDER"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        provider: action.payload.provider
+      });
+
+    case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
+      });
+
+    case types["SET_TICKET_IS_LOADING"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        isLoading: action.payload.isLoading
+      });
+
+    case types["SET_TICKET_IS_MODAL_OPEN"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        isModalOpen: action.payload.isModalOpen
+      });
+
+    case types["SET_TICKET_HAS_BEEN_CREATED"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        hasBeenCreated: action.payload.hasBeenCreated
+      });
+
+    case types["SET_TICKET_HAS_CHANGES"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        hasChanges: action.payload.hasChanges
+      });
+
+    case types["SET_TICKET_HAS_DURATION_ERROR"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        hasDurationError: action.payload.hasDurationError
+      });
+
+    case types["SET_TICKET_IS_SELECTED"]:
+      return ticket_objectSpread(ticket_objectSpread({}, state), {}, {
+        isSelected: action.payload.isSelected
+      });
+
+    default:
+      return state;
+  }
+});
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducers/tickets.js
+
+
+function tickets_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function tickets_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { tickets_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { tickets_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * External dependencies
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const byClientId = function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["SET_TICKET_TITLE"]:
+    case types["SET_TICKET_DESCRIPTION"]:
+    case types["SET_TICKET_PRICE"]:
+    case types["SET_TICKET_SKU"]:
+    case types["SET_TICKET_IAC_SETTING"]:
+    case types["SET_TICKET_START_DATE"]:
+    case types["SET_TICKET_START_DATE_INPUT"]:
+    case types["SET_TICKET_START_DATE_MOMENT"]:
+    case types["SET_TICKET_END_DATE"]:
+    case types["SET_TICKET_END_DATE_INPUT"]:
+    case types["SET_TICKET_END_DATE_MOMENT"]:
+    case types["SET_TICKET_START_TIME"]:
+    case types["SET_TICKET_END_TIME"]:
+    case types["SET_TICKET_START_TIME_INPUT"]:
+    case types["SET_TICKET_END_TIME_INPUT"]:
+    case types["SET_TICKET_CAPACITY_TYPE"]:
+    case types["SET_TICKET_CAPACITY"]:
+    case types["SET_TICKET_TEMP_TITLE"]:
+    case types["SET_TICKET_TEMP_DESCRIPTION"]:
+    case types["SET_TICKET_TEMP_PRICE"]:
+    case types["SET_TICKET_TEMP_SKU"]:
+    case types["SET_TICKET_TEMP_IAC_SETTING"]:
+    case types["SET_TICKET_TEMP_START_DATE"]:
+    case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_END_DATE"]:
+    case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_START_TIME"]:
+    case types["SET_TICKET_TEMP_END_TIME"]:
+    case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+    case types["SET_TICKET_TEMP_CAPACITY"]:
+    case types["SET_TICKET_SOLD"]:
+    case types["SET_TICKET_AVAILABLE"]:
+    case types["SET_TICKET_ID"]:
+    case types["SET_TICKET_CURRENCY_SYMBOL"]:
+    case types["SET_TICKET_CURRENCY_POSITION"]:
+    case types["SET_TICKET_PROVIDER"]:
+    case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+    case types["SET_TICKET_IS_LOADING"]:
+    case types["SET_TICKET_IS_MODAL_OPEN"]:
+    case types["SET_TICKET_HAS_BEEN_CREATED"]:
+    case types["SET_TICKET_HAS_CHANGES"]:
+    case types["SET_TICKET_HAS_DURATION_ERROR"]:
+    case types["SET_TICKET_IS_SELECTED"]:
+    case types["REGISTER_TICKET_BLOCK"]:
+      return tickets_objectSpread(tickets_objectSpread({}, state), {}, {
+        [action.payload.clientId]: tickets_ticket(state[action.payload.clientId], action)
+      });
+
+    case types["REMOVE_TICKET_BLOCK"]:
+      return omit_default()(state, [action.payload.clientId]);
+
+    case types["REMOVE_TICKET_BLOCKS"]:
+      return {};
+
+    default:
+      return state;
+  }
+};
+const allClientIds = function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["REGISTER_TICKET_BLOCK"]:
+      return [...state, action.payload.clientId];
+
+    case types["REMOVE_TICKET_BLOCK"]:
+      return state.filter(clientId => action.payload.clientId !== clientId);
+
+    case types["REMOVE_TICKET_BLOCKS"]:
+      return [];
+
+    default:
+      return state;
+  }
+};
+/* harmony default export */ var reducers_tickets = (Object(redux["b" /* combineReducers */])({
+  byClientId,
+  allClientIds
+}));
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
+var header_image = __webpack_require__(42);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/reducer.js
+
+
+function reducer_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function reducer_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { reducer_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { reducer_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * Internal dependencies
+ */
+
+
+
+const reducer_DEFAULT_STATE = {
+  headerImage: header_image["a" /* DEFAULT_STATE */],
+  isSelected: false,
+  isSettingsOpen: false,
+  isSettingsLoading: false,
+  provider: '',
+  sharedCapacity: '',
+  tempSharedCapacity: '',
+  tickets: reducers_tickets(undefined, {})
+};
+/* harmony default export */ var reducer = (function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case types["SET_TICKETS_HEADER_IMAGE"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
+      });
+
+    case types["SET_TICKETS_IS_SELECTED"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isSelected: action.payload.isSelected
+      });
+
+    case types["SET_TICKETS_IS_SETTINGS_OPEN"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isSettingsOpen: action.payload.isSettingsOpen
+      });
+
+    case types["SET_TICKETS_IS_SETTINGS_LOADING"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isSettingsLoading: action.payload.isSettingsLoading
+      });
+
+    case types["SET_TICKETS_PROVIDER"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        provider: action.payload.provider
+      });
+
+    case types["SET_TICKETS_SHARED_CAPACITY"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        sharedCapacity: action.payload.sharedCapacity
+      });
+
+    case types["SET_TICKETS_TEMP_SHARED_CAPACITY"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        tempSharedCapacity: action.payload.tempSharedCapacity
+      });
+
+    case types["SET_TICKET_TITLE"]:
+    case types["SET_TICKET_DESCRIPTION"]:
+    case types["SET_TICKET_PRICE"]:
+    case types["SET_TICKET_SKU"]:
+    case types["SET_TICKET_IAC_SETTING"]:
+    case types["SET_TICKET_START_DATE"]:
+    case types["SET_TICKET_START_DATE_INPUT"]:
+    case types["SET_TICKET_START_DATE_MOMENT"]:
+    case types["SET_TICKET_END_DATE"]:
+    case types["SET_TICKET_END_DATE_INPUT"]:
+    case types["SET_TICKET_END_DATE_MOMENT"]:
+    case types["SET_TICKET_START_TIME"]:
+    case types["SET_TICKET_END_TIME"]:
+    case types["SET_TICKET_START_TIME_INPUT"]:
+    case types["SET_TICKET_END_TIME_INPUT"]:
+    case types["SET_TICKET_CAPACITY_TYPE"]:
+    case types["SET_TICKET_CAPACITY"]:
+    case types["SET_TICKET_TEMP_TITLE"]:
+    case types["SET_TICKET_TEMP_DESCRIPTION"]:
+    case types["SET_TICKET_TEMP_PRICE"]:
+    case types["SET_TICKET_TEMP_SKU"]:
+    case types["SET_TICKET_TEMP_IAC_SETTING"]:
+    case types["SET_TICKET_TEMP_START_DATE"]:
+    case types["SET_TICKET_TEMP_START_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_START_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_END_DATE"]:
+    case types["SET_TICKET_TEMP_END_DATE_INPUT"]:
+    case types["SET_TICKET_TEMP_END_DATE_MOMENT"]:
+    case types["SET_TICKET_TEMP_START_TIME"]:
+    case types["SET_TICKET_TEMP_END_TIME"]:
+    case types["SET_TICKET_TEMP_START_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_END_TIME_INPUT"]:
+    case types["SET_TICKET_TEMP_CAPACITY_TYPE"]:
+    case types["SET_TICKET_TEMP_CAPACITY"]:
+    case types["SET_TICKET_SOLD"]:
+    case types["SET_TICKET_AVAILABLE"]:
+    case types["SET_TICKET_ID"]:
+    case types["SET_TICKET_CURRENCY_SYMBOL"]:
+    case types["SET_TICKET_CURRENCY_POSITION"]:
+    case types["SET_TICKET_PROVIDER"]:
+    case types["SET_TICKET_HAS_ATTENDEE_INFO_FIELDS"]:
+    case types["SET_TICKET_IS_LOADING"]:
+    case types["SET_TICKET_IS_MODAL_OPEN"]:
+    case types["SET_TICKET_HAS_BEEN_CREATED"]:
+    case types["SET_TICKET_HAS_CHANGES"]:
+    case types["SET_TICKET_HAS_DURATION_ERROR"]:
+    case types["SET_TICKET_IS_SELECTED"]:
+    case types["REGISTER_TICKET_BLOCK"]:
+    case types["REMOVE_TICKET_BLOCK"]:
+    case types["REMOVE_TICKET_BLOCKS"]:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        tickets: reducers_tickets(state.tickets, action)
+      });
+
+    default:
+      return state;
+  }
+});
+// EXTERNAL MODULE: ./src/modules/data/blocks/ticket/actions.js
+var actions = __webpack_require__(9);
+
+// EXTERNAL MODULE: ./node_modules/lodash/includes.js
+var includes = __webpack_require__(72);
+var includes_default = /*#__PURE__*/__webpack_require__.n(includes);
+
+// EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
+var effects = __webpack_require__(0);
+
+// EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
+var external_var_wp_data_root_wp_data_ = __webpack_require__(17);
+
+// EXTERNAL MODULE: external {"var":"wp.blocks","root":["wp","blocks"]}
+var external_var_wp_blocks_root_wp_blocks_ = __webpack_require__(71);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/actions.js
+var rsvp_actions = __webpack_require__(12);
+
+// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
+var reducers_header_image = __webpack_require__(47);
+
+// EXTERNAL MODULE: ./src/modules/data/utils.js
+var utils = __webpack_require__(8);
+
+// EXTERNAL MODULE: external "tribe.common.data"
+var external_tribe_common_data_ = __webpack_require__(30);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
+var move_types = __webpack_require__(18);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
+var selectors = __webpack_require__(27);
+
+// EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
+var sagas = __webpack_require__(25);
+
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/sagas.js
+
+
+
+function sagas_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function sagas_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { sagas_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { sagas_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+/**
+ * External Dependencies
+ */
+
+
+/**
+ * Wordpress dependencies
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const {
+  UNLIMITED: sagas_UNLIMITED,
+  SHARED: sagas_SHARED,
+  TICKET_TYPES: sagas_TICKET_TYPES,
+  PROVIDER_CLASS_TO_PROVIDER_MAPPING
+} = constants;
+const {
+  restNonce,
+  tecDateSettings
+} = external_tribe_common_utils_["globals"];
+const {
+  wpREST
+} = external_tribe_common_utils_["api"];
+function* createMissingTicketBlocks(tickets) {
+  const {
+    insertBlock
+  } = yield Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["dispatch"], 'core/editor');
+  const {
+    getBlockCount,
+    getBlocks
+  } = yield Object(effects["b" /* call */])(external_var_wp_data_root_wp_data_["select"], 'core/editor');
+  const ticketsBlocks = yield Object(effects["b" /* call */])([getBlocks(), 'filter'], block => block.name === 'tribe/tickets');
+  ticketsBlocks.forEach(_ref => {
+    let {
+      clientId
+    } = _ref;
+    tickets.forEach(ticketId => {
+      const attributes = {
+        hasBeenCreated: true,
+        ticketId
+      };
+      const nextChildPosition = getBlockCount(clientId);
+      const block = Object(external_var_wp_blocks_root_wp_blocks_["createBlock"])('tribe/tickets-item', attributes);
+      insertBlock(block, nextChildPosition, clientId, false);
+    });
+  });
+}
+function* setTicketsInitialState(action) {
+  const {
+    get
+  } = action.payload;
+  const header = parseInt(get('header', header_image["a" /* DEFAULT_STATE */].id), 10);
+  const sharedCapacity = get('sharedCapacity');
+  const ticketsList = get('tickets', []);
+  const ticketsInBlock = yield Object(effects["f" /* select */])(getTicketsIdsInBlocks); // Get only the IDs of the tickets that are not in the block list already
+
+  const ticketsDiff = ticketsList.filter(item => !includes_default()(ticketsInBlock, item));
+
+  if (ticketsDiff.length >= 1) {
+    yield Object(effects["b" /* call */])(createMissingTicketBlocks, ticketsDiff);
+  } // Meta value is '0' however fields use empty string as default
+
+
+  if (sharedCapacity !== '0') {
+    yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](sharedCapacity))]);
+  }
+
+  if (!isNaN(header) && header !== 0) {
+    yield Object(effects["e" /* put */])(actions["fetchTicketsHeaderImage"](header));
+  }
+
+  let provider = get('provider', reducer_DEFAULT_STATE.provider);
+
+  if (provider === constants["RSVP_CLASS"] || !provider) {
+    const defaultProvider = yield Object(effects["f" /* select */])(getDefaultTicketProvider);
+    provider = defaultProvider === constants["RSVP_CLASS"] ? '' : defaultProvider;
+  }
+
+  yield Object(effects["e" /* put */])(actions["setTicketsProvider"](provider));
+}
+function* resetTicketsBlock() {
+  const hasCreatedTickets = yield Object(effects["f" /* select */])(selectors_hasCreatedTickets);
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlocks"]()), Object(effects["e" /* put */])(actions["setTicketsIsSettingsOpen"](false))]);
+
+  if (!hasCreatedTickets) {
+    const currentMeta = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostAttribute'], 'meta');
+
+    const newMeta = sagas_objectSpread(sagas_objectSpread({}, currentMeta), {}, {
+      [utils["d" /* KEY_TICKET_CAPACITY */]]: ''
+    });
+
+    yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'editPost'], {
+      meta: newMeta
+    });
+    yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"]('')), Object(effects["e" /* put */])(actions["setTicketsTempSharedCapacity"](''))]);
+  }
+}
+function* setTicketInitialState(action) {
+  const {
+    clientId,
+    get
+  } = action.payload;
+  const ticketId = get('ticketId', ticket_DEFAULT_STATE.ticketId);
+  const hasBeenCreated = get('hasBeenCreated', ticket_DEFAULT_STATE.hasBeenCreated);
+  const datePickerFormat = tecDateSettings().datepickerFormat;
+  const publishDate = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
+  const startMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, publishDate);
+  const startDate = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
+  const startDateInput = yield datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
+  const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
+  const startTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, hasBeenCreated))]);
+  const isEvent = yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]); // Only run this on events post type.
+
+  if (isEvent && window.tribe.events) {
+    // This try-catch may be redundant given the above if statement.
+    try {
+      // NOTE: This requires TEC to be installed, if not installed, do not set an end date
+      // Ticket purchase window should end when event starts
+      const eventStart = yield Object(effects["f" /* select */])(tribe.events.data.blocks.datetime.selectors.getStart);
+      const endMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, eventStart);
+      const endDate = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
+      const endDateInput = yield datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
+      const endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
+      const endTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput))]);
+    } catch (err) {
+      console.error(err); // ¯\_(ツ)_/¯
+    }
+  }
+
+  const hasTicketsPlus = yield Object(effects["f" /* select */])(external_tribe_common_data_["plugins"].selectors.hasPlugin, external_tribe_common_data_["plugins"].constants.TICKETS_PLUS);
+
+  if (hasTicketsPlus) {
+    yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]])), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, constants["TICKET_TYPES"][constants["SHARED"]]))]);
+  }
+
+  const sharedCapacity = yield Object(effects["f" /* select */])(getTicketsSharedCapacity);
+
+  if (sharedCapacity) {
+    yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, sharedCapacity)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, sharedCapacity))]);
+  }
+
+  if (ticketId !== 0) {
+    yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticketId)), Object(effects["b" /* call */])(fetchTicket, {
+      payload: {
+        clientId,
+        ticketId
+      }
+    })]);
+  }
+
+  yield Object(effects["b" /* call */])(handleTicketDurationError, clientId);
+  yield Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
+}
+function* setBodyDetails(clientId) {
+  const body = new FormData();
+  const props = {
+    clientId
+  };
+  const rootClientId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockRootClientId'], clientId);
+  const ticketProvider = yield Object(effects["f" /* select */])(getTicketProvider, props);
+  const ticketsProvider = yield Object(effects["f" /* select */])(getTicketsProvider);
+  body.append('post_id', yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']));
+  body.append('provider', ticketProvider || ticketsProvider);
+  body.append('name', yield Object(effects["f" /* select */])(getTicketTempTitle, props));
+  body.append('description', yield Object(effects["f" /* select */])(getTicketTempDescription, props));
+  body.append('price', yield Object(effects["f" /* select */])(getTicketTempPrice, props));
+  body.append('start_date', yield Object(effects["f" /* select */])(getTicketTempStartDate, props));
+  body.append('start_time', yield Object(effects["f" /* select */])(getTicketTempStartTime, props));
+  body.append('end_date', yield Object(effects["f" /* select */])(getTicketTempEndDate, props));
+  body.append('end_time', yield Object(effects["f" /* select */])(getTicketTempEndTime, props));
+  body.append('sku', yield Object(effects["f" /* select */])(getTicketTempSku, props));
+  body.append('iac', yield Object(effects["f" /* select */])(getTicketTempIACSetting, props));
+  body.append('menu_order', yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getBlockIndex'], clientId, rootClientId));
+  const capacityType = yield Object(effects["f" /* select */])(getTicketTempCapacityType, props);
+  const capacity = yield Object(effects["f" /* select */])(getTicketTempCapacity, props);
+  const isUnlimited = capacityType === sagas_TICKET_TYPES[sagas_UNLIMITED];
+  body.append('ticket[mode]', isUnlimited ? '' : capacityType);
+  body.append('ticket[capacity]', isUnlimited ? '' : capacity);
+
+  if (capacityType === sagas_TICKET_TYPES[sagas_SHARED]) {
+    body.append('ticket[event_capacity]', yield Object(effects["f" /* select */])(getTicketsTempSharedCapacity));
+  }
+
+  return body;
+}
+function* removeTicketBlock(clientId) {
+  const {
+    removeBlock
+  } = Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor');
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId)), Object(effects["b" /* call */])(removeBlock, clientId)]);
+}
+function* fetchTicket(action) {
+  const {
+    ticketId,
+    clientId
+  } = action.payload;
+
+  if (ticketId === 0) {
+    return;
+  }
+
+  yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+
+  try {
+    const {
+      response,
+      data: ticket
+    } = yield Object(effects["b" /* call */])(wpREST, {
+      path: `tickets/${ticketId}`,
+      namespace: 'tribe/tickets/v1'
+    });
+    const {
+      status = '',
+      provider
+    } = ticket;
+
+    if (response.status === 404 || status === 'trash' || provider === constants["RSVP"]) {
+      yield Object(effects["b" /* call */])(removeTicketBlock, clientId);
+      return;
+    }
+
+    if (response.ok) {
+      /* eslint-disable camelcase */
+      const {
+        totals = {},
+        available_from,
+        available_until,
+        cost_details,
+        title,
+        description,
+        sku,
+        iac,
+        capacity_type,
+        capacity,
+        supports_attendee_information
+      } = ticket;
+      /* eslint-enable camelcase */
+
+      const datePickerFormat = tecDateSettings().datepickerFormat;
+      const startMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_from);
+      const startDate = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startMoment);
+      const startDateInput = yield datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, startMoment);
+      const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, startMoment);
+      const startTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startMoment);
+      let endMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, '');
+      let endDate = '';
+      let endDateInput = '';
+      let endTime = '';
+      let endTimeInput = '';
+
+      if (available_until) {
+        // eslint-disable-line camelcase
+        endMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, available_until);
+        endDate = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endMoment);
+        endDateInput = yield datePickerFormat ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment, datePickerFormat) : Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDate, endMoment);
+        endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseTime, endMoment);
+        endTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endMoment);
+      }
+
+      const details = {
+        title,
+        description,
+        price: cost_details.values[0],
+        sku,
+        iac,
+        startDate,
+        startDateInput,
+        startDateMoment: startMoment,
+        endDate,
+        endDateInput,
+        endDateMoment: endMoment,
+        startTime,
+        endTime,
+        startTimeInput,
+        endTimeInput,
+        capacityType: capacity_type,
+        capacity
+      };
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketTempDetails"](clientId, details)), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, totals.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, totals.stock)), Object(effects["e" /* put */])(actions["setTicketCurrencySymbol"](clientId, cost_details.currency_symbol)), Object(effects["e" /* put */])(actions["setTicketCurrencyPosition"](clientId, cost_details.currency_position)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, provider)), Object(effects["e" /* put */])(actions["setTicketHasAttendeeInfoFields"](clientId, supports_attendee_information)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true))]);
+    }
+  } catch (e) {
+    console.error(e);
+    /**
+     * @todo handle error scenario
+     */
+  }
+
+  yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+}
+function* createNewTicket(action) {
+  const {
+    clientId
+  } = action.payload;
+  const props = {
+    clientId
+  };
+  const {
+    add_ticket_nonce = ''
+  } = restNonce(); // eslint-disable-line camelcase
+
+  const body = yield Object(effects["b" /* call */])(setBodyDetails, clientId);
+  body.append('add_ticket_nonce', add_ticket_nonce);
+
+  try {
+    yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+    const {
+      response,
+      data: ticket
+    } = yield Object(effects["b" /* call */])(wpREST, {
+      path: 'tickets/',
+      namespace: 'tribe/tickets/v1',
+      initParams: {
+        method: 'POST',
+        body
+      }
+    });
+
+    if (response.ok) {
+      const sharedCapacity = yield Object(effects["f" /* select */])(getTicketsSharedCapacity);
+      const tempSharedCapacity = yield Object(effects["f" /* select */])(getTicketsTempSharedCapacity);
+
+      if (sharedCapacity === '' && !isNaN(tempSharedCapacity) && tempSharedCapacity > 0) {
+        yield Object(effects["e" /* put */])(actions["setTicketsSharedCapacity"](tempSharedCapacity));
+      }
+
+      const available = ticket.capacity_details.available === -1 ? 0 : ticket.capacity_details.available;
+      const [title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity] = yield Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
+        title,
+        description,
+        price,
+        sku,
+        iac,
+        startDate,
+        startDateInput,
+        startDateMoment,
+        endDate,
+        endDateInput,
+        endDateMoment,
+        startTime,
+        endTime,
+        startTimeInput,
+        endTimeInput,
+        capacityType,
+        capacity
+      })), Object(effects["e" /* put */])(actions["setTicketId"](clientId, ticket.id)), Object(effects["e" /* put */])(actions["setTicketHasBeenCreated"](clientId, true)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketProvider"](clientId, PROVIDER_CLASS_TO_PROVIDER_MAPPING[ticket.provider_class])), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
+      yield Object(effects["d" /* fork */])(saveTicketWithPostSave, clientId);
+    }
+  } catch (e) {
+    console.error(e);
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+  }
+}
+function* updateTicket(action) {
+  const {
+    clientId
+  } = action.payload;
+  const props = {
+    clientId
+  };
+  const {
+    edit_ticket_nonce = ''
+  } = restNonce(); // eslint-disable-line camelcase
+
+  const body = yield Object(effects["b" /* call */])(setBodyDetails, clientId);
+  body.append('edit_ticket_nonce', edit_ticket_nonce);
+  const ticketId = yield Object(effects["f" /* select */])(getTicketId, props);
+
+  try {
+    const data = [];
+
+    for (const [key, value] of body.entries()) {
+      data.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    }
+
+    yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, true));
+    const {
+      response,
+      data: ticket
+    } = yield Object(effects["b" /* call */])(wpREST, {
+      path: `tickets/${ticketId}`,
+      namespace: 'tribe/tickets/v1',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      initParams: {
+        method: 'PUT',
+        body: data.join('&')
+      }
+    });
+
+    if (response.ok) {
+      const {
+        capacity_details
+      } = ticket; // eslint-disable-line camelcase
+
+      const available = capacity_details.available === -1 ? 0 : capacity_details.available;
+      const [title, description, price, sku, iac, startDate, startDateInput, startDateMoment, endDate, endDateInput, endDateMoment, startTime, endTime, startTimeInput, endTimeInput, capacityType, capacity] = yield Object(effects["a" /* all */])([Object(effects["f" /* select */])(getTicketTempTitle, props), Object(effects["f" /* select */])(getTicketTempDescription, props), Object(effects["f" /* select */])(getTicketTempPrice, props), Object(effects["f" /* select */])(getTicketTempSku, props), Object(effects["f" /* select */])(getTicketTempIACSetting, props), Object(effects["f" /* select */])(getTicketTempStartDate, props), Object(effects["f" /* select */])(getTicketTempStartDateInput, props), Object(effects["f" /* select */])(getTicketTempStartDateMoment, props), Object(effects["f" /* select */])(getTicketTempEndDate, props), Object(effects["f" /* select */])(getTicketTempEndDateInput, props), Object(effects["f" /* select */])(getTicketTempEndDateMoment, props), Object(effects["f" /* select */])(getTicketTempStartTime, props), Object(effects["f" /* select */])(getTicketTempEndTime, props), Object(effects["f" /* select */])(getTicketTempStartTimeInput, props), Object(effects["f" /* select */])(getTicketTempEndTimeInput, props), Object(effects["f" /* select */])(getTicketTempCapacityType, props), Object(effects["f" /* select */])(getTicketTempCapacity, props)]);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketDetails"](clientId, {
+        title,
+        description,
+        price,
+        sku,
+        iac,
+        startDate,
+        startDateInput,
+        startDateMoment,
+        endDate,
+        endDateInput,
+        endDateMoment,
+        startTime,
+        endTime,
+        startTimeInput,
+        endTimeInput,
+        capacityType,
+        capacity
+      })), Object(effects["e" /* put */])(actions["setTicketSold"](clientId, capacity_details.sold)), Object(effects["e" /* put */])(actions["setTicketAvailable"](clientId, available)), Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, false))]);
+    }
+  } catch (e) {
+    console.error(e);
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    yield Object(effects["e" /* put */])(actions["setTicketIsLoading"](clientId, false));
+  }
+}
+function* deleteTicket(action) {
+  const {
+    clientId
+  } = action.payload;
+  const props = {
+    clientId
+  };
+  const shouldDelete = yield Object(effects["b" /* call */])([window, 'confirm'], Object(external_var_wp_i18n_root_wp_i18n_["__"])('Are you sure you want to delete this ticket? It cannot be undone.', 'event-tickets'));
+
+  if (shouldDelete) {
+    const ticketId = yield Object(effects["f" /* select */])(getTicketId, props);
+    const hasBeenCreated = yield Object(effects["f" /* select */])(getTicketHasBeenCreated, props);
+    yield Object(effects["e" /* put */])(actions["setTicketIsSelected"](clientId, false));
+    yield Object(effects["e" /* put */])(actions["removeTicketBlock"](clientId));
+    yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'clearSelectedBlock']);
+    yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
+
+    if (hasBeenCreated) {
+      const {
+        remove_ticket_nonce = ''
+      } = restNonce(); // eslint-disable-line camelcase
+
+      const postId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+      /**
+       * Encode params to be passed into the DELETE request as PHP doesn’t transform the request body
+       * of a DELETE request into a super global.
+       */
+
+      const body = [`${encodeURIComponent('post_id')}=${encodeURIComponent(postId)}`, `${encodeURIComponent('remove_ticket_nonce')}=${encodeURIComponent(remove_ticket_nonce)}` // eslint-disable-line max-len
+      ];
+
+      try {
+        yield Object(effects["b" /* call */])(wpREST, {
+          path: `tickets/${ticketId}`,
+          namespace: 'tribe/tickets/v1',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          initParams: {
+            method: 'DELETE',
+            body: body.join('&')
+          }
+        });
+      } catch (e) {
+        /**
+         * @todo handle error on removal
+         */
+      }
+    }
+  }
+}
+function* fetchTicketsHeaderImage(action) {
+  const {
+    id
+  } = action.payload;
+  yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+
+  try {
+    const {
+      response,
+      data: media
+    } = yield Object(effects["b" /* call */])(wpREST, {
+      path: `media/${id}`
+    });
+
+    if (response.ok) {
+      const headerImage = {
+        id: media.id,
+        alt: media.alt_text,
+        src: media.media_details.sizes.medium.source_url
+      };
+      yield Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
+    }
+  } catch (e) {
+    console.error(e);
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+  }
+}
+function* updateTicketsHeaderImage(action) {
+  const {
+    image
+  } = action.payload;
+  const postId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+  const body = {
+    meta: {
+      [utils["i" /* KEY_TICKET_HEADER */]]: `${image.id}`
+    }
+  };
+
+  try {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+    yield Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
+    const slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+    const postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+    const restBase = postType.rest_base;
+    const {
+      response
+    } = yield Object(effects["b" /* call */])(wpREST, {
+      path: `${restBase}/${postId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      initParams: {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      }
+    });
+
+    if (response.ok) {
+      const headerImage = {
+        id: image.id,
+        alt: image.alt,
+        src: image.sizes.medium.url
+      };
+      /**
+       * @todo: until rsvp and tickets header image can be separated, they need to be linked
+       */
+
+      yield Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](headerImage));
+      yield Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](headerImage));
+    }
+  } catch (e) {
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+    yield Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
+  }
+}
+function* deleteTicketsHeaderImage() {
+  const postId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+  const body = {
+    meta: {
+      [utils["i" /* KEY_TICKET_HEADER */]]: null
+    }
+  };
+
+  try {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](true));
+    yield Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](true));
+    const slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+    const postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+    const restBase = postType.rest_base;
+    const {
+      response
+    } = yield Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
+      path: `${restBase}/${postId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      initParams: {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      }
+    });
+
+    if (response.ok) {
+      /**
+       * @todo: until rsvp and tickets header image can be separated, they need to be linked
+       */
+      yield Object(effects["e" /* put */])(actions["setTicketsHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
+      yield Object(effects["e" /* put */])(rsvp_actions["setRSVPHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
+    }
+  } catch (e) {
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setTicketsIsSettingsLoading"](false));
+    yield Object(effects["e" /* put */])(rsvp_actions["setRSVPIsSettingsLoading"](false));
+  }
+}
+function* setTicketDetails(action) {
+  const {
+    clientId,
+    details
+  } = action.payload;
+  const {
+    title,
+    description,
+    price,
+    sku,
+    iac,
+    startDate,
+    startDateInput,
+    startDateMoment,
+    endDate,
+    endDateInput,
+    endDateMoment,
+    startTime,
+    endTime,
+    startTimeInput,
+    endTimeInput,
+    capacityType,
+    capacity
+  } = details;
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketCapacity"](clientId, capacity))]);
+}
+function* setTicketTempDetails(action) {
+  const {
+    clientId,
+    tempDetails
+  } = action.payload;
+  const {
+    title,
+    description,
+    price,
+    sku,
+    iac,
+    startDate,
+    startDateInput,
+    startDateMoment,
+    endDate,
+    endDateInput,
+    endDateMoment,
+    startTime,
+    endTime,
+    startTimeInput,
+    endTimeInput,
+    capacityType,
+    capacity
+  } = tempDetails;
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempTitle"](clientId, title)), Object(effects["e" /* put */])(actions["setTicketTempDescription"](clientId, description)), Object(effects["e" /* put */])(actions["setTicketTempPrice"](clientId, price)), Object(effects["e" /* put */])(actions["setTicketTempSku"](clientId, sku)), Object(effects["e" /* put */])(actions["setTicketTempIACSetting"](clientId, iac)), Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate)), Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, startDateInput)), Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, startTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)), Object(effects["e" /* put */])(actions["setTicketTempCapacityType"](clientId, capacityType)), Object(effects["e" /* put */])(actions["setTicketTempCapacity"](clientId, capacity))]);
+}
+/**
+ * Allows the Ticket to be saved at the same time a post is being saved.
+ * Avoids the user having to open up the Ticket block, and then click update again there,
+ * when changing the event start date.
+ *
+ * @param {string} clientId Client ID of ticket block
+ * @export
+ * @yields
+ */
+
+function* saveTicketWithPostSave(clientId) {
+  let savingChannel, notSavingChannel;
+
+  try {
+    // Do nothing when not already created
+    if (yield Object(effects["f" /* select */])(getTicketHasBeenCreated, {
+      clientId
+    })) {
+      // Create channels for use
+      savingChannel = yield Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]);
+      notSavingChannel = yield Object(effects["b" /* call */])(sagas["b" /* createWPEditorNotSavingChannel */]);
+
+      while (true) {
+        // Wait for channel to save
+        yield Object(effects["g" /* take */])(savingChannel); // Update when saving
+
+        yield Object(effects["b" /* call */])(updateTicket, {
+          payload: {
+            clientId
+          }
+        }); // Wait for channel to finish saving
+
+        yield Object(effects["g" /* take */])(notSavingChannel);
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // Close save channel if exists
+    if (savingChannel) {
+      yield Object(effects["b" /* call */])([savingChannel, 'close']);
+    } // Close not saving channel if exists
+
+
+    if (notSavingChannel) {
+      yield Object(effects["b" /* call */])([notSavingChannel, 'close']);
+    }
+  }
+}
+/**
+ * Will sync all tickets
+ *
+ * @param {string} prevStartDate Previous start date before latest set date time changes
+ * @export
+ * @yields
+ */
+
+function* syncTicketsSaleEndWithEventStart(prevStartDate) {
+  const ticketIds = yield Object(effects["f" /* select */])(getTicketsAllClientIds);
+
+  for (let index = 0; index < ticketIds.length; index++) {
+    const clientId = ticketIds[index];
+    yield Object(effects["b" /* call */])(syncTicketSaleEndWithEventStart, prevStartDate, clientId);
+  }
+}
+/**
+ * Will sync Tickets sale end to be the same as event start date and time, if field has not been manually edited
+ *
+ * @borrows TEC - Functionality requires TEC to be enabled
+ * @param {string} prevStartDate Previous start date before latest set date time changes
+ * @param {string} clientId Client ID of ticket block
+ * @export
+ * @yields
+ */
+
+function* syncTicketSaleEndWithEventStart(prevStartDate, clientId) {
+  try {
+    const tempEndMoment = yield Object(effects["f" /* select */])(getTicketTempEndDateMoment, {
+      clientId
+    });
+    const endMoment = yield Object(effects["f" /* select */])(getTicketEndDateMoment, {
+      clientId
+    });
+    const {
+      moment: prevEventStartMoment
+    } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate); // NOTE: Mutation
+    // Convert to use local timezone
+
+    yield Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]); // If initial end and current end are the same, the RSVP has not been modified
+
+    const isNotManuallyEdited = yield Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
+    const isSyncedToEventStart = yield Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
+    const isEvent = yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]); // This if statement may be redundant given the try-catch statement above.
+    // Only run this on events post type.
+
+    if (isEvent && window.tribe.events && isNotManuallyEdited && isSyncedToEventStart) {
+      const eventStart = yield Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
+      const {
+        moment: endDateMoment,
+        date: endDate,
+        dateInput: endDateInput,
+        time: endTime,
+        timeInput: endTimeInput
+      } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput)), // Sync Ticket end items as well so as not to make state 'manually edited'
+      Object(effects["e" /* put */])(actions["setTicketEndDate"](clientId, endDate)), Object(effects["e" /* put */])(actions["setTicketEndDateInput"](clientId, endDateInput)), Object(effects["e" /* put */])(actions["setTicketEndDateMoment"](clientId, endDateMoment)), Object(effects["e" /* put */])(actions["setTicketEndTime"](clientId, endTime)), Object(effects["e" /* put */])(actions["setTicketEndTimeInput"](clientId, endTimeInput)), // Trigger UI button
+      Object(effects["e" /* put */])(actions["setTicketHasChanges"](clientId, true)), // Handle ticket duration error
+      Object(effects["b" /* call */])(handleTicketDurationError, clientId)]);
+    }
+  } catch (error) {
+    // ¯\_(ツ)_/¯
+    console.error(error);
+  }
+}
+/**
+ * Listens for event start date and time changes after RSVP block is loaded.
+ *
+ * @borrows TEC - Functionality requires TEC to be enabled and post type to be event
+ * @export
+ * @yields
+ */
+
+function* handleEventStartDateChanges() {
+  try {
+    // Ensure we have a postType set before proceeding
+    const postTypeChannel = yield Object(effects["b" /* call */])(sagas["d" /* hasPostTypeChannel */]);
+    yield Object(effects["g" /* take */])(postTypeChannel);
+    yield Object(effects["b" /* call */])([postTypeChannel, 'close']);
+    const isEvent = yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+
+    if (isEvent && window.tribe.events) {
+      const {
+        SET_START_DATE_TIME,
+        SET_START_TIME
+      } = window.tribe.events.data.blocks.datetime.types;
+      let syncTask;
+
+      while (true) {
+        // Cache current event start date for comparison
+        const eventStart = yield Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart); // Wait til use changes date or time on TEC datetime block
+
+        yield Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]); // Important to cancel any pre-existing forks to prevent bad data from being sent
+
+        if (syncTask) {
+          yield Object(effects["c" /* cancel */])(syncTask);
+        }
+
+        syncTask = yield Object(effects["d" /* fork */])(syncTicketsSaleEndWithEventStart, eventStart);
+      }
+    }
+  } catch (error) {
+    // ¯\_(ツ)_/¯
+    console.error(error);
+  }
+}
+function* handleTicketDurationError(clientId) {
+  let hasDurationError = false;
+  const startDateMoment = yield Object(effects["f" /* select */])(getTicketTempStartDateMoment, {
+    clientId
+  });
+  const endDateMoment = yield Object(effects["f" /* select */])(getTicketTempEndDateMoment, {
+    clientId
+  });
+
+  if (!startDateMoment || !endDateMoment) {
+    hasDurationError = true;
+  } else {
+    const startTime = yield Object(effects["f" /* select */])(getTicketTempStartTime, {
+      clientId
+    });
+    const endTime = yield Object(effects["f" /* select */])(getTicketTempEndTime, {
+      clientId
+    });
+    const startTimeSeconds = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+    const endTimeSeconds = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+    const startDateTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
+    const endDateTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
+    const durationHasError = yield Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
+
+    if (durationHasError) {
+      hasDurationError = true;
+    }
+  }
+
+  yield Object(effects["e" /* put */])(actions["setTicketHasDurationError"](clientId, hasDurationError));
+}
+function* handleTicketStartDate(action) {
+  const {
+    clientId,
+    date,
+    dayPickerInput
+  } = action.payload;
+  const startDateMoment = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+  const startDate = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
+  yield Object(effects["e" /* put */])(actions["setTicketTempStartDate"](clientId, startDate));
+  yield Object(effects["e" /* put */])(actions["setTicketTempStartDateInput"](clientId, dayPickerInput.state.value));
+  yield Object(effects["e" /* put */])(actions["setTicketTempStartDateMoment"](clientId, startDateMoment));
+}
+function* handleTicketEndDate(action) {
+  const {
+    clientId,
+    date,
+    dayPickerInput
+  } = action.payload;
+  const endDateMoment = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+  const endDate = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
+  yield Object(effects["e" /* put */])(actions["setTicketTempEndDate"](clientId, endDate));
+  yield Object(effects["e" /* put */])(actions["setTicketTempEndDateInput"](clientId, dayPickerInput.state.value));
+  yield Object(effects["e" /* put */])(actions["setTicketTempEndDateMoment"](clientId, endDateMoment));
+}
+function* handleTicketStartTime(action) {
+  const {
+    clientId,
+    seconds
+  } = action.payload;
+  const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  yield Object(effects["e" /* put */])(actions["setTicketTempStartTime"](clientId, `${startTime}:00`));
+}
+function* handleTicketStartTimeInput(action) {
+  const {
+    clientId,
+    seconds
+  } = action.payload;
+  const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  const startTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+  const startTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
+  yield Object(effects["e" /* put */])(actions["setTicketTempStartTimeInput"](clientId, startTimeInput));
+}
+function* handleTicketEndTime(action) {
+  const {
+    clientId,
+    seconds
+  } = action.payload;
+  const endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  yield Object(effects["e" /* put */])(actions["setTicketTempEndTime"](clientId, `${endTime}:00`));
+}
+function* handleTicketEndTimeInput(action) {
+  const {
+    clientId,
+    seconds
+  } = action.payload;
+  const endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  const endTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+  const endTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
+  yield Object(effects["e" /* put */])(actions["setTicketTempEndTimeInput"](clientId, endTimeInput));
+}
+function* handleTicketMove() {
+  const ticketClientIds = yield Object(effects["f" /* select */])(getTicketsAllClientIds);
+  const modalClientId = yield Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
+
+  if (ticketClientIds.includes(modalClientId)) {
+    yield Object(effects["e" /* put */])(actions["setTicketIsSelected"](modalClientId, false));
+    yield Object(effects["e" /* put */])(actions["removeTicketBlock"](modalClientId));
+    yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [modalClientId]);
+  }
+}
+function* handler(action) {
+  switch (action.type) {
+    case types["SET_TICKETS_INITIAL_STATE"]:
+      yield Object(effects["b" /* call */])(setTicketsInitialState, action);
+      break;
+
+    case types["RESET_TICKETS_BLOCK"]:
+      yield Object(effects["b" /* call */])(resetTicketsBlock);
+      break;
+
+    case types["SET_TICKET_INITIAL_STATE"]:
+      yield Object(effects["b" /* call */])(setTicketInitialState, action);
+      break;
+
+    case types["FETCH_TICKET"]:
+      yield Object(effects["b" /* call */])(fetchTicket, action);
+      break;
+
+    case types["CREATE_NEW_TICKET"]:
+      yield Object(effects["b" /* call */])(createNewTicket, action);
+      break;
+
+    case types["UPDATE_TICKET"]:
+      yield Object(effects["b" /* call */])(updateTicket, action);
+      break;
+
+    case types["DELETE_TICKET"]:
+      yield Object(effects["b" /* call */])(deleteTicket, action);
+      break;
+
+    case types["FETCH_TICKETS_HEADER_IMAGE"]:
+      yield Object(effects["b" /* call */])(fetchTicketsHeaderImage, action);
+      break;
+
+    case types["UPDATE_TICKETS_HEADER_IMAGE"]:
+      yield Object(effects["b" /* call */])(updateTicketsHeaderImage, action);
+      break;
+
+    case types["DELETE_TICKETS_HEADER_IMAGE"]:
+      yield Object(effects["b" /* call */])(deleteTicketsHeaderImage);
+      break;
+
+    case types["SET_TICKET_DETAILS"]:
+      yield Object(effects["b" /* call */])(setTicketDetails, action);
+      break;
+
+    case types["SET_TICKET_TEMP_DETAILS"]:
+      yield Object(effects["b" /* call */])(setTicketTempDetails, action);
+      break;
+
+    case types["HANDLE_TICKET_START_DATE"]:
+      yield Object(effects["b" /* call */])(handleTicketStartDate, action);
+      yield Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+      yield Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+      break;
+
+    case types["HANDLE_TICKET_END_DATE"]:
+      yield Object(effects["b" /* call */])(handleTicketEndDate, action);
+      yield Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+      yield Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+      break;
+
+    case types["HANDLE_TICKET_START_TIME"]:
+      yield Object(effects["b" /* call */])(handleTicketStartTime, action);
+      yield Object(effects["b" /* call */])(handleTicketStartTimeInput, action);
+      yield Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+      yield Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+      break;
+
+    case types["HANDLE_TICKET_END_TIME"]:
+      yield Object(effects["b" /* call */])(handleTicketEndTime, action);
+      yield Object(effects["b" /* call */])(handleTicketEndTimeInput, action);
+      yield Object(effects["b" /* call */])(handleTicketDurationError, action.payload.clientId);
+      yield Object(effects["e" /* put */])(actions["setTicketHasChanges"](action.payload.clientId, true));
+      break;
+
+    case move_types["k" /* MOVE_TICKET_SUCCESS */]:
+      yield Object(effects["b" /* call */])(handleTicketMove);
+      break;
+
+    default:
+      break;
+  }
+}
+function* watchers() {
+  yield Object(effects["h" /* takeEvery */])([types["SET_TICKETS_INITIAL_STATE"], types["RESET_TICKETS_BLOCK"], types["SET_TICKET_INITIAL_STATE"], types["FETCH_TICKET"], types["CREATE_NEW_TICKET"], types["UPDATE_TICKET"], types["DELETE_TICKET"], types["FETCH_TICKETS_HEADER_IMAGE"], types["UPDATE_TICKETS_HEADER_IMAGE"], types["DELETE_TICKETS_HEADER_IMAGE"], types["SET_TICKET_DETAILS"], types["SET_TICKET_TEMP_DETAILS"], types["HANDLE_TICKET_START_DATE"], types["HANDLE_TICKET_END_DATE"], types["HANDLE_TICKET_START_TIME"], types["HANDLE_TICKET_END_TIME"], move_types["k" /* MOVE_TICKET_SUCCESS */]], handler);
+  yield Object(effects["d" /* fork */])(handleEventStartDateChanges);
+}
+// CONCATENATED MODULE: ./src/modules/data/blocks/ticket/index.js
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+
+
+/* harmony default export */ var blocks_ticket = __webpack_exports__["c"] = (reducer);
+
 
 /***/ }),
 /* 6 */
@@ -9073,59 +7535,28 @@ var cloneableGenerator = function cloneableGenerator(generatorFunc) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return KEY_TICKET_GOING_COUNT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return KEY_TICKET_NOT_GOING_COUNT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS; });
-var PREFIX_TICKETS_STORE = '@@MT/TICKETS';
-
-var RSVP_POST_TYPE = 'tribe_rsvp_tickets';
-
+const PREFIX_TICKETS_STORE = '@@MT/TICKETS';
+const RSVP_POST_TYPE = 'tribe_rsvp_tickets';
 /**
  * @todo: these are expected to change based on BE changes
  */
-var KEY_RSVP_FOR_EVENT = '_tribe_rsvp_for_event';
-var KEY_TICKET_SHOW_DESCRIPTION = '_tribe_ticket_show_description';
-var KEY_PRICE = '_price';
-var KEY_TICKET_CAPACITY = '_tribe_ticket_capacity';
-var KEY_TICKET_START_DATE = '_ticket_start_date';
-var KEY_TICKET_END_DATE = '_ticket_end_date';
-var KEY_TICKET_SHOW_NOT_GOING = '_tribe_ticket_show_not_going';
-var KEY_TICKET_HEADER = '_tribe_ticket_header';
-var KEY_TICKET_DEFAULT_PROVIDER = '_tribe_default_ticket_provider';
-var KEY_TICKETS_LIST = '_tribe_tickets_list';
 
-var KEY_TICKET_GOING_COUNT = '_tribe_ticket_going_count';
-var KEY_TICKET_NOT_GOING_COUNT = '_tribe_ticket_not_going_count';
-var KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS = '_tribe_ticket_has_attendee_info_fields';
+const KEY_RSVP_FOR_EVENT = '_tribe_rsvp_for_event';
+const KEY_TICKET_SHOW_DESCRIPTION = '_tribe_ticket_show_description';
+const KEY_PRICE = '_price';
+const KEY_TICKET_CAPACITY = '_tribe_ticket_capacity';
+const KEY_TICKET_START_DATE = '_ticket_start_date';
+const KEY_TICKET_END_DATE = '_ticket_end_date';
+const KEY_TICKET_SHOW_NOT_GOING = '_tribe_ticket_show_not_going';
+const KEY_TICKET_HEADER = '_tribe_ticket_header';
+const KEY_TICKET_DEFAULT_PROVIDER = '_tribe_default_ticket_provider';
+const KEY_TICKETS_LIST = '_tribe_tickets_list';
+const KEY_TICKET_GOING_COUNT = '_tribe_ticket_going_count';
+const KEY_TICKET_NOT_GOING_COUNT = '_tribe_ticket_not_going_count';
+const KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS = '_tribe_ticket_has_attendee_info_fields';
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _assign = __webpack_require__(271);
-
-var _assign2 = _interopRequireDefault(_assign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _assign2.default || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-/***/ }),
-/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9205,751 +7636,514 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateTicket", function() { return updateTicket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteTicket", function() { return deleteTicket; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setTicketInitialState", function() { return setTicketInitialState; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
+/* harmony import */ var _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /**
  * Internal dependencies
  */
-
-
-//
+ //
 // ─── TICKETS ACTIONS ────────────────────────────────────────────────────────────
 //
 
-var setTicketsInitialState = function setTicketsInitialState(props) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_INITIAL_STATE,
-		payload: props
-	};
-};
-
-var resetTicketsBlock = function resetTicketsBlock() {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].RESET_TICKETS_BLOCK
-	};
-};
-
-var setTicketsHeaderImage = function setTicketsHeaderImage(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_HEADER_IMAGE,
-		payload: payload
-	};
-};
-
-var setTicketsIsSelected = function setTicketsIsSelected(isSelected) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SELECTED,
-		payload: {
-			isSelected: isSelected
-		}
-	};
-};
-
-var setTicketsIsSettingsOpen = function setTicketsIsSettingsOpen(isSettingsOpen) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SETTINGS_OPEN,
-		payload: {
-			isSettingsOpen: isSettingsOpen
-		}
-	};
-};
-
-var setTicketsIsSettingsLoading = function setTicketsIsSettingsLoading(isSettingsLoading) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SETTINGS_LOADING,
-		payload: {
-			isSettingsLoading: isSettingsLoading
-		}
-	};
-};
-
-var openSettings = function openSettings() {
-	return setTicketsIsSettingsOpen(true);
-};
-var closeSettings = function closeSettings() {
-	return setTicketsIsSettingsOpen(false);
-};
-
-var setTicketsProvider = function setTicketsProvider(provider) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_PROVIDER,
-		payload: {
-			provider: provider
-		}
-	};
-};
-
-var setTicketsSharedCapacity = function setTicketsSharedCapacity(sharedCapacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_SHARED_CAPACITY,
-		payload: {
-			sharedCapacity: sharedCapacity
-		}
-	};
-};
-
-var setTicketsTempSharedCapacity = function setTicketsTempSharedCapacity(tempSharedCapacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_TEMP_SHARED_CAPACITY,
-		payload: {
-			tempSharedCapacity: tempSharedCapacity
-		}
-	};
-};
-
-//
+const setTicketsInitialState = props => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_INITIAL_STATE,
+  payload: props
+});
+const resetTicketsBlock = () => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].RESET_TICKETS_BLOCK
+});
+const setTicketsHeaderImage = payload => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_HEADER_IMAGE,
+  payload
+});
+const setTicketsIsSelected = isSelected => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SELECTED,
+  payload: {
+    isSelected
+  }
+});
+const setTicketsIsSettingsOpen = isSettingsOpen => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SETTINGS_OPEN,
+  payload: {
+    isSettingsOpen
+  }
+});
+const setTicketsIsSettingsLoading = isSettingsLoading => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_IS_SETTINGS_LOADING,
+  payload: {
+    isSettingsLoading
+  }
+});
+const openSettings = () => setTicketsIsSettingsOpen(true);
+const closeSettings = () => setTicketsIsSettingsOpen(false);
+const setTicketsProvider = provider => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_PROVIDER,
+  payload: {
+    provider
+  }
+});
+const setTicketsSharedCapacity = sharedCapacity => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_SHARED_CAPACITY,
+  payload: {
+    sharedCapacity
+  }
+});
+const setTicketsTempSharedCapacity = tempSharedCapacity => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKETS_TEMP_SHARED_CAPACITY,
+  payload: {
+    tempSharedCapacity
+  }
+}); //
 // ─── HEADER IMAGE SAGA ACTIONS ──────────────────────────────────────────────────
 //
 
-var fetchTicketsHeaderImage = function fetchTicketsHeaderImage(id) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].FETCH_TICKETS_HEADER_IMAGE,
-		payload: {
-			id: id
-		}
-	};
-};
-
-var updateTicketsHeaderImage = function updateTicketsHeaderImage(image) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].UPDATE_TICKETS_HEADER_IMAGE,
-		payload: {
-			image: image
-		}
-	};
-};
-
-var deleteTicketsHeaderImage = function deleteTicketsHeaderImage() {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].DELETE_TICKETS_HEADER_IMAGE
-	};
-};
-
-//
+const fetchTicketsHeaderImage = id => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].FETCH_TICKETS_HEADER_IMAGE,
+  payload: {
+    id
+  }
+});
+const updateTicketsHeaderImage = image => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].UPDATE_TICKETS_HEADER_IMAGE,
+  payload: {
+    image
+  }
+});
+const deleteTicketsHeaderImage = () => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].DELETE_TICKETS_HEADER_IMAGE
+}); //
 // ─── TICKET DETAILS ACTIONS ─────────────────────────────────────────────────────
 //
 
-var setTicketTitle = function setTicketTitle(clientId, title) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TITLE,
-		payload: {
-			clientId: clientId,
-			title: title
-		}
-	};
-};
-
-var setTicketDescription = function setTicketDescription(clientId, description) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_DESCRIPTION,
-		payload: {
-			clientId: clientId,
-			description: description
-		}
-	};
-};
-
-var setTicketPrice = function setTicketPrice(clientId, price) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_PRICE,
-		payload: {
-			clientId: clientId,
-			price: price
-		}
-	};
-};
-
-var setTicketSku = function setTicketSku(clientId, sku) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_SKU,
-		payload: {
-			clientId: clientId,
-			sku: sku
-		}
-	};
-};
-
-var setTicketIACSetting = function setTicketIACSetting(clientId, iac) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IAC_SETTING,
-		payload: {
-			clientId: clientId,
-			iac: iac
-		}
-	};
-};
-
-var setTicketStartDate = function setTicketStartDate(clientId, startDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE,
-		payload: {
-			clientId: clientId,
-			startDate: startDate
-		}
-	};
-};
-
-var setTicketStartDateInput = function setTicketStartDateInput(clientId, startDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE_INPUT,
-		payload: {
-			clientId: clientId,
-			startDateInput: startDateInput
-		}
-	};
-};
-
-var setTicketStartDateMoment = function setTicketStartDateMoment(clientId, startDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE_MOMENT,
-		payload: {
-			clientId: clientId,
-			startDateMoment: startDateMoment
-		}
-	};
-};
-
-var setTicketEndDate = function setTicketEndDate(clientId, endDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE,
-		payload: {
-			clientId: clientId,
-			endDate: endDate
-		}
-	};
-};
-
-var setTicketEndDateInput = function setTicketEndDateInput(clientId, endDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE_INPUT,
-		payload: {
-			clientId: clientId,
-			endDateInput: endDateInput
-		}
-	};
-};
-
-var setTicketEndDateMoment = function setTicketEndDateMoment(clientId, endDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE_MOMENT,
-		payload: {
-			clientId: clientId,
-			endDateMoment: endDateMoment
-		}
-	};
-};
-
-var setTicketStartTime = function setTicketStartTime(clientId, startTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_TIME,
-		payload: {
-			clientId: clientId,
-			startTime: startTime
-		}
-	};
-};
-
-var setTicketEndTime = function setTicketEndTime(clientId, endTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_TIME,
-		payload: {
-			clientId: clientId,
-			endTime: endTime
-		}
-	};
-};
-
-var setTicketStartTimeInput = function setTicketStartTimeInput(clientId, startTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_TIME_INPUT,
-		payload: {
-			clientId: clientId,
-			startTimeInput: startTimeInput
-		}
-	};
-};
-
-var setTicketEndTimeInput = function setTicketEndTimeInput(clientId, endTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_TIME_INPUT,
-		payload: {
-			clientId: clientId,
-			endTimeInput: endTimeInput
-		}
-	};
-};
-
-var setTicketCapacityType = function setTicketCapacityType(clientId, capacityType) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CAPACITY_TYPE,
-		payload: {
-			clientId: clientId,
-			capacityType: capacityType
-		}
-	};
-};
-
-var setTicketCapacity = function setTicketCapacity(clientId, capacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CAPACITY,
-		payload: {
-			clientId: clientId,
-			capacity: capacity
-		}
-	};
-};
-
-//
+const setTicketTitle = (clientId, title) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TITLE,
+  payload: {
+    clientId,
+    title
+  }
+});
+const setTicketDescription = (clientId, description) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_DESCRIPTION,
+  payload: {
+    clientId,
+    description
+  }
+});
+const setTicketPrice = (clientId, price) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_PRICE,
+  payload: {
+    clientId,
+    price
+  }
+});
+const setTicketSku = (clientId, sku) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_SKU,
+  payload: {
+    clientId,
+    sku
+  }
+});
+const setTicketIACSetting = (clientId, iac) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IAC_SETTING,
+  payload: {
+    clientId,
+    iac
+  }
+});
+const setTicketStartDate = (clientId, startDate) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE,
+  payload: {
+    clientId,
+    startDate
+  }
+});
+const setTicketStartDateInput = (clientId, startDateInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE_INPUT,
+  payload: {
+    clientId,
+    startDateInput
+  }
+});
+const setTicketStartDateMoment = (clientId, startDateMoment) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_DATE_MOMENT,
+  payload: {
+    clientId,
+    startDateMoment
+  }
+});
+const setTicketEndDate = (clientId, endDate) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE,
+  payload: {
+    clientId,
+    endDate
+  }
+});
+const setTicketEndDateInput = (clientId, endDateInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE_INPUT,
+  payload: {
+    clientId,
+    endDateInput
+  }
+});
+const setTicketEndDateMoment = (clientId, endDateMoment) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_DATE_MOMENT,
+  payload: {
+    clientId,
+    endDateMoment
+  }
+});
+const setTicketStartTime = (clientId, startTime) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_TIME,
+  payload: {
+    clientId,
+    startTime
+  }
+});
+const setTicketEndTime = (clientId, endTime) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_TIME,
+  payload: {
+    clientId,
+    endTime
+  }
+});
+const setTicketStartTimeInput = (clientId, startTimeInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_START_TIME_INPUT,
+  payload: {
+    clientId,
+    startTimeInput
+  }
+});
+const setTicketEndTimeInput = (clientId, endTimeInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_END_TIME_INPUT,
+  payload: {
+    clientId,
+    endTimeInput
+  }
+});
+const setTicketCapacityType = (clientId, capacityType) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CAPACITY_TYPE,
+  payload: {
+    clientId,
+    capacityType
+  }
+});
+const setTicketCapacity = (clientId, capacity) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CAPACITY,
+  payload: {
+    clientId,
+    capacity
+  }
+}); //
 // ─── TICKET TEMP DETAILS ACTIONS ────────────────────────────────────────────────
 //
 
-var setTicketTempTitle = function setTicketTempTitle(clientId, title) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_TITLE,
-		payload: {
-			clientId: clientId,
-			title: title
-		}
-	};
-};
-
-var setTicketTempDescription = function setTicketTempDescription(clientId, description) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_DESCRIPTION,
-		payload: {
-			clientId: clientId,
-			description: description
-		}
-	};
-};
-
-var setTicketTempPrice = function setTicketTempPrice(clientId, price) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_PRICE,
-		payload: {
-			clientId: clientId,
-			price: price
-		}
-	};
-};
-
-var setTicketTempSku = function setTicketTempSku(clientId, sku) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_SKU,
-		payload: {
-			clientId: clientId,
-			sku: sku
-		}
-	};
-};
-
-var setTicketTempIACSetting = function setTicketTempIACSetting(clientId, iac) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_IAC_SETTING,
-		payload: {
-			clientId: clientId,
-			iac: iac
-		}
-	};
-};
-
-var setTicketTempStartDate = function setTicketTempStartDate(clientId, startDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE,
-		payload: {
-			clientId: clientId,
-			startDate: startDate
-		}
-	};
-};
-
-var setTicketTempStartDateInput = function setTicketTempStartDateInput(clientId, startDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE_INPUT,
-		payload: {
-			clientId: clientId,
-			startDateInput: startDateInput
-		}
-	};
-};
-
-var setTicketTempStartDateMoment = function setTicketTempStartDateMoment(clientId, startDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE_MOMENT,
-		payload: {
-			clientId: clientId,
-			startDateMoment: startDateMoment
-		}
-	};
-};
-
-var setTicketTempEndDate = function setTicketTempEndDate(clientId, endDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE,
-		payload: {
-			clientId: clientId,
-			endDate: endDate
-		}
-	};
-};
-
-var setTicketTempEndDateInput = function setTicketTempEndDateInput(clientId, endDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE_INPUT,
-		payload: {
-			clientId: clientId,
-			endDateInput: endDateInput
-		}
-	};
-};
-
-var setTicketTempEndDateMoment = function setTicketTempEndDateMoment(clientId, endDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE_MOMENT,
-		payload: {
-			clientId: clientId,
-			endDateMoment: endDateMoment
-		}
-	};
-};
-
-var setTicketTempStartTime = function setTicketTempStartTime(clientId, startTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_TIME,
-		payload: {
-			clientId: clientId,
-			startTime: startTime
-		}
-	};
-};
-
-var setTicketTempEndTime = function setTicketTempEndTime(clientId, endTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_TIME,
-		payload: {
-			clientId: clientId,
-			endTime: endTime
-		}
-	};
-};
-
-var setTicketTempStartTimeInput = function setTicketTempStartTimeInput(clientId, startTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_TIME_INPUT,
-		payload: {
-			clientId: clientId,
-			startTimeInput: startTimeInput
-		}
-	};
-};
-
-var setTicketTempEndTimeInput = function setTicketTempEndTimeInput(clientId, endTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_TIME_INPUT,
-		payload: {
-			clientId: clientId,
-			endTimeInput: endTimeInput
-		}
-	};
-};
-
-var setTicketTempCapacityType = function setTicketTempCapacityType(clientId, capacityType) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_CAPACITY_TYPE,
-		payload: {
-			clientId: clientId,
-			capacityType: capacityType
-		}
-	};
-};
-
-var setTicketTempCapacity = function setTicketTempCapacity(clientId, capacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_CAPACITY,
-		payload: {
-			clientId: clientId,
-			capacity: capacity
-		}
-	};
-};
-
-//
+const setTicketTempTitle = (clientId, title) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_TITLE,
+  payload: {
+    clientId,
+    title
+  }
+});
+const setTicketTempDescription = (clientId, description) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_DESCRIPTION,
+  payload: {
+    clientId,
+    description
+  }
+});
+const setTicketTempPrice = (clientId, price) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_PRICE,
+  payload: {
+    clientId,
+    price
+  }
+});
+const setTicketTempSku = (clientId, sku) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_SKU,
+  payload: {
+    clientId,
+    sku
+  }
+});
+const setTicketTempIACSetting = (clientId, iac) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_IAC_SETTING,
+  payload: {
+    clientId,
+    iac
+  }
+});
+const setTicketTempStartDate = (clientId, startDate) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE,
+  payload: {
+    clientId,
+    startDate
+  }
+});
+const setTicketTempStartDateInput = (clientId, startDateInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE_INPUT,
+  payload: {
+    clientId,
+    startDateInput
+  }
+});
+const setTicketTempStartDateMoment = (clientId, startDateMoment) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_DATE_MOMENT,
+  payload: {
+    clientId,
+    startDateMoment
+  }
+});
+const setTicketTempEndDate = (clientId, endDate) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE,
+  payload: {
+    clientId,
+    endDate
+  }
+});
+const setTicketTempEndDateInput = (clientId, endDateInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE_INPUT,
+  payload: {
+    clientId,
+    endDateInput
+  }
+});
+const setTicketTempEndDateMoment = (clientId, endDateMoment) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_DATE_MOMENT,
+  payload: {
+    clientId,
+    endDateMoment
+  }
+});
+const setTicketTempStartTime = (clientId, startTime) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_TIME,
+  payload: {
+    clientId,
+    startTime
+  }
+});
+const setTicketTempEndTime = (clientId, endTime) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_TIME,
+  payload: {
+    clientId,
+    endTime
+  }
+});
+const setTicketTempStartTimeInput = (clientId, startTimeInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_START_TIME_INPUT,
+  payload: {
+    clientId,
+    startTimeInput
+  }
+});
+const setTicketTempEndTimeInput = (clientId, endTimeInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_END_TIME_INPUT,
+  payload: {
+    clientId,
+    endTimeInput
+  }
+});
+const setTicketTempCapacityType = (clientId, capacityType) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_CAPACITY_TYPE,
+  payload: {
+    clientId,
+    capacityType
+  }
+});
+const setTicketTempCapacity = (clientId, capacity) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_CAPACITY,
+  payload: {
+    clientId,
+    capacity
+  }
+}); //
 // ─── TICKET ACTIONS ─────────────────────────────────────────────────────────────
 //
 
-var registerTicketBlock = function registerTicketBlock(clientId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REGISTER_TICKET_BLOCK,
-		payload: {
-			clientId: clientId
-		}
-	};
-};
-
-var removeTicketBlock = function removeTicketBlock(clientId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REMOVE_TICKET_BLOCK,
-		payload: {
-			clientId: clientId
-		}
-	};
-};
-
-var removeTicketBlocks = function removeTicketBlocks() {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REMOVE_TICKET_BLOCKS
-	};
-};
-
-var setTicketSold = function setTicketSold(clientId, sold) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_SOLD,
-		payload: {
-			clientId: clientId,
-			sold: sold
-		}
-	};
-};
-
-var setTicketAvailable = function setTicketAvailable(clientId, available) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_AVAILABLE,
-		payload: {
-			clientId: clientId,
-			available: available
-		}
-	};
-};
-
-var setTicketId = function setTicketId(clientId, ticketId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_ID,
-		payload: {
-			clientId: clientId,
-			ticketId: ticketId
-		}
-	};
-};
-
-var setTicketCurrencySymbol = function setTicketCurrencySymbol(clientId, currencySymbol) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CURRENCY_SYMBOL,
-		payload: {
-			clientId: clientId,
-			currencySymbol: currencySymbol
-		}
-	};
-};
-
-var setTicketCurrencyPosition = function setTicketCurrencyPosition(clientId, currencyPosition) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CURRENCY_POSITION,
-		payload: {
-			clientId: clientId,
-			currencyPosition: currencyPosition
-		}
-	};
-};
-
-var setTicketProvider = function setTicketProvider(clientId, provider) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_PROVIDER,
-		payload: {
-			clientId: clientId,
-			provider: provider
-		}
-	};
-};
-
-var setTicketHasAttendeeInfoFields = function setTicketHasAttendeeInfoFields(clientId, hasAttendeeInfoFields) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_ATTENDEE_INFO_FIELDS,
-		payload: {
-			clientId: clientId,
-			hasAttendeeInfoFields: hasAttendeeInfoFields
-		}
-	};
-};
-
-var setTicketIsLoading = function setTicketIsLoading(clientId, isLoading) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_LOADING,
-		payload: {
-			clientId: clientId,
-			isLoading: isLoading
-		}
-	};
-};
-
-var setTicketIsModalOpen = function setTicketIsModalOpen(clientId, isModalOpen) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_MODAL_OPEN,
-		payload: {
-			clientId: clientId,
-			isModalOpen: isModalOpen
-		}
-	};
-};
-
-var setTicketHasBeenCreated = function setTicketHasBeenCreated(clientId, hasBeenCreated) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_BEEN_CREATED,
-		payload: {
-			clientId: clientId,
-			hasBeenCreated: hasBeenCreated
-		}
-	};
-};
-
-var setTicketHasChanges = function setTicketHasChanges(clientId, hasChanges) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_CHANGES,
-		payload: {
-			clientId: clientId,
-			hasChanges: hasChanges
-		}
-	};
-};
-
-var setTicketHasDurationError = function setTicketHasDurationError(clientId, hasDurationError) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_DURATION_ERROR,
-		payload: {
-			clientId: clientId,
-			hasDurationError: hasDurationError
-		}
-	};
-};
-
-var setTicketIsSelected = function setTicketIsSelected(clientId, isSelected) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_SELECTED,
-		payload: {
-			clientId: clientId,
-			isSelected: isSelected
-		}
-	};
-};
-
-//
+const registerTicketBlock = clientId => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REGISTER_TICKET_BLOCK,
+  payload: {
+    clientId
+  }
+});
+const removeTicketBlock = clientId => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REMOVE_TICKET_BLOCK,
+  payload: {
+    clientId
+  }
+});
+const removeTicketBlocks = () => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].REMOVE_TICKET_BLOCKS
+});
+const setTicketSold = (clientId, sold) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_SOLD,
+  payload: {
+    clientId,
+    sold
+  }
+});
+const setTicketAvailable = (clientId, available) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_AVAILABLE,
+  payload: {
+    clientId,
+    available
+  }
+});
+const setTicketId = (clientId, ticketId) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_ID,
+  payload: {
+    clientId,
+    ticketId
+  }
+});
+const setTicketCurrencySymbol = (clientId, currencySymbol) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CURRENCY_SYMBOL,
+  payload: {
+    clientId,
+    currencySymbol
+  }
+});
+const setTicketCurrencyPosition = (clientId, currencyPosition) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_CURRENCY_POSITION,
+  payload: {
+    clientId,
+    currencyPosition
+  }
+});
+const setTicketProvider = (clientId, provider) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_PROVIDER,
+  payload: {
+    clientId,
+    provider
+  }
+});
+const setTicketHasAttendeeInfoFields = (clientId, hasAttendeeInfoFields) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_ATTENDEE_INFO_FIELDS,
+  payload: {
+    clientId,
+    hasAttendeeInfoFields
+  }
+});
+const setTicketIsLoading = (clientId, isLoading) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_LOADING,
+  payload: {
+    clientId,
+    isLoading
+  }
+});
+const setTicketIsModalOpen = (clientId, isModalOpen) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_MODAL_OPEN,
+  payload: {
+    clientId,
+    isModalOpen
+  }
+});
+const setTicketHasBeenCreated = (clientId, hasBeenCreated) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_BEEN_CREATED,
+  payload: {
+    clientId,
+    hasBeenCreated
+  }
+});
+const setTicketHasChanges = (clientId, hasChanges) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_CHANGES,
+  payload: {
+    clientId,
+    hasChanges
+  }
+});
+const setTicketHasDurationError = (clientId, hasDurationError) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_HAS_DURATION_ERROR,
+  payload: {
+    clientId,
+    hasDurationError
+  }
+});
+const setTicketIsSelected = (clientId, isSelected) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_IS_SELECTED,
+  payload: {
+    clientId,
+    isSelected
+  }
+}); //
 // ─── TICKET SAGA ACTIONS ────────────────────────────────────────────────────────
 //
 
-var setTicketDetails = function setTicketDetails(clientId, details) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_DETAILS,
-		payload: {
-			clientId: clientId,
-			details: details
-		}
-	};
-};
-
-var setTicketTempDetails = function setTicketTempDetails(clientId, tempDetails) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_DETAILS,
-		payload: {
-			clientId: clientId,
-			tempDetails: tempDetails
-		}
-	};
-};
-
-var handleTicketStartDate = function handleTicketStartDate(clientId, date, dayPickerInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_START_DATE,
-		payload: {
-			clientId: clientId,
-			date: date,
-			dayPickerInput: dayPickerInput
-		}
-	};
-};
-
-var handleTicketEndDate = function handleTicketEndDate(clientId, date, dayPickerInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_END_DATE,
-		payload: {
-			clientId: clientId,
-			date: date,
-			dayPickerInput: dayPickerInput
-		}
-	};
-};
-
-var handleTicketStartTime = function handleTicketStartTime(clientId, seconds) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_START_TIME,
-		payload: {
-			clientId: clientId,
-			seconds: seconds
-		}
-	};
-};
-
-var handleTicketEndTime = function handleTicketEndTime(clientId, seconds) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_END_TIME,
-		payload: {
-			clientId: clientId,
-			seconds: seconds
-		}
-	};
-};
-
-var fetchTicket = function fetchTicket(clientId, ticketId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].FETCH_TICKET,
-		payload: {
-			clientId: clientId,
-			ticketId: ticketId
-		}
-	};
-};
-
-var createNewTicket = function createNewTicket(clientId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].CREATE_NEW_TICKET,
-		payload: {
-			clientId: clientId
-		}
-	};
-};
-
-var updateTicket = function updateTicket(clientId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].UPDATE_TICKET,
-		payload: {
-			clientId: clientId
-		}
-	};
-};
-
-var deleteTicket = function deleteTicket(clientId) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].DELETE_TICKET,
-		payload: {
-			clientId: clientId
-		}
-	};
-};
-
-var setTicketInitialState = function setTicketInitialState(props) {
-	return {
-		type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_INITIAL_STATE,
-		payload: props
-	};
-};
+const setTicketDetails = (clientId, details) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_DETAILS,
+  payload: {
+    clientId,
+    details
+  }
+});
+const setTicketTempDetails = (clientId, tempDetails) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_TEMP_DETAILS,
+  payload: {
+    clientId,
+    tempDetails
+  }
+});
+const handleTicketStartDate = (clientId, date, dayPickerInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_START_DATE,
+  payload: {
+    clientId,
+    date,
+    dayPickerInput
+  }
+});
+const handleTicketEndDate = (clientId, date, dayPickerInput) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_END_DATE,
+  payload: {
+    clientId,
+    date,
+    dayPickerInput
+  }
+});
+const handleTicketStartTime = (clientId, seconds) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_START_TIME,
+  payload: {
+    clientId,
+    seconds
+  }
+});
+const handleTicketEndTime = (clientId, seconds) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].HANDLE_TICKET_END_TIME,
+  payload: {
+    clientId,
+    seconds
+  }
+});
+const fetchTicket = (clientId, ticketId) => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].FETCH_TICKET,
+  payload: {
+    clientId,
+    ticketId
+  }
+});
+const createNewTicket = clientId => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].CREATE_NEW_TICKET,
+  payload: {
+    clientId
+  }
+});
+const updateTicket = clientId => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].UPDATE_TICKET,
+  payload: {
+    clientId
+  }
+});
+const deleteTicket = clientId => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].DELETE_TICKET,
+  payload: {
+    clientId
+  }
+});
+const setTicketInitialState = props => ({
+  type: _moderntribe_tickets_data_blocks_ticket__WEBPACK_IMPORTED_MODULE_0__[/* types */ "g"].SET_TICKET_INITIAL_STATE,
+  payload: props
+});
 
 /***/ }),
-/* 11 */,
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(327);
-
-
-/***/ }),
-/* 13 */
+/* 10 */,
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10076,93 +8270,84 @@ var thunks_namespaceObject = {};
 __webpack_require__.r(thunks_namespaceObject);
 __webpack_require__.d(thunks_namespaceObject, "createRSVP", function() { return createRSVP; });
 __webpack_require__.d(thunks_namespaceObject, "updateRSVP", function() { return updateRSVP; });
-__webpack_require__.d(thunks_namespaceObject, "deleteRSVP", function() { return thunks_deleteRSVP; });
-__webpack_require__.d(thunks_namespaceObject, "getRSVP", function() { return thunks_getRSVP; });
+__webpack_require__.d(thunks_namespaceObject, "deleteRSVP", function() { return deleteRSVP; });
+__webpack_require__.d(thunks_namespaceObject, "getRSVP", function() { return getRSVP; });
 
 // EXTERNAL MODULE: ./src/modules/data/utils.js
 var utils = __webpack_require__(8);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/types.js
+/* eslint-disable max-len */
+
 /**
  * Internal dependencies
  */
-
-
-//
+ //
 // ─── RSVP TYPES ─────────────────────────────────────────────────────────────────
 //
 
-var SET_RSVP_ID = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_ID';
-var SET_RSVP_SETTINGS_OPEN = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_SETTINGS_OPEN';
-var SET_RSVP_HAS_CHANGES = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_HAS_CHANGES';
-var SET_RSVP_IS_LOADING = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_IS_LOADING';
-var SET_RSVP_IS_SETTINGS_LOADING = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_IS_SETTINGS_LOADING';
-var SET_RSVP_IS_MODAL_OPEN = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_IS_MODAL_OPEN';
-var SET_RSVP_GOING_COUNT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_GOING_COUNT';
-var SET_RSVP_NOT_GOING_COUNT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_NOT_GOING_COUNT';
-var SET_RSVP_HAS_ATTENDEE_INFO_FIELDS = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_HAS_ATTENDEE_INFO_FIELDS';
-var SET_RSVP_HAS_DURATION_ERROR = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_HAS_DURATION_ERROR';
-
-var SET_RSVP_DETAILS = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_DETAILS';
-var SET_RSVP_TEMP_DETAILS = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_DETAILS';
-var SET_RSVP_HEADER_IMAGE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_HEADER_IMAGE';
-
-//
+const SET_RSVP_ID = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_ID`;
+const SET_RSVP_SETTINGS_OPEN = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_SETTINGS_OPEN`;
+const SET_RSVP_HAS_CHANGES = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_HAS_CHANGES`;
+const SET_RSVP_IS_LOADING = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_IS_LOADING`;
+const SET_RSVP_IS_SETTINGS_LOADING = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_IS_SETTINGS_LOADING`;
+const SET_RSVP_IS_MODAL_OPEN = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_IS_MODAL_OPEN`;
+const SET_RSVP_GOING_COUNT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_GOING_COUNT`;
+const SET_RSVP_NOT_GOING_COUNT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_NOT_GOING_COUNT`;
+const SET_RSVP_HAS_ATTENDEE_INFO_FIELDS = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_HAS_ATTENDEE_INFO_FIELDS`;
+const SET_RSVP_HAS_DURATION_ERROR = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_HAS_DURATION_ERROR`;
+const SET_RSVP_DETAILS = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_DETAILS`;
+const SET_RSVP_TEMP_DETAILS = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_DETAILS`;
+const SET_RSVP_HEADER_IMAGE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_HEADER_IMAGE`; //
 // ─── RSVP DETAILS TYPES ─────────────────────────────────────────────────────────
 //
 
-var SET_RSVP_TITLE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TITLE';
-var SET_RSVP_DESCRIPTION = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_DESCRIPTION';
-var SET_RSVP_CAPACITY = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_CAPACITY';
-var SET_RSVP_NOT_GOING_RESPONSES = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_NOT_GOING_RESPONSES';
-var SET_RSVP_START_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_START_DATE';
-var SET_RSVP_START_DATE_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_START_DATE_INPUT';
-var SET_RSVP_START_DATE_MOMENT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_START_DATE_MOMENT';
-var SET_RSVP_END_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_END_DATE';
-var SET_RSVP_END_DATE_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_END_DATE_INPUT';
-var SET_RSVP_END_DATE_MOMENT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_END_DATE_MOMENT';
-var SET_RSVP_START_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_START_TIME';
-var SET_RSVP_END_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_END_TIME';
-var SET_RSVP_START_TIME_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_START_TIME_INPUT';
-var SET_RSVP_END_TIME_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_END_TIME_INPUT';
-
-//
+const SET_RSVP_TITLE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TITLE`;
+const SET_RSVP_DESCRIPTION = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_DESCRIPTION`;
+const SET_RSVP_CAPACITY = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_CAPACITY`;
+const SET_RSVP_NOT_GOING_RESPONSES = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_NOT_GOING_RESPONSES`;
+const SET_RSVP_START_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_START_DATE`;
+const SET_RSVP_START_DATE_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_START_DATE_INPUT`;
+const SET_RSVP_START_DATE_MOMENT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_START_DATE_MOMENT`;
+const SET_RSVP_END_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_END_DATE`;
+const SET_RSVP_END_DATE_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_END_DATE_INPUT`;
+const SET_RSVP_END_DATE_MOMENT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_END_DATE_MOMENT`;
+const SET_RSVP_START_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_START_TIME`;
+const SET_RSVP_END_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_END_TIME`;
+const SET_RSVP_START_TIME_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_START_TIME_INPUT`;
+const SET_RSVP_END_TIME_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_END_TIME_INPUT`; //
 // ─── RSVP TEMP DETAILS TYPES ────────────────────────────────────────────────────
 //
 
-var SET_RSVP_TEMP_TITLE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_TITLE';
-var SET_RSVP_TEMP_DESCRIPTION = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_DESCRIPTION';
-var SET_RSVP_TEMP_CAPACITY = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_CAPACITY';
-var SET_RSVP_TEMP_NOT_GOING_RESPONSES = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_NOT_GOING_RESPONSES';
-var SET_RSVP_TEMP_START_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_START_DATE';
-var SET_RSVP_TEMP_START_DATE_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_START_DATE_INPUT';
-var SET_RSVP_TEMP_START_DATE_MOMENT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_START_DATE_MOMENT';
-var SET_RSVP_TEMP_END_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_END_DATE';
-var SET_RSVP_TEMP_END_DATE_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_END_DATE_INPUT';
-var SET_RSVP_TEMP_END_DATE_MOMENT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_END_DATE_MOMENT';
-var SET_RSVP_TEMP_START_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_START_TIME';
-var SET_RSVP_TEMP_END_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_END_TIME';
-var SET_RSVP_TEMP_START_TIME_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_START_TIME_INPUT';
-var SET_RSVP_TEMP_END_TIME_INPUT = utils["n" /* PREFIX_TICKETS_STORE */] + '/SET_RSVP_TEMP_END_TIME_INPUT';
-
-//
+const SET_RSVP_TEMP_TITLE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_TITLE`;
+const SET_RSVP_TEMP_DESCRIPTION = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_DESCRIPTION`;
+const SET_RSVP_TEMP_CAPACITY = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_CAPACITY`;
+const SET_RSVP_TEMP_NOT_GOING_RESPONSES = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_NOT_GOING_RESPONSES`;
+const SET_RSVP_TEMP_START_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_START_DATE`;
+const SET_RSVP_TEMP_START_DATE_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_START_DATE_INPUT`;
+const SET_RSVP_TEMP_START_DATE_MOMENT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_START_DATE_MOMENT`;
+const SET_RSVP_TEMP_END_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_END_DATE`;
+const SET_RSVP_TEMP_END_DATE_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_END_DATE_INPUT`;
+const SET_RSVP_TEMP_END_DATE_MOMENT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_END_DATE_MOMENT`;
+const SET_RSVP_TEMP_START_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_START_TIME`;
+const SET_RSVP_TEMP_END_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_END_TIME`;
+const SET_RSVP_TEMP_START_TIME_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_START_TIME_INPUT`;
+const SET_RSVP_TEMP_END_TIME_INPUT = `${utils["n" /* PREFIX_TICKETS_STORE */]}/SET_RSVP_TEMP_END_TIME_INPUT`; //
 // ─── RSVP THUNK & SAGA TYPES ────────────────────────────────────────────────────
 //
 
-var CREATE_RSVP = utils["n" /* PREFIX_TICKETS_STORE */] + '/CREATE_RSVP';
-var INITIALIZE_RSVP = utils["n" /* PREFIX_TICKETS_STORE */] + '/INITIALIZE_RSVP';
-var DELETE_RSVP = utils["n" /* PREFIX_TICKETS_STORE */] + '/DELETE_RSVP';
-
-var HANDLE_RSVP_START_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/HANDLE_RSVP_START_DATE';
-var HANDLE_RSVP_END_DATE = utils["n" /* PREFIX_TICKETS_STORE */] + '/HANDLE_RSVP_END_DATE';
-var HANDLE_RSVP_START_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/HANDLE_RSVP_START_TIME';
-var HANDLE_RSVP_END_TIME = utils["n" /* PREFIX_TICKETS_STORE */] + '/HANDLE_RSVP_END_TIME';
-
-var FETCH_RSVP_HEADER_IMAGE = utils["n" /* PREFIX_TICKETS_STORE */] + '/FETCH_RSVP_HEADER_IMAGE';
-var UPDATE_RSVP_HEADER_IMAGE = utils["n" /* PREFIX_TICKETS_STORE */] + '/UPDATE_RSVP_HEADER_IMAGE';
-var DELETE_RSVP_HEADER_IMAGE = utils["n" /* PREFIX_TICKETS_STORE */] + '/DELETE_RSVP_HEADER_IMAGE';
+const CREATE_RSVP = `${utils["n" /* PREFIX_TICKETS_STORE */]}/CREATE_RSVP`;
+const INITIALIZE_RSVP = `${utils["n" /* PREFIX_TICKETS_STORE */]}/INITIALIZE_RSVP`;
+const DELETE_RSVP = `${utils["n" /* PREFIX_TICKETS_STORE */]}/DELETE_RSVP`;
+const HANDLE_RSVP_START_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/HANDLE_RSVP_START_DATE`;
+const HANDLE_RSVP_END_DATE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/HANDLE_RSVP_END_DATE`;
+const HANDLE_RSVP_START_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/HANDLE_RSVP_START_TIME`;
+const HANDLE_RSVP_END_TIME = `${utils["n" /* PREFIX_TICKETS_STORE */]}/HANDLE_RSVP_END_TIME`;
+const FETCH_RSVP_HEADER_IMAGE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/FETCH_RSVP_HEADER_IMAGE`;
+const UPDATE_RSVP_HEADER_IMAGE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/UPDATE_RSVP_HEADER_IMAGE`;
+const DELETE_RSVP_HEADER_IMAGE = `${utils["n" /* PREFIX_TICKETS_STORE */]}/DELETE_RSVP_HEADER_IMAGE`;
 // EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/actions.js
-var actions = __webpack_require__(14);
+var actions = __webpack_require__(12);
 
 // EXTERNAL MODULE: ./node_modules/reselect/lib/index.js
 var lib = __webpack_require__(6);
@@ -10172,256 +8357,101 @@ var lib = __webpack_require__(6);
  * External dependencies
  */
 
-
 /**
  * ------------------------------------------------------------
  * RSVP State
  * ------------------------------------------------------------
  */
 
-var getRSVPBlock = function getRSVPBlock(state) {
-	return state.tickets.blocks.rsvp;
-};
-
-var getRSVPId = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.id;
-});
-
-var getRSVPCreated = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.created;
-});
-
-var getRSVPSettingsOpen = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.settingsOpen;
-});
-
-var getRSVPHasChanges = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.hasChanges;
-});
-
-var getRSVPIsLoading = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.isLoading;
-});
-
-var getRSVPIsSettingsLoading = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.isSettingsLoading;
-});
-
-var getRSVPIsModalOpen = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.isModalOpen;
-});
-
-var getRSVPGoingCount = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.goingCount;
-});
-
-var getRSVPNotGoingCount = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.notGoingCount;
-});
-
-var getRSVPHasAttendeeInfoFields = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.hasAttendeeInfoFields;
-});
-
-var getRSVPHasDurationError = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.hasDurationError;
-});
-
+const getRSVPBlock = state => state.tickets.blocks.rsvp;
+const getRSVPId = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.id);
+const getRSVPCreated = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.created);
+const getRSVPSettingsOpen = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.settingsOpen);
+const getRSVPHasChanges = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.hasChanges);
+const getRSVPIsLoading = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.isLoading);
+const getRSVPIsSettingsLoading = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.isSettingsLoading);
+const getRSVPIsModalOpen = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.isModalOpen);
+const getRSVPGoingCount = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.goingCount);
+const getRSVPNotGoingCount = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.notGoingCount);
+const getRSVPHasAttendeeInfoFields = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.hasAttendeeInfoFields);
+const getRSVPHasDurationError = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.hasDurationError);
 /**
  * ------------------------------------------------------------
  * RSVP Details
  * ------------------------------------------------------------
  */
-var getRSVPDetails = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.details;
+
+const getRSVPDetails = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.details);
+const getRSVPTitle = Object(lib["createSelector"])([getRSVPDetails], details => details.title);
+const getRSVPDescription = Object(lib["createSelector"])([getRSVPDetails], details => details.description);
+const getRSVPCapacity = Object(lib["createSelector"])([getRSVPDetails], details => details.capacity);
+const getRSVPAvailable = Object(lib["createSelector"])([getRSVPCapacity, getRSVPGoingCount], (capacity, goingCount) => {
+  if (capacity === '') {
+    return -1;
+  }
+
+  const total = parseInt(capacity, 10) || 0;
+  const going = parseInt(goingCount, 10) || 0;
+  /**
+   * Prevent to have negative values when subtracting the going amount from total amount, so it takes the max value
+   * of the substraction operation or zero if the operation is lower than zero it will return zero insted.
+   */
+
+  return Math.max(total - going, 0);
 });
-
-var getRSVPTitle = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.title;
-});
-
-var getRSVPDescription = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.description;
-});
-
-var getRSVPCapacity = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.capacity;
-});
-
-var getRSVPAvailable = Object(lib["createSelector"])([getRSVPCapacity, getRSVPGoingCount], function (capacity, goingCount) {
-	if (capacity === '') {
-		return -1;
-	}
-
-	var total = parseInt(capacity, 10) || 0;
-	var going = parseInt(goingCount, 10) || 0;
-	/**
-  * Prevent to have negative values when subtracting the going amount from total amount, so it takes the max value
-  * of the substraction operation or zero if the operation is lower than zero it will return zero insted.
-  */
-	return Math.max(total - going, 0);
-});
-
-var getRSVPNotGoingResponses = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.notGoingResponses;
-});
-
-var getRSVPStartDate = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.startDate;
-});
-
-var getRSVPStartDateInput = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.startDateInput;
-});
-
-var getRSVPStartDateMoment = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.startDateMoment;
-});
-
-var getRSVPStartTime = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.startTime;
-});
-
-var getRSVPStartTimeNoSeconds = Object(lib["createSelector"])([getRSVPStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getRSVPEndDate = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.endDate;
-});
-
-var getRSVPEndDateInput = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.endDateInput;
-});
-
-var getRSVPEndDateMoment = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.endDateMoment;
-});
-
-var getRSVPEndTime = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.endTime;
-});
-
-var getRSVPEndTimeNoSeconds = Object(lib["createSelector"])([getRSVPEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getRSVPStartTimeInput = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.startTimeInput;
-});
-
-var getRSVPEndTimeInput = Object(lib["createSelector"])([getRSVPDetails], function (details) {
-	return details.endTimeInput;
-});
-
+const getRSVPNotGoingResponses = Object(lib["createSelector"])([getRSVPDetails], details => details.notGoingResponses);
+const getRSVPStartDate = Object(lib["createSelector"])([getRSVPDetails], details => details.startDate);
+const getRSVPStartDateInput = Object(lib["createSelector"])([getRSVPDetails], details => details.startDateInput);
+const getRSVPStartDateMoment = Object(lib["createSelector"])([getRSVPDetails], details => details.startDateMoment);
+const getRSVPStartTime = Object(lib["createSelector"])([getRSVPDetails], details => details.startTime);
+const getRSVPStartTimeNoSeconds = Object(lib["createSelector"])([getRSVPStartTime], startTime => startTime.slice(0, -3));
+const getRSVPEndDate = Object(lib["createSelector"])([getRSVPDetails], details => details.endDate);
+const getRSVPEndDateInput = Object(lib["createSelector"])([getRSVPDetails], details => details.endDateInput);
+const getRSVPEndDateMoment = Object(lib["createSelector"])([getRSVPDetails], details => details.endDateMoment);
+const getRSVPEndTime = Object(lib["createSelector"])([getRSVPDetails], details => details.endTime);
+const getRSVPEndTimeNoSeconds = Object(lib["createSelector"])([getRSVPEndTime], endTime => endTime.slice(0, -3));
+const getRSVPStartTimeInput = Object(lib["createSelector"])([getRSVPDetails], details => details.startTimeInput);
+const getRSVPEndTimeInput = Object(lib["createSelector"])([getRSVPDetails], details => details.endTimeInput);
 /**
  * ------------------------------------------------------------
  * RSVP Temp Details
  * ------------------------------------------------------------
  */
-var getRSVPTempDetails = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.tempDetails;
-});
 
-var getRSVPTempTitle = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.title;
-});
-
-var getRSVPTempDescription = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.description;
-});
-
-var getRSVPTempCapacity = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.capacity;
-});
-
-var getRSVPTempNotGoingResponses = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.notGoingResponses;
-});
-
-var getRSVPTempStartDate = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.startDate;
-});
-
-var getRSVPTempStartDateInput = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.startDateInput;
-});
-
-var getRSVPTempStartDateMoment = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.startDateMoment;
-});
-
-var getRSVPTempStartTime = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.startTime;
-});
-
-var getRSVPTempStartTimeNoSeconds = Object(lib["createSelector"])([getRSVPTempStartTime], function (startTime) {
-	return startTime.slice(0, -3);
-});
-
-var getRSVPTempEndDate = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.endDate;
-});
-
-var getRSVPTempEndDateInput = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.endDateInput;
-});
-
-var getRSVPTempEndDateMoment = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.endDateMoment;
-});
-
-var getRSVPTempEndTime = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.endTime;
-});
-
-var getRSVPTempEndTimeNoSeconds = Object(lib["createSelector"])([getRSVPTempEndTime], function (endTime) {
-	return endTime.slice(0, -3);
-});
-
-var getRSVPTempStartTimeInput = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.startTimeInput;
-});
-
-var getRSVPTempEndTimeInput = Object(lib["createSelector"])([getRSVPTempDetails], function (tempDetails) {
-	return tempDetails.endTimeInput;
-});
-
+const getRSVPTempDetails = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.tempDetails);
+const getRSVPTempTitle = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.title);
+const getRSVPTempDescription = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.description);
+const getRSVPTempCapacity = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.capacity);
+const getRSVPTempNotGoingResponses = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.notGoingResponses);
+const getRSVPTempStartDate = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.startDate);
+const getRSVPTempStartDateInput = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.startDateInput);
+const getRSVPTempStartDateMoment = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.startDateMoment);
+const getRSVPTempStartTime = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.startTime);
+const getRSVPTempStartTimeNoSeconds = Object(lib["createSelector"])([getRSVPTempStartTime], startTime => startTime.slice(0, -3));
+const getRSVPTempEndDate = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.endDate);
+const getRSVPTempEndDateInput = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.endDateInput);
+const getRSVPTempEndDateMoment = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.endDateMoment);
+const getRSVPTempEndTime = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.endTime);
+const getRSVPTempEndTimeNoSeconds = Object(lib["createSelector"])([getRSVPTempEndTime], endTime => endTime.slice(0, -3));
+const getRSVPTempStartTimeInput = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.startTimeInput);
+const getRSVPTempEndTimeInput = Object(lib["createSelector"])([getRSVPTempDetails], tempDetails => tempDetails.endTimeInput);
 /**
  * ------------------------------------------------------------
  * RSVP Header Image
  * ------------------------------------------------------------
  */
-var getRSVPHeaderImage = Object(lib["createSelector"])([getRSVPBlock], function (rsvp) {
-	return rsvp.headerImage;
-});
 
-var getRSVPHeaderImageId = Object(lib["createSelector"])([getRSVPHeaderImage], function (headerImage) {
-	return headerImage.id;
-});
-
-var getRSVPHeaderImageSrc = Object(lib["createSelector"])([getRSVPHeaderImage], function (headerImage) {
-	return headerImage.src;
-});
-
-var getRSVPHeaderImageAlt = Object(lib["createSelector"])([getRSVPHeaderImage], function (headerImage) {
-	return headerImage.alt;
-});
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(25);
-var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
-
-// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
-var header_image = __webpack_require__(60);
-
+const getRSVPHeaderImage = Object(lib["createSelector"])([getRSVPBlock], rsvp => rsvp.headerImage);
+const getRSVPHeaderImageId = Object(lib["createSelector"])([getRSVPHeaderImage], headerImage => headerImage.id);
+const getRSVPHeaderImageSrc = Object(lib["createSelector"])([getRSVPHeaderImage], headerImage => headerImage.src);
+const getRSVPHeaderImageAlt = Object(lib["createSelector"])([getRSVPHeaderImage], headerImage => headerImage.alt);
 // EXTERNAL MODULE: external "tribe.common.store"
-var external_tribe_common_store_ = __webpack_require__(61);
+var external_tribe_common_store_ = __webpack_require__(46);
 
 // EXTERNAL MODULE: external "tribe.common.utils"
 var external_tribe_common_utils_ = __webpack_require__(3);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/thunks.js
-
 /**
  * Internal dependencies
  */
@@ -10429,393 +8459,419 @@ var external_tribe_common_utils_ = __webpack_require__(3);
 
 
 
-
-
-var wpRequestActions = external_tribe_common_store_["middlewares"].request.actions;
-
+const {
+  request: {
+    actions: wpRequestActions
+  }
+} = external_tribe_common_store_["middlewares"];
 /**
  * @todo: until we can abstract out wpRequest() better, these should remain as a thunk
  */
 
-var METHODS = {
-	DELETE: 'DELETE',
-	GET: 'GET',
-	POST: 'POST',
-	PUT: 'PUT'
+const METHODS = {
+  DELETE: 'DELETE',
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT'
 };
 
-var thunks_createOrUpdateRSVP = function createOrUpdateRSVP(method) {
-	return function (payload) {
-		return function (dispatch) {
-			var _meta;
+const createOrUpdateRSVP = method => payload => dispatch => {
+  const {
+    title,
+    description,
+    capacity,
+    notGoingResponses,
+    startDateMoment,
+    startTime,
+    endDateMoment,
+    endTime
+  } = payload;
+  const startMoment = startDateMoment.clone().startOf('day').seconds(external_tribe_common_utils_["time"].toSeconds(startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS));
+  const endMoment = endDateMoment.clone().startOf('day').seconds(external_tribe_common_utils_["time"].toSeconds(endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS));
+  let path = `${utils["o" /* RSVP_POST_TYPE */]}`;
+  const reqBody = {
+    title,
+    excerpt: description,
+    meta: {
+      [utils["d" /* KEY_TICKET_CAPACITY */]]: capacity,
+      [utils["m" /* KEY_TICKET_START_DATE */]]: external_tribe_common_utils_["moment"].toDateTime(startMoment),
+      [utils["f" /* KEY_TICKET_END_DATE */]]: external_tribe_common_utils_["moment"].toDateTime(endMoment),
+      [utils["l" /* KEY_TICKET_SHOW_NOT_GOING */]]: notGoingResponses
+    }
+  };
 
-			var title = payload.title,
-			    description = payload.description,
-			    capacity = payload.capacity,
-			    notGoingResponses = payload.notGoingResponses,
-			    startDateMoment = payload.startDateMoment,
-			    startTime = payload.startTime,
-			    endDateMoment = payload.endDateMoment,
-			    endTime = payload.endTime;
+  if (method === METHODS.POST) {
+    reqBody.status = 'publish';
+    reqBody.meta[utils["b" /* KEY_RSVP_FOR_EVENT */]] = `${payload.postId}`;
+    /* This is hardcoded value until we can sort out BE */
 
+    reqBody.meta[utils["k" /* KEY_TICKET_SHOW_DESCRIPTION */]] = 'yes';
+    /* This is hardcoded value until we can sort out BE */
 
-			var startMoment = startDateMoment.clone().startOf('day').seconds(external_tribe_common_utils_["time"].toSeconds(startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS));
+    reqBody.meta[utils["a" /* KEY_PRICE */]] = '0';
+  } else if (method === METHODS.PUT) {
+    path += `/${payload.id}`;
+  }
 
-			var endMoment = endDateMoment.clone().startOf('day').seconds(external_tribe_common_utils_["time"].toSeconds(endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS));
+  const options = {
+    path,
+    params: {
+      method,
+      body: JSON.stringify(reqBody)
+    },
+    actions: {
+      start: () => dispatch(actions["setRSVPIsLoading"](true)),
+      success: _ref => {
+        let {
+          body
+        } = _ref;
 
-			var path = '' + utils["o" /* RSVP_POST_TYPE */];
-			var body = {
-				title: title,
-				excerpt: description,
-				meta: (_meta = {}, defineProperty_default()(_meta, utils["d" /* KEY_TICKET_CAPACITY */], capacity), defineProperty_default()(_meta, utils["m" /* KEY_TICKET_START_DATE */], external_tribe_common_utils_["moment"].toDateTime(startMoment)), defineProperty_default()(_meta, utils["f" /* KEY_TICKET_END_DATE */], external_tribe_common_utils_["moment"].toDateTime(endMoment)), defineProperty_default()(_meta, utils["l" /* KEY_TICKET_SHOW_NOT_GOING */], notGoingResponses), _meta)
-			};
+        if (method === METHODS.POST) {
+          dispatch(actions["createRSVP"]());
+          dispatch(actions["setRSVPId"](body.id));
+        }
 
-			if (method === METHODS.POST) {
-				body.status = 'publish';
-				body.meta[utils["b" /* KEY_RSVP_FOR_EVENT */]] = '' + payload.postId;
-				/* This is hardcoded value until we can sort out BE */
-				body.meta[utils["k" /* KEY_TICKET_SHOW_DESCRIPTION */]] = 'yes';
-				/* This is hardcoded value until we can sort out BE */
-				body.meta[utils["a" /* KEY_PRICE */]] = '0';
-			} else if (method === METHODS.PUT) {
-				path += '/' + payload.id;
-			}
-
-			var options = {
-				path: path,
-				params: {
-					method: method,
-					body: JSON.stringify(body)
-				},
-				actions: {
-					start: function start() {
-						return dispatch(actions["setRSVPIsLoading"](true));
-					},
-					success: function success(_ref) {
-						var body = _ref.body;
-
-						if (method === METHODS.POST) {
-							dispatch(actions["createRSVP"]());
-							dispatch(actions["setRSVPId"](body.id));
-						}
-						dispatch(actions["setRSVPDetails"](payload));
-						dispatch(actions["setRSVPHasChanges"](false));
-						dispatch(actions["setRSVPIsLoading"](false));
-					},
-					error: function error() {
-						return dispatch(actions["setRSVPIsLoading"](false));
-					}
-				}
-			};
-
-			dispatch(wpRequestActions.wpRequest(options));
-		};
-	};
+        dispatch(actions["setRSVPDetails"](payload));
+        dispatch(actions["setRSVPHasChanges"](false));
+        dispatch(actions["setRSVPIsLoading"](false));
+      },
+      error: () => dispatch(actions["setRSVPIsLoading"](false))
+    }
+  };
+  dispatch(wpRequestActions.wpRequest(options));
 };
 
-var createRSVP = thunks_createOrUpdateRSVP(METHODS.POST);
-
-var updateRSVP = thunks_createOrUpdateRSVP(METHODS.PUT);
-
-var thunks_deleteRSVP = function deleteRSVP(id) {
-	return function (dispatch) {
-		var path = utils["o" /* RSVP_POST_TYPE */] + '/' + id;
-		var options = {
-			path: path,
-			params: {
-				method: METHODS.DELETE
-			}
-		};
-
-		dispatch(wpRequestActions.wpRequest(options));
-	};
+const createRSVP = createOrUpdateRSVP(METHODS.POST);
+const updateRSVP = createOrUpdateRSVP(METHODS.PUT);
+const deleteRSVP = id => dispatch => {
+  const path = `${utils["o" /* RSVP_POST_TYPE */]}/${id}`;
+  const options = {
+    path,
+    params: {
+      method: METHODS.DELETE
+    }
+  };
+  dispatch(wpRequestActions.wpRequest(options));
 };
+const getRSVP = function (postId) {
+  let page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  return dispatch => {
+    const path = `${utils["o" /* RSVP_POST_TYPE */]}?per_page=100&page=${page}&context=edit`;
+    const options = {
+      path,
+      params: {
+        method: METHODS.GET
+      },
+      actions: {
+        start: () => dispatch(actions["setRSVPIsLoading"](true)),
+        success: _ref2 => {
+          let {
+            body,
+            headers
+          } = _ref2;
+          const filteredRSVPs = body.filter(rsvp => rsvp.meta[utils["b" /* KEY_RSVP_FOR_EVENT */]] == postId // eslint-disable-line eqeqeq
+          );
+          const totalPages = headers.get('x-wp-totalpages');
 
-var thunks_getRSVP = function getRSVP(postId) {
-	var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-	return function (dispatch) {
-		var path = utils["o" /* RSVP_POST_TYPE */] + '?per_page=100&page=' + page + '&context=edit';
+          if (filteredRSVPs.length) {
+            /* If RSVP for event exists in fetched data */
 
-		var options = {
-			path: path,
-			params: {
-				method: METHODS.GET
-			},
-			actions: {
-				start: function start() {
-					return dispatch(actions["setRSVPIsLoading"](true));
-				},
-				success: function success(_ref2) {
-					var body = _ref2.body,
-					    headers = _ref2.headers;
-
-					var filteredRSVPs = body.filter(function (rsvp) {
-						return rsvp.meta[utils["b" /* KEY_RSVP_FOR_EVENT */]] == postId;
-					});
-					var totalPages = headers.get('x-wp-totalpages');
-
-					if (filteredRSVPs.length) {
-						/* If RSVP for event exists in fetched data */
-						/**
-       * @todo We are currently only fetching the first RSVP.
-       *       If an event has more than 1 RSVP set up from
-       *       the classic editor, only one will be displayed.
-       *       The strategy to handle this is is being worked on.
-       */
-						var datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-
-						var rsvp = filteredRSVPs[0];
-						var _rsvp$meta = rsvp.meta,
-						    meta = _rsvp$meta === undefined ? {} : _rsvp$meta;
-
-						var startMoment = external_tribe_common_utils_["moment"].toMoment(meta[utils["m" /* KEY_TICKET_START_DATE */]]);
-						var endMoment = external_tribe_common_utils_["moment"].toMoment(meta[utils["f" /* KEY_TICKET_END_DATE */]]);
-						var startDateInput = datePickerFormat ? startMoment.format(external_tribe_common_utils_["moment"].toFormat(datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(startMoment);
-						var endDateInput = datePickerFormat ? endMoment.format(external_tribe_common_utils_["moment"].toFormat(datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(endMoment);
-						var capacity = meta[utils["d" /* KEY_TICKET_CAPACITY */]] >= 0 ? meta[utils["d" /* KEY_TICKET_CAPACITY */]] : '';
-						var notGoingResponses = meta[utils["l" /* KEY_TICKET_SHOW_NOT_GOING */]];
-
-						dispatch(actions["createRSVP"]());
-						dispatch(actions["setRSVPId"](rsvp.id));
-						dispatch(actions["setRSVPGoingCount"](parseInt(meta[utils["g" /* KEY_TICKET_GOING_COUNT */]], 10) || 0));
-						dispatch(actions["setRSVPNotGoingCount"](parseInt(meta[utils["j" /* KEY_TICKET_NOT_GOING_COUNT */]], 10) || 0));
-						dispatch(actions["setRSVPHasAttendeeInfoFields"](meta[utils["h" /* KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS */]]));
-						dispatch(actions["setRSVPDetails"]({
-							title: rsvp.title.rendered,
-							description: rsvp.excerpt.raw,
-							capacity: capacity,
-							notGoingResponses: notGoingResponses,
-							startDate: external_tribe_common_utils_["moment"].toDate(startMoment),
-							startDateInput: startDateInput,
-							startDateMoment: startMoment.clone().startOf('day'),
-							endDate: external_tribe_common_utils_["moment"].toDate(endMoment),
-							endDateInput: endDateInput,
-							endDateMoment: endMoment.clone().seconds(0),
-							startTime: external_tribe_common_utils_["moment"].toDatabaseTime(startMoment),
-							endTime: external_tribe_common_utils_["moment"].toDatabaseTime(endMoment),
-							startTimeInput: external_tribe_common_utils_["moment"].toTime(startMoment),
-							endTimeInput: external_tribe_common_utils_["moment"].toTime(endMoment)
-						}));
-						dispatch(actions["setRSVPTempDetails"]({
-							tempTitle: rsvp.title.rendered,
-							tempDescription: rsvp.excerpt.raw,
-							tempCapacity: capacity,
-							tempNotGoingResponses: notGoingResponses,
-							tempStartDate: external_tribe_common_utils_["moment"].toDate(startMoment),
-							tempStartDateInput: startDateInput,
-							tempStartDateMoment: startMoment.clone().startOf('day'),
-							tempEndDate: external_tribe_common_utils_["moment"].toDate(endMoment),
-							tempEndDateInput: endDateInput,
-							tempEndDateMoment: endMoment.clone().seconds(0),
-							tempStartTime: external_tribe_common_utils_["moment"].toDatabaseTime(startMoment),
-							tempEndTime: external_tribe_common_utils_["moment"].toDatabaseTime(endMoment),
-							tempStartTimeInput: external_tribe_common_utils_["moment"].toTime(startMoment),
-							tempEndTimeInput: external_tribe_common_utils_["moment"].toTime(endMoment)
-						}));
-						dispatch(actions["setRSVPIsLoading"](false));
-					} else if (page < totalPages) {
-						/* If there are more pages */
-						dispatch(getRSVP(postId, page + 1));
-					} else {
-						/* Did not find RSVP */
-						dispatch(actions["setRSVPIsLoading"](false));
-					}
-				},
-				error: function error() {
-					return dispatch(actions["setRSVPIsLoading"](false));
-				}
-			}
-		};
-
-		dispatch(wpRequestActions.wpRequest(options));
-	};
+            /**
+             * @todo We are currently only fetching the first RSVP.
+             *       If an event has more than 1 RSVP set up from
+             *       the classic editor, only one will be displayed.
+             *       The strategy to handle this is is being worked on.
+             */
+            const datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+            const rsvp = filteredRSVPs[0];
+            const {
+              meta = {}
+            } = rsvp;
+            const startMoment = external_tribe_common_utils_["moment"].toMoment(meta[utils["m" /* KEY_TICKET_START_DATE */]]);
+            const endMoment = external_tribe_common_utils_["moment"].toMoment(meta[utils["f" /* KEY_TICKET_END_DATE */]]);
+            const startDateInput = datePickerFormat ? startMoment.format(external_tribe_common_utils_["moment"].toFormat(datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(startMoment);
+            const endDateInput = datePickerFormat ? endMoment.format(external_tribe_common_utils_["moment"].toFormat(datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(endMoment);
+            const capacity = meta[utils["d" /* KEY_TICKET_CAPACITY */]] >= 0 ? meta[utils["d" /* KEY_TICKET_CAPACITY */]] : '';
+            const notGoingResponses = meta[utils["l" /* KEY_TICKET_SHOW_NOT_GOING */]];
+            dispatch(actions["createRSVP"]());
+            dispatch(actions["setRSVPId"](rsvp.id));
+            dispatch(actions["setRSVPGoingCount"](parseInt(meta[utils["g" /* KEY_TICKET_GOING_COUNT */]], 10) || 0));
+            dispatch(actions["setRSVPNotGoingCount"](parseInt(meta[utils["j" /* KEY_TICKET_NOT_GOING_COUNT */]], 10) || 0));
+            dispatch(actions["setRSVPHasAttendeeInfoFields"](meta[utils["h" /* KEY_TICKET_HAS_ATTENDEE_INFO_FIELDS */]]));
+            dispatch(actions["setRSVPDetails"]({
+              title: rsvp.title.raw,
+              description: rsvp.excerpt.raw,
+              capacity,
+              notGoingResponses,
+              startDate: external_tribe_common_utils_["moment"].toDate(startMoment),
+              startDateInput,
+              startDateMoment: startMoment.clone().startOf('day'),
+              endDate: external_tribe_common_utils_["moment"].toDate(endMoment),
+              endDateInput,
+              endDateMoment: endMoment.clone().seconds(0),
+              startTime: external_tribe_common_utils_["moment"].toDatabaseTime(startMoment),
+              endTime: external_tribe_common_utils_["moment"].toDatabaseTime(endMoment),
+              startTimeInput: external_tribe_common_utils_["moment"].toTime(startMoment),
+              endTimeInput: external_tribe_common_utils_["moment"].toTime(endMoment)
+            }));
+            dispatch(actions["setRSVPTempDetails"]({
+              tempTitle: rsvp.title.raw,
+              tempDescription: rsvp.excerpt.raw,
+              tempCapacity: capacity,
+              tempNotGoingResponses: notGoingResponses,
+              tempStartDate: external_tribe_common_utils_["moment"].toDate(startMoment),
+              tempStartDateInput: startDateInput,
+              tempStartDateMoment: startMoment.clone().startOf('day'),
+              tempEndDate: external_tribe_common_utils_["moment"].toDate(endMoment),
+              tempEndDateInput: endDateInput,
+              tempEndDateMoment: endMoment.clone().seconds(0),
+              tempStartTime: external_tribe_common_utils_["moment"].toDatabaseTime(startMoment),
+              tempEndTime: external_tribe_common_utils_["moment"].toDatabaseTime(endMoment),
+              tempStartTimeInput: external_tribe_common_utils_["moment"].toTime(startMoment),
+              tempEndTimeInput: external_tribe_common_utils_["moment"].toTime(endMoment)
+            }));
+            dispatch(actions["setRSVPIsLoading"](false));
+          } else if (page < totalPages) {
+            /* If there are more pages */
+            dispatch(getRSVP(postId, page + 1));
+          } else {
+            /* Did not find RSVP */
+            dispatch(actions["setRSVPIsLoading"](false));
+          }
+        },
+        error: () => dispatch(actions["setRSVPIsLoading"](false))
+      }
+    };
+    dispatch(wpRequestActions.wpRequest(options));
+  };
 };
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
-var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(14);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/moment/moment.js
-var moment_moment = __webpack_require__(5);
+var moment_moment = __webpack_require__(4);
 var moment_default = /*#__PURE__*/__webpack_require__.n(moment_moment);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/reducers/details.js
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
  * External dependencies
  */
 
-
 /**
  * Internal dependencies
  */
 
 
 
-var details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
-var currentMoment = moment_default()();
-var bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
-var bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
-var details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
-
-var details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
-var details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
-
-var DEFAULT_STATE = {
-	title: '',
-	description: '',
-	capacity: '',
-	notGoingResponses: false,
-	startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
-	startDateInput: details_startDateInput,
-	startDateMoment: currentMoment,
-	endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
-	endDateInput: details_endDateInput,
-	endDateMoment: details_endMoment,
-	startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
-	endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
-	startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
-	endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment)
+const details_datePickerFormat = external_tribe_common_utils_["globals"].tecDateSettings().datepickerFormat;
+const currentMoment = moment_default()();
+const bufferDuration = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_duration : 2;
+const bufferYears = external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years ? external_tribe_common_utils_["globals"].tickets().end_sale_buffer_years : 1;
+const details_endMoment = currentMoment.clone().add(bufferDuration, 'hours').add(bufferYears, 'years');
+const details_startDateInput = details_datePickerFormat ? currentMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(currentMoment);
+const details_endDateInput = details_datePickerFormat ? details_endMoment.format(external_tribe_common_utils_["moment"].toFormat(details_datePickerFormat)) : external_tribe_common_utils_["moment"].toDate(details_endMoment);
+const DEFAULT_STATE = {
+  title: '',
+  description: '',
+  capacity: '',
+  notGoingResponses: false,
+  startDate: external_tribe_common_utils_["moment"].toDatabaseDate(currentMoment),
+  startDateInput: details_startDateInput,
+  startDateMoment: currentMoment,
+  endDate: external_tribe_common_utils_["moment"].toDatabaseDate(details_endMoment),
+  endDateInput: details_endDateInput,
+  endDateMoment: details_endMoment,
+  startTime: external_tribe_common_utils_["moment"].toDatabaseTime(currentMoment),
+  endTime: external_tribe_common_utils_["moment"].toDatabaseTime(details_endMoment),
+  startTimeInput: external_tribe_common_utils_["moment"].toTime(currentMoment),
+  endTimeInput: external_tribe_common_utils_["moment"].toTime(details_endMoment)
 };
-
 /* harmony default export */ var details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case types_namespaceObject.SET_RSVP_TITLE:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types_namespaceObject.SET_RSVP_DESCRIPTION:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types_namespaceObject.SET_RSVP_CAPACITY:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		case types_namespaceObject.SET_RSVP_NOT_GOING_RESPONSES:
-			return extends_default()({}, state, {
-				notGoingResponses: action.payload.notGoingResponses
-			});
-		case types_namespaceObject.SET_RSVP_START_DATE:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types_namespaceObject.SET_RSVP_START_DATE_INPUT:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types_namespaceObject.SET_RSVP_START_DATE_MOMENT:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types_namespaceObject.SET_RSVP_END_DATE:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types_namespaceObject.SET_RSVP_END_DATE_INPUT:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types_namespaceObject.SET_RSVP_END_DATE_MOMENT:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types_namespaceObject.SET_RSVP_START_TIME:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types_namespaceObject.SET_RSVP_END_TIME:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types_namespaceObject.SET_RSVP_START_TIME_INPUT:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types_namespaceObject.SET_RSVP_END_TIME_INPUT:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case types_namespaceObject.SET_RSVP_TITLE:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        title: action.payload.title
+      });
+
+    case types_namespaceObject.SET_RSVP_DESCRIPTION:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        description: action.payload.description
+      });
+
+    case types_namespaceObject.SET_RSVP_CAPACITY:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        capacity: action.payload.capacity
+      });
+
+    case types_namespaceObject.SET_RSVP_NOT_GOING_RESPONSES:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        notGoingResponses: action.payload.notGoingResponses
+      });
+
+    case types_namespaceObject.SET_RSVP_START_DATE:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDate: action.payload.startDate
+      });
+
+    case types_namespaceObject.SET_RSVP_START_DATE_INPUT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDateInput: action.payload.startDateInput
+      });
+
+    case types_namespaceObject.SET_RSVP_START_DATE_MOMENT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startDateMoment: action.payload.startDateMoment
+      });
+
+    case types_namespaceObject.SET_RSVP_END_DATE:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDate: action.payload.endDate
+      });
+
+    case types_namespaceObject.SET_RSVP_END_DATE_INPUT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDateInput: action.payload.endDateInput
+      });
+
+    case types_namespaceObject.SET_RSVP_END_DATE_MOMENT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endDateMoment: action.payload.endDateMoment
+      });
+
+    case types_namespaceObject.SET_RSVP_START_TIME:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startTime: action.payload.startTime
+      });
+
+    case types_namespaceObject.SET_RSVP_END_TIME:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endTime: action.payload.endTime
+      });
+
+    case types_namespaceObject.SET_RSVP_START_TIME_INPUT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        startTimeInput: action.payload.startTimeInput
+      });
+
+    case types_namespaceObject.SET_RSVP_END_TIME_INPUT:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        endTimeInput: action.payload.endTimeInput
+      });
+
+    default:
+      return state;
+  }
 });
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/reducers/temp-details.js
 
+
+function temp_details_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function temp_details_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { temp_details_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { temp_details_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
-
 
 
 /* harmony default export */ var temp_details = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case types_namespaceObject.SET_RSVP_TEMP_TITLE:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_DESCRIPTION:
-			return extends_default()({}, state, {
-				description: action.payload.description
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_CAPACITY:
-			return extends_default()({}, state, {
-				capacity: action.payload.capacity
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_NOT_GOING_RESPONSES:
-			return extends_default()({}, state, {
-				notGoingResponses: action.payload.notGoingResponses
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE:
-			return extends_default()({}, state, {
-				startDate: action.payload.startDate
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE_INPUT:
-			return extends_default()({}, state, {
-				startDateInput: action.payload.startDateInput
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE_MOMENT:
-			return extends_default()({}, state, {
-				startDateMoment: action.payload.startDateMoment
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE:
-			return extends_default()({}, state, {
-				endDate: action.payload.endDate
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE_INPUT:
-			return extends_default()({}, state, {
-				endDateInput: action.payload.endDateInput
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE_MOMENT:
-			return extends_default()({}, state, {
-				endDateMoment: action.payload.endDateMoment
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_START_TIME:
-			return extends_default()({}, state, {
-				startTime: action.payload.startTime
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_END_TIME:
-			return extends_default()({}, state, {
-				endTime: action.payload.endTime
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_START_TIME_INPUT:
-			return extends_default()({}, state, {
-				startTimeInput: action.payload.startTimeInput
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_END_TIME_INPUT:
-			return extends_default()({}, state, {
-				endTimeInput: action.payload.endTimeInput
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case types_namespaceObject.SET_RSVP_TEMP_TITLE:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        title: action.payload.title
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_DESCRIPTION:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        description: action.payload.description
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_CAPACITY:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        capacity: action.payload.capacity
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_NOT_GOING_RESPONSES:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        notGoingResponses: action.payload.notGoingResponses
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDate: action.payload.startDate
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE_INPUT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDateInput: action.payload.startDateInput
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE_MOMENT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startDateMoment: action.payload.startDateMoment
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDate: action.payload.endDate
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE_INPUT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDateInput: action.payload.endDateInput
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE_MOMENT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endDateMoment: action.payload.endDateMoment
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_START_TIME:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startTime: action.payload.startTime
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_END_TIME:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endTime: action.payload.endTime
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_START_TIME_INPUT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        startTimeInput: action.payload.startTimeInput
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_END_TIME_INPUT:
+      return temp_details_objectSpread(temp_details_objectSpread({}, state), {}, {
+        endTimeInput: action.payload.endTimeInput
+      });
+
+    default:
+      return state;
+  }
 });
+// EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/reducers/header-image.js
+var header_image = __webpack_require__(47);
+
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/reducer.js
+
+
+function reducer_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function reducer_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { reducer_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { reducer_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
  * Internal dependencies
@@ -10824,166 +8880,151 @@ var DEFAULT_STATE = {
 
 
 
-
-var reducer_DEFAULT_STATE = {
-	id: 0,
-	created: false,
-	settingsOpen: false,
-	hasChanges: false,
-	isLoading: false,
-	isSettingsLoading: false,
-	isModalOpen: false,
-	goingCount: 0,
-	notGoingCount: 0,
-	hasAttendeeInfoFields: false,
-	details: DEFAULT_STATE,
-	tempDetails: DEFAULT_STATE,
-	headerImage: header_image["a" /* DEFAULT_STATE */]
+const reducer_DEFAULT_STATE = {
+  id: 0,
+  created: false,
+  settingsOpen: false,
+  hasChanges: false,
+  isLoading: false,
+  isSettingsLoading: false,
+  isModalOpen: false,
+  goingCount: 0,
+  notGoingCount: 0,
+  hasAttendeeInfoFields: false,
+  details: DEFAULT_STATE,
+  tempDetails: DEFAULT_STATE,
+  headerImage: header_image["a" /* DEFAULT_STATE */]
 };
-
 /* harmony default export */ var reducer = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : reducer_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case types_namespaceObject.CREATE_RSVP:
-			return extends_default()({}, state, {
-				created: true
-			});
-		case types_namespaceObject.DELETE_RSVP:
-			return reducer_DEFAULT_STATE;
-		case types_namespaceObject.SET_RSVP_ID:
-			return extends_default()({}, state, {
-				id: action.payload.id
-			});
-		case types_namespaceObject.SET_RSVP_SETTINGS_OPEN:
-			return extends_default()({}, state, {
-				settingsOpen: action.payload.settingsOpen
-			});
-		case types_namespaceObject.SET_RSVP_HAS_CHANGES:
-			return extends_default()({}, state, {
-				hasChanges: action.payload.hasChanges
-			});
-		case types_namespaceObject.SET_RSVP_IS_LOADING:
-			return extends_default()({}, state, {
-				isLoading: action.payload.isLoading
-			});
-		case types_namespaceObject.SET_RSVP_IS_SETTINGS_LOADING:
-			return extends_default()({}, state, {
-				isSettingsLoading: action.payload.isSettingsLoading
-			});
-		case types_namespaceObject.SET_RSVP_IS_MODAL_OPEN:
-			return extends_default()({}, state, {
-				isModalOpen: action.payload.isModalOpen
-			});
-		case types_namespaceObject.SET_RSVP_GOING_COUNT:
-			return extends_default()({}, state, {
-				goingCount: action.payload.goingCount
-			});
-		case types_namespaceObject.SET_RSVP_NOT_GOING_COUNT:
-			return extends_default()({}, state, {
-				notGoingCount: action.payload.notGoingCount
-			});
-		case types_namespaceObject.SET_RSVP_HAS_ATTENDEE_INFO_FIELDS:
-			return extends_default()({}, state, {
-				hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
-			});
-		case types_namespaceObject.SET_RSVP_HAS_DURATION_ERROR:
-			return extends_default()({}, state, {
-				hasDurationError: action.payload.hasDurationError
-			});
-		case types_namespaceObject.SET_RSVP_TITLE:
-		case types_namespaceObject.SET_RSVP_DESCRIPTION:
-		case types_namespaceObject.SET_RSVP_CAPACITY:
-		case types_namespaceObject.SET_RSVP_NOT_GOING_RESPONSES:
-		case types_namespaceObject.SET_RSVP_START_DATE:
-		case types_namespaceObject.SET_RSVP_START_DATE_INPUT:
-		case types_namespaceObject.SET_RSVP_START_DATE_MOMENT:
-		case types_namespaceObject.SET_RSVP_END_DATE:
-		case types_namespaceObject.SET_RSVP_END_DATE_INPUT:
-		case types_namespaceObject.SET_RSVP_END_DATE_MOMENT:
-		case types_namespaceObject.SET_RSVP_START_TIME:
-		case types_namespaceObject.SET_RSVP_END_TIME:
-		case types_namespaceObject.SET_RSVP_START_TIME_INPUT:
-		case types_namespaceObject.SET_RSVP_END_TIME_INPUT:
-			return extends_default()({}, state, {
-				details: details(state.details, action)
-			});
-		case types_namespaceObject.SET_RSVP_TEMP_TITLE:
-		case types_namespaceObject.SET_RSVP_TEMP_DESCRIPTION:
-		case types_namespaceObject.SET_RSVP_TEMP_CAPACITY:
-		case types_namespaceObject.SET_RSVP_TEMP_NOT_GOING_RESPONSES:
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE:
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE_INPUT:
-		case types_namespaceObject.SET_RSVP_TEMP_START_DATE_MOMENT:
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE:
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE_INPUT:
-		case types_namespaceObject.SET_RSVP_TEMP_END_DATE_MOMENT:
-		case types_namespaceObject.SET_RSVP_TEMP_START_TIME:
-		case types_namespaceObject.SET_RSVP_TEMP_END_TIME:
-		case types_namespaceObject.SET_RSVP_TEMP_START_TIME_INPUT:
-		case types_namespaceObject.SET_RSVP_TEMP_END_TIME_INPUT:
-			return extends_default()({}, state, {
-				tempDetails: temp_details(state.tempDetails, action)
-			});
-		case types_namespaceObject.SET_RSVP_HEADER_IMAGE:
-			return extends_default()({}, state, {
-				headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case types_namespaceObject.CREATE_RSVP:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        created: true
+      });
+
+    case types_namespaceObject.DELETE_RSVP:
+      return reducer_DEFAULT_STATE;
+
+    case types_namespaceObject.SET_RSVP_ID:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        id: action.payload.id
+      });
+
+    case types_namespaceObject.SET_RSVP_SETTINGS_OPEN:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        settingsOpen: action.payload.settingsOpen
+      });
+
+    case types_namespaceObject.SET_RSVP_HAS_CHANGES:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        hasChanges: action.payload.hasChanges
+      });
+
+    case types_namespaceObject.SET_RSVP_IS_LOADING:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isLoading: action.payload.isLoading
+      });
+
+    case types_namespaceObject.SET_RSVP_IS_SETTINGS_LOADING:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isSettingsLoading: action.payload.isSettingsLoading
+      });
+
+    case types_namespaceObject.SET_RSVP_IS_MODAL_OPEN:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        isModalOpen: action.payload.isModalOpen
+      });
+
+    case types_namespaceObject.SET_RSVP_GOING_COUNT:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        goingCount: action.payload.goingCount
+      });
+
+    case types_namespaceObject.SET_RSVP_NOT_GOING_COUNT:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        notGoingCount: action.payload.notGoingCount
+      });
+
+    case types_namespaceObject.SET_RSVP_HAS_ATTENDEE_INFO_FIELDS:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        hasAttendeeInfoFields: action.payload.hasAttendeeInfoFields
+      });
+
+    case types_namespaceObject.SET_RSVP_HAS_DURATION_ERROR:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        hasDurationError: action.payload.hasDurationError
+      });
+
+    case types_namespaceObject.SET_RSVP_TITLE:
+    case types_namespaceObject.SET_RSVP_DESCRIPTION:
+    case types_namespaceObject.SET_RSVP_CAPACITY:
+    case types_namespaceObject.SET_RSVP_NOT_GOING_RESPONSES:
+    case types_namespaceObject.SET_RSVP_START_DATE:
+    case types_namespaceObject.SET_RSVP_START_DATE_INPUT:
+    case types_namespaceObject.SET_RSVP_START_DATE_MOMENT:
+    case types_namespaceObject.SET_RSVP_END_DATE:
+    case types_namespaceObject.SET_RSVP_END_DATE_INPUT:
+    case types_namespaceObject.SET_RSVP_END_DATE_MOMENT:
+    case types_namespaceObject.SET_RSVP_START_TIME:
+    case types_namespaceObject.SET_RSVP_END_TIME:
+    case types_namespaceObject.SET_RSVP_START_TIME_INPUT:
+    case types_namespaceObject.SET_RSVP_END_TIME_INPUT:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        details: details(state.details, action)
+      });
+
+    case types_namespaceObject.SET_RSVP_TEMP_TITLE:
+    case types_namespaceObject.SET_RSVP_TEMP_DESCRIPTION:
+    case types_namespaceObject.SET_RSVP_TEMP_CAPACITY:
+    case types_namespaceObject.SET_RSVP_TEMP_NOT_GOING_RESPONSES:
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE:
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE_INPUT:
+    case types_namespaceObject.SET_RSVP_TEMP_START_DATE_MOMENT:
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE:
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE_INPUT:
+    case types_namespaceObject.SET_RSVP_TEMP_END_DATE_MOMENT:
+    case types_namespaceObject.SET_RSVP_TEMP_START_TIME:
+    case types_namespaceObject.SET_RSVP_TEMP_END_TIME:
+    case types_namespaceObject.SET_RSVP_TEMP_START_TIME_INPUT:
+    case types_namespaceObject.SET_RSVP_TEMP_END_TIME_INPUT:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        tempDetails: temp_details(state.tempDetails, action)
+      });
+
+    case types_namespaceObject.SET_RSVP_HEADER_IMAGE:
+      return reducer_objectSpread(reducer_objectSpread({}, state), {}, {
+        headerImage: Object(header_image["b" /* default */])(state.headerImage, action)
+      });
+
+    default:
+      return state;
+  }
 });
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
-var regenerator = __webpack_require__(12);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-
 // EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
-var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
+var external_var_wp_data_root_wp_data_ = __webpack_require__(17);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
 var effects = __webpack_require__(0);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/ticket/actions.js
-var ticket_actions = __webpack_require__(10);
+var ticket_actions = __webpack_require__(9);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/ticket/reducers/header-image.js
-var reducers_header_image = __webpack_require__(62);
+var reducers_header_image = __webpack_require__(42);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var types = __webpack_require__(19);
+var types = __webpack_require__(18);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var selectors = __webpack_require__(29);
+var selectors = __webpack_require__(27);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/sagas.js
-var sagas = __webpack_require__(27);
+var sagas = __webpack_require__(25);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/sagas.js
-
-
-
-var _marked = /*#__PURE__*/regenerator_default.a.mark(setRSVPDetails),
-    _marked2 = /*#__PURE__*/regenerator_default.a.mark(setRSVPTempDetails),
-    _marked3 = /*#__PURE__*/regenerator_default.a.mark(initializeRSVP),
-    _marked4 = /*#__PURE__*/regenerator_default.a.mark(syncRSVPSaleEndWithEventStart),
-    _marked5 = /*#__PURE__*/regenerator_default.a.mark(saveRSVPWithPostSave),
-    _marked6 = /*#__PURE__*/regenerator_default.a.mark(handleEventStartDateChanges),
-    _marked7 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPDurationError),
-    _marked8 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPStartDate),
-    _marked9 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPEndDate),
-    _marked10 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPStartTime),
-    _marked11 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPStartTimeInput),
-    _marked12 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPEndTime),
-    _marked13 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPEndTimeInput),
-    _marked14 = /*#__PURE__*/regenerator_default.a.mark(handleRSVPMove),
-    _marked15 = /*#__PURE__*/regenerator_default.a.mark(fetchRSVPHeaderImage),
-    _marked16 = /*#__PURE__*/regenerator_default.a.mark(updateRSVPHeaderImage),
-    _marked17 = /*#__PURE__*/regenerator_default.a.mark(deleteRSVPHeaderImage),
-    _marked18 = /*#__PURE__*/regenerator_default.a.mark(handler),
-    _marked19 = /*#__PURE__*/regenerator_default.a.mark(setNonEventPostTypeEndDate),
-    _marked20 = /*#__PURE__*/regenerator_default.a.mark(watchers);
-
 /* eslint-disable max-len */
 
 /**
@@ -10991,7 +9032,6 @@ var _marked = /*#__PURE__*/regenerator_default.a.mark(setRSVPDetails),
  */
 
 
-
 /**
  * Internal dependencies
  */
@@ -11007,9 +9047,7 @@ var _marked = /*#__PURE__*/regenerator_default.a.mark(setRSVPDetails),
 
 
 
-
-
-//
+ //
 // ─── RSVP DETAILS ───────────────────────────────────────────────────────────────
 //
 
@@ -11017,1185 +9055,547 @@ var _marked = /*#__PURE__*/regenerator_default.a.mark(setRSVPDetails),
  * Set details for current RSVP
  *
  * @export
- * @param {Object} action redux action
+ * @yields
+ * @param {object} action redux action
  */
-function setRSVPDetails(action) {
-	var _action$payload, title, description, capacity, notGoingResponses, startDate, startDateInput, startDateMoment, startTime, endDate, endDateInput, endDateMoment, endTime, startTimeInput, endTimeInput;
 
-	return regenerator_default.a.wrap(function setRSVPDetails$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_action$payload = action.payload, title = _action$payload.title, description = _action$payload.description, capacity = _action$payload.capacity, notGoingResponses = _action$payload.notGoingResponses, startDate = _action$payload.startDate, startDateInput = _action$payload.startDateInput, startDateMoment = _action$payload.startDateMoment, startTime = _action$payload.startTime, endDate = _action$payload.endDate, endDateInput = _action$payload.endDateInput, endDateMoment = _action$payload.endDateMoment, endTime = _action$payload.endTime, startTimeInput = _action$payload.startTimeInput, endTimeInput = _action$payload.endTimeInput;
-					_context.next = 3;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTitle"](title)), Object(effects["e" /* put */])(actions["setRSVPDescription"](description)), Object(effects["e" /* put */])(actions["setRSVPCapacity"](capacity)), Object(effects["e" /* put */])(actions["setRSVPNotGoingResponses"](notGoingResponses)), Object(effects["e" /* put */])(actions["setRSVPStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPStartDateMoment"](startDateMoment)), Object(effects["e" /* put */])(actions["setRSVPStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPStartTimeInput"](startTimeInput)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput))]);
-
-				case 3:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
+function* setRSVPDetails(action) {
+  const {
+    title,
+    description,
+    capacity,
+    notGoingResponses,
+    startDate,
+    startDateInput,
+    startDateMoment,
+    startTime,
+    endDate,
+    endDateInput,
+    endDateMoment,
+    endTime,
+    startTimeInput,
+    endTimeInput
+  } = action.payload;
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTitle"](title)), Object(effects["e" /* put */])(actions["setRSVPDescription"](description)), Object(effects["e" /* put */])(actions["setRSVPCapacity"](capacity)), Object(effects["e" /* put */])(actions["setRSVPNotGoingResponses"](notGoingResponses)), Object(effects["e" /* put */])(actions["setRSVPStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPStartDateMoment"](startDateMoment)), Object(effects["e" /* put */])(actions["setRSVPStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPStartTimeInput"](startTimeInput)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput))]);
 }
-
 /**
  * Set details for current temp RSVP
  *
  * @export
- * @param {Object} action redux action
+ * @yields
+ * @param {object} action redux action
  */
-function setRSVPTempDetails(action) {
-	var _action$payload2, tempTitle, tempDescription, tempCapacity, tempNotGoingResponses, tempStartDate, tempStartDateInput, tempStartDateMoment, tempStartTime, tempEndDate, tempEndDateInput, tempEndDateMoment, tempEndTime, tempStartTimeInput, tempEndTimeInput;
 
-	return regenerator_default.a.wrap(function setRSVPTempDetails$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					_action$payload2 = action.payload, tempTitle = _action$payload2.tempTitle, tempDescription = _action$payload2.tempDescription, tempCapacity = _action$payload2.tempCapacity, tempNotGoingResponses = _action$payload2.tempNotGoingResponses, tempStartDate = _action$payload2.tempStartDate, tempStartDateInput = _action$payload2.tempStartDateInput, tempStartDateMoment = _action$payload2.tempStartDateMoment, tempStartTime = _action$payload2.tempStartTime, tempEndDate = _action$payload2.tempEndDate, tempEndDateInput = _action$payload2.tempEndDateInput, tempEndDateMoment = _action$payload2.tempEndDateMoment, tempEndTime = _action$payload2.tempEndTime, tempStartTimeInput = _action$payload2.tempStartTimeInput, tempEndTimeInput = _action$payload2.tempEndTimeInput;
-					_context2.next = 3;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempTitle"](tempTitle)), Object(effects["e" /* put */])(actions["setRSVPTempDescription"](tempDescription)), Object(effects["e" /* put */])(actions["setRSVPTempCapacity"](tempCapacity)), Object(effects["e" /* put */])(actions["setRSVPTempNotGoingResponses"](tempNotGoingResponses)), Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](tempStartDate)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](tempStartDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](tempStartDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](tempStartTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](tempEndDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](tempEndDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](tempEndDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](tempEndTime)), Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](tempStartTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](tempEndTimeInput))]);
-
-				case 3:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
-}
-
-//
+function* setRSVPTempDetails(action) {
+  const {
+    tempTitle,
+    tempDescription,
+    tempCapacity,
+    tempNotGoingResponses,
+    tempStartDate,
+    tempStartDateInput,
+    tempStartDateMoment,
+    tempStartTime,
+    tempEndDate,
+    tempEndDateInput,
+    tempEndDateMoment,
+    tempEndTime,
+    tempStartTimeInput,
+    tempEndTimeInput
+  } = action.payload;
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempTitle"](tempTitle)), Object(effects["e" /* put */])(actions["setRSVPTempDescription"](tempDescription)), Object(effects["e" /* put */])(actions["setRSVPTempCapacity"](tempCapacity)), Object(effects["e" /* put */])(actions["setRSVPTempNotGoingResponses"](tempNotGoingResponses)), Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](tempStartDate)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](tempStartDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](tempStartDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](tempStartTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](tempEndDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](tempEndDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](tempEndDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](tempEndTime)), Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](tempStartTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](tempEndTimeInput))]);
+} //
 // ─── INITIALIZE ─────────────────────────────────────────────────────────────────
 //
 
 /**
  * Initializes RSVP that has not been created
+ *
  * @borrows TEC - Optional functionality requires TEC to be enabled and post type to be event
  * @export
+ * @yields
  */
-function initializeRSVP() {
-	var publishDate, _ref, startMoment, startDate, startDateInput, startTime, startTimeInput, eventStart, _ref2, endMoment, endDate, endDateInput, endTime, endTimeInput;
 
-	return regenerator_default.a.wrap(function initializeRSVP$(_context3) {
-		while (1) {
-			switch (_context3.prev = _context3.next) {
-				case 0:
-					_context3.next = 2;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
+function* initializeRSVP() {
+  const publishDate = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getEditedPostAttribute'], 'date');
+  const {
+    moment: startMoment,
+    date: startDate,
+    dateInput: startDateInput,
+    time: startTime,
+    timeInput: startTimeInput
+  } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], publishDate);
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPStartDateMoment"](startMoment)), Object(effects["e" /* put */])(actions["setRSVPStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPStartTimeInput"](startTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](startMoment)), Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](startTimeInput))]);
 
-				case 2:
-					publishDate = _context3.sent;
-					_context3.next = 5;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], publishDate);
+  try {
+    if (yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */])) {
+      // NOTE: This requires TEC to be installed, if not installed, do not set an end date
+      const eventStart = yield Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart); // RSVP window should end when event starts... ideally
 
-				case 5:
-					_ref = _context3.sent;
-					startMoment = _ref.moment;
-					startDate = _ref.date;
-					startDateInput = _ref.dateInput;
-					startTime = _ref.time;
-					startTimeInput = _ref.timeInput;
-					_context3.next = 13;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPStartDateMoment"](startMoment)), Object(effects["e" /* put */])(actions["setRSVPStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPStartTimeInput"](startTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](startDate)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](startDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](startMoment)), Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](startTime)), Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](startTimeInput))]);
+      const {
+        moment: endMoment,
+        date: endDate,
+        dateInput: endDateInput,
+        time: endTime,
+        timeInput: endTimeInput
+      } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput))]);
+    }
+  } catch (error) {
+    // ¯\_(ツ)_/¯
+    console.error(error);
+  }
 
-				case 13:
-					_context3.prev = 13;
-					_context3.next = 16;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
-
-				case 16:
-					if (!_context3.sent) {
-						_context3.next = 30;
-						break;
-					}
-
-					_context3.next = 19;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 19:
-					eventStart = _context3.sent;
-					_context3.next = 22;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
-
-				case 22:
-					_ref2 = _context3.sent;
-					endMoment = _ref2.moment;
-					endDate = _ref2.date;
-					endDateInput = _ref2.dateInput;
-					endTime = _ref2.time;
-					endTimeInput = _ref2.timeInput;
-					_context3.next = 30;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput))]);
-
-				case 30:
-					_context3.next = 35;
-					break;
-
-				case 32:
-					_context3.prev = 32;
-					_context3.t0 = _context3['catch'](13);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context3.t0);
-
-				case 35:
-					_context3.next = 37;
-					return Object(effects["b" /* call */])(handleRSVPDurationError);
-
-				case 37:
-				case 'end':
-					return _context3.stop();
-			}
-		}
-	}, _marked3, this, [[13, 32]]);
+  yield Object(effects["b" /* call */])(handleRSVPDurationError);
 }
-
 /**
  * Will sync RSVP sale end to be the same as event start date and time, if field has not been manually edited
+ *
  * @borrows TEC - Functionality requires TEC to be enabled
- * @param {String} prevStartDate Previous start date before latest set date time changes
+ * @param {string} prevStartDate Previous start date before latest set date time changes
  * @export
+ * @yields
  */
-function syncRSVPSaleEndWithEventStart(prevStartDate) {
-	var tempEndMoment, endMoment, _ref3, prevEventStartMoment, isNotManuallyEdited, isSyncedToEventStart, eventStart, _ref4, endDateMoment, endDate, endDateInput, endTime, endTimeInput;
 
-	return regenerator_default.a.wrap(function syncRSVPSaleEndWithEventStart$(_context4) {
-		while (1) {
-			switch (_context4.prev = _context4.next) {
-				case 0:
-					_context4.prev = 0;
-					_context4.next = 3;
-					return Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
+function* syncRSVPSaleEndWithEventStart(prevStartDate) {
+  try {
+    const tempEndMoment = yield Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
+    const endMoment = yield Object(effects["f" /* select */])(getRSVPEndDateMoment);
+    const {
+      moment: prevEventStartMoment
+    } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate); // NOTE: Mutation
+    // Convert to use local timezone
 
-				case 3:
-					tempEndMoment = _context4.sent;
-					_context4.next = 6;
-					return Object(effects["f" /* select */])(getRSVPEndDateMoment);
+    yield Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]); // If initial end and current end are the same, the RSVP has not been modified
 
-				case 6:
-					endMoment = _context4.sent;
-					_context4.next = 9;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], prevStartDate);
+    const isNotManuallyEdited = yield Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
+    const isSyncedToEventStart = yield Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
 
-				case 9:
-					_ref3 = _context4.sent;
-					prevEventStartMoment = _ref3.moment;
-					_context4.next = 13;
-					return Object(effects["a" /* all */])([Object(effects["b" /* call */])([tempEndMoment, 'local']), Object(effects["b" /* call */])([endMoment, 'local']), Object(effects["b" /* call */])([prevEventStartMoment, 'local'])]);
+    if (isNotManuallyEdited && isSyncedToEventStart) {
+      const eventStart = yield Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
+      const {
+        moment: endDateMoment,
+        date: endDate,
+        dateInput: endDateInput,
+        time: endTime,
+        timeInput: endTimeInput
+      } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
+      yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput)), // Sync RSVP end items as well so as not to make state 'manually edited'
+      Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput)), // Trigger UI button
+      Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true)), // Handle RSVP duration error
+      Object(effects["b" /* call */])(handleRSVPDurationError)]); // Sub fork which will wait to sync RSVP when post saves
 
-				case 13:
-					_context4.next = 15;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], endMoment, 'minute');
-
-				case 15:
-					isNotManuallyEdited = _context4.sent;
-					_context4.next = 18;
-					return Object(effects["b" /* call */])([tempEndMoment, 'isSame'], prevEventStartMoment, 'minute');
-
-				case 18:
-					isSyncedToEventStart = _context4.sent;
-
-					if (!(isNotManuallyEdited && isSyncedToEventStart)) {
-						_context4.next = 35;
-						break;
-					}
-
-					_context4.next = 22;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 22:
-					eventStart = _context4.sent;
-					_context4.next = 25;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], eventStart);
-
-				case 25:
-					_ref4 = _context4.sent;
-					endDateMoment = _ref4.moment;
-					endDate = _ref4.date;
-					endDateInput = _ref4.dateInput;
-					endTime = _ref4.time;
-					endTimeInput = _ref4.timeInput;
-					_context4.next = 33;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput)),
-
-					// Sync RSVP end items as well so as not to make state 'manually edited'
-					Object(effects["e" /* put */])(actions["setRSVPEndDate"](endDate)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](endDateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](endDateMoment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](endTime)), Object(effects["e" /* put */])(actions["setRSVPEndTimeInput"](endTimeInput)),
-
-					// Trigger UI button
-					Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true)),
-
-					// Handle RSVP duration error
-					Object(effects["b" /* call */])(handleRSVPDurationError)]);
-
-				case 33:
-					_context4.next = 35;
-					return Object(effects["d" /* fork */])(saveRSVPWithPostSave);
-
-				case 35:
-					_context4.next = 40;
-					break;
-
-				case 37:
-					_context4.prev = 37;
-					_context4.t0 = _context4['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context4.t0);
-
-				case 40:
-				case 'end':
-					return _context4.stop();
-			}
-		}
-	}, _marked4, this, [[0, 37]]);
+      yield Object(effects["d" /* fork */])(saveRSVPWithPostSave);
+    }
+  } catch (error) {
+    // ¯\_(ツ)_/¯
+    console.error(error);
+  }
 }
-
 /**
  * Allows the RSVP to be saved at the same time a post is being saved.
  * Avoids the user having to open up the RSVP block, and then click update again there, when changing the event start date.
  *
  * @export
+ * @yields
  */
-function saveRSVPWithPostSave() {
-	var saveChannel, payload;
-	return regenerator_default.a.wrap(function saveRSVPWithPostSave$(_context5) {
-		while (1) {
-			switch (_context5.prev = _context5.next) {
-				case 0:
-					saveChannel = void 0;
-					_context5.prev = 1;
-					_context5.next = 4;
-					return Object(effects["f" /* select */])(getRSVPCreated);
 
-				case 4:
-					if (!_context5.sent) {
-						_context5.next = 15;
-						break;
-					}
+function* saveRSVPWithPostSave() {
+  let saveChannel;
 
-					_context5.next = 7;
-					return Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]);
+  try {
+    // Do nothing when not already created
+    if (yield Object(effects["f" /* select */])(getRSVPCreated)) {
+      // Create channel for use
+      saveChannel = yield Object(effects["b" /* call */])(sagas["c" /* createWPEditorSavingChannel */]); // Wait for channel to save
 
-				case 7:
-					saveChannel = _context5.sent;
-					_context5.next = 10;
-					return Object(effects["g" /* take */])(saveChannel);
+      yield Object(effects["g" /* take */])(saveChannel);
+      const payload = yield Object(effects["a" /* all */])({
+        id: Object(effects["f" /* select */])(getRSVPId),
+        title: Object(effects["f" /* select */])(getRSVPTempTitle),
+        description: Object(effects["f" /* select */])(getRSVPTempDescription),
+        capacity: Object(effects["f" /* select */])(getRSVPTempCapacity),
+        notGoingResponses: Object(effects["f" /* select */])(getRSVPTempNotGoingResponses),
+        startDate: Object(effects["f" /* select */])(getRSVPTempStartDate),
+        startDateInput: Object(effects["f" /* select */])(getRSVPTempStartDateInput),
+        startDateMoment: Object(effects["f" /* select */])(getRSVPTempStartDateMoment),
+        endDate: Object(effects["f" /* select */])(getRSVPTempEndDate),
+        endDateInput: Object(effects["f" /* select */])(getRSVPTempEndDateInput),
+        endDateMoment: Object(effects["f" /* select */])(getRSVPTempEndDateMoment),
+        startTime: Object(effects["f" /* select */])(getRSVPTempStartTime),
+        endTime: Object(effects["f" /* select */])(getRSVPTempEndTime)
+      }); // Use update thunk to submit
 
-				case 10:
-					_context5.next = 12;
-					return Object(effects["a" /* all */])({
-						id: Object(effects["f" /* select */])(getRSVPId),
-						title: Object(effects["f" /* select */])(getRSVPTempTitle),
-						description: Object(effects["f" /* select */])(getRSVPTempDescription),
-						capacity: Object(effects["f" /* select */])(getRSVPTempCapacity),
-						notGoingResponses: Object(effects["f" /* select */])(getRSVPTempNotGoingResponses),
-						startDate: Object(effects["f" /* select */])(getRSVPTempStartDate),
-						startDateInput: Object(effects["f" /* select */])(getRSVPTempStartDateInput),
-						startDateMoment: Object(effects["f" /* select */])(getRSVPTempStartDateMoment),
-						endDate: Object(effects["f" /* select */])(getRSVPTempEndDate),
-						endDateInput: Object(effects["f" /* select */])(getRSVPTempEndDateInput),
-						endDateMoment: Object(effects["f" /* select */])(getRSVPTempEndDateMoment),
-						startTime: Object(effects["f" /* select */])(getRSVPTempStartTime),
-						endTime: Object(effects["f" /* select */])(getRSVPTempEndTime)
-					});
-
-				case 12:
-					payload = _context5.sent;
-					_context5.next = 15;
-					return Object(effects["e" /* put */])(updateRSVP(payload));
-
-				case 15:
-					_context5.next = 20;
-					break;
-
-				case 17:
-					_context5.prev = 17;
-					_context5.t0 = _context5['catch'](1);
-
-					console.error(_context5.t0);
-
-				case 20:
-					_context5.prev = 20;
-
-					if (!saveChannel) {
-						_context5.next = 24;
-						break;
-					}
-
-					_context5.next = 24;
-					return Object(effects["b" /* call */])([saveChannel, 'close']);
-
-				case 24:
-					return _context5.finish(20);
-
-				case 25:
-				case 'end':
-					return _context5.stop();
-			}
-		}
-	}, _marked5, this, [[1, 17, 20, 25]]);
+      yield Object(effects["e" /* put */])(updateRSVP(payload));
+    }
+  } catch (error) {
+    console.error(error);
+  } finally {
+    // Close channel if exists
+    if (saveChannel) {
+      yield Object(effects["b" /* call */])([saveChannel, 'close']);
+    }
+  }
 }
-
 /**
  * Listens for event start date and time changes after RSVP block is loaded.
+ *
  * @borrows TEC - Functionality requires TEC to be enabled and post type to be event
  * @export
+ * @yields
  */
-function handleEventStartDateChanges() {
-	var isEvent, _window$tribe$events$, SET_START_DATE_TIME, SET_START_TIME, syncTask, eventStart;
 
-	return regenerator_default.a.wrap(function handleEventStartDateChanges$(_context6) {
-		while (1) {
-			switch (_context6.prev = _context6.next) {
-				case 0:
-					_context6.prev = 0;
-					_context6.next = 3;
-					return Object(effects["g" /* take */])([INITIALIZE_RSVP, SET_RSVP_DETAILS]);
+function* handleEventStartDateChanges() {
+  try {
+    // Proceed after creating dummy RSVP or after fetching
+    yield Object(effects["g" /* take */])([INITIALIZE_RSVP, SET_RSVP_DETAILS]);
+    const isEvent = yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
 
-				case 3:
-					_context6.next = 5;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+    if (isEvent && window.tribe.events) {
+      const {
+        SET_START_DATE_TIME,
+        SET_START_TIME
+      } = window.tribe.events.data.blocks.datetime.types;
+      let syncTask;
 
-				case 5:
-					isEvent = _context6.sent;
+      while (true) {
+        // Cache current event start date for comparison
+        const eventStart = yield Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart); // Wait til use changes date or time on TEC datetime block
 
-					if (!(isEvent && window.tribe.events)) {
-						_context6.next = 23;
-						break;
-					}
+        yield Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]); // Important to cancel any pre-existing forks to prevent bad data from being sent
 
-					_window$tribe$events$ = window.tribe.events.data.blocks.datetime.types, SET_START_DATE_TIME = _window$tribe$events$.SET_START_DATE_TIME, SET_START_TIME = _window$tribe$events$.SET_START_TIME;
-					syncTask = void 0;
+        if (syncTask) {
+          yield Object(effects["c" /* cancel */])(syncTask);
+        }
 
-				case 9:
-					if (false) {}
-
-					_context6.next = 12;
-					return Object(effects["f" /* select */])(window.tribe.events.data.blocks.datetime.selectors.getStart);
-
-				case 12:
-					eventStart = _context6.sent;
-					_context6.next = 15;
-					return Object(effects["g" /* take */])([SET_START_DATE_TIME, SET_START_TIME]);
-
-				case 15:
-					if (!syncTask) {
-						_context6.next = 18;
-						break;
-					}
-
-					_context6.next = 18;
-					return Object(effects["c" /* cancel */])(syncTask);
-
-				case 18:
-					_context6.next = 20;
-					return Object(effects["d" /* fork */])(syncRSVPSaleEndWithEventStart, eventStart);
-
-				case 20:
-					syncTask = _context6.sent;
-					_context6.next = 9;
-					break;
-
-				case 23:
-					_context6.next = 28;
-					break;
-
-				case 25:
-					_context6.prev = 25;
-					_context6.t0 = _context6['catch'](0);
-
-					// ¯\_(ツ)_/¯
-					console.error(_context6.t0);
-
-				case 28:
-				case 'end':
-					return _context6.stop();
-			}
-		}
-	}, _marked6, this, [[0, 25]]);
-}
-
-//
+        syncTask = yield Object(effects["d" /* fork */])(syncRSVPSaleEndWithEventStart, eventStart);
+      }
+    }
+  } catch (error) {
+    // ¯\_(ツ)_/¯
+    console.error(error);
+  }
+} //
 // ─── DATE & TIME ────────────────────────────────────────────────────────────────
 //
 
-function handleRSVPDurationError() {
-	var hasDurationError, startDateMoment, endDateMoment, startTime, endTime, startTimeSeconds, endTimeSeconds, startDateTimeMoment, endDateTimeMoment, durationHasError;
-	return regenerator_default.a.wrap(function handleRSVPDurationError$(_context7) {
-		while (1) {
-			switch (_context7.prev = _context7.next) {
-				case 0:
-					hasDurationError = false;
-					_context7.next = 3;
-					return Object(effects["f" /* select */])(getRSVPTempStartDateMoment);
+function* handleRSVPDurationError() {
+  let hasDurationError = false;
+  const startDateMoment = yield Object(effects["f" /* select */])(getRSVPTempStartDateMoment);
+  const endDateMoment = yield Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
 
-				case 3:
-					startDateMoment = _context7.sent;
-					_context7.next = 6;
-					return Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
+  if (!startDateMoment || !endDateMoment) {
+    hasDurationError = true;
+  } else {
+    const startTime = yield Object(effects["f" /* select */])(getRSVPTempStartTime);
+    const endTime = yield Object(effects["f" /* select */])(getRSVPTempEndTime);
+    const startTimeSeconds = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+    const endTimeSeconds = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
+    const startDateTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
+    const endDateTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
+    const durationHasError = yield Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
 
-				case 6:
-					endDateMoment = _context7.sent;
+    if (durationHasError) {
+      hasDurationError = true;
+    }
+  }
 
-					if (!(!startDateMoment || !endDateMoment)) {
-						_context7.next = 11;
-						break;
-					}
-
-					hasDurationError = true;
-					_context7.next = 33;
-					break;
-
-				case 11:
-					_context7.next = 13;
-					return Object(effects["f" /* select */])(getRSVPTempStartTime);
-
-				case 13:
-					startTime = _context7.sent;
-					_context7.next = 16;
-					return Object(effects["f" /* select */])(getRSVPTempEndTime);
-
-				case 16:
-					endTime = _context7.sent;
-					_context7.next = 19;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, startTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 19:
-					startTimeSeconds = _context7.sent;
-					_context7.next = 22;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].toSeconds, endTime, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM_SS);
-
-				case 22:
-					endTimeSeconds = _context7.sent;
-					_context7.next = 25;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, startDateMoment.clone(), startTimeSeconds);
-
-				case 25:
-					startDateTimeMoment = _context7.sent;
-					_context7.next = 28;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].setTimeInSeconds, endDateMoment.clone(), endTimeSeconds);
-
-				case 28:
-					endDateTimeMoment = _context7.sent;
-					_context7.next = 31;
-					return Object(effects["b" /* call */])([startDateTimeMoment, 'isSameOrAfter'], endDateTimeMoment);
-
-				case 31:
-					durationHasError = _context7.sent;
-
-
-					if (durationHasError) {
-						hasDurationError = true;
-					}
-
-				case 33:
-					_context7.next = 35;
-					return Object(effects["e" /* put */])(actions["setRSVPHasDurationError"](hasDurationError));
-
-				case 35:
-				case 'end':
-					return _context7.stop();
-			}
-		}
-	}, _marked7, this);
+  yield Object(effects["e" /* put */])(actions["setRSVPHasDurationError"](hasDurationError));
 }
-
-function handleRSVPStartDate(action) {
-	var _action$payload3, date, dayPickerInput, startDateMoment, startDate;
-
-	return regenerator_default.a.wrap(function handleRSVPStartDate$(_context8) {
-		while (1) {
-			switch (_context8.prev = _context8.next) {
-				case 0:
-					_action$payload3 = action.payload, date = _action$payload3.date, dayPickerInput = _action$payload3.dayPickerInput;
-					_context8.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					startDateMoment = _context8.sent;
-					_context8.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
-
-				case 6:
-					startDate = _context8.sent;
-					_context8.next = 9;
-					return Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](startDate));
-
-				case 9:
-					_context8.next = 11;
-					return Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](dayPickerInput.state.value));
-
-				case 11:
-					_context8.next = 13;
-					return Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](startDateMoment));
-
-				case 13:
-				case 'end':
-					return _context8.stop();
-			}
-		}
-	}, _marked8, this);
+function* handleRSVPStartDate(action) {
+  const {
+    date,
+    dayPickerInput
+  } = action.payload;
+  const startDateMoment = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+  const startDate = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, startDateMoment) : '';
+  yield Object(effects["e" /* put */])(actions["setRSVPTempStartDate"](startDate));
+  yield Object(effects["e" /* put */])(actions["setRSVPTempStartDateInput"](dayPickerInput.state.value));
+  yield Object(effects["e" /* put */])(actions["setRSVPTempStartDateMoment"](startDateMoment));
 }
-
-function handleRSVPEndDate(action) {
-	var _action$payload4, date, dayPickerInput, endDateMoment, endDate;
-
-	return regenerator_default.a.wrap(function handleRSVPEndDate$(_context9) {
-		while (1) {
-			switch (_context9.prev = _context9.next) {
-				case 0:
-					_action$payload4 = action.payload, date = _action$payload4.date, dayPickerInput = _action$payload4.dayPickerInput;
-					_context9.next = 3;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
-
-				case 3:
-					endDateMoment = _context9.sent;
-					_context9.next = 6;
-					return date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
-
-				case 6:
-					endDate = _context9.sent;
-					_context9.next = 9;
-					return Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate));
-
-				case 9:
-					_context9.next = 11;
-					return Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](dayPickerInput.state.value));
-
-				case 11:
-					_context9.next = 13;
-					return Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endDateMoment));
-
-				case 13:
-				case 'end':
-					return _context9.stop();
-			}
-		}
-	}, _marked9, this);
+function* handleRSVPEndDate(action) {
+  const {
+    date,
+    dayPickerInput
+  } = action.payload;
+  const endDateMoment = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, date) : undefined;
+  const endDate = yield date ? Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toDatabaseDate, endDateMoment) : '';
+  yield Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](endDate));
+  yield Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](dayPickerInput.state.value));
+  yield Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](endDateMoment));
 }
-
-function handleRSVPStartTime(action) {
-	var startTime;
-	return regenerator_default.a.wrap(function handleRSVPStartTime$(_context10) {
-		while (1) {
-			switch (_context10.prev = _context10.next) {
-				case 0:
-					_context10.next = 2;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 2:
-					startTime = _context10.sent;
-					_context10.next = 5;
-					return Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](startTime + ':00'));
-
-				case 5:
-				case 'end':
-					return _context10.stop();
-			}
-		}
-	}, _marked10, this);
+function* handleRSVPStartTime(action) {
+  const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  yield Object(effects["e" /* put */])(actions["setRSVPTempStartTime"](`${startTime}:00`));
 }
-
-function handleRSVPStartTimeInput(action) {
-	var startTime, startTimeMoment, startTimeInput;
-	return regenerator_default.a.wrap(function handleRSVPStartTimeInput$(_context11) {
-		while (1) {
-			switch (_context11.prev = _context11.next) {
-				case 0:
-					_context11.next = 2;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 2:
-					startTime = _context11.sent;
-					_context11.next = 5;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 5:
-					startTimeMoment = _context11.sent;
-					_context11.next = 8;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
-
-				case 8:
-					startTimeInput = _context11.sent;
-					_context11.next = 11;
-					return Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](startTimeInput));
-
-				case 11:
-				case 'end':
-					return _context11.stop();
-			}
-		}
-	}, _marked11, this);
+function* handleRSVPStartTimeInput(action) {
+  const startTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  const startTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, startTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+  const startTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, startTimeMoment);
+  yield Object(effects["e" /* put */])(actions["setRSVPTempStartTimeInput"](startTimeInput));
 }
-
-function handleRSVPEndTime(action) {
-	var endTime;
-	return regenerator_default.a.wrap(function handleRSVPEndTime$(_context12) {
-		while (1) {
-			switch (_context12.prev = _context12.next) {
-				case 0:
-					_context12.next = 2;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 2:
-					endTime = _context12.sent;
-					_context12.next = 5;
-					return Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](endTime + ':00'));
-
-				case 5:
-				case 'end':
-					return _context12.stop();
-			}
-		}
-	}, _marked12, this);
+function* handleRSVPEndTime(action) {
+  const endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  yield Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](`${endTime}:00`));
 }
-
-function handleRSVPEndTimeInput(action) {
-	var endTime, endTimeMoment, endTimeInput;
-	return regenerator_default.a.wrap(function handleRSVPEndTimeInput$(_context13) {
-		while (1) {
-			switch (_context13.prev = _context13.next) {
-				case 0:
-					_context13.next = 2;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
-
-				case 2:
-					endTime = _context13.sent;
-					_context13.next = 5;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
-
-				case 5:
-					endTimeMoment = _context13.sent;
-					_context13.next = 8;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
-
-				case 8:
-					endTimeInput = _context13.sent;
-					_context13.next = 11;
-					return Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput));
-
-				case 11:
-				case 'end':
-					return _context13.stop();
-			}
-		}
-	}, _marked13, this);
+function* handleRSVPEndTimeInput(action) {
+  const endTime = yield Object(effects["b" /* call */])(external_tribe_common_utils_["time"].fromSeconds, action.payload.seconds, external_tribe_common_utils_["time"].TIME_FORMAT_HH_MM);
+  const endTimeMoment = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toMoment, endTime, external_tribe_common_utils_["moment"].TIME_FORMAT, false);
+  const endTimeInput = yield Object(effects["b" /* call */])(external_tribe_common_utils_["moment"].toTime, endTimeMoment);
+  yield Object(effects["e" /* put */])(actions["setRSVPTempEndTimeInput"](endTimeInput));
 }
-
 /**
  * Handles proper RSVP deletion and RSVP block removal upon moving RSVP
  *
  * @export
+ * @yields
  */
-function handleRSVPMove() {
-	var rsvpId, modalTicketId, clientId;
-	return regenerator_default.a.wrap(function handleRSVPMove$(_context14) {
-		while (1) {
-			switch (_context14.prev = _context14.next) {
-				case 0:
-					_context14.next = 2;
-					return Object(effects["f" /* select */])(getRSVPId);
 
-				case 2:
-					rsvpId = _context14.sent;
-					_context14.next = 5;
-					return Object(effects["f" /* select */])(selectors["e" /* getModalTicketId */]);
+function* handleRSVPMove() {
+  const rsvpId = yield Object(effects["f" /* select */])(getRSVPId);
+  const modalTicketId = yield Object(effects["f" /* select */])(selectors["e" /* getModalTicketId */]);
 
-				case 5:
-					modalTicketId = _context14.sent;
-
-					if (!(rsvpId === modalTicketId)) {
-						_context14.next = 14;
-						break;
-					}
-
-					_context14.next = 9;
-					return Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
-
-				case 9:
-					clientId = _context14.sent;
-					_context14.next = 12;
-					return Object(effects["e" /* put */])(actions["deleteRSVP"]());
-
-				case 12:
-					_context14.next = 14;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
-
-				case 14:
-				case 'end':
-					return _context14.stop();
-			}
-		}
-	}, _marked14, this);
-}
-
-//
+  if (rsvpId === modalTicketId) {
+    const clientId = yield Object(effects["f" /* select */])(selectors["a" /* getModalClientId */]);
+    yield Object(effects["e" /* put */])(actions["deleteRSVP"]());
+    yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["dispatch"])('core/editor'), 'removeBlocks'], [clientId]);
+  }
+} //
 // ─── HEADER IMAGE ───────────────────────────────────────────────────────────────
 //
 
-function fetchRSVPHeaderImage(action) {
-	var id, _ref5, response, media, headerImage;
+function* fetchRSVPHeaderImage(action) {
+  const {
+    id
+  } = action.payload;
+  yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
 
-	return regenerator_default.a.wrap(function fetchRSVPHeaderImage$(_context15) {
-		while (1) {
-			switch (_context15.prev = _context15.next) {
-				case 0:
-					id = action.payload.id;
-					_context15.next = 3;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
+  try {
+    const {
+      response,
+      data: media
+    } = yield Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
+      path: `media/${id}`
+    });
 
-				case 3:
-					_context15.prev = 3;
-					_context15.next = 6;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, { path: 'media/' + id });
-
-				case 6:
-					_ref5 = _context15.sent;
-					response = _ref5.response;
-					media = _ref5.data;
-
-					if (!response.ok) {
-						_context15.next = 13;
-						break;
-					}
-
-					headerImage = {
-						id: media.id,
-						alt: media.alt_text,
-						src: media.media_details.sizes.medium.source_url
-					};
-					_context15.next = 13;
-					return Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](headerImage));
-
-				case 13:
-					_context15.next = 18;
-					break;
-
-				case 15:
-					_context15.prev = 15;
-					_context15.t0 = _context15['catch'](3);
-
-					console.error(_context15.t0);
-					/**
-      * @todo: handle error scenario
-      */
-
-				case 18:
-					_context15.prev = 18;
-					_context15.next = 21;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
-
-				case 21:
-					return _context15.finish(18);
-
-				case 22:
-				case 'end':
-					return _context15.stop();
-			}
-		}
-	}, _marked15, this, [[3, 15, 18, 22]]);
+    if (response.ok) {
+      const headerImage = {
+        id: media.id,
+        alt: media.alt_text,
+        src: media.media_details.sizes.medium.source_url
+      };
+      yield Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](headerImage));
+    }
+  } catch (e) {
+    console.error(e);
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
+  }
 }
+function* updateRSVPHeaderImage(action) {
+  const {
+    image
+  } = action.payload;
+  const postId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+  const body = {
+    meta: {
+      [utils["i" /* KEY_TICKET_HEADER */]]: `${image.id}`
+    }
+  };
 
-function updateRSVPHeaderImage(action) {
-	var image, postId, body, slug, postType, restBase, _ref6, response, headerImage;
+  try {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
+    yield Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](true));
+    const slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+    const postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+    const restBase = postType.rest_base;
+    const {
+      response
+    } = yield Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
+      path: `${restBase}/${postId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      initParams: {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      }
+    });
 
-	return regenerator_default.a.wrap(function updateRSVPHeaderImage$(_context16) {
-		while (1) {
-			switch (_context16.prev = _context16.next) {
-				case 0:
-					image = action.payload.image;
-					_context16.next = 3;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+    if (response.ok) {
+      const headerImage = {
+        id: image.id,
+        alt: image.alt,
+        src: image.sizes.medium.url
+      };
+      /**
+       * @todo: until rsvp and tickets header image can be separated, they need to be linked
+       */
 
-				case 3:
-					postId = _context16.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], '' + image.id)
-					};
-					_context16.prev = 5;
-					_context16.next = 8;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
-
-				case 8:
-					_context16.next = 10;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](true));
-
-				case 10:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context16.next = 15;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 15:
-					_ref6 = _context16.sent;
-					response = _ref6.response;
-
-					if (!response.ok) {
-						_context16.next = 23;
-						break;
-					}
-
-					headerImage = {
-						id: image.id,
-						alt: image.alt,
-						src: image.sizes.medium.url
-					};
-					/**
-      * @todo: until rsvp and tickets header image can be separated, they need to be linked
-      */
-
-					_context16.next = 21;
-					return Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](headerImage));
-
-				case 21:
-					_context16.next = 23;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsHeaderImage"](headerImage));
-
-				case 23:
-					_context16.next = 27;
-					break;
-
-				case 25:
-					_context16.prev = 25;
-					_context16.t0 = _context16['catch'](5);
-
-				case 27:
-					_context16.prev = 27;
-					_context16.next = 30;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
-
-				case 30:
-					_context16.next = 32;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](false));
-
-				case 32:
-					return _context16.finish(27);
-
-				case 33:
-				case 'end':
-					return _context16.stop();
-			}
-		}
-	}, _marked16, this, [[5, 25, 27, 33]]);
+      yield Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](headerImage));
+      yield Object(effects["e" /* put */])(ticket_actions["setTicketsHeaderImage"](headerImage));
+    }
+  } catch (e) {
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
+    yield Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](false));
+  }
 }
+function* deleteRSVPHeaderImage() {
+  const postId = yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
+  const body = {
+    meta: {
+      [utils["i" /* KEY_TICKET_HEADER */]]: null
+    }
+  };
 
-function deleteRSVPHeaderImage() {
-	var postId, body, slug, postType, restBase, _ref7, response;
+  try {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
+    yield Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](true));
+    const slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
+    const postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
+    const restBase = postType.rest_base;
+    const {
+      response
+    } = yield Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
+      path: `${restBase}/${postId}`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      initParams: {
+        method: 'PUT',
+        body: JSON.stringify(body)
+      }
+    });
 
-	return regenerator_default.a.wrap(function deleteRSVPHeaderImage$(_context17) {
-		while (1) {
-			switch (_context17.prev = _context17.next) {
-				case 0:
-					_context17.next = 2;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 2:
-					postId = _context17.sent;
-					body = {
-						meta: defineProperty_default()({}, utils["i" /* KEY_TICKET_HEADER */], null)
-					};
-					_context17.prev = 4;
-					_context17.next = 7;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](true));
-
-				case 7:
-					_context17.next = 9;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](true));
-
-				case 9:
-					slug = Object(external_var_wp_data_root_wp_data_["select"])('core/editor').getCurrentPostType();
-					postType = Object(external_var_wp_data_root_wp_data_["select"])('core').getPostType(slug);
-					restBase = postType.rest_base;
-					_context17.next = 14;
-					return Object(effects["b" /* call */])(external_tribe_common_utils_["api"].wpREST, {
-						path: restBase + '/' + postId,
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						initParams: {
-							method: 'PUT',
-							body: JSON.stringify(body)
-						}
-					});
-
-				case 14:
-					_ref7 = _context17.sent;
-					response = _ref7.response;
-
-					if (!response.ok) {
-						_context17.next = 21;
-						break;
-					}
-
-					_context17.next = 19;
-					return Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
-
-				case 19:
-					_context17.next = 21;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
-
-				case 21:
-					_context17.next = 25;
-					break;
-
-				case 23:
-					_context17.prev = 23;
-					_context17.t0 = _context17['catch'](4);
-
-				case 25:
-					_context17.prev = 25;
-					_context17.next = 28;
-					return Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
-
-				case 28:
-					_context17.next = 30;
-					return Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](false));
-
-				case 30:
-					return _context17.finish(25);
-
-				case 31:
-				case 'end':
-					return _context17.stop();
-			}
-		}
-	}, _marked17, this, [[4, 23, 25, 31]]);
-}
-
-//
+    if (response.ok) {
+      /**
+       * @todo: until rsvp and tickets header image can be separated, they need to be linked
+       */
+      yield Object(effects["e" /* put */])(actions["setRSVPHeaderImage"](header_image["a" /* DEFAULT_STATE */]));
+      yield Object(effects["e" /* put */])(ticket_actions["setTicketsHeaderImage"](reducers_header_image["a" /* DEFAULT_STATE */]));
+    }
+  } catch (e) {
+    /**
+     * @todo: handle error scenario
+     */
+  } finally {
+    /**
+     * @todo: until rsvp and tickets header image can be separated, they need to be linked
+     */
+    yield Object(effects["e" /* put */])(actions["setRSVPIsSettingsLoading"](false));
+    yield Object(effects["e" /* put */])(ticket_actions["setTicketsIsSettingsLoading"](false));
+  }
+} //
 // ─── HANDLERS ───────────────────────────────────────────────────────────────────
 //
 
-function handler(action) {
-	return regenerator_default.a.wrap(function handler$(_context18) {
-		while (1) {
-			switch (_context18.prev = _context18.next) {
-				case 0:
-					_context18.t0 = action.type;
-					_context18.next = _context18.t0 === SET_RSVP_DETAILS ? 3 : _context18.t0 === SET_RSVP_TEMP_DETAILS ? 6 : _context18.t0 === INITIALIZE_RSVP ? 9 : _context18.t0 === HANDLE_RSVP_START_DATE ? 12 : _context18.t0 === HANDLE_RSVP_END_DATE ? 19 : _context18.t0 === HANDLE_RSVP_START_TIME ? 26 : _context18.t0 === HANDLE_RSVP_END_TIME ? 35 : _context18.t0 === FETCH_RSVP_HEADER_IMAGE ? 44 : _context18.t0 === UPDATE_RSVP_HEADER_IMAGE ? 47 : _context18.t0 === DELETE_RSVP_HEADER_IMAGE ? 50 : _context18.t0 === types["k" /* MOVE_TICKET_SUCCESS */] ? 53 : 56;
-					break;
+function* handler(action) {
+  switch (action.type) {
+    case SET_RSVP_DETAILS:
+      yield Object(effects["b" /* call */])(setRSVPDetails, action);
+      break;
 
-				case 3:
-					_context18.next = 5;
-					return Object(effects["b" /* call */])(setRSVPDetails, action);
+    case SET_RSVP_TEMP_DETAILS:
+      yield Object(effects["b" /* call */])(setRSVPTempDetails, action);
+      break;
 
-				case 5:
-					return _context18.abrupt('break', 57);
+    case INITIALIZE_RSVP:
+      yield Object(effects["b" /* call */])(initializeRSVP);
+      break;
 
-				case 6:
-					_context18.next = 8;
-					return Object(effects["b" /* call */])(setRSVPTempDetails, action);
+    case HANDLE_RSVP_START_DATE:
+      yield Object(effects["b" /* call */])(handleRSVPStartDate, action);
+      yield Object(effects["b" /* call */])(handleRSVPDurationError);
+      yield Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
+      break;
 
-				case 8:
-					return _context18.abrupt('break', 57);
+    case HANDLE_RSVP_END_DATE:
+      yield Object(effects["b" /* call */])(handleRSVPEndDate, action);
+      yield Object(effects["b" /* call */])(handleRSVPDurationError);
+      yield Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
+      break;
 
-				case 9:
-					_context18.next = 11;
-					return Object(effects["b" /* call */])(initializeRSVP);
+    case HANDLE_RSVP_START_TIME:
+      yield Object(effects["b" /* call */])(handleRSVPStartTime, action);
+      yield Object(effects["b" /* call */])(handleRSVPStartTimeInput, action);
+      yield Object(effects["b" /* call */])(handleRSVPDurationError);
+      yield Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
+      break;
 
-				case 11:
-					return _context18.abrupt('break', 57);
+    case HANDLE_RSVP_END_TIME:
+      yield Object(effects["b" /* call */])(handleRSVPEndTime, action);
+      yield Object(effects["b" /* call */])(handleRSVPEndTimeInput, action);
+      yield Object(effects["b" /* call */])(handleRSVPDurationError);
+      yield Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
+      break;
 
-				case 12:
-					_context18.next = 14;
-					return Object(effects["b" /* call */])(handleRSVPStartDate, action);
+    case FETCH_RSVP_HEADER_IMAGE:
+      yield Object(effects["b" /* call */])(fetchRSVPHeaderImage, action);
+      break;
 
-				case 14:
-					_context18.next = 16;
-					return Object(effects["b" /* call */])(handleRSVPDurationError);
+    case UPDATE_RSVP_HEADER_IMAGE:
+      yield Object(effects["b" /* call */])(updateRSVPHeaderImage, action);
+      break;
 
-				case 16:
-					_context18.next = 18;
-					return Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
+    case DELETE_RSVP_HEADER_IMAGE:
+      yield Object(effects["b" /* call */])(deleteRSVPHeaderImage);
+      break;
 
-				case 18:
-					return _context18.abrupt('break', 57);
+    case types["k" /* MOVE_TICKET_SUCCESS */]:
+      yield Object(effects["b" /* call */])(handleRSVPMove);
+      break;
 
-				case 19:
-					_context18.next = 21;
-					return Object(effects["b" /* call */])(handleRSVPEndDate, action);
-
-				case 21:
-					_context18.next = 23;
-					return Object(effects["b" /* call */])(handleRSVPDurationError);
-
-				case 23:
-					_context18.next = 25;
-					return Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
-
-				case 25:
-					return _context18.abrupt('break', 57);
-
-				case 26:
-					_context18.next = 28;
-					return Object(effects["b" /* call */])(handleRSVPStartTime, action);
-
-				case 28:
-					_context18.next = 30;
-					return Object(effects["b" /* call */])(handleRSVPStartTimeInput, action);
-
-				case 30:
-					_context18.next = 32;
-					return Object(effects["b" /* call */])(handleRSVPDurationError);
-
-				case 32:
-					_context18.next = 34;
-					return Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
-
-				case 34:
-					return _context18.abrupt('break', 57);
-
-				case 35:
-					_context18.next = 37;
-					return Object(effects["b" /* call */])(handleRSVPEndTime, action);
-
-				case 37:
-					_context18.next = 39;
-					return Object(effects["b" /* call */])(handleRSVPEndTimeInput, action);
-
-				case 39:
-					_context18.next = 41;
-					return Object(effects["b" /* call */])(handleRSVPDurationError);
-
-				case 41:
-					_context18.next = 43;
-					return Object(effects["e" /* put */])(actions["setRSVPHasChanges"](true));
-
-				case 43:
-					return _context18.abrupt('break', 57);
-
-				case 44:
-					_context18.next = 46;
-					return Object(effects["b" /* call */])(fetchRSVPHeaderImage, action);
-
-				case 46:
-					return _context18.abrupt('break', 57);
-
-				case 47:
-					_context18.next = 49;
-					return Object(effects["b" /* call */])(updateRSVPHeaderImage, action);
-
-				case 49:
-					return _context18.abrupt('break', 57);
-
-				case 50:
-					_context18.next = 52;
-					return Object(effects["b" /* call */])(deleteRSVPHeaderImage);
-
-				case 52:
-					return _context18.abrupt('break', 57);
-
-				case 53:
-					_context18.next = 55;
-					return Object(effects["b" /* call */])(handleRSVPMove);
-
-				case 55:
-					return _context18.abrupt('break', 57);
-
-				case 56:
-					return _context18.abrupt('break', 57);
-
-				case 57:
-				case 'end':
-					return _context18.stop();
-			}
-		}
-	}, _marked18, this);
+    default:
+      break;
+  }
 }
-
 /**
  * Temporary bandaid until datepickers allow blank state
  *
  * @export
+ * @yields
  */
-function setNonEventPostTypeEndDate() {
-	var tempEndMoment, endMoment, _ref8, date, dateInput, moment, time;
 
-	return regenerator_default.a.wrap(function setNonEventPostTypeEndDate$(_context19) {
-		while (1) {
-			switch (_context19.prev = _context19.next) {
-				case 0:
-					_context19.next = 2;
-					return Object(effects["g" /* take */])([INITIALIZE_RSVP]);
+function* setNonEventPostTypeEndDate() {
+  yield Object(effects["g" /* take */])([INITIALIZE_RSVP]);
 
-				case 2:
-					_context19.next = 4;
-					return Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */]);
+  if (yield Object(effects["b" /* call */])(sagas["e" /* isTribeEventPostType */])) {
+    return;
+  }
 
-				case 4:
-					if (!_context19.sent) {
-						_context19.next = 6;
-						break;
-					}
-
-					return _context19.abrupt('return');
-
-				case 6:
-					_context19.next = 8;
-					return Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
-
-				case 8:
-					tempEndMoment = _context19.sent;
-					_context19.next = 11;
-					return Object(effects["b" /* call */])([tempEndMoment, 'clone']);
-
-				case 11:
-					endMoment = _context19.sent;
-					_context19.next = 14;
-					return Object(effects["b" /* call */])(sagas["a" /* createDates */], endMoment.toDate());
-
-				case 14:
-					_ref8 = _context19.sent;
-					date = _ref8.date;
-					dateInput = _ref8.dateInput;
-					moment = _ref8.moment;
-					time = _ref8.time;
-					_context19.next = 21;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](time)), Object(effects["e" /* put */])(actions["setRSVPEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](time))]);
-
-				case 21:
-				case 'end':
-					return _context19.stop();
-			}
-		}
-	}, _marked19, this);
-}
-
-//
+  const tempEndMoment = yield Object(effects["f" /* select */])(getRSVPTempEndDateMoment);
+  const endMoment = yield Object(effects["b" /* call */])([tempEndMoment, 'clone']);
+  const {
+    date,
+    dateInput,
+    moment,
+    time
+  } = yield Object(effects["b" /* call */])(sagas["a" /* createDates */], endMoment.toDate());
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["setRSVPTempEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPTempEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPTempEndTime"](time)), Object(effects["e" /* put */])(actions["setRSVPEndDate"](date)), Object(effects["e" /* put */])(actions["setRSVPEndDateInput"](dateInput)), Object(effects["e" /* put */])(actions["setRSVPEndDateMoment"](moment)), Object(effects["e" /* put */])(actions["setRSVPEndTime"](time))]);
+} //
 // ─── WATCHERS ───────────────────────────────────────────────────────────────────
 //
 
-function watchers() {
-	return regenerator_default.a.wrap(function watchers$(_context20) {
-		while (1) {
-			switch (_context20.prev = _context20.next) {
-				case 0:
-					_context20.next = 2;
-					return Object(effects["h" /* takeEvery */])([SET_RSVP_DETAILS, SET_RSVP_TEMP_DETAILS, INITIALIZE_RSVP, HANDLE_RSVP_START_DATE, HANDLE_RSVP_END_DATE, HANDLE_RSVP_START_TIME, HANDLE_RSVP_END_TIME, FETCH_RSVP_HEADER_IMAGE, UPDATE_RSVP_HEADER_IMAGE, DELETE_RSVP_HEADER_IMAGE, types["k" /* MOVE_TICKET_SUCCESS */]], handler);
-
-				case 2:
-					_context20.next = 4;
-					return Object(effects["d" /* fork */])(handleEventStartDateChanges);
-
-				case 4:
-					_context20.next = 6;
-					return Object(effects["d" /* fork */])(setNonEventPostTypeEndDate);
-
-				case 6:
-				case 'end':
-					return _context20.stop();
-			}
-		}
-	}, _marked20, this);
+function* watchers() {
+  yield Object(effects["h" /* takeEvery */])([SET_RSVP_DETAILS, SET_RSVP_TEMP_DETAILS, INITIALIZE_RSVP, HANDLE_RSVP_START_DATE, HANDLE_RSVP_END_DATE, HANDLE_RSVP_START_TIME, HANDLE_RSVP_END_TIME, FETCH_RSVP_HEADER_IMAGE, UPDATE_RSVP_HEADER_IMAGE, DELETE_RSVP_HEADER_IMAGE, types["k" /* MOVE_TICKET_SUCCESS */]], handler);
+  yield Object(effects["d" /* fork */])(handleEventStartDateChanges);
+  yield Object(effects["d" /* fork */])(setNonEventPostTypeEndDate);
 }
 // CONCATENATED MODULE: ./src/modules/data/blocks/rsvp/index.js
 /**
@@ -12207,12 +9607,11 @@ function watchers() {
 
 
 
-
 /* harmony default export */ var blocks_rsvp = __webpack_exports__["b"] = (reducer);
 
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12268,484 +9667,422 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fetchRSVPHeaderImage", function() { return fetchRSVPHeaderImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRSVPHeaderImage", function() { return updateRSVPHeaderImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteRSVPHeaderImage", function() { return deleteRSVPHeaderImage; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
+/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
 /**
  * Internal dependencies
  */
-
-
-//
+ //
 // ─── RSVP ACTIONS ───────────────────────────────────────────────────────────────
 //
 
-var setRSVPId = function setRSVPId(id) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_ID,
-		payload: {
-			id: id
-		}
-	};
-};
-
-var setRSVPSettingsOpen = function setRSVPSettingsOpen(settingsOpen) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_SETTINGS_OPEN,
-		payload: {
-			settingsOpen: settingsOpen
-		}
-	};
-};
-
-var setRSVPHasChanges = function setRSVPHasChanges(hasChanges) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_CHANGES,
-		payload: {
-			hasChanges: hasChanges
-		}
-	};
-};
-
-var setRSVPIsLoading = function setRSVPIsLoading(isLoading) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_LOADING,
-		payload: {
-			isLoading: isLoading
-		}
-	};
-};
-
-var setRSVPIsSettingsLoading = function setRSVPIsSettingsLoading(isSettingsLoading) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_SETTINGS_LOADING,
-		payload: {
-			isSettingsLoading: isSettingsLoading
-		}
-	};
-};
-
-var setRSVPIsModalOpen = function setRSVPIsModalOpen(isModalOpen) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_MODAL_OPEN,
-		payload: {
-			isModalOpen: isModalOpen
-		}
-	};
-};
-
-var setRSVPGoingCount = function setRSVPGoingCount(goingCount) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_GOING_COUNT,
-		payload: {
-			goingCount: goingCount
-		}
-	};
-};
-
-var setRSVPNotGoingCount = function setRSVPNotGoingCount(notGoingCount) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_NOT_GOING_COUNT,
-		payload: {
-			notGoingCount: notGoingCount
-		}
-	};
-};
-
-var setRSVPHasAttendeeInfoFields = function setRSVPHasAttendeeInfoFields(hasAttendeeInfoFields) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_ATTENDEE_INFO_FIELDS,
-		payload: {
-			hasAttendeeInfoFields: hasAttendeeInfoFields
-		}
-	};
-};
-
-var setRSVPHasDurationError = function setRSVPHasDurationError(hasDurationError) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_DURATION_ERROR,
-		payload: {
-			hasDurationError: hasDurationError
-		}
-	};
-};
-
-var setRSVPDetails = function setRSVPDetails(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_DETAILS,
-		payload: payload
-	};
-};
-
-var setRSVPTempDetails = function setRSVPTempDetails(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_DETAILS,
-		payload: payload
-	};
-};
-
-var setRSVPHeaderImage = function setRSVPHeaderImage(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HEADER_IMAGE,
-		payload: payload
-	};
-};
-
-//
+const setRSVPId = id => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_ID,
+  payload: {
+    id
+  }
+});
+const setRSVPSettingsOpen = settingsOpen => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_SETTINGS_OPEN,
+  payload: {
+    settingsOpen
+  }
+});
+const setRSVPHasChanges = hasChanges => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_CHANGES,
+  payload: {
+    hasChanges
+  }
+});
+const setRSVPIsLoading = isLoading => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_LOADING,
+  payload: {
+    isLoading
+  }
+});
+const setRSVPIsSettingsLoading = isSettingsLoading => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_SETTINGS_LOADING,
+  payload: {
+    isSettingsLoading
+  }
+});
+const setRSVPIsModalOpen = isModalOpen => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_IS_MODAL_OPEN,
+  payload: {
+    isModalOpen
+  }
+});
+const setRSVPGoingCount = goingCount => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_GOING_COUNT,
+  payload: {
+    goingCount
+  }
+});
+const setRSVPNotGoingCount = notGoingCount => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_NOT_GOING_COUNT,
+  payload: {
+    notGoingCount
+  }
+});
+const setRSVPHasAttendeeInfoFields = hasAttendeeInfoFields => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_ATTENDEE_INFO_FIELDS,
+  payload: {
+    hasAttendeeInfoFields
+  }
+});
+const setRSVPHasDurationError = hasDurationError => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HAS_DURATION_ERROR,
+  payload: {
+    hasDurationError
+  }
+});
+const setRSVPDetails = payload => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_DETAILS,
+  payload
+});
+const setRSVPTempDetails = payload => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_DETAILS,
+  payload
+});
+const setRSVPHeaderImage = payload => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HEADER_IMAGE,
+  payload
+}); //
 // ─── RSVP DETAILS ACTIONS ───────────────────────────────────────────────────────
 //
 
-var setRSVPTitle = function setRSVPTitle(title) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TITLE,
-		payload: {
-			title: title
-		}
-	};
-};
-
-var setRSVPDescription = function setRSVPDescription(description) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_DESCRIPTION,
-		payload: {
-			description: description
-		}
-	};
-};
-
-var setRSVPCapacity = function setRSVPCapacity(capacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_CAPACITY,
-		payload: {
-			capacity: capacity
-		}
-	};
-};
-
-var setRSVPNotGoingResponses = function setRSVPNotGoingResponses(notGoingResponses) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_NOT_GOING_RESPONSES,
-		payload: {
-			notGoingResponses: notGoingResponses
-		}
-	};
-};
-
-var setRSVPStartDate = function setRSVPStartDate(startDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE,
-		payload: {
-			startDate: startDate
-		}
-	};
-};
-
-var setRSVPStartDateInput = function setRSVPStartDateInput(startDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE_INPUT,
-		payload: {
-			startDateInput: startDateInput
-		}
-	};
-};
-
-var setRSVPStartDateMoment = function setRSVPStartDateMoment(startDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE_MOMENT,
-		payload: {
-			startDateMoment: startDateMoment
-		}
-	};
-};
-
-var setRSVPEndDate = function setRSVPEndDate(endDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE,
-		payload: {
-			endDate: endDate
-		}
-	};
-};
-
-var setRSVPEndDateInput = function setRSVPEndDateInput(endDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE_INPUT,
-		payload: {
-			endDateInput: endDateInput
-		}
-	};
-};
-
-var setRSVPEndDateMoment = function setRSVPEndDateMoment(endDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE_MOMENT,
-		payload: {
-			endDateMoment: endDateMoment
-		}
-	};
-};
-
-var setRSVPStartTime = function setRSVPStartTime(startTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_TIME,
-		payload: {
-			startTime: startTime
-		}
-	};
-};
-
-var setRSVPEndTime = function setRSVPEndTime(endTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_TIME,
-		payload: {
-			endTime: endTime
-		}
-	};
-};
-
-var setRSVPStartTimeInput = function setRSVPStartTimeInput(startTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_TIME_INPUT,
-		payload: {
-			startTimeInput: startTimeInput
-		}
-	};
-};
-
-var setRSVPEndTimeInput = function setRSVPEndTimeInput(endTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_TIME_INPUT,
-		payload: {
-			endTimeInput: endTimeInput
-		}
-	};
-};
-
-//
+const setRSVPTitle = title => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TITLE,
+  payload: {
+    title
+  }
+});
+const setRSVPDescription = description => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_DESCRIPTION,
+  payload: {
+    description
+  }
+});
+const setRSVPCapacity = capacity => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_CAPACITY,
+  payload: {
+    capacity
+  }
+});
+const setRSVPNotGoingResponses = notGoingResponses => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_NOT_GOING_RESPONSES,
+  payload: {
+    notGoingResponses
+  }
+});
+const setRSVPStartDate = startDate => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE,
+  payload: {
+    startDate
+  }
+});
+const setRSVPStartDateInput = startDateInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE_INPUT,
+  payload: {
+    startDateInput
+  }
+});
+const setRSVPStartDateMoment = startDateMoment => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_DATE_MOMENT,
+  payload: {
+    startDateMoment
+  }
+});
+const setRSVPEndDate = endDate => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE,
+  payload: {
+    endDate
+  }
+});
+const setRSVPEndDateInput = endDateInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE_INPUT,
+  payload: {
+    endDateInput
+  }
+});
+const setRSVPEndDateMoment = endDateMoment => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_DATE_MOMENT,
+  payload: {
+    endDateMoment
+  }
+});
+const setRSVPStartTime = startTime => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_TIME,
+  payload: {
+    startTime
+  }
+});
+const setRSVPEndTime = endTime => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_TIME,
+  payload: {
+    endTime
+  }
+});
+const setRSVPStartTimeInput = startTimeInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_START_TIME_INPUT,
+  payload: {
+    startTimeInput
+  }
+});
+const setRSVPEndTimeInput = endTimeInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_END_TIME_INPUT,
+  payload: {
+    endTimeInput
+  }
+}); //
 // ─── RSVP TEMP DETAILS ACTIONS ──────────────────────────────────────────────────
 //
 
-var setRSVPTempTitle = function setRSVPTempTitle(title) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_TITLE,
-		payload: {
-			title: title
-		}
-	};
-};
-
-var setRSVPTempDescription = function setRSVPTempDescription(description) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_DESCRIPTION,
-		payload: {
-			description: description
-		}
-	};
-};
-
-var setRSVPTempCapacity = function setRSVPTempCapacity(capacity) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_CAPACITY,
-		payload: {
-			capacity: capacity
-		}
-	};
-};
-
-var setRSVPTempNotGoingResponses = function setRSVPTempNotGoingResponses(notGoingResponses) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_NOT_GOING_RESPONSES,
-		payload: {
-			notGoingResponses: notGoingResponses
-		}
-	};
-};
-
-var setRSVPTempStartDate = function setRSVPTempStartDate(startDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE,
-		payload: {
-			startDate: startDate
-		}
-	};
-};
-
-var setRSVPTempStartDateInput = function setRSVPTempStartDateInput(startDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE_INPUT,
-		payload: {
-			startDateInput: startDateInput
-		}
-	};
-};
-
-var setRSVPTempStartDateMoment = function setRSVPTempStartDateMoment(startDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE_MOMENT,
-		payload: {
-			startDateMoment: startDateMoment
-		}
-	};
-};
-
-var setRSVPTempEndDate = function setRSVPTempEndDate(endDate) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE,
-		payload: {
-			endDate: endDate
-		}
-	};
-};
-
-var setRSVPTempEndDateInput = function setRSVPTempEndDateInput(endDateInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE_INPUT,
-		payload: {
-			endDateInput: endDateInput
-		}
-	};
-};
-
-var setRSVPTempEndDateMoment = function setRSVPTempEndDateMoment(endDateMoment) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE_MOMENT,
-		payload: {
-			endDateMoment: endDateMoment
-		}
-	};
-};
-
-var setRSVPTempStartTime = function setRSVPTempStartTime(startTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_TIME,
-		payload: {
-			startTime: startTime
-		}
-	};
-};
-
-var setRSVPTempEndTime = function setRSVPTempEndTime(endTime) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_TIME,
-		payload: {
-			endTime: endTime
-		}
-	};
-};
-
-var setRSVPTempStartTimeInput = function setRSVPTempStartTimeInput(startTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_TIME_INPUT,
-		payload: {
-			startTimeInput: startTimeInput
-		}
-	};
-};
-
-var setRSVPTempEndTimeInput = function setRSVPTempEndTimeInput(endTimeInput) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_TIME_INPUT,
-		payload: {
-			endTimeInput: endTimeInput
-		}
-	};
-};
-
-//
+const setRSVPTempTitle = title => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_TITLE,
+  payload: {
+    title
+  }
+});
+const setRSVPTempDescription = description => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_DESCRIPTION,
+  payload: {
+    description
+  }
+});
+const setRSVPTempCapacity = capacity => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_CAPACITY,
+  payload: {
+    capacity
+  }
+});
+const setRSVPTempNotGoingResponses = notGoingResponses => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_NOT_GOING_RESPONSES,
+  payload: {
+    notGoingResponses
+  }
+});
+const setRSVPTempStartDate = startDate => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE,
+  payload: {
+    startDate
+  }
+});
+const setRSVPTempStartDateInput = startDateInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE_INPUT,
+  payload: {
+    startDateInput
+  }
+});
+const setRSVPTempStartDateMoment = startDateMoment => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_DATE_MOMENT,
+  payload: {
+    startDateMoment
+  }
+});
+const setRSVPTempEndDate = endDate => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE,
+  payload: {
+    endDate
+  }
+});
+const setRSVPTempEndDateInput = endDateInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE_INPUT,
+  payload: {
+    endDateInput
+  }
+});
+const setRSVPTempEndDateMoment = endDateMoment => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_DATE_MOMENT,
+  payload: {
+    endDateMoment
+  }
+});
+const setRSVPTempStartTime = startTime => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_TIME,
+  payload: {
+    startTime
+  }
+});
+const setRSVPTempEndTime = endTime => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_TIME,
+  payload: {
+    endTime
+  }
+});
+const setRSVPTempStartTimeInput = startTimeInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_START_TIME_INPUT,
+  payload: {
+    startTimeInput
+  }
+});
+const setRSVPTempEndTimeInput = endTimeInput => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_TEMP_END_TIME_INPUT,
+  payload: {
+    endTimeInput
+  }
+}); //
 // ─── RSVP THUNK & SAGA ACTIONS ──────────────────────────────────────────────────
 //
 
-var createRSVP = function createRSVP() {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].CREATE_RSVP
-	};
-};
-
-var initializeRSVP = function initializeRSVP() {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].INITIALIZE_RSVP
-	};
-};
-
-var deleteRSVP = function deleteRSVP() {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].DELETE_RSVP
-	};
-};
-
-var handleRSVPStartDate = function handleRSVPStartDate(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_START_DATE,
-		payload: payload
-	};
-};
-
-var handleRSVPEndDate = function handleRSVPEndDate(payload) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_END_DATE,
-		payload: payload
-	};
-};
-
-var handleRSVPStartTime = function handleRSVPStartTime(seconds) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_START_TIME,
-		payload: {
-			seconds: seconds
-		}
-	};
-};
-
-var handleRSVPEndTime = function handleRSVPEndTime(seconds) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_END_TIME,
-		payload: {
-			seconds: seconds
-		}
-	};
-};
-
-var fetchRSVPHeaderImage = function fetchRSVPHeaderImage(id) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].FETCH_RSVP_HEADER_IMAGE,
-		payload: {
-			id: id
-		}
-	};
-};
-
-var updateRSVPHeaderImage = function updateRSVPHeaderImage(image) {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].UPDATE_RSVP_HEADER_IMAGE,
-		payload: {
-			image: image
-		}
-	};
-};
-
-var deleteRSVPHeaderImage = function deleteRSVPHeaderImage() {
-	return {
-		type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].DELETE_RSVP_HEADER_IMAGE
-	};
-};
+const createRSVP = () => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].CREATE_RSVP
+});
+const initializeRSVP = () => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].INITIALIZE_RSVP
+});
+const deleteRSVP = () => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].DELETE_RSVP
+});
+const handleRSVPStartDate = payload => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_START_DATE,
+  payload
+});
+const handleRSVPEndDate = payload => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_END_DATE,
+  payload
+});
+const handleRSVPStartTime = seconds => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_START_TIME,
+  payload: {
+    seconds
+  }
+});
+const handleRSVPEndTime = seconds => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].HANDLE_RSVP_END_TIME,
+  payload: {
+    seconds
+  }
+});
+const fetchRSVPHeaderImage = id => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].FETCH_RSVP_HEADER_IMAGE,
+  payload: {
+    id
+  }
+});
+const updateRSVPHeaderImage = image => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].UPDATE_RSVP_HEADER_IMAGE,
+  payload: {
+    image
+  }
+});
+const deleteRSVPHeaderImage = () => ({
+  type: _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].DELETE_RSVP_HEADER_IMAGE
+});
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = wp.i18n;
 
 /***/ }),
-/* 16 */
+/* 14 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+
+/***/ }),
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export __DO_NOT_USE__ActionTypes */
-/* unused harmony export applyMiddleware */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return bindActionCreators; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return combineReducers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return compose; });
-/* unused harmony export createStore */
-/* harmony import */ var symbol_observable__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(264);
 
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ bindActionCreators; });
+__webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ combineReducers; });
+__webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ compose; });
+
+// UNUSED EXPORTS: __DO_NOT_USE__ActionTypes, applyMiddleware, createStore
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
+
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+// CONCATENATED MODULE: ./node_modules/redux/es/redux.js
+
+
+/**
+ * Adapted from React: https://github.com/facebook/react/blob/master/packages/shared/formatProdErrorMessage.js
+ *
+ * Do not require this module directly! Use normal throw error calls. These messages will be replaced with error codes
+ * during build.
+ * @param {number} code
+ */
+function formatProdErrorMessage(code) {
+  return "Minified Redux error #" + code + "; visit https://redux.js.org/Errors?code=" + code + " for the full message or " + 'use the non-minified dev environment for full errors. ';
+}
+
+// Inlined version of the `symbol-observable` polyfill
+var $$observable = (function () {
+  return typeof Symbol === 'function' && Symbol.observable || '@@observable';
+})();
 
 /**
  * These are private action types reserved by Redux.
@@ -12780,6 +10117,63 @@ function isPlainObject(obj) {
   return Object.getPrototypeOf(obj) === proto;
 }
 
+// Inlined / shortened version of `kindOf` from https://github.com/jonschlinkert/kind-of
+function miniKindOf(val) {
+  if (val === void 0) return 'undefined';
+  if (val === null) return 'null';
+  var type = typeof val;
+
+  switch (type) {
+    case 'boolean':
+    case 'string':
+    case 'number':
+    case 'symbol':
+    case 'function':
+      {
+        return type;
+      }
+  }
+
+  if (Array.isArray(val)) return 'array';
+  if (isDate(val)) return 'date';
+  if (isError(val)) return 'error';
+  var constructorName = ctorName(val);
+
+  switch (constructorName) {
+    case 'Symbol':
+    case 'Promise':
+    case 'WeakMap':
+    case 'WeakSet':
+    case 'Map':
+    case 'Set':
+      return constructorName;
+  } // other
+
+
+  return type.slice(8, -1).toLowerCase().replace(/\s/g, '');
+}
+
+function ctorName(val) {
+  return typeof val.constructor === 'function' ? val.constructor.name : null;
+}
+
+function isError(val) {
+  return val instanceof Error || typeof val.message === 'string' && val.constructor && typeof val.constructor.stackTraceLimit === 'number';
+}
+
+function isDate(val) {
+  if (val instanceof Date) return true;
+  return typeof val.toDateString === 'function' && typeof val.getDate === 'function' && typeof val.setDate === 'function';
+}
+
+function kindOf(val) {
+  var typeOfVal = typeof val;
+
+  if (false) {}
+
+  return typeOfVal;
+}
+
 /**
  * Creates a Redux store that holds the state tree.
  * The only way to change the data in the store is to call `dispatch()` on it.
@@ -12806,11 +10200,11 @@ function isPlainObject(obj) {
  * and subscribe to changes.
  */
 
-function createStore(reducer, preloadedState, enhancer) {
+function redux_createStore(reducer, preloadedState, enhancer) {
   var _ref2;
 
   if (typeof preloadedState === 'function' && typeof enhancer === 'function' || typeof enhancer === 'function' && typeof arguments[3] === 'function') {
-    throw new Error('It looks like you are passing several store enhancers to ' + 'createStore(). This is not supported. Instead, compose them ' + 'together to a single function.');
+    throw new Error( true ? formatProdErrorMessage(0) : undefined);
   }
 
   if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
@@ -12820,14 +10214,14 @@ function createStore(reducer, preloadedState, enhancer) {
 
   if (typeof enhancer !== 'undefined') {
     if (typeof enhancer !== 'function') {
-      throw new Error('Expected the enhancer to be a function.');
+      throw new Error( true ? formatProdErrorMessage(1) : undefined);
     }
 
-    return enhancer(createStore)(reducer, preloadedState);
+    return enhancer(redux_createStore)(reducer, preloadedState);
   }
 
   if (typeof reducer !== 'function') {
-    throw new Error('Expected the reducer to be a function.');
+    throw new Error( true ? formatProdErrorMessage(2) : undefined);
   }
 
   var currentReducer = reducer;
@@ -12857,7 +10251,7 @@ function createStore(reducer, preloadedState, enhancer) {
 
   function getState() {
     if (isDispatching) {
-      throw new Error('You may not call store.getState() while the reducer is executing. ' + 'The reducer has already received the state as an argument. ' + 'Pass it down from the top reducer instead of reading it from the store.');
+      throw new Error( true ? formatProdErrorMessage(3) : undefined);
     }
 
     return currentState;
@@ -12889,11 +10283,11 @@ function createStore(reducer, preloadedState, enhancer) {
 
   function subscribe(listener) {
     if (typeof listener !== 'function') {
-      throw new Error('Expected the listener to be a function.');
+      throw new Error( true ? formatProdErrorMessage(4) : undefined);
     }
 
     if (isDispatching) {
-      throw new Error('You may not call store.subscribe() while the reducer is executing. ' + 'If you would like to be notified after the store has been updated, subscribe from a ' + 'component and invoke store.getState() in the callback to access the latest state. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
+      throw new Error( true ? formatProdErrorMessage(5) : undefined);
     }
 
     var isSubscribed = true;
@@ -12905,7 +10299,7 @@ function createStore(reducer, preloadedState, enhancer) {
       }
 
       if (isDispatching) {
-        throw new Error('You may not unsubscribe from a store listener while the reducer is executing. ' + 'See https://redux.js.org/api-reference/store#subscribelistener for more details.');
+        throw new Error( true ? formatProdErrorMessage(6) : undefined);
       }
 
       isSubscribed = false;
@@ -12944,15 +10338,15 @@ function createStore(reducer, preloadedState, enhancer) {
 
   function dispatch(action) {
     if (!isPlainObject(action)) {
-      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+      throw new Error( true ? formatProdErrorMessage(7) : undefined);
     }
 
     if (typeof action.type === 'undefined') {
-      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
+      throw new Error( true ? formatProdErrorMessage(8) : undefined);
     }
 
     if (isDispatching) {
-      throw new Error('Reducers may not dispatch actions.');
+      throw new Error( true ? formatProdErrorMessage(9) : undefined);
     }
 
     try {
@@ -12985,7 +10379,7 @@ function createStore(reducer, preloadedState, enhancer) {
 
   function replaceReducer(nextReducer) {
     if (typeof nextReducer !== 'function') {
-      throw new Error('Expected the nextReducer to be a function.');
+      throw new Error( true ? formatProdErrorMessage(10) : undefined);
     }
 
     currentReducer = nextReducer; // This action has a similiar effect to ActionTypes.INIT.
@@ -13020,7 +10414,7 @@ function createStore(reducer, preloadedState, enhancer) {
        */
       subscribe: function subscribe(observer) {
         if (typeof observer !== 'object' || observer === null) {
-          throw new TypeError('Expected the observer to be an object.');
+          throw new Error( true ? formatProdErrorMessage(11) : undefined);
         }
 
         function observeState() {
@@ -13035,7 +10429,7 @@ function createStore(reducer, preloadedState, enhancer) {
           unsubscribe: unsubscribe
         };
       }
-    }, _ref[symbol_observable__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]] = function () {
+    }, _ref[$$observable] = function () {
       return this;
     }, _ref;
   } // When a store is created, an "INIT" action is dispatched so that every
@@ -13051,7 +10445,7 @@ function createStore(reducer, preloadedState, enhancer) {
     subscribe: subscribe,
     getState: getState,
     replaceReducer: replaceReducer
-  }, _ref2[symbol_observable__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"]] = observable, _ref2;
+  }, _ref2[$$observable] = observable, _ref2;
 }
 
 /**
@@ -13077,12 +10471,6 @@ function warning(message) {
 
 }
 
-function getUndefinedStateErrorMessage(key, action) {
-  var actionType = action && action.type;
-  var actionDescription = actionType && "action \"" + String(actionType) + "\"" || 'an action';
-  return "Given " + actionDescription + ", reducer \"" + key + "\" returned undefined. " + "To ignore an action, you must explicitly return the previous state. " + "If you want this reducer to hold no value, you can return null instead of undefined.";
-}
-
 function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
   var reducerKeys = Object.keys(reducers);
   var argumentName = action && action.type === ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
@@ -13092,7 +10480,7 @@ function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, une
   }
 
   if (!isPlainObject(inputState)) {
-    return "The " + argumentName + " has unexpected type of \"" + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
+    return "The " + argumentName + " has unexpected type of \"" + kindOf(inputState) + "\". Expected argument to be an object with the following " + ("keys: \"" + reducerKeys.join('", "') + "\"");
   }
 
   var unexpectedKeys = Object.keys(inputState).filter(function (key) {
@@ -13116,13 +10504,13 @@ function assertReducerShape(reducers) {
     });
 
     if (typeof initialState === 'undefined') {
-      throw new Error("Reducer \"" + key + "\" returned undefined during initialization. " + "If the state passed to the reducer is undefined, you must " + "explicitly return the initial state. The initial state may " + "not be undefined. If you don't want to set a value for this reducer, " + "you can use null instead of undefined.");
+      throw new Error( true ? formatProdErrorMessage(12) : undefined);
     }
 
     if (typeof reducer(undefined, {
       type: ActionTypes.PROBE_UNKNOWN_ACTION()
     }) === 'undefined') {
-      throw new Error("Reducer \"" + key + "\" returned undefined when probed with a random type. " + ("Don't try to handle " + ActionTypes.INIT + " or other actions in \"redux/*\" ") + "namespace. They are considered private. Instead, you must return the " + "current state for any unknown actions, unless it is undefined, " + "in which case you must return the initial state, regardless of the " + "action type. The initial state may not be undefined, but can be null.");
+      throw new Error( true ? formatProdErrorMessage(13) : undefined);
     }
   });
 }
@@ -13194,8 +10582,8 @@ function combineReducers(reducers) {
       var nextStateForKey = reducer(previousStateForKey, action);
 
       if (typeof nextStateForKey === 'undefined') {
-        var errorMessage = getUndefinedStateErrorMessage(_key, action);
-        throw new Error(errorMessage);
+        var actionType = action && action.type;
+        throw new Error( true ? formatProdErrorMessage(14) : undefined);
       }
 
       nextState[_key] = nextStateForKey;
@@ -13241,7 +10629,7 @@ function bindActionCreators(actionCreators, dispatch) {
   }
 
   if (typeof actionCreators !== 'object' || actionCreators === null) {
-    throw new Error("bindActionCreators expected an object or a function, instead received " + (actionCreators === null ? 'null' : typeof actionCreators) + ". " + "Did you write \"import ActionCreators from\" instead of \"import * as ActionCreators from\"?");
+    throw new Error( true ? formatProdErrorMessage(16) : undefined);
   }
 
   var boundActionCreators = {};
@@ -13255,54 +10643,6 @@ function bindActionCreators(actionCreators, dispatch) {
   }
 
   return boundActionCreators;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    keys.push.apply(keys, Object.getOwnPropertySymbols(object));
-  }
-
-  if (enumerableOnly) keys = keys.filter(function (sym) {
-    return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-  });
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
 }
 
 /**
@@ -13364,7 +10704,7 @@ function applyMiddleware() {
       var store = createStore.apply(void 0, arguments);
 
       var _dispatch = function dispatch() {
-        throw new Error('Dispatching while constructing your middleware is not allowed. ' + 'Other middleware would not be applied to this dispatch.');
+        throw new Error( true ? formatProdErrorMessage(15) : undefined);
       };
 
       var middlewareAPI = {
@@ -13377,7 +10717,7 @@ function applyMiddleware() {
         return middleware(middlewareAPI);
       });
       _dispatch = compose.apply(void 0, chain)(store.dispatch);
-      return _objectSpread2({}, store, {
+      return _objectSpread2(_objectSpread2({}, store), {}, {
         dispatch: _dispatch
       });
     };
@@ -13397,7 +10737,7 @@ if (false) {}
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13670,13 +11010,13 @@ var asEffect = {
 };
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports) {
 
 module.exports = wp.data;
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13699,45 +11039,37 @@ module.exports = wp.data;
 /**
  * Internal dependencies
  */
-
-
-//
+ //
 // ─── MODAL DATA ─────────────────────────────────────────────────────────────────
 //
 
-var SET_MODAL_DATA = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_MODAL_DATA';
-var RESET_MODAL_DATA = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/RESET_MODAL_DATA';
-var SUBMIT_MODAL = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SUBMIT_MODAL';
-
-//
+const SET_MODAL_DATA = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_MODAL_DATA`;
+const RESET_MODAL_DATA = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/RESET_MODAL_DATA`;
+const SUBMIT_MODAL = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SUBMIT_MODAL`; //
 // ─── MODAL UI STATE ─────────────────────────────────────────────────────────────
 //
 
-var INITIALIZE_MODAL = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/INITIALIZE_MODAL';
-var SHOW_MODAL = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SHOW_MODAL';
-var HIDE_MODAL = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/HIDE_MODAL';
-
-//
+const INITIALIZE_MODAL = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/INITIALIZE_MODAL`;
+const SHOW_MODAL = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SHOW_MODAL`;
+const HIDE_MODAL = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/HIDE_MODAL`; //
 // ─── API ───────────────────────────────────────────────────────────────────────-
 //
 
-var FETCH_POST_TYPES = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_TYPES';
-var FETCH_POST_TYPES_SUCCESS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_TYPES_SUCCESS';
-var FETCH_POST_TYPES_ERROR = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_TYPES_ERROR';
-
-var FETCH_POST_CHOICES = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_CHOICES';
-var FETCH_POST_CHOICES_SUCCESS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_CHOICES_SUCCESS';
-var FETCH_POST_CHOICES_ERROR = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/FETCH_POST_CHOICES_ERROR';
-
-var MOVE_TICKET = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/MOVE_TICKET';
-var MOVE_TICKET_SUCCESS = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/MOVE_TICKET_SUCCESS';
-var MOVE_TICKET_ERROR = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/MOVE_TICKET_ERROR';
+const FETCH_POST_TYPES = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_TYPES`;
+const FETCH_POST_TYPES_SUCCESS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_TYPES_SUCCESS`;
+const FETCH_POST_TYPES_ERROR = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_TYPES_ERROR`;
+const FETCH_POST_CHOICES = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_CHOICES`;
+const FETCH_POST_CHOICES_SUCCESS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_CHOICES_SUCCESS`;
+const FETCH_POST_CHOICES_ERROR = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/FETCH_POST_CHOICES_ERROR`;
+const MOVE_TICKET = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/MOVE_TICKET`;
+const MOVE_TICKET_SUCCESS = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/MOVE_TICKET_SUCCESS`;
+const MOVE_TICKET_ERROR = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/MOVE_TICKET_ERROR`;
 
 /***/ }),
+/* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */,
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13766,81 +11098,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PREFIX", function() { return PREFIX; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SUFFIX", function() { return SUFFIX; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PRICE_POSITIONS", function() { return PRICE_POSITIONS; });
-/* harmony import */ var babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(25);
-/* harmony import */ var babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-
-
-var _PROVIDER_CLASS_TO_PR, _TICKET_ORDERS_PAGE_S, _TICKET_TYPES;
-
-var TC = 'tribe-commerce';
-var EDD = 'edd';
-var WOO = 'woo';
-var RSVP = 'rsvp';
-
-var RSVP_CLASS = 'Tribe__Tickets__RSVP';
-var TC_CLASS = 'Tribe__Tickets__Commerce__PayPal__Main';
-var EDD_CLASS = 'Tribe__Tickets_Plus__Commerce__EDD__Main';
-var WOO_CLASS = 'Tribe__Tickets_Plus__Commerce__WooCommerce__Main';
-
-var PROVIDER_CLASS_TO_PROVIDER_MAPPING = (_PROVIDER_CLASS_TO_PR = {}, babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_PROVIDER_CLASS_TO_PR, TC_CLASS, TC), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_PROVIDER_CLASS_TO_PR, EDD_CLASS, EDD), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_PROVIDER_CLASS_TO_PR, WOO_CLASS, WOO), _PROVIDER_CLASS_TO_PR);
-
-var PROVIDER_TYPES = [TC, EDD, WOO];
-
-var EDD_ORDERS = 'edd-orders';
-var TC_ORDERS = 'tpp-orders';
-var WOO_ORDERS = 'tickets-orders';
-
-var TICKET_ORDERS_PAGE_SLUG = (_TICKET_ORDERS_PAGE_S = {}, babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_ORDERS_PAGE_S, EDD_CLASS, EDD_ORDERS), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_ORDERS_PAGE_S, TC_CLASS, TC_ORDERS), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_ORDERS_PAGE_S, WOO_CLASS, WOO_ORDERS), _TICKET_ORDERS_PAGE_S);
-
-var UNLIMITED = 'unlimited';
-var SHARED = 'shared';
-var INDEPENDENT = 'independent';
-var CAPPED = 'capped';
-var OWN = 'own';
-
-var TICKET_TYPES_VALUES = [UNLIMITED, CAPPED, OWN];
-
-var TICKET_TYPES = (_TICKET_TYPES = {}, babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_TYPES, UNLIMITED, UNLIMITED), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_TYPES, SHARED, CAPPED), babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_TICKET_TYPES, INDEPENDENT, OWN), _TICKET_TYPES);
-
-var PREFIX = 'prefix';
-var SUFFIX = 'postfix';
-
-var PRICE_POSITIONS = [PREFIX, SUFFIX];
+const TC = 'tribe-commerce';
+const EDD = 'edd';
+const WOO = 'woo';
+const RSVP = 'rsvp';
+const RSVP_CLASS = 'Tribe__Tickets__RSVP';
+const TC_CLASS = 'Tribe__Tickets__Commerce__PayPal__Main';
+const EDD_CLASS = 'Tribe__Tickets_Plus__Commerce__EDD__Main';
+const WOO_CLASS = 'Tribe__Tickets_Plus__Commerce__WooCommerce__Main';
+const PROVIDER_CLASS_TO_PROVIDER_MAPPING = {
+  [TC_CLASS]: TC,
+  [EDD_CLASS]: EDD,
+  [WOO_CLASS]: WOO
+};
+const PROVIDER_TYPES = [TC, EDD, WOO];
+const EDD_ORDERS = 'edd-orders';
+const TC_ORDERS = 'tpp-orders';
+const WOO_ORDERS = 'tickets-orders';
+const TICKET_ORDERS_PAGE_SLUG = {
+  [EDD_CLASS]: EDD_ORDERS,
+  [TC_CLASS]: TC_ORDERS,
+  [WOO_CLASS]: WOO_ORDERS
+};
+const UNLIMITED = 'unlimited';
+const SHARED = 'shared';
+const INDEPENDENT = 'independent';
+const CAPPED = 'capped';
+const OWN = 'own';
+const TICKET_TYPES_VALUES = [UNLIMITED, CAPPED, OWN];
+const TICKET_TYPES = {
+  [UNLIMITED]: UNLIMITED,
+  [SHARED]: CAPPED,
+  [INDEPENDENT]: OWN
+};
+const PREFIX = 'prefix';
+const SUFFIX = 'postfix';
+const PRICE_POSITIONS = [PREFIX, SUFFIX];
 
 /***/ }),
+/* 23 */,
 /* 24 */,
 /* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(266);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-
-/***/ }),
-/* 26 */,
-/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13849,23 +11147,17 @@ exports.default = function (obj, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return createWPEditorSavingChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return createWPEditorNotSavingChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return createDates; });
-/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(12);
-/* harmony import */ var babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(112);
-/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash_some__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(18);
-/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(0);
-/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(73);
-/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(35);
-/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3);
-/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73);
+/* harmony import */ var lodash_some__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_some__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17);
+/* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(0);
+/* harmony import */ var redux_saga__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53);
+/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(30);
+/* harmony import */ var _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_data__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3);
+/* harmony import */ var _moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__);
 
-
-
-var _marked = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(isTribeEventPostType),
-    _marked2 = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(createDates);
 
 /* eslint-disable max-len */
 
@@ -13876,11 +11168,9 @@ var _marked = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0_
 
 
 
-
 /**
  * Internal dependencies
  */
-
 
 
 /*
@@ -13888,166 +11178,98 @@ var _marked = /*#__PURE__*/babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0_
  * @export
  * @returns {Boolean} bool
  */
-function isTribeEventPostType() {
-	var postType;
-	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function isTribeEventPostType$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_context.next = 2;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor'), 'getEditedPostAttribute'], 'type');
 
-				case 2:
-					postType = _context.sent;
-					return _context.abrupt('return', postType === _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_5__["editor"].EVENT);
-
-				case 4:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
+function* isTribeEventPostType() {
+  const postType = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])([Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["select"])('core/editor'), 'getEditedPostAttribute'], 'type');
+  return postType === _moderntribe_common_data__WEBPACK_IMPORTED_MODULE_4__["editor"].EVENT;
 }
-
 /**
  * Creates event channel subscribing to WP editor state when post type is loaded.
  * Used as post type is not available upon load in some cases, so some false negatives
  *
  * @returns {Function} Channel
  */
+
 function hasPostTypeChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+  return Object(redux_saga__WEBPACK_IMPORTED_MODULE_3__[/* eventChannel */ "b"])(emit => {
+    const wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["select"])('core/editor');
+    const predicates = [() => !!wpEditor.getEditedPostAttribute('type')]; // Returns unsubscribe function
 
-		var predicates = [function () {
-			return !!wpEditor.getEditedPostAttribute('type');
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
+    return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["subscribe"])(() => {
+      // Only emit when truthy
+      if (lodash_some__WEBPACK_IMPORTED_MODULE_0___default()(predicates, fn => fn())) {
+        emit(true); // Emitted value is insignificant here, but cannot be left undefined
+      }
+    });
+  });
 }
-
 /**
  * Creates event channel subscribing to WP editor state when saving post
  *
  * @returns {Function} Channel
  */
+
 function createWPEditorSavingChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+  return Object(redux_saga__WEBPACK_IMPORTED_MODULE_3__[/* eventChannel */ "b"])(emit => {
+    const wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["select"])('core/editor');
+    const predicates = [() => wpEditor.isSavingPost() && !wpEditor.isAutosavingPost()]; // Returns unsubscribe function
 
-		var predicates = [function () {
-			return wpEditor.isSavingPost() && !wpEditor.isAutosavingPost();
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
+    return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["subscribe"])(() => {
+      // Only emit when truthy
+      if (lodash_some__WEBPACK_IMPORTED_MODULE_0___default()(predicates, fn => fn())) {
+        emit(true); // Emitted value is insignificant here, but cannot be left undefined
+      }
+    });
+  });
 }
-
 /**
  * Creates event channel subscribing to WP editor state when not saving post
  *
  * @returns {Function} Channel
  */
+
 function createWPEditorNotSavingChannel() {
-	return Object(redux_saga__WEBPACK_IMPORTED_MODULE_4__[/* eventChannel */ "b"])(function (emit) {
-		var wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["select"])('core/editor');
+  return Object(redux_saga__WEBPACK_IMPORTED_MODULE_3__[/* eventChannel */ "b"])(emit => {
+    const wpEditor = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["select"])('core/editor');
+    const predicates = [() => !(wpEditor.isSavingPost() && !wpEditor.isAutosavingPost())]; // Returns unsubscribe function
 
-		var predicates = [function () {
-			return !(wpEditor.isSavingPost() && !wpEditor.isAutosavingPost());
-		}];
-
-		// Returns unsubscribe function
-		return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_2__["subscribe"])(function () {
-			// Only emit when truthy
-			if (lodash_some__WEBPACK_IMPORTED_MODULE_1___default()(predicates, function (fn) {
-				return fn();
-			})) {
-				emit(true); // Emitted value is insignificant here, but cannot be left undefined
-			}
-		});
-	});
+    return Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__["subscribe"])(() => {
+      // Only emit when truthy
+      if (lodash_some__WEBPACK_IMPORTED_MODULE_0___default()(predicates, fn => fn())) {
+        emit(true); // Emitted value is insignificant here, but cannot be left undefined
+      }
+    });
+  });
 }
-
 /**
  * Create date objects used throughout sagas
  *
  * @export
- * @param {String} date datetime string
- * @returns {Object} Object of dates/moments
+ * @yields
+ * @param {string} date datetime string
+ * @returns {object} Object of dates/moments
  */
-function createDates(date) {
-	var _ref, datepickerFormat, moment, currentDate, dateInput, time, timeInput;
 
-	return babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function createDates$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					_context2.next = 2;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])([_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["globals"], 'tecDateSettings']);
-
-				case 2:
-					_ref = _context2.sent;
-					datepickerFormat = _ref.datepickerFormat;
-					_context2.next = 6;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toMoment, date);
-
-				case 6:
-					moment = _context2.sent;
-					_context2.next = 9;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseDate, moment);
-
-				case 9:
-					currentDate = _context2.sent;
-					_context2.next = 12;
-					return datepickerFormat ? Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment, datepickerFormat) : Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDate, moment);
-
-				case 12:
-					dateInput = _context2.sent;
-					_context2.next = 15;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toDatabaseTime, moment);
-
-				case 15:
-					time = _context2.sent;
-					_context2.next = 18;
-					return Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_3__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_6__["moment"].toTime, moment);
-
-				case 18:
-					timeInput = _context2.sent;
-					return _context2.abrupt('return', {
-						moment: moment,
-						date: currentDate,
-						dateInput: dateInput,
-						time: time,
-						timeInput: timeInput
-					});
-
-				case 20:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
+function* createDates(date) {
+  const {
+    datepickerFormat
+  } = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])([_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["globals"], 'tecDateSettings']);
+  const moment = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toMoment, date);
+  const currentDate = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toDatabaseDate, moment);
+  const dateInput = yield datepickerFormat ? Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toDate, moment, datepickerFormat) : Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toDate, moment);
+  const time = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toDatabaseTime, moment);
+  const timeInput = yield Object(redux_saga_effects__WEBPACK_IMPORTED_MODULE_2__[/* call */ "b"])(_moderntribe_common_utils__WEBPACK_IMPORTED_MODULE_5__["moment"].toTime, moment);
+  return {
+    moment,
+    date: currentDate,
+    dateInput,
+    time,
+    timeInput
+  };
 }
 
 /***/ }),
-/* 28 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14060,8 +11282,8 @@ function createDates(date) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return eventChannel; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return stdChannel; });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7);
-/* harmony import */ var _buffers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(54);
-/* harmony import */ var _scheduler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(72);
+/* harmony import */ var _buffers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
+/* harmony import */ var _scheduler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(52);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
@@ -14262,7 +11484,7 @@ function stdChannel(subscribe) {
 }
 
 /***/ }),
-/* 29 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14286,133 +11508,53 @@ function stdChannel(subscribe) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return isModalSubmitting; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return getPostTypeOptionValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return hasSelectedPost; });
-/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(86);
+/* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(57);
 /* harmony import */ var lodash_find__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash_find__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6);
 /* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(reselect__WEBPACK_IMPORTED_MODULE_1__);
+
 
 /**
  * External dependencies
  */
 
-
-
-var getMove = function getMove(state) {
-	return state.tickets.move;
-};
-var _getUI = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, function (move) {
-	return move.ui;
-});
-var _getPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, function (move) {
-	return move.postTypes;
-});
-var _getPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, function (move) {
-	return move.posts;
-});
-var _getModal = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, function (move) {
-	return move.modal;
-});
-
-var isModalShowing = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getUI, function (ui) {
-	return ui.showModal;
-});
-var isFetchingPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPostTypes, function (postTypes) {
-	return postTypes.isFetching;
-});
-var isFetchingPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPosts, function (posts) {
-	return posts.isFetching;
-});
-
-var getPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPostTypes, function (postTypes) {
-	return postTypes.posts;
-});
-var getPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPosts, function (posts) {
-	return posts.posts;
-});
-
-var getPostTypeOptions = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getPostTypes, function (types) {
-	return Object.keys(types).map(function (type) {
-		return {
-			value: type,
-			label: types[type]
-		};
-	});
-});
-var getPostOptions = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getPosts, function (posts) {
-	return Object.keys(posts).map(function (post) {
-		return {
-			value: post,
-			label: posts[post]
-		};
-	});
-});
-
-var getModalPostType = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.post_type;
-});
-var getModalSearch = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.search_terms;
-});
-var getModalTarget = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.target_post_id;
-});
-var getModalTicketId = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.ticketId;
-});
-var getModalClientId = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.clientId;
-});
-var isModalSubmitting = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, function (modal) {
-	return modal.isSubmitting;
-});
-
-var getPostTypeOptionValue = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])([getPostTypeOptions, getModalPostType], function (postTypeOptions, postType) {
-	return lodash_find__WEBPACK_IMPORTED_MODULE_0___default()(postTypeOptions, ['value', postType]);
-});
-
-var hasSelectedPost = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])([getPostOptions, getModalTarget], function (posts, target) {
-	return !!(target && lodash_find__WEBPACK_IMPORTED_MODULE_0___default()(posts, ['value', target]));
-});
+const getMove = state => state.tickets.move;
+const _getUI = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, move => move.ui);
+const _getPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, move => move.postTypes);
+const _getPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, move => move.posts);
+const _getModal = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getMove, move => move.modal);
+const isModalShowing = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getUI, ui => ui.showModal);
+const isFetchingPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPostTypes, postTypes => postTypes.isFetching);
+const isFetchingPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPosts, posts => posts.isFetching);
+const getPostTypes = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPostTypes, postTypes => postTypes.posts);
+const getPosts = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getPosts, posts => posts.posts);
+const getPostTypeOptions = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getPostTypes, types => Object.keys(types).map(type => ({
+  value: type,
+  label: types[type]
+})));
+const getPostOptions = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(getPosts, posts => Object.keys(posts).map(post => ({
+  value: post,
+  label: posts[post]
+})));
+const getModalPostType = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.post_type);
+const getModalSearch = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.search_terms);
+const getModalTarget = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.target_post_id);
+const getModalTicketId = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.ticketId);
+const getModalClientId = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.clientId);
+const isModalSubmitting = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(_getModal, modal => modal.isSubmitting);
+const getPostTypeOptionValue = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])([getPostTypeOptions, getModalPostType], (postTypeOptions, postType) => lodash_find__WEBPACK_IMPORTED_MODULE_0___default()(postTypeOptions, ['value', postType]));
+const hasSelectedPost = Object(reselect__WEBPACK_IMPORTED_MODULE_1__["createSelector"])([getPostOptions, getModalTarget], (posts, target) => !!(target && lodash_find__WEBPACK_IMPORTED_MODULE_0___default()(posts, ['value', target])));
 
 /***/ }),
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */
+/* 28 */,
+/* 29 */,
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = tribe.common.data;
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.6.12' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__(90)('wks');
-var uid = __webpack_require__(76);
-var Symbol = __webpack_require__(41).Symbol;
-var USE_SYMBOL = typeof Symbol == 'function';
-
-var $exports = module.exports = function (name) {
-  return store[name] || (store[name] =
-    USE_SYMBOL && Symbol[name] || (USE_SYMBOL ? Symbol : uid)('Symbol.' + name));
-};
-
-$exports.store = store;
-
-
-/***/ }),
-/* 38 */,
-/* 39 */
+/* 31 */
 /***/ (function(module, exports) {
 
 /**
@@ -14444,7 +11586,7 @@ module.exports = isArray;
 
 
 /***/ }),
-/* 40 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14453,126 +11595,23 @@ module.exports = isArray;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SET_ATTENDEES_DISPLAY_TITLE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SET_ATTENDEES_DISPLAY_SUBTITLE; });
 /* harmony import */ var _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8);
+/* eslint-disable max-len */
+
 /**
  * Internal dependencies
  */
 
-
-var SET_ATTENDEES_INITIAL_STATE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_INITIAL_STATE';
-
-var SET_ATTENDEES_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_TITLE';
-
-var SET_ATTENDEES_DISPLAY_TITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_TITLE';
-
-var SET_ATTENDEES_DISPLAY_SUBTITLE = _moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"] + '/SET_ATTENDEES_DISPLAY_SUBTITLE';
+const SET_ATTENDEES_INITIAL_STATE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_ATTENDEES_INITIAL_STATE`;
+const SET_ATTENDEES_TITLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_ATTENDEES_TITLE`;
+const SET_ATTENDEES_DISPLAY_TITLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_ATTENDEES_DISPLAY_TITLE`;
+const SET_ATTENDEES_DISPLAY_SUBTITLE = `${_moderntribe_tickets_data_utils__WEBPACK_IMPORTED_MODULE_0__[/* PREFIX_TICKETS_STORE */ "n"]}/SET_ATTENDEES_DISPLAY_SUBTITLE`;
 
 /***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 42 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(64)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 43 */,
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(47);
-var IE8_DOM_DEFINE = __webpack_require__(239);
-var toPrimitive = __webpack_require__(98);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(42) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _isIterable2 = __webpack_require__(302);
-
-var _isIterable3 = _interopRequireDefault(_isIterable2);
-
-var _getIterator2 = __webpack_require__(308);
-
-var _getIterator3 = _interopRequireDefault(_getIterator2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-  function sliceIterator(arr, i) {
-    var _arr = [];
-    var _n = true;
-    var _d = false;
-    var _e = undefined;
-
-    try {
-      for (var _i = (0, _getIterator3.default)(arr), _s; !(_n = (_s = _i.next()).done); _n = true) {
-        _arr.push(_s.value);
-
-        if (i && _arr.length === i) break;
-      }
-    } catch (err) {
-      _d = true;
-      _e = err;
-    } finally {
-      try {
-        if (!_n && _i["return"]) _i["return"]();
-      } finally {
-        if (_d) throw _e;
-      }
-    }
-
-    return _arr;
-  }
-
-  return function (arr, i) {
-    if (Array.isArray(arr)) {
-      return arr;
-    } else if ((0, _isIterable3.default)(Object(arr))) {
-      return sliceIterator(arr, i);
-    } else {
-      throw new TypeError("Invalid attempt to destructure non-iterable instance");
-    }
-  };
-}();
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var freeGlobal = __webpack_require__(284);
+var freeGlobal = __webpack_require__(216);
 
 /** Detect free variable `self`. */
 var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -14584,117 +11623,8 @@ module.exports = root;
 
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(56);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(41);
-var core = __webpack_require__(36);
-var ctx = __webpack_require__(97);
-var hide = __webpack_require__(50);
-var has = __webpack_require__(48);
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && has(exports, key)) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(44);
-var createDesc = __webpack_require__(68);
-module.exports = __webpack_require__(42) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports) {
-
-module.exports = {};
-
-
-/***/ }),
-/* 52 */
+/* 35 */,
+/* 36 */
 /***/ (function(module, exports) {
 
 /**
@@ -14729,7 +11659,7 @@ module.exports = isObjectLike;
 
 
 /***/ }),
-/* 53 */
+/* 37 */
 /***/ (function(module, exports) {
 
 /**
@@ -14766,7 +11696,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 54 */
+/* 38 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14877,7 +11807,7 @@ var buffers = {
 };
 
 /***/ }),
-/* 55 */
+/* 39 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14885,74 +11815,41 @@ var buffers = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setDisplayTitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return setDisplaySubtitle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setInitialState; });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(32);
 /**
  * Internal dependencies
  */
 
-
-var setTitle = function setTitle(title) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_TITLE */ "d"],
-		payload: {
-			title: title
-		}
-	};
-};
-
-var setDisplayTitle = function setDisplayTitle(displayTitle) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_DISPLAY_TITLE */ "b"],
-		payload: {
-			displayTitle: displayTitle
-		}
-	};
-};
-
-var setDisplaySubtitle = function setDisplaySubtitle(displaySubtitle) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_DISPLAY_SUBTITLE */ "a"],
-		payload: {
-			displaySubtitle: displaySubtitle
-		}
-	};
-};
-
-var setInitialState = function setInitialState(payload) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_INITIAL_STATE */ "c"],
-		payload: payload
-	};
-};
+const setTitle = title => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_TITLE */ "d"],
+  payload: {
+    title
+  }
+});
+const setDisplayTitle = displayTitle => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_DISPLAY_TITLE */ "b"],
+  payload: {
+    displayTitle
+  }
+});
+const setDisplaySubtitle = displaySubtitle => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_DISPLAY_SUBTITLE */ "a"],
+  payload: {
+    displaySubtitle
+  }
+});
+const setInitialState = payload => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_ATTENDEES_INITIAL_STATE */ "c"],
+  payload
+});
 
 /***/ }),
-/* 56 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 57 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(114);
-var defined = __webpack_require__(79);
-module.exports = function (it) {
-  return IObject(defined(it));
-};
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeKeys = __webpack_require__(290),
-    baseKeys = __webpack_require__(323),
-    isArrayLike = __webpack_require__(69);
+var arrayLikeKeys = __webpack_require__(221),
+    baseKeys = __webpack_require__(242),
+    isArrayLike = __webpack_require__(49);
 
 /**
  * Creates an array of the own enumerable property names of `object`.
@@ -14990,7 +11887,7 @@ module.exports = keys;
 
 
 /***/ }),
-/* 59 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15056,10 +11953,10 @@ function fsmIterator(fsm, q0) {
   }, name, true);
 }
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/io.js
-var io = __webpack_require__(17);
+var io = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/channel.js
-var internal_channel = __webpack_require__(28);
+var internal_channel = __webpack_require__(26);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/takeEvery.js
 
@@ -15130,7 +12027,7 @@ function takeLatest(patternOrChannel, worker) {
   }, 'q1', 'takeLatest(' + safeName(patternOrChannel) + ', ' + worker.name + ')');
 }
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/buffers.js
-var buffers = __webpack_require__(54);
+var buffers = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/throttle.js
 
@@ -15196,51 +12093,7 @@ var sagaHelpers_throttle = /*#__PURE__*/Object(utils["k" /* deprecate */])(throt
 
 
 /***/ }),
-/* 60 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DEFAULT_STATE; });
-/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(13);
-/**
- * Internal dependencies
- */
-
-
-/**
- * Full payload from gutenberg media upload is not used,
- * only id, alt, and src are used for this specific case.
- */
-var DEFAULT_STATE = {
-	id: 0,
-	src: '',
-	alt: ''
-};
-
-/* harmony default export */ __webpack_exports__["b"] = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
-
-	switch (action.type) {
-		case _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HEADER_IMAGE:
-			return {
-				id: action.payload.id,
-				src: action.payload.src,
-				alt: action.payload.alt
-			};
-		default:
-			return state;
-	}
-});
-
-/***/ }),
-/* 61 */
-/***/ (function(module, exports) {
-
-module.exports = tribe.common.store;
-
-/***/ }),
-/* 62 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15250,53 +12103,40 @@ module.exports = tribe.common.store;
  * Internal dependencies
  */
 
-
 /**
  * Full payload from gutenberg media upload is not used,
  * only id, alt, and src are used for this specific case.
  */
-var DEFAULT_STATE = {
-	id: 0,
-	src: '',
-	alt: ''
+
+const DEFAULT_STATE = {
+  id: 0,
+  src: '',
+  alt: ''
 };
-
 /* harmony default export */ __webpack_exports__["b"] = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case _moderntribe_tickets_data_blocks_ticket_types__WEBPACK_IMPORTED_MODULE_0__["SET_TICKETS_HEADER_IMAGE"]:
-			return {
-				id: action.payload.id,
-				src: action.payload.src,
-				alt: action.payload.alt
-			};
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case _moderntribe_tickets_data_blocks_ticket_types__WEBPACK_IMPORTED_MODULE_0__["SET_TICKETS_HEADER_IMAGE"]:
+      return {
+        id: action.payload.id,
+        src: action.payload.src,
+        alt: action.payload.alt
+      };
+
+    default:
+      return state;
+  }
 });
 
 /***/ }),
-/* 63 */,
-/* 64 */
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-
-/***/ }),
-/* 65 */
+/* 43 */,
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(347),
-    getValue = __webpack_require__(352);
+var baseIsNative = __webpack_require__(259),
+    getValue = __webpack_require__(265);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -15315,12 +12155,12 @@ module.exports = getNative;
 
 
 /***/ }),
-/* 66 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71),
-    getRawTag = __webpack_require__(348),
-    objectToString = __webpack_require__(349);
+var Symbol = __webpack_require__(51),
+    getRawTag = __webpack_require__(261),
+    objectToString = __webpack_require__(262);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -15349,26 +12189,56 @@ module.exports = baseGetTag;
 
 
 /***/ }),
-/* 67 */,
-/* 68 */
+/* 46 */
 /***/ (function(module, exports) {
 
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
+module.exports = tribe.common.store;
 
 /***/ }),
-/* 69 */
+/* 47 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DEFAULT_STATE; });
+/* harmony import */ var _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(11);
+/**
+ * Internal dependencies
+ */
+
+/**
+ * Full payload from gutenberg media upload is not used,
+ * only id, alt, and src are used for this specific case.
+ */
+
+const DEFAULT_STATE = {
+  id: 0,
+  src: '',
+  alt: ''
+};
+/* harmony default export */ __webpack_exports__["b"] = (function () {
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _moderntribe_tickets_data_blocks_rsvp__WEBPACK_IMPORTED_MODULE_0__[/* types */ "f"].SET_RSVP_HEADER_IMAGE:
+      return {
+        id: action.payload.id,
+        src: action.payload.src,
+        alt: action.payload.alt
+      };
+
+    default:
+      return state;
+  }
+});
+
+/***/ }),
+/* 48 */,
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(283),
-    isLength = __webpack_require__(249);
+var isFunction = __webpack_require__(215),
+    isLength = __webpack_require__(200);
 
 /**
  * Checks if `value` is array-like. A value is considered array-like if it's
@@ -15403,45 +12273,40 @@ module.exports = isArrayLike;
 
 
 /***/ }),
-/* 70 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return showModal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return hideModal; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return setModalData; });
-/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(19);
+/* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(18);
 /* eslint-disable camelcase */
+
 /**
  * Internal Dependencies
  */
 
-
-var showModal = function showModal(ticketId, clientId) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SHOW_MODAL */ "n"],
-		payload: { ticketId: ticketId, clientId: clientId }
-	};
-};
-
-var hideModal = function hideModal() {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* HIDE_MODAL */ "g"]
-	};
-};
-
-var setModalData = function setModalData(payload) {
-	return {
-		type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_MODAL_DATA */ "m"],
-		payload: payload
-	};
-};
+const showModal = (ticketId, clientId) => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SHOW_MODAL */ "n"],
+  payload: {
+    ticketId,
+    clientId
+  }
+});
+const hideModal = () => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* HIDE_MODAL */ "g"]
+});
+const setModalData = payload => ({
+  type: _types__WEBPACK_IMPORTED_MODULE_0__[/* SET_MODAL_DATA */ "m"],
+  payload
+});
 
 /***/ }),
-/* 71 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(46);
+var root = __webpack_require__(34);
 
 /** Built-in value references. */
 var Symbol = root.Symbol;
@@ -15450,7 +12315,7 @@ module.exports = Symbol;
 
 
 /***/ }),
-/* 72 */
+/* 52 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15521,7 +12386,7 @@ function flush() {
 }
 
 /***/ }),
-/* 73 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15536,16 +12401,16 @@ __webpack_require__.d(__webpack_exports__, "a", function() { return /* reexport 
 var utils = __webpack_require__(7);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/channel.js
-var internal_channel = __webpack_require__(28);
+var internal_channel = __webpack_require__(26);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/scheduler.js
-var scheduler = __webpack_require__(72);
+var scheduler = __webpack_require__(52);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/io.js
-var io = __webpack_require__(17);
+var io = __webpack_require__(16);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/buffers.js
-var buffers = __webpack_require__(54);
+var buffers = __webpack_require__(38);
 
 // CONCATENATED MODULE: ./node_modules/redux-saga/es/internal/proc.js
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -16445,7 +13310,7 @@ function sagaMiddlewareFactory() {
   return sagaMiddleware;
 }
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/internal/sagaHelpers/index.js + 4 modules
-var sagaHelpers = __webpack_require__(59);
+var sagaHelpers = __webpack_require__(41);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
 var es_effects = __webpack_require__(0);
@@ -16471,114 +13336,7 @@ var es_effects = __webpack_require__(0);
 
 
 /***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(240);
-var enumBugKeys = __webpack_require__(91);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-module.exports = true;
-
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(79);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $at = __webpack_require__(278)(true);
-
-// 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(233)(String, 'String', function (iterated) {
-  this._t = String(iterated); // target
-  this._i = 0;                // next index
-// 21.1.5.2.1 %StringIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var index = this._i;
-  var point;
-  if (index >= O.length) return { value: undefined, done: true };
-  point = $at(O, index);
-  this._i += point.length;
-  return { value: point, done: false };
-});
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var shared = __webpack_require__(90)('keys');
-var uid = __webpack_require__(76);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
-};
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 83 */
+/* 54 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -16606,11 +13364,11 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 84 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assignValue = __webpack_require__(287),
-    baseAssignValue = __webpack_require__(288);
+var assignValue = __webpack_require__(218),
+    baseAssignValue = __webpack_require__(219);
 
 /**
  * Copies properties of `source` to `object`.
@@ -16652,10 +13410,10 @@ module.exports = copyObject;
 
 
 /***/ }),
-/* 85 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isSymbol = __webpack_require__(107);
+var isSymbol = __webpack_require__(68);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -16679,11 +13437,11 @@ module.exports = toKey;
 
 
 /***/ }),
-/* 86 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createFind = __webpack_require__(423),
-    findIndex = __webpack_require__(444);
+var createFind = __webpack_require__(337),
+    findIndex = __webpack_require__(358);
 
 /**
  * Iterates over elements of `collection`, returning the first element
@@ -16727,18 +13485,16 @@ module.exports = find;
 
 
 /***/ }),
-/* 87 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToString = __webpack_require__(299),
-    castSlice = __webpack_require__(414),
-    charsEndIndex = __webpack_require__(415),
-    charsStartIndex = __webpack_require__(418),
-    stringToArray = __webpack_require__(419),
-    toString = __webpack_require__(298);
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
+var baseToString = __webpack_require__(230),
+    baseTrim = __webpack_require__(233),
+    castSlice = __webpack_require__(328),
+    charsEndIndex = __webpack_require__(329),
+    charsStartIndex = __webpack_require__(332),
+    stringToArray = __webpack_require__(333),
+    toString = __webpack_require__(229);
 
 /**
  * Removes leading and trailing whitespace or specified characters from `string`.
@@ -16765,7 +13521,7 @@ var reTrim = /^\s+|\s+$/g;
 function trim(string, chars, guard) {
   string = toString(string);
   if (string && (guard || chars === undefined)) {
-    return string.replace(reTrim, '');
+    return baseTrim(string);
   }
   if (!string || !(chars = baseToString(chars))) {
     return string;
@@ -16782,69 +13538,17 @@ module.exports = trim;
 
 
 /***/ }),
-/* 88 */,
-/* 89 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-/* 90 */
+/* 59 */,
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var core = __webpack_require__(36);
-var global = __webpack_require__(41);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-
-(module.exports = function (key, value) {
-  return store[key] || (store[key] = value !== undefined ? value : {});
-})('versions', []).push({
-  version: core.version,
-  mode: __webpack_require__(75) ? 'pure' : 'global',
-  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
-});
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var def = __webpack_require__(44).f;
-var has = __webpack_require__(48);
-var TAG = __webpack_require__(37)('toStringTag');
-
-module.exports = function (it, tag, stat) {
-  if (it && !has(it = stat ? it : it.prototype, TAG)) def(it, TAG, { configurable: true, value: tag });
-};
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var DataView = __webpack_require__(380),
-    Map = __webpack_require__(246),
-    Promise = __webpack_require__(381),
-    Set = __webpack_require__(382),
-    WeakMap = __webpack_require__(383),
-    baseGetTag = __webpack_require__(66),
-    toSource = __webpack_require__(286);
+var DataView = __webpack_require__(293),
+    Map = __webpack_require__(197),
+    Promise = __webpack_require__(294),
+    Set = __webpack_require__(295),
+    WeakMap = __webpack_require__(296),
+    baseGetTag = __webpack_require__(45),
+    toSource = __webpack_require__(217);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -16899,139 +13603,15 @@ module.exports = getTag;
 
 
 /***/ }),
-/* 94 */
+/* 61 */,
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(304);
-var global = __webpack_require__(41);
-var hide = __webpack_require__(50);
-var Iterators = __webpack_require__(51);
-var TO_STRING_TAG = __webpack_require__(37)('toStringTag');
-
-var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
-  'DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,' +
-  'MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,' +
-  'SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,' +
-  'TextTrackList,TouchList').split(',');
-
-for (var i = 0; i < DOMIterables.length; i++) {
-  var NAME = DOMIterables[i];
-  var Collection = global[NAME];
-  var proto = Collection && Collection.prototype;
-  if (proto && !proto[TO_STRING_TAG]) hide(proto, TO_STRING_TAG, NAME);
-  Iterators[NAME] = Iterators.Array;
-}
-
-
-/***/ }),
-/* 95 */,
-/* 96 */,
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(270);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(56);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports) {
-
-exports.f = Object.getOwnPropertySymbols;
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(47);
-var dPs = __webpack_require__(280);
-var enumBugKeys = __webpack_require__(91);
-var IE_PROTO = __webpack_require__(81)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(113)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(281).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var listCacheClear = __webpack_require__(337),
-    listCacheDelete = __webpack_require__(338),
-    listCacheGet = __webpack_require__(339),
-    listCacheHas = __webpack_require__(340),
-    listCacheSet = __webpack_require__(341);
+var listCacheClear = __webpack_require__(249),
+    listCacheDelete = __webpack_require__(250),
+    listCacheGet = __webpack_require__(251),
+    listCacheHas = __webpack_require__(252),
+    listCacheSet = __webpack_require__(253);
 
 /**
  * Creates an list cache object.
@@ -17062,10 +13642,10 @@ module.exports = ListCache;
 
 
 /***/ }),
-/* 102 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(103);
+var eq = __webpack_require__(64);
 
 /**
  * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -17089,7 +13669,7 @@ module.exports = assocIndexOf;
 
 
 /***/ }),
-/* 103 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -17132,10 +13712,10 @@ module.exports = eq;
 
 
 /***/ }),
-/* 104 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65);
+var getNative = __webpack_require__(44);
 
 /* Built-in method references that are verified to be native. */
 var nativeCreate = getNative(Object, 'create');
@@ -17144,10 +13724,10 @@ module.exports = nativeCreate;
 
 
 /***/ }),
-/* 105 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isKeyable = __webpack_require__(361);
+var isKeyable = __webpack_require__(274);
 
 /**
  * Gets the data for `map`.
@@ -17168,13 +13748,13 @@ module.exports = getMapData;
 
 
 /***/ }),
-/* 106 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(39),
-    isKey = __webpack_require__(257),
-    stringToPath = __webpack_require__(397),
-    toString = __webpack_require__(298);
+var isArray = __webpack_require__(31),
+    isKey = __webpack_require__(208),
+    stringToPath = __webpack_require__(310),
+    toString = __webpack_require__(229);
 
 /**
  * Casts `value` to a path array if it's not one.
@@ -17195,11 +13775,11 @@ module.exports = castPath;
 
 
 /***/ }),
-/* 107 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(66),
-    isObjectLike = __webpack_require__(52);
+var baseGetTag = __webpack_require__(45),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var symbolTag = '[object Symbol]';
@@ -17230,8 +13810,8 @@ module.exports = isSymbol;
 
 
 /***/ }),
-/* 108 */,
-/* 109 */
+/* 69 */,
+/* 70 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -17245,38 +13825,26 @@ module.exports = isSymbol;
  * External dependencies
  */
 
-
-var getAttendeesBlock = function getAttendeesBlock(state) {
-	return state.tickets.blocks.attendees;
-};
-
-var getTitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], function (attendees) {
-	return attendees.title;
-});
-
-var getDisplayTitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], function (attendees) {
-	return attendees.displayTitle;
-});
-
-var getDisplaySubtitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], function (attendees) {
-	return attendees.displaySubtitle;
-});
+const getAttendeesBlock = state => state.tickets.blocks.attendees;
+const getTitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], attendees => attendees.title);
+const getDisplayTitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], attendees => attendees.displayTitle);
+const getDisplaySubtitle = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])([getAttendeesBlock], attendees => attendees.displaySubtitle);
 
 /***/ }),
-/* 110 */
+/* 71 */
 /***/ (function(module, exports) {
 
 module.exports = wp.blocks;
 
 /***/ }),
-/* 111 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(259),
-    isArrayLike = __webpack_require__(69),
-    isString = __webpack_require__(448),
-    toInteger = __webpack_require__(317),
-    values = __webpack_require__(449);
+var baseIndexOf = __webpack_require__(210),
+    isArrayLike = __webpack_require__(49),
+    isString = __webpack_require__(361),
+    toInteger = __webpack_require__(240),
+    values = __webpack_require__(362);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -17328,14 +13896,14 @@ module.exports = includes;
 
 
 /***/ }),
-/* 112 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arraySome = __webpack_require__(314),
-    baseIteratee = __webpack_require__(260),
-    baseSome = __webpack_require__(451),
-    isArray = __webpack_require__(39),
-    isIterateeCall = __webpack_require__(457);
+var arraySome = __webpack_require__(237),
+    baseIteratee = __webpack_require__(211),
+    baseSome = __webpack_require__(364),
+    isArray = __webpack_require__(31),
+    isIterateeCall = __webpack_require__(370);
 
 /**
  * Checks if `predicate` returns truthy for **any** element of `collection`.
@@ -17385,32 +13953,7 @@ module.exports = some;
 
 
 /***/ }),
-/* 113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(56);
-var document = __webpack_require__(41).document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(89);
-// eslint-disable-next-line no-prototype-builtins
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-
-/***/ }),
-/* 115 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17418,7 +13961,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 //! author : Werner Mollentze : https://github.com/wernerm
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17487,7 +14030,7 @@ return af;
 
 
 /***/ }),
-/* 116 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17497,7 +14040,7 @@ return af;
 //! author : forabi https://github.com/forabi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17633,7 +14176,7 @@ return ar;
 
 
 /***/ }),
-/* 117 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17641,7 +14184,7 @@ return ar;
 //! author : Noureddine LOUAHEDJ : https://github.com/noureddineme
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17696,7 +14239,7 @@ return arDz;
 
 
 /***/ }),
-/* 118 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17704,7 +14247,7 @@ return arDz;
 //! author : Nusret Parlak: https://github.com/nusretparlak
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17759,7 +14302,7 @@ return arKw;
 
 
 /***/ }),
-/* 119 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17767,7 +14310,7 @@ return arKw;
 //! author : Ali Hmer: https://github.com/kikoanis
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17889,7 +14432,7 @@ return arLy;
 
 
 /***/ }),
-/* 120 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17898,7 +14441,7 @@ return arLy;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -17953,7 +14496,7 @@ return arMa;
 
 
 /***/ }),
-/* 121 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17961,7 +14504,7 @@ return arMa;
 //! author : Suhail Alkowaileet : https://github.com/xsoh
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18062,7 +14605,7 @@ return arSa;
 
 
 /***/ }),
-/* 122 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18070,7 +14613,7 @@ return arSa;
 //! author : Nader Toukabri : https://github.com/naderio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18125,7 +14668,7 @@ return arTn;
 
 
 /***/ }),
-/* 123 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18133,7 +14676,7 @@ return arTn;
 //! author : topchiyev : https://github.com/topchiyev
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18234,7 +14777,7 @@ return az;
 
 
 /***/ }),
-/* 124 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18244,7 +14787,7 @@ return az;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18372,7 +14915,7 @@ return be;
 
 
 /***/ }),
-/* 125 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18380,7 +14923,7 @@ return be;
 //! author : Krasen Borisov : https://github.com/kraz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18466,7 +15009,7 @@ return bg;
 
 
 /***/ }),
-/* 126 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18474,7 +15017,7 @@ return bg;
 //! author : Estelle Comment : https://github.com/estellecomment
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18529,7 +15072,7 @@ return bm;
 
 
 /***/ }),
-/* 127 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18537,7 +15080,7 @@ return bm;
 //! author : Kaushik Gandhi : https://github.com/kaushikgandhi
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18652,7 +15195,7 @@ return bn;
 
 
 /***/ }),
-/* 128 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18660,7 +15203,7 @@ return bn;
 //! author : Thupten N. Chakrishar : https://github.com/vajradog
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18775,7 +15318,7 @@ return bo;
 
 
 /***/ }),
-/* 129 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18783,7 +15326,7 @@ return bo;
 //! author : Jean-Baptiste Le Duigou : https://github.com/jbleduigou
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -18887,7 +15430,7 @@ return br;
 
 
 /***/ }),
-/* 130 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -18896,7 +15439,7 @@ return br;
 //! based on (hr) translation by Bojan Marković
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19034,7 +15577,7 @@ return bs;
 
 
 /***/ }),
-/* 131 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19042,7 +15585,7 @@ return bs;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19126,7 +15669,7 @@ return ca;
 
 
 /***/ }),
-/* 132 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19134,7 +15677,7 @@ return ca;
 //! author : petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19302,7 +15845,7 @@ return cs;
 
 
 /***/ }),
-/* 133 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19310,7 +15853,7 @@ return cs;
 //! author : Anatoly Mironov : https://github.com/mirontoli
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19369,7 +15912,7 @@ return cv;
 
 
 /***/ }),
-/* 134 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19378,7 +15921,7 @@ return cv;
 //! author : https://github.com/ryangreaves
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19454,7 +15997,7 @@ return cy;
 
 
 /***/ }),
-/* 135 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19462,7 +16005,7 @@ return cy;
 //! author : Ulrik Nielsen : https://github.com/mrbase
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19518,7 +16061,7 @@ return da;
 
 
 /***/ }),
-/* 136 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19528,7 +16071,7 @@ return da;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19600,7 +16143,7 @@ return de;
 
 
 /***/ }),
-/* 137 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19611,7 +16154,7 @@ return de;
 //! author : Mikolaj Dadela : https://github.com/mik01aj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19683,7 +16226,7 @@ return deAt;
 
 
 /***/ }),
-/* 138 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19691,7 +16234,7 @@ return deAt;
 //! author : sschueller : https://github.com/sschueller
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19765,7 +16308,7 @@ return deCh;
 
 
 /***/ }),
-/* 139 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19773,7 +16316,7 @@ return deCh;
 //! author : Jawish Hameed : https://github.com/jawish
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19869,7 +16412,7 @@ return dv;
 
 
 /***/ }),
-/* 140 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19877,7 +16420,7 @@ return dv;
 //! author : Aggelos Karalias : https://github.com/mehiel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -19973,7 +16516,7 @@ return el;
 
 
 /***/ }),
-/* 141 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -19981,7 +16524,7 @@ return el;
 //! author : Jared Morse : https://github.com/jarcoal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20044,7 +16587,7 @@ return enAu;
 
 
 /***/ }),
-/* 142 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20052,7 +16595,7 @@ return enAu;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20111,7 +16654,7 @@ return enCa;
 
 
 /***/ }),
-/* 143 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20119,7 +16662,7 @@ return enCa;
 //! author : Chris Gedrim : https://github.com/chrisgedrim
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20182,7 +16725,7 @@ return enGb;
 
 
 /***/ }),
-/* 144 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20190,7 +16733,7 @@ return enGb;
 //! author : Chris Cartlidge : https://github.com/chriscartlidge
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20253,7 +16796,7 @@ return enIe;
 
 
 /***/ }),
-/* 145 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20261,7 +16804,7 @@ return enIe;
 //! author : Luke McGregor : https://github.com/lukemcgregor
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20324,7 +16867,7 @@ return enNz;
 
 
 /***/ }),
-/* 146 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20334,7 +16877,7 @@ return enNz;
 //! comment : miestasmia corrected the translation by colindean
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20401,7 +16944,7 @@ return eo;
 
 
 /***/ }),
-/* 147 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20409,7 +16952,7 @@ return eo;
 //! author : Julio Napurí : https://github.com/julionc
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20497,14 +17040,14 @@ return es;
 
 
 /***/ }),
-/* 148 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
 //! locale : Spanish (Dominican Republic) [es-do]
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20592,7 +17135,7 @@ return esDo;
 
 
 /***/ }),
-/* 149 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20600,7 +17143,7 @@ return esDo;
 //! author : bustta : https://github.com/bustta
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20679,7 +17222,7 @@ return esUs;
 
 
 /***/ }),
-/* 150 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20688,7 +17231,7 @@ return esUs;
 //! improvements : Illimar Tambek : https://github.com/ragulka
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20763,7 +17306,7 @@ return et;
 
 
 /***/ }),
-/* 151 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20771,7 +17314,7 @@ return et;
 //! author : Eneko Illarramendi : https://github.com/eillarra
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20833,7 +17376,7 @@ return eu;
 
 
 /***/ }),
-/* 152 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20841,7 +17384,7 @@ return eu;
 //! author : Ebrahim Byagowi : https://github.com/ebraminio
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -20944,7 +17487,7 @@ return fa;
 
 
 /***/ }),
-/* 153 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -20952,7 +17495,7 @@ return fa;
 //! author : Tarmo Aidantausta : https://github.com/bleadof
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21055,7 +17598,7 @@ return fi;
 
 
 /***/ }),
-/* 154 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21063,7 +17606,7 @@ return fi;
 //! author : Ragnar Johannesen : https://github.com/ragnar123
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21119,7 +17662,7 @@ return fo;
 
 
 /***/ }),
-/* 155 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21127,7 +17670,7 @@ return fo;
 //! author : John Fischer : https://github.com/jfroffice
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21206,7 +17749,7 @@ return fr;
 
 
 /***/ }),
-/* 156 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21214,7 +17757,7 @@ return fr;
 //! author : Jonathan Abourbih : https://github.com/jonbca
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21284,7 +17827,7 @@ return frCa;
 
 
 /***/ }),
-/* 157 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21292,7 +17835,7 @@ return frCa;
 //! author : Gaspard Bucher : https://github.com/gaspard
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21366,7 +17909,7 @@ return frCh;
 
 
 /***/ }),
-/* 158 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21374,7 +17917,7 @@ return frCh;
 //! author : Robin van der Vliet : https://github.com/robin0van0der0v
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21445,7 +17988,7 @@ return fy;
 
 
 /***/ }),
-/* 159 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21453,7 +17996,7 @@ return fy;
 //! author : Jon Ashdown : https://github.com/jonashdown
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21525,7 +18068,7 @@ return gd;
 
 
 /***/ }),
-/* 160 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21533,7 +18076,7 @@ return gd;
 //! author : Juan G. Hurtado : https://github.com/juanghurtado
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21606,7 +18149,7 @@ return gl;
 
 
 /***/ }),
-/* 161 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21614,7 +18157,7 @@ return gl;
 //! author : The Discoverer : https://github.com/WikiDiscoverer
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21732,7 +18275,7 @@ return gomLatn;
 
 
 /***/ }),
-/* 162 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21740,7 +18283,7 @@ return gomLatn;
 //! author : Kaushik Thanki : https://github.com/Kaushik1987
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21860,7 +18403,7 @@ return gu;
 
 
 /***/ }),
-/* 163 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21870,7 +18413,7 @@ return gu;
 //! author : Tal Ater : https://github.com/TalAter
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -21963,7 +18506,7 @@ return he;
 
 
 /***/ }),
-/* 164 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -21971,7 +18514,7 @@ return he;
 //! author : Mayank Singhal : https://github.com/mayanksinghal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22091,7 +18634,7 @@ return hi;
 
 
 /***/ }),
-/* 165 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22099,7 +18642,7 @@ return hi;
 //! author : Bojan Marković : https://github.com/bmarkovic
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22240,7 +18783,7 @@ return hr;
 
 
 /***/ }),
-/* 166 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22248,7 +18791,7 @@ return hr;
 //! author : Adam Brunner : https://github.com/adambrunner
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22352,7 +18895,7 @@ return hu;
 
 
 /***/ }),
-/* 167 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22360,7 +18903,7 @@ return hu;
 //! author : Armendarabyan : https://github.com/armendarabyan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22451,7 +18994,7 @@ return hyAm;
 
 
 /***/ }),
-/* 168 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22460,7 +19003,7 @@ return hyAm;
 //! reference: http://id.wikisource.org/wiki/Pedoman_Umum_Ejaan_Bahasa_Indonesia_yang_Disempurnakan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22538,7 +19081,7 @@ return id;
 
 
 /***/ }),
-/* 169 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22546,7 +19089,7 @@ return id;
 //! author : Hinrik Örn Sigurðsson : https://github.com/hinrik
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22669,7 +19212,7 @@ return is;
 
 
 /***/ }),
-/* 170 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22678,7 +19221,7 @@ return is;
 //! author: Mattia Larentis: https://github.com/nostalgiaz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22743,7 +19286,7 @@ return it;
 
 
 /***/ }),
-/* 171 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22751,7 +19294,7 @@ return it;
 //! author : LI Long : https://github.com/baryon
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22827,7 +19370,7 @@ return ja;
 
 
 /***/ }),
-/* 172 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22836,7 +19379,7 @@ return ja;
 //! reference: http://jv.wikipedia.org/wiki/Basa_Jawa
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -22914,7 +19457,7 @@ return jv;
 
 
 /***/ }),
-/* 173 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -22922,7 +19465,7 @@ return jv;
 //! author : Irakli Janiashvili : https://github.com/irakli-janiashvili
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23007,7 +19550,7 @@ return ka;
 
 
 /***/ }),
-/* 174 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23015,7 +19558,7 @@ return ka;
 //! authors : Nurlan Rakhimzhanov : https://github.com/nurlan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23098,7 +19641,7 @@ return kk;
 
 
 /***/ }),
-/* 175 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23106,7 +19649,7 @@ return kk;
 //! author : Kruy Vanna : https://github.com/kruyvanna
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23160,7 +19703,7 @@ return km;
 
 
 /***/ }),
-/* 176 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23168,7 +19711,7 @@ return km;
 //! author : Rajeev Naik : https://github.com/rajeevnaikte
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23290,7 +19833,7 @@ return kn;
 
 
 /***/ }),
-/* 177 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23299,7 +19842,7 @@ return kn;
 //! author : Jeeeyul Lee <jeeeyul@gmail.com>
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23377,7 +19920,7 @@ return ko;
 
 
 /***/ }),
-/* 178 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23385,7 +19928,7 @@ return ko;
 //! author : Chyngyz Arystan uulu : https://github.com/chyngyz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23469,7 +20012,7 @@ return ky;
 
 
 /***/ }),
-/* 179 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23478,7 +20021,7 @@ return ky;
 //! author : David Raison : https://github.com/kwisatz
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23610,7 +20153,7 @@ return lb;
 
 
 /***/ }),
-/* 180 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23618,7 +20161,7 @@ return lb;
 //! author : Ryan Hart : https://github.com/ryanhart2
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23684,7 +20227,7 @@ return lo;
 
 
 /***/ }),
-/* 181 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23692,7 +20235,7 @@ return lo;
 //! author : Mindaugas Mozūras : https://github.com/mmozuras
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23805,7 +20348,7 @@ return lt;
 
 
 /***/ }),
-/* 182 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23814,7 +20357,7 @@ return lt;
 //! author : Jānis Elmeris : https://github.com/JanisE
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -23906,7 +20449,7 @@ return lv;
 
 
 /***/ }),
-/* 183 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -23914,7 +20457,7 @@ return lv;
 //! author : Miodrag Nikač <miodrag@restartit.me> : https://github.com/miodragnikac
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24021,7 +20564,7 @@ return me;
 
 
 /***/ }),
-/* 184 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24029,7 +20572,7 @@ return me;
 //! author : John Corrigan <robbiecloset@gmail.com> : https://github.com/johnideal
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24089,7 +20632,7 @@ return mi;
 
 
 /***/ }),
-/* 185 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24097,7 +20640,7 @@ return mi;
 //! author : Borislav Mickov : https://github.com/B0k0
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24183,7 +20726,7 @@ return mk;
 
 
 /***/ }),
-/* 186 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24191,7 +20734,7 @@ return mk;
 //! author : Floyd Pink : https://github.com/floydpink
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24268,7 +20811,7 @@ return ml;
 
 
 /***/ }),
-/* 187 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24277,7 +20820,7 @@ return ml;
 //! author : Vivek Athalye : https://github.com/vnathalye
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24431,7 +20974,7 @@ return mr;
 
 
 /***/ }),
-/* 188 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24439,7 +20982,7 @@ return mr;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24517,7 +21060,7 @@ return ms;
 
 
 /***/ }),
-/* 189 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24526,7 +21069,7 @@ return ms;
 //! author : Weldan Jamili : https://github.com/weldan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24604,7 +21147,7 @@ return msMy;
 
 
 /***/ }),
-/* 190 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24614,7 +21157,7 @@ return msMy;
 //! author : Tin Aung Lin : https://github.com/thanyawzinmin
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24704,7 +21247,7 @@ return my;
 
 
 /***/ }),
-/* 191 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24713,7 +21256,7 @@ return my;
 //!           Sigurd Gartmann : https://github.com/sigurdga
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24771,7 +21314,7 @@ return nb;
 
 
 /***/ }),
-/* 192 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24779,7 +21322,7 @@ return nb;
 //! author : suvash : https://github.com/suvash
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24898,7 +21441,7 @@ return ne;
 
 
 /***/ }),
-/* 193 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24907,7 +21450,7 @@ return ne;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -24990,7 +21533,7 @@ return nl;
 
 
 /***/ }),
-/* 194 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -24999,7 +21542,7 @@ return nl;
 //! author : Jacob Middag : https://github.com/middagj
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25082,7 +21625,7 @@ return nlBe;
 
 
 /***/ }),
-/* 195 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25090,7 +21633,7 @@ return nlBe;
 //! author : https://github.com/mechuwind
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25146,7 +21689,7 @@ return nn;
 
 
 /***/ }),
-/* 196 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25154,7 +21697,7 @@ return nn;
 //! author : Harpreet Singh : https://github.com/harpreetkhalsagtbit
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25274,7 +21817,7 @@ return paIn;
 
 
 /***/ }),
-/* 197 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25282,7 +21825,7 @@ return paIn;
 //! author : Rafal Hirsz : https://github.com/evoL
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25402,7 +21945,7 @@ return pl;
 
 
 /***/ }),
-/* 198 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25410,7 +21953,7 @@ return pl;
 //! author : Jefferson : https://github.com/jalex79
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25471,7 +22014,7 @@ return pt;
 
 
 /***/ }),
-/* 199 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25479,7 +22022,7 @@ return pt;
 //! author : Caio Ribeiro Pereira : https://github.com/caio-ribeiro-pereira
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25537,7 +22080,7 @@ return ptBr;
 
 
 /***/ }),
-/* 200 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25546,7 +22089,7 @@ return ptBr;
 //! author : Valentin Agachi : https://github.com/avaly
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25616,7 +22159,7 @@ return ro;
 
 
 /***/ }),
-/* 201 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25626,7 +22169,7 @@ return ro;
 //! author : Коренберг Марк : https://github.com/socketpair
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25803,7 +22346,7 @@ return ru;
 
 
 /***/ }),
-/* 202 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25811,7 +22354,7 @@ return ru;
 //! author : Narain Sagar : https://github.com/narainsagar
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25905,7 +22448,7 @@ return sd;
 
 
 /***/ }),
-/* 203 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25913,7 +22456,7 @@ return sd;
 //! authors : Bård Rolstad Henriksen : https://github.com/karamell
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -25970,7 +22513,7 @@ return se;
 
 
 /***/ }),
-/* 204 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -25978,7 +22521,7 @@ return se;
 //! author : Sampath Sitinamaluwa : https://github.com/sampathsris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26045,7 +22588,7 @@ return si;
 
 
 /***/ }),
-/* 205 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26054,7 +22597,7 @@ return si;
 //! based on work of petrbela : https://github.com/petrbela
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26199,7 +22742,7 @@ return sk;
 
 
 /***/ }),
-/* 206 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26207,7 +22750,7 @@ return sk;
 //! author : Robert Sedovšek : https://github.com/sedovsek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26365,7 +22908,7 @@ return sl;
 
 
 /***/ }),
-/* 207 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26375,7 +22918,7 @@ return sl;
 //! author : Oerd Cukalla : https://github.com/oerd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26439,7 +22982,7 @@ return sq;
 
 
 /***/ }),
-/* 208 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26447,7 +22990,7 @@ return sq;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26553,7 +23096,7 @@ return sr;
 
 
 /***/ }),
-/* 209 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26561,7 +23104,7 @@ return sr;
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26667,7 +23210,7 @@ return srCyrl;
 
 
 /***/ }),
-/* 210 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26675,7 +23218,7 @@ return srCyrl;
 //! author : Nicolai Davies<mail@nicolai.io> : https://github.com/nicolaidavies
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26760,7 +23303,7 @@ return ss;
 
 
 /***/ }),
-/* 211 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26768,7 +23311,7 @@ return ss;
 //! author : Jens Alm : https://github.com/ulmus
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26833,7 +23376,7 @@ return sv;
 
 
 /***/ }),
-/* 212 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26841,7 +23384,7 @@ return sv;
 //! author : Fahad Kassim : https://github.com/fadsel
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -26896,7 +23439,7 @@ return sw;
 
 
 /***/ }),
-/* 213 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -26904,7 +23447,7 @@ return sw;
 //! author : Arjunkumar Krishnamoorthy : https://github.com/tk120404
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27030,7 +23573,7 @@ return ta;
 
 
 /***/ }),
-/* 214 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27038,7 +23581,7 @@ return ta;
 //! author : Krishna Chaitanya Thota : https://github.com/kcthota
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27123,7 +23666,7 @@ return te;
 
 
 /***/ }),
-/* 215 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27132,7 +23675,7 @@ return te;
 //! author : Onorio De J. Afonso : https://github.com/marobo
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27195,7 +23738,7 @@ return tet;
 
 
 /***/ }),
-/* 216 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27203,7 +23746,7 @@ return tet;
 //! author : Kridsada Thanabulpong : https://github.com/sirn
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27266,7 +23809,7 @@ return th;
 
 
 /***/ }),
-/* 217 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27274,7 +23817,7 @@ return th;
 //! author : Dan Hagman : https://github.com/hagmandan
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27332,7 +23875,7 @@ return tlPh;
 
 
 /***/ }),
-/* 218 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27340,7 +23883,7 @@ return tlPh;
 //! author : Dominika Kruk : https://github.com/amaranthrose
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27456,7 +23999,7 @@ return tlh;
 
 
 /***/ }),
-/* 219 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27465,7 +24008,7 @@ return tlh;
 //!           Burak Yiğit Kaya: https://github.com/BYK
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27550,7 +24093,7 @@ return tr;
 
 
 /***/ }),
-/* 220 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27559,7 +24102,7 @@ return tr;
 //! author : Iustì Canun
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27645,7 +24188,7 @@ return tzl;
 
 
 /***/ }),
-/* 221 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27653,7 +24196,7 @@ return tzl;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27707,7 +24250,7 @@ return tzm;
 
 
 /***/ }),
-/* 222 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27715,7 +24258,7 @@ return tzm;
 //! author : Abdel Said : https://github.com/abdelsaid
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27769,7 +24312,7 @@ return tzmLatn;
 
 
 /***/ }),
-/* 223 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27778,7 +24321,7 @@ return tzmLatn;
 //! Author : Menelion Elensúle : https://github.com/Oire
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -27924,7 +24467,7 @@ return uk;
 
 
 /***/ }),
-/* 224 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -27933,7 +24476,7 @@ return uk;
 //! author : Zack : https://github.com/ZackVision
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28027,7 +24570,7 @@ return ur;
 
 
 /***/ }),
-/* 225 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28035,7 +24578,7 @@ return ur;
 //! author : Sardor Muminov : https://github.com/muminoff
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28089,7 +24632,7 @@ return uz;
 
 
 /***/ }),
-/* 226 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28097,7 +24640,7 @@ return uz;
 //! author : Rasulbek Mirzayev : github.com/Rasulbeeek
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28151,7 +24694,7 @@ return uzLatn;
 
 
 /***/ }),
-/* 227 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28159,7 +24702,7 @@ return uzLatn;
 //! author : Bang Nguyen : https://github.com/bangnk
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28234,7 +24777,7 @@ return vi;
 
 
 /***/ }),
-/* 228 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28242,7 +24785,7 @@ return vi;
 //! author : Andrew Hood : https://github.com/andrewhood125
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28306,7 +24849,7 @@ return xPseudo;
 
 
 /***/ }),
-/* 229 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28314,7 +24857,7 @@ return xPseudo;
 //! author : Atolagbe Abisoye : https://github.com/andela-batolagbe
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28370,7 +24913,7 @@ return yo;
 
 
 /***/ }),
-/* 230 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28379,7 +24922,7 @@ return yo;
 //! author : Zeno Zeng : https://github.com/zenozeng
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28485,7 +25028,7 @@ return zhCn;
 
 
 /***/ }),
-/* 231 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28495,7 +25038,7 @@ return zhCn;
 //! author : Konstantin : https://github.com/skfd
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28594,7 +25137,7 @@ return zhHk;
 
 
 /***/ }),
-/* 232 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -28603,7 +25146,7 @@ return zhHk;
 //! author : Chris Lam : https://github.com/hehachris
 
 ;(function (global, factory) {
-    true ? factory(__webpack_require__(5)) :
+    true ? factory(__webpack_require__(4)) :
    undefined
 }(this, (function (moment) { 'use strict';
 
@@ -28702,116 +25245,11 @@ return zhTw;
 
 
 /***/ }),
-/* 233 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-var LIBRARY = __webpack_require__(75);
-var $export = __webpack_require__(49);
-var redefine = __webpack_require__(242);
-var hide = __webpack_require__(50);
-var Iterators = __webpack_require__(51);
-var $iterCreate = __webpack_require__(279);
-var setToStringTag = __webpack_require__(92);
-var getPrototypeOf = __webpack_require__(282);
-var ITERATOR = __webpack_require__(37)('iterator');
-var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
-var FF_ITERATOR = '@@iterator';
-var KEYS = 'keys';
-var VALUES = 'values';
-
-var returnThis = function () { return this; };
-
-module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED) {
-  $iterCreate(Constructor, NAME, next);
-  var getMethod = function (kind) {
-    if (!BUGGY && kind in proto) return proto[kind];
-    switch (kind) {
-      case KEYS: return function keys() { return new Constructor(this, kind); };
-      case VALUES: return function values() { return new Constructor(this, kind); };
-    } return function entries() { return new Constructor(this, kind); };
-  };
-  var TAG = NAME + ' Iterator';
-  var DEF_VALUES = DEFAULT == VALUES;
-  var VALUES_BUG = false;
-  var proto = Base.prototype;
-  var $native = proto[ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT];
-  var $default = $native || getMethod(DEFAULT);
-  var $entries = DEFAULT ? !DEF_VALUES ? $default : getMethod('entries') : undefined;
-  var $anyNative = NAME == 'Array' ? proto.entries || $native : $native;
-  var methods, key, IteratorPrototype;
-  // Fix native
-  if ($anyNative) {
-    IteratorPrototype = getPrototypeOf($anyNative.call(new Base()));
-    if (IteratorPrototype !== Object.prototype && IteratorPrototype.next) {
-      // Set @@toStringTag to native iterators
-      setToStringTag(IteratorPrototype, TAG, true);
-      // fix for some old engines
-      if (!LIBRARY && typeof IteratorPrototype[ITERATOR] != 'function') hide(IteratorPrototype, ITERATOR, returnThis);
-    }
-  }
-  // fix Array#{values, @@iterator}.name in V8 / FF
-  if (DEF_VALUES && $native && $native.name !== VALUES) {
-    VALUES_BUG = true;
-    $default = function values() { return $native.call(this); };
-  }
-  // Define iterator
-  if ((!LIBRARY || FORCED) && (BUGGY || VALUES_BUG || !proto[ITERATOR])) {
-    hide(proto, ITERATOR, $default);
-  }
-  // Plug for library
-  Iterators[NAME] = $default;
-  Iterators[TAG] = returnThis;
-  if (DEFAULT) {
-    methods = {
-      values: DEF_VALUES ? $default : getMethod(VALUES),
-      keys: IS_SET ? $default : getMethod(KEYS),
-      entries: $entries
-    };
-    if (FORCED) for (key in methods) {
-      if (!(key in proto)) redefine(proto, key, methods[key]);
-    } else $export($export.P + $export.F * (BUGGY || VALUES_BUG), NAME, methods);
-  }
-  return methods;
-};
-
-
-/***/ }),
-/* 234 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(89);
-var TAG = __webpack_require__(37)('toStringTag');
-// ES3 wrong here
-var ARG = cof(function () { return arguments; }()) == 'Arguments';
-
-// fallback for IE11 Script Access Denied error
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (e) { /* empty */ }
-};
-
-module.exports = function (it) {
-  var O, T, B;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (T = tryGet(O = Object(it), TAG)) == 'string' ? T
-    // builtinTag case
-    : ARG ? cof(O)
-    // ES3 arguments fallback
-    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-};
-
-
-/***/ }),
-/* 235 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseIsArguments = __webpack_require__(368),
-    isObjectLike = __webpack_require__(52);
+var baseIsArguments = __webpack_require__(281),
+    isObjectLike = __webpack_require__(36);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -28849,11 +25287,11 @@ module.exports = isArguments;
 
 
 /***/ }),
-/* 236 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(46),
-    stubFalse = __webpack_require__(369);
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(34),
+    stubFalse = __webpack_require__(282);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -28891,10 +25329,10 @@ var isBuffer = nativeIsBuffer || stubFalse;
 
 module.exports = isBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54)(module)))
 
 /***/ }),
-/* 237 */
+/* 194 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -28918,73 +25356,7 @@ module.exports = isPrototype;
 
 
 /***/ }),
-/* 238 */,
-/* 239 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(42) && !__webpack_require__(64)(function () {
-  return Object.defineProperty(__webpack_require__(113)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 240 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var has = __webpack_require__(48);
-var toIObject = __webpack_require__(57);
-var arrayIndexOf = __webpack_require__(275)(false);
-var IE_PROTO = __webpack_require__(81)('IE_PROTO');
-
-module.exports = function (object, names) {
-  var O = toIObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-
-/***/ }),
-/* 241 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.15 ToLength
-var toInteger = __webpack_require__(80);
-var min = Math.min;
-module.exports = function (it) {
-  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-
-/***/ }),
-/* 242 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(50);
-
-
-/***/ }),
-/* 243 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof = __webpack_require__(234);
-var ITERATOR = __webpack_require__(37)('iterator');
-var Iterators = __webpack_require__(51);
-module.exports = __webpack_require__(36).getIteratorMethod = function (it) {
-  if (it != undefined) return it[ITERATOR]
-    || it['@@iterator']
-    || Iterators[classof(it)];
-};
-
-
-/***/ }),
-/* 244 */
+/* 195 */
 /***/ (function(module, exports) {
 
 /**
@@ -29011,15 +25383,15 @@ module.exports = arrayMap;
 
 
 /***/ }),
-/* 245 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(101),
-    stackClear = __webpack_require__(342),
-    stackDelete = __webpack_require__(343),
-    stackGet = __webpack_require__(344),
-    stackHas = __webpack_require__(345),
-    stackSet = __webpack_require__(346);
+var ListCache = __webpack_require__(62),
+    stackClear = __webpack_require__(254),
+    stackDelete = __webpack_require__(255),
+    stackGet = __webpack_require__(256),
+    stackHas = __webpack_require__(257),
+    stackSet = __webpack_require__(258);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -29044,11 +25416,11 @@ module.exports = Stack;
 
 
 /***/ }),
-/* 246 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65),
-    root = __webpack_require__(46);
+var getNative = __webpack_require__(44),
+    root = __webpack_require__(34);
 
 /* Built-in method references that are verified to be native. */
 var Map = getNative(root, 'Map');
@@ -29057,14 +25429,14 @@ module.exports = Map;
 
 
 /***/ }),
-/* 247 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapCacheClear = __webpack_require__(353),
-    mapCacheDelete = __webpack_require__(360),
-    mapCacheGet = __webpack_require__(362),
-    mapCacheHas = __webpack_require__(363),
-    mapCacheSet = __webpack_require__(364);
+var mapCacheClear = __webpack_require__(266),
+    mapCacheDelete = __webpack_require__(273),
+    mapCacheGet = __webpack_require__(275),
+    mapCacheHas = __webpack_require__(276),
+    mapCacheSet = __webpack_require__(277);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -29095,7 +25467,7 @@ module.exports = MapCache;
 
 
 /***/ }),
-/* 248 */
+/* 199 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -29126,7 +25498,7 @@ module.exports = isIndex;
 
 
 /***/ }),
-/* 249 */
+/* 200 */
 /***/ (function(module, exports) {
 
 /** Used as references for various `Number` constants. */
@@ -29167,7 +25539,7 @@ module.exports = isLength;
 
 
 /***/ }),
-/* 250 */
+/* 201 */
 /***/ (function(module, exports) {
 
 /**
@@ -29187,10 +25559,10 @@ module.exports = baseUnary;
 
 
 /***/ }),
-/* 251 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(284);
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(216);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -29221,15 +25593,15 @@ var nodeUtil = (function() {
 
 module.exports = nodeUtil;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54)(module)))
 
 /***/ }),
-/* 252 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeKeys = __webpack_require__(290),
-    baseKeysIn = __webpack_require__(373),
-    isArrayLike = __webpack_require__(69);
+var arrayLikeKeys = __webpack_require__(221),
+    baseKeysIn = __webpack_require__(286),
+    isArrayLike = __webpack_require__(49);
 
 /**
  * Creates an array of the own and inherited enumerable property names of `object`.
@@ -29262,11 +25634,11 @@ module.exports = keysIn;
 
 
 /***/ }),
-/* 253 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayFilter = __webpack_require__(378),
-    stubArray = __webpack_require__(292);
+var arrayFilter = __webpack_require__(291),
+    stubArray = __webpack_require__(223);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -29298,7 +25670,7 @@ module.exports = getSymbols;
 
 
 /***/ }),
-/* 254 */
+/* 205 */
 /***/ (function(module, exports) {
 
 /**
@@ -29324,10 +25696,10 @@ module.exports = arrayPush;
 
 
 /***/ }),
-/* 255 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(291);
+var overArg = __webpack_require__(222);
 
 /** Built-in value references. */
 var getPrototype = overArg(Object.getPrototypeOf, Object);
@@ -29336,10 +25708,10 @@ module.exports = getPrototype;
 
 
 /***/ }),
-/* 256 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Uint8Array = __webpack_require__(297);
+var Uint8Array = __webpack_require__(228);
 
 /**
  * Creates a clone of `arrayBuffer`.
@@ -29358,11 +25730,11 @@ module.exports = cloneArrayBuffer;
 
 
 /***/ }),
-/* 257 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArray = __webpack_require__(39),
-    isSymbol = __webpack_require__(107);
+var isArray = __webpack_require__(31),
+    isSymbol = __webpack_require__(68);
 
 /** Used to match property names within property paths. */
 var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -29393,11 +25765,11 @@ module.exports = isKey;
 
 
 /***/ }),
-/* 258 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(106),
-    toKey = __webpack_require__(85);
+var castPath = __webpack_require__(67),
+    toKey = __webpack_require__(56);
 
 /**
  * The base implementation of `_.get` without support for default values.
@@ -29423,12 +25795,12 @@ module.exports = baseGet;
 
 
 /***/ }),
-/* 259 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(311),
-    baseIsNaN = __webpack_require__(416),
-    strictIndexOf = __webpack_require__(417);
+var baseFindIndex = __webpack_require__(234),
+    baseIsNaN = __webpack_require__(330),
+    strictIndexOf = __webpack_require__(331);
 
 /**
  * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -29449,14 +25821,14 @@ module.exports = baseIndexOf;
 
 
 /***/ }),
-/* 260 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMatches = __webpack_require__(424),
-    baseMatchesProperty = __webpack_require__(436),
-    identity = __webpack_require__(301),
-    isArray = __webpack_require__(39),
-    property = __webpack_require__(441);
+var baseMatches = __webpack_require__(338),
+    baseMatchesProperty = __webpack_require__(350),
+    identity = __webpack_require__(232),
+    isArray = __webpack_require__(31),
+    property = __webpack_require__(355);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -29486,79 +25858,18 @@ module.exports = baseIteratee;
 
 
 /***/ }),
-/* 261 */,
-/* 262 */,
-/* 263 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _from = __webpack_require__(329);
-
-var _from2 = _interopRequireDefault(_from);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  } else {
-    return (0, _from2.default)(arr);
-  }
-};
-
-/***/ }),
-/* 264 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(322);
-/* global window */
-
-
-var root;
-
-if (typeof self !== 'undefined') {
-  root = self;
-} else if (typeof window !== 'undefined') {
-  root = window;
-} else if (typeof global !== 'undefined') {
-  root = global;
-} else if (true) {
-  root = module;
-} else {}
-
-var result = Object(_ponyfill_js__WEBPACK_IMPORTED_MODULE_0__[/* default */ "a"])(root);
-/* harmony default export */ __webpack_exports__["a"] = (result);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(285), __webpack_require__(447)(module)))
-
-/***/ }),
-/* 265 */
+/* 212 */
 /***/ (function(module, exports) {
 
 module.exports = tribe.common.data.plugins;
 
 /***/ }),
-/* 266 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(268), __esModule: true };
-
-/***/ }),
-/* 267 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseIsTypedArray = __webpack_require__(370),
-    baseUnary = __webpack_require__(250),
-    nodeUtil = __webpack_require__(251);
+var baseIsTypedArray = __webpack_require__(283),
+    baseUnary = __webpack_require__(201),
+    nodeUtil = __webpack_require__(202);
 
 /* Node.js helper references. */
 var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -29586,387 +25897,246 @@ module.exports = isTypedArray;
 
 
 /***/ }),
-/* 268 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(269);
-var $Object = __webpack_require__(36).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-
-/***/ }),
-/* 269 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(49);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(42), 'Object', { defineProperty: __webpack_require__(44).f });
-
-
-/***/ }),
-/* 270 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-
-/***/ }),
-/* 271 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(272), __esModule: true };
-
-/***/ }),
-/* 272 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(273);
-module.exports = __webpack_require__(36).Object.assign;
-
-
-/***/ }),
-/* 273 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(49);
-
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(274) });
-
-
-/***/ }),
-/* 274 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 19.1.2.1 Object.assign(target, source, ...)
-var DESCRIPTORS = __webpack_require__(42);
-var getKeys = __webpack_require__(74);
-var gOPS = __webpack_require__(99);
-var pIE = __webpack_require__(82);
-var toObject = __webpack_require__(77);
-var IObject = __webpack_require__(114);
-var $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(64)(function () {
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var S = Symbol();
-  var K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function (k) { B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = toObject(target);
-  var aLen = arguments.length;
-  var index = 1;
-  var getSymbols = gOPS.f;
-  var isEnum = pIE.f;
-  while (aLen > index) {
-    var S = IObject(arguments[index++]);
-    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) {
-      key = keys[j++];
-      if (!DESCRIPTORS || isEnum.call(S, key)) T[key] = S[key];
-    }
-  } return T;
-} : $assign;
-
-
-/***/ }),
-/* 275 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = __webpack_require__(57);
-var toLength = __webpack_require__(241);
-var toAbsoluteIndex = __webpack_require__(276);
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-
-/***/ }),
-/* 276 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(80);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 277 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 115,
-	"./af.js": 115,
-	"./ar": 116,
-	"./ar-dz": 117,
-	"./ar-dz.js": 117,
-	"./ar-kw": 118,
-	"./ar-kw.js": 118,
-	"./ar-ly": 119,
-	"./ar-ly.js": 119,
-	"./ar-ma": 120,
-	"./ar-ma.js": 120,
-	"./ar-sa": 121,
-	"./ar-sa.js": 121,
-	"./ar-tn": 122,
-	"./ar-tn.js": 122,
-	"./ar.js": 116,
-	"./az": 123,
-	"./az.js": 123,
-	"./be": 124,
-	"./be.js": 124,
-	"./bg": 125,
-	"./bg.js": 125,
-	"./bm": 126,
-	"./bm.js": 126,
-	"./bn": 127,
-	"./bn.js": 127,
-	"./bo": 128,
-	"./bo.js": 128,
-	"./br": 129,
-	"./br.js": 129,
-	"./bs": 130,
-	"./bs.js": 130,
-	"./ca": 131,
-	"./ca.js": 131,
-	"./cs": 132,
-	"./cs.js": 132,
-	"./cv": 133,
-	"./cv.js": 133,
-	"./cy": 134,
-	"./cy.js": 134,
-	"./da": 135,
-	"./da.js": 135,
-	"./de": 136,
-	"./de-at": 137,
-	"./de-at.js": 137,
-	"./de-ch": 138,
-	"./de-ch.js": 138,
-	"./de.js": 136,
-	"./dv": 139,
-	"./dv.js": 139,
-	"./el": 140,
-	"./el.js": 140,
-	"./en-au": 141,
-	"./en-au.js": 141,
-	"./en-ca": 142,
-	"./en-ca.js": 142,
-	"./en-gb": 143,
-	"./en-gb.js": 143,
-	"./en-ie": 144,
-	"./en-ie.js": 144,
-	"./en-nz": 145,
-	"./en-nz.js": 145,
-	"./eo": 146,
-	"./eo.js": 146,
-	"./es": 147,
-	"./es-do": 148,
-	"./es-do.js": 148,
-	"./es-us": 149,
-	"./es-us.js": 149,
-	"./es.js": 147,
-	"./et": 150,
-	"./et.js": 150,
-	"./eu": 151,
-	"./eu.js": 151,
-	"./fa": 152,
-	"./fa.js": 152,
-	"./fi": 153,
-	"./fi.js": 153,
-	"./fo": 154,
-	"./fo.js": 154,
-	"./fr": 155,
-	"./fr-ca": 156,
-	"./fr-ca.js": 156,
-	"./fr-ch": 157,
-	"./fr-ch.js": 157,
-	"./fr.js": 155,
-	"./fy": 158,
-	"./fy.js": 158,
-	"./gd": 159,
-	"./gd.js": 159,
-	"./gl": 160,
-	"./gl.js": 160,
-	"./gom-latn": 161,
-	"./gom-latn.js": 161,
-	"./gu": 162,
-	"./gu.js": 162,
-	"./he": 163,
-	"./he.js": 163,
-	"./hi": 164,
-	"./hi.js": 164,
-	"./hr": 165,
-	"./hr.js": 165,
-	"./hu": 166,
-	"./hu.js": 166,
-	"./hy-am": 167,
-	"./hy-am.js": 167,
-	"./id": 168,
-	"./id.js": 168,
-	"./is": 169,
-	"./is.js": 169,
-	"./it": 170,
-	"./it.js": 170,
-	"./ja": 171,
-	"./ja.js": 171,
-	"./jv": 172,
-	"./jv.js": 172,
-	"./ka": 173,
-	"./ka.js": 173,
-	"./kk": 174,
-	"./kk.js": 174,
-	"./km": 175,
-	"./km.js": 175,
-	"./kn": 176,
-	"./kn.js": 176,
-	"./ko": 177,
-	"./ko.js": 177,
-	"./ky": 178,
-	"./ky.js": 178,
-	"./lb": 179,
-	"./lb.js": 179,
-	"./lo": 180,
-	"./lo.js": 180,
-	"./lt": 181,
-	"./lt.js": 181,
-	"./lv": 182,
-	"./lv.js": 182,
-	"./me": 183,
-	"./me.js": 183,
-	"./mi": 184,
-	"./mi.js": 184,
-	"./mk": 185,
-	"./mk.js": 185,
-	"./ml": 186,
-	"./ml.js": 186,
-	"./mr": 187,
-	"./mr.js": 187,
-	"./ms": 188,
-	"./ms-my": 189,
-	"./ms-my.js": 189,
-	"./ms.js": 188,
-	"./my": 190,
-	"./my.js": 190,
-	"./nb": 191,
-	"./nb.js": 191,
-	"./ne": 192,
-	"./ne.js": 192,
-	"./nl": 193,
-	"./nl-be": 194,
-	"./nl-be.js": 194,
-	"./nl.js": 193,
-	"./nn": 195,
-	"./nn.js": 195,
-	"./pa-in": 196,
-	"./pa-in.js": 196,
-	"./pl": 197,
-	"./pl.js": 197,
-	"./pt": 198,
-	"./pt-br": 199,
-	"./pt-br.js": 199,
-	"./pt.js": 198,
-	"./ro": 200,
-	"./ro.js": 200,
-	"./ru": 201,
-	"./ru.js": 201,
-	"./sd": 202,
-	"./sd.js": 202,
-	"./se": 203,
-	"./se.js": 203,
-	"./si": 204,
-	"./si.js": 204,
-	"./sk": 205,
-	"./sk.js": 205,
-	"./sl": 206,
-	"./sl.js": 206,
-	"./sq": 207,
-	"./sq.js": 207,
-	"./sr": 208,
-	"./sr-cyrl": 209,
-	"./sr-cyrl.js": 209,
-	"./sr.js": 208,
-	"./ss": 210,
-	"./ss.js": 210,
-	"./sv": 211,
-	"./sv.js": 211,
-	"./sw": 212,
-	"./sw.js": 212,
-	"./ta": 213,
-	"./ta.js": 213,
-	"./te": 214,
-	"./te.js": 214,
-	"./tet": 215,
-	"./tet.js": 215,
-	"./th": 216,
-	"./th.js": 216,
-	"./tl-ph": 217,
-	"./tl-ph.js": 217,
-	"./tlh": 218,
-	"./tlh.js": 218,
-	"./tr": 219,
-	"./tr.js": 219,
-	"./tzl": 220,
-	"./tzl.js": 220,
-	"./tzm": 221,
-	"./tzm-latn": 222,
-	"./tzm-latn.js": 222,
-	"./tzm.js": 221,
-	"./uk": 223,
-	"./uk.js": 223,
-	"./ur": 224,
-	"./ur.js": 224,
-	"./uz": 225,
-	"./uz-latn": 226,
-	"./uz-latn.js": 226,
-	"./uz.js": 225,
-	"./vi": 227,
-	"./vi.js": 227,
-	"./x-pseudo": 228,
-	"./x-pseudo.js": 228,
-	"./yo": 229,
-	"./yo.js": 229,
-	"./zh-cn": 230,
-	"./zh-cn.js": 230,
-	"./zh-hk": 231,
-	"./zh-hk.js": 231,
-	"./zh-tw": 232,
-	"./zh-tw.js": 232
+	"./af": 74,
+	"./af.js": 74,
+	"./ar": 75,
+	"./ar-dz": 76,
+	"./ar-dz.js": 76,
+	"./ar-kw": 77,
+	"./ar-kw.js": 77,
+	"./ar-ly": 78,
+	"./ar-ly.js": 78,
+	"./ar-ma": 79,
+	"./ar-ma.js": 79,
+	"./ar-sa": 80,
+	"./ar-sa.js": 80,
+	"./ar-tn": 81,
+	"./ar-tn.js": 81,
+	"./ar.js": 75,
+	"./az": 82,
+	"./az.js": 82,
+	"./be": 83,
+	"./be.js": 83,
+	"./bg": 84,
+	"./bg.js": 84,
+	"./bm": 85,
+	"./bm.js": 85,
+	"./bn": 86,
+	"./bn.js": 86,
+	"./bo": 87,
+	"./bo.js": 87,
+	"./br": 88,
+	"./br.js": 88,
+	"./bs": 89,
+	"./bs.js": 89,
+	"./ca": 90,
+	"./ca.js": 90,
+	"./cs": 91,
+	"./cs.js": 91,
+	"./cv": 92,
+	"./cv.js": 92,
+	"./cy": 93,
+	"./cy.js": 93,
+	"./da": 94,
+	"./da.js": 94,
+	"./de": 95,
+	"./de-at": 96,
+	"./de-at.js": 96,
+	"./de-ch": 97,
+	"./de-ch.js": 97,
+	"./de.js": 95,
+	"./dv": 98,
+	"./dv.js": 98,
+	"./el": 99,
+	"./el.js": 99,
+	"./en-au": 100,
+	"./en-au.js": 100,
+	"./en-ca": 101,
+	"./en-ca.js": 101,
+	"./en-gb": 102,
+	"./en-gb.js": 102,
+	"./en-ie": 103,
+	"./en-ie.js": 103,
+	"./en-nz": 104,
+	"./en-nz.js": 104,
+	"./eo": 105,
+	"./eo.js": 105,
+	"./es": 106,
+	"./es-do": 107,
+	"./es-do.js": 107,
+	"./es-us": 108,
+	"./es-us.js": 108,
+	"./es.js": 106,
+	"./et": 109,
+	"./et.js": 109,
+	"./eu": 110,
+	"./eu.js": 110,
+	"./fa": 111,
+	"./fa.js": 111,
+	"./fi": 112,
+	"./fi.js": 112,
+	"./fo": 113,
+	"./fo.js": 113,
+	"./fr": 114,
+	"./fr-ca": 115,
+	"./fr-ca.js": 115,
+	"./fr-ch": 116,
+	"./fr-ch.js": 116,
+	"./fr.js": 114,
+	"./fy": 117,
+	"./fy.js": 117,
+	"./gd": 118,
+	"./gd.js": 118,
+	"./gl": 119,
+	"./gl.js": 119,
+	"./gom-latn": 120,
+	"./gom-latn.js": 120,
+	"./gu": 121,
+	"./gu.js": 121,
+	"./he": 122,
+	"./he.js": 122,
+	"./hi": 123,
+	"./hi.js": 123,
+	"./hr": 124,
+	"./hr.js": 124,
+	"./hu": 125,
+	"./hu.js": 125,
+	"./hy-am": 126,
+	"./hy-am.js": 126,
+	"./id": 127,
+	"./id.js": 127,
+	"./is": 128,
+	"./is.js": 128,
+	"./it": 129,
+	"./it.js": 129,
+	"./ja": 130,
+	"./ja.js": 130,
+	"./jv": 131,
+	"./jv.js": 131,
+	"./ka": 132,
+	"./ka.js": 132,
+	"./kk": 133,
+	"./kk.js": 133,
+	"./km": 134,
+	"./km.js": 134,
+	"./kn": 135,
+	"./kn.js": 135,
+	"./ko": 136,
+	"./ko.js": 136,
+	"./ky": 137,
+	"./ky.js": 137,
+	"./lb": 138,
+	"./lb.js": 138,
+	"./lo": 139,
+	"./lo.js": 139,
+	"./lt": 140,
+	"./lt.js": 140,
+	"./lv": 141,
+	"./lv.js": 141,
+	"./me": 142,
+	"./me.js": 142,
+	"./mi": 143,
+	"./mi.js": 143,
+	"./mk": 144,
+	"./mk.js": 144,
+	"./ml": 145,
+	"./ml.js": 145,
+	"./mr": 146,
+	"./mr.js": 146,
+	"./ms": 147,
+	"./ms-my": 148,
+	"./ms-my.js": 148,
+	"./ms.js": 147,
+	"./my": 149,
+	"./my.js": 149,
+	"./nb": 150,
+	"./nb.js": 150,
+	"./ne": 151,
+	"./ne.js": 151,
+	"./nl": 152,
+	"./nl-be": 153,
+	"./nl-be.js": 153,
+	"./nl.js": 152,
+	"./nn": 154,
+	"./nn.js": 154,
+	"./pa-in": 155,
+	"./pa-in.js": 155,
+	"./pl": 156,
+	"./pl.js": 156,
+	"./pt": 157,
+	"./pt-br": 158,
+	"./pt-br.js": 158,
+	"./pt.js": 157,
+	"./ro": 159,
+	"./ro.js": 159,
+	"./ru": 160,
+	"./ru.js": 160,
+	"./sd": 161,
+	"./sd.js": 161,
+	"./se": 162,
+	"./se.js": 162,
+	"./si": 163,
+	"./si.js": 163,
+	"./sk": 164,
+	"./sk.js": 164,
+	"./sl": 165,
+	"./sl.js": 165,
+	"./sq": 166,
+	"./sq.js": 166,
+	"./sr": 167,
+	"./sr-cyrl": 168,
+	"./sr-cyrl.js": 168,
+	"./sr.js": 167,
+	"./ss": 169,
+	"./ss.js": 169,
+	"./sv": 170,
+	"./sv.js": 170,
+	"./sw": 171,
+	"./sw.js": 171,
+	"./ta": 172,
+	"./ta.js": 172,
+	"./te": 173,
+	"./te.js": 173,
+	"./tet": 174,
+	"./tet.js": 174,
+	"./th": 175,
+	"./th.js": 175,
+	"./tl-ph": 176,
+	"./tl-ph.js": 176,
+	"./tlh": 177,
+	"./tlh.js": 177,
+	"./tr": 178,
+	"./tr.js": 178,
+	"./tzl": 179,
+	"./tzl.js": 179,
+	"./tzm": 180,
+	"./tzm-latn": 181,
+	"./tzm-latn.js": 181,
+	"./tzm.js": 180,
+	"./uk": 182,
+	"./uk.js": 182,
+	"./ur": 183,
+	"./ur.js": 183,
+	"./uz": 184,
+	"./uz-latn": 185,
+	"./uz-latn.js": 185,
+	"./uz.js": 184,
+	"./vi": 186,
+	"./vi.js": 186,
+	"./x-pseudo": 187,
+	"./x-pseudo.js": 187,
+	"./yo": 188,
+	"./yo.js": 188,
+	"./zh-cn": 189,
+	"./zh-cn.js": 189,
+	"./zh-hk": 190,
+	"./zh-hk.js": 190,
+	"./zh-tw": 191,
+	"./zh-tw.js": 191
 };
 
 
@@ -29987,103 +26157,14 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 277;
+webpackContext.id = 214;
 
 /***/ }),
-/* 278 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(80);
-var defined = __webpack_require__(79);
-// true  -> String#at
-// false -> String#codePointAt
-module.exports = function (TO_STRING) {
-  return function (that, pos) {
-    var s = String(defined(that));
-    var i = toInteger(pos);
-    var l = s.length;
-    var a, b;
-    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
-    a = s.charCodeAt(i);
-    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
-      ? TO_STRING ? s.charAt(i) : a
-      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-  };
-};
-
-
-/***/ }),
-/* 279 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var create = __webpack_require__(100);
-var descriptor = __webpack_require__(68);
-var setToStringTag = __webpack_require__(92);
-var IteratorPrototype = {};
-
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(50)(IteratorPrototype, __webpack_require__(37)('iterator'), function () { return this; });
-
-module.exports = function (Constructor, NAME, next) {
-  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
-  setToStringTag(Constructor, NAME + ' Iterator');
-};
-
-
-/***/ }),
-/* 280 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(44);
-var anObject = __webpack_require__(47);
-var getKeys = __webpack_require__(74);
-
-module.exports = __webpack_require__(42) ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var keys = getKeys(Properties);
-  var length = keys.length;
-  var i = 0;
-  var P;
-  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
-  return O;
-};
-
-
-/***/ }),
-/* 281 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var document = __webpack_require__(41).document;
-module.exports = document && document.documentElement;
-
-
-/***/ }),
-/* 282 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(48);
-var toObject = __webpack_require__(77);
-var IE_PROTO = __webpack_require__(81)('IE_PROTO');
-var ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-
-/***/ }),
-/* 283 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var baseGetTag = __webpack_require__(66),
-    isObject = __webpack_require__(53);
+var baseGetTag = __webpack_require__(45),
+    isObject = __webpack_require__(37);
 
 /** `Object#toString` result references. */
 var asyncTag = '[object AsyncFunction]',
@@ -30122,7 +26203,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 284 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -30130,36 +26211,10 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 
 module.exports = freeGlobal;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(285)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(260)))
 
 /***/ }),
-/* 285 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 286 */
+/* 217 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -30191,11 +26246,11 @@ module.exports = toSource;
 
 
 /***/ }),
-/* 287 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseAssignValue = __webpack_require__(288),
-    eq = __webpack_require__(103);
+var baseAssignValue = __webpack_require__(219),
+    eq = __webpack_require__(64);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -30225,10 +26280,10 @@ module.exports = assignValue;
 
 
 /***/ }),
-/* 288 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var defineProperty = __webpack_require__(289);
+var defineProperty = __webpack_require__(220);
 
 /**
  * The base implementation of `assignValue` and `assignMergeValue` without
@@ -30256,10 +26311,10 @@ module.exports = baseAssignValue;
 
 
 /***/ }),
-/* 289 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65);
+var getNative = __webpack_require__(44);
 
 var defineProperty = (function() {
   try {
@@ -30273,15 +26328,15 @@ module.exports = defineProperty;
 
 
 /***/ }),
-/* 290 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(367),
-    isArguments = __webpack_require__(235),
-    isArray = __webpack_require__(39),
-    isBuffer = __webpack_require__(236),
-    isIndex = __webpack_require__(248),
-    isTypedArray = __webpack_require__(267);
+var baseTimes = __webpack_require__(280),
+    isArguments = __webpack_require__(192),
+    isArray = __webpack_require__(31),
+    isBuffer = __webpack_require__(193),
+    isIndex = __webpack_require__(199),
+    isTypedArray = __webpack_require__(213);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -30328,7 +26383,7 @@ module.exports = arrayLikeKeys;
 
 
 /***/ }),
-/* 291 */
+/* 222 */
 /***/ (function(module, exports) {
 
 /**
@@ -30349,7 +26404,7 @@ module.exports = overArg;
 
 
 /***/ }),
-/* 292 */
+/* 223 */
 /***/ (function(module, exports) {
 
 /**
@@ -30378,13 +26433,13 @@ module.exports = stubArray;
 
 
 /***/ }),
-/* 293 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(254),
-    getPrototype = __webpack_require__(255),
-    getSymbols = __webpack_require__(253),
-    stubArray = __webpack_require__(292);
+var arrayPush = __webpack_require__(205),
+    getPrototype = __webpack_require__(206),
+    getSymbols = __webpack_require__(204),
+    stubArray = __webpack_require__(223);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeGetSymbols = Object.getOwnPropertySymbols;
@@ -30409,12 +26464,12 @@ module.exports = getSymbolsIn;
 
 
 /***/ }),
-/* 294 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(295),
-    getSymbols = __webpack_require__(253),
-    keys = __webpack_require__(58);
+var baseGetAllKeys = __webpack_require__(226),
+    getSymbols = __webpack_require__(204),
+    keys = __webpack_require__(40);
 
 /**
  * Creates an array of own enumerable property names and symbols of `object`.
@@ -30431,11 +26486,11 @@ module.exports = getAllKeys;
 
 
 /***/ }),
-/* 295 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(254),
-    isArray = __webpack_require__(39);
+var arrayPush = __webpack_require__(205),
+    isArray = __webpack_require__(31);
 
 /**
  * The base implementation of `getAllKeys` and `getAllKeysIn` which uses
@@ -30457,12 +26512,12 @@ module.exports = baseGetAllKeys;
 
 
 /***/ }),
-/* 296 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetAllKeys = __webpack_require__(295),
-    getSymbolsIn = __webpack_require__(293),
-    keysIn = __webpack_require__(252);
+var baseGetAllKeys = __webpack_require__(226),
+    getSymbolsIn = __webpack_require__(224),
+    keysIn = __webpack_require__(203);
 
 /**
  * Creates an array of own and inherited enumerable property names and
@@ -30480,10 +26535,10 @@ module.exports = getAllKeysIn;
 
 
 /***/ }),
-/* 297 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(46);
+var root = __webpack_require__(34);
 
 /** Built-in value references. */
 var Uint8Array = root.Uint8Array;
@@ -30492,10 +26547,10 @@ module.exports = Uint8Array;
 
 
 /***/ }),
-/* 298 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToString = __webpack_require__(299);
+var baseToString = __webpack_require__(230);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -30526,13 +26581,13 @@ module.exports = toString;
 
 
 /***/ }),
-/* 299 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71),
-    arrayMap = __webpack_require__(244),
-    isArray = __webpack_require__(39),
-    isSymbol = __webpack_require__(107);
+var Symbol = __webpack_require__(51),
+    arrayMap = __webpack_require__(195),
+    isArray = __webpack_require__(31),
+    isSymbol = __webpack_require__(68);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0;
@@ -30569,7 +26624,7 @@ module.exports = baseToString;
 
 
 /***/ }),
-/* 300 */
+/* 231 */
 /***/ (function(module, exports) {
 
 /**
@@ -30606,7 +26661,7 @@ module.exports = baseSlice;
 
 
 /***/ }),
-/* 301 */
+/* 232 */
 /***/ (function(module, exports) {
 
 /**
@@ -30633,123 +26688,32 @@ module.exports = identity;
 
 
 /***/ }),
-/* 302 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(303), __esModule: true };
+var trimmedEndIndex = __webpack_require__(327);
 
-/***/ }),
-/* 303 */
-/***/ (function(module, exports, __webpack_require__) {
+/** Used to match leading whitespace. */
+var reTrimStart = /^\s+/;
 
-__webpack_require__(94);
-__webpack_require__(78);
-module.exports = __webpack_require__(307);
+/**
+ * The base implementation of `_.trim`.
+ *
+ * @private
+ * @param {string} string The string to trim.
+ * @returns {string} Returns the trimmed string.
+ */
+function baseTrim(string) {
+  return string
+    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
+    : string;
+}
 
-
-/***/ }),
-/* 304 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var addToUnscopables = __webpack_require__(305);
-var step = __webpack_require__(306);
-var Iterators = __webpack_require__(51);
-var toIObject = __webpack_require__(57);
-
-// 22.1.3.4 Array.prototype.entries()
-// 22.1.3.13 Array.prototype.keys()
-// 22.1.3.29 Array.prototype.values()
-// 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(233)(Array, 'Array', function (iterated, kind) {
-  this._t = toIObject(iterated); // target
-  this._i = 0;                   // next index
-  this._k = kind;                // kind
-// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var kind = this._k;
-  var index = this._i++;
-  if (!O || index >= O.length) {
-    this._t = undefined;
-    return step(1);
-  }
-  if (kind == 'keys') return step(0, index);
-  if (kind == 'values') return step(0, O[index]);
-  return step(0, [index, O[index]]);
-}, 'values');
-
-// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
-Iterators.Arguments = Iterators.Array;
-
-addToUnscopables('keys');
-addToUnscopables('values');
-addToUnscopables('entries');
+module.exports = baseTrim;
 
 
 /***/ }),
-/* 305 */
-/***/ (function(module, exports) {
-
-module.exports = function () { /* empty */ };
-
-
-/***/ }),
-/* 306 */
-/***/ (function(module, exports) {
-
-module.exports = function (done, value) {
-  return { value: value, done: !!done };
-};
-
-
-/***/ }),
-/* 307 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var classof = __webpack_require__(234);
-var ITERATOR = __webpack_require__(37)('iterator');
-var Iterators = __webpack_require__(51);
-module.exports = __webpack_require__(36).isIterable = function (it) {
-  var O = Object(it);
-  return O[ITERATOR] !== undefined
-    || '@@iterator' in O
-    // eslint-disable-next-line no-prototype-builtins
-    || Iterators.hasOwnProperty(classof(O));
-};
-
-
-/***/ }),
-/* 308 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(309), __esModule: true };
-
-/***/ }),
-/* 309 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(94);
-__webpack_require__(78);
-module.exports = __webpack_require__(310);
-
-
-/***/ }),
-/* 310 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(47);
-var get = __webpack_require__(243);
-module.exports = __webpack_require__(36).getIterator = function (it) {
-  var iterFn = get(it);
-  if (typeof iterFn != 'function') throw TypeError(it + ' is not iterable!');
-  return anObject(iterFn.call(it));
-};
-
-
-/***/ }),
-/* 311 */
+/* 234 */
 /***/ (function(module, exports) {
 
 /**
@@ -30779,11 +26743,11 @@ module.exports = baseFindIndex;
 
 
 /***/ }),
-/* 312 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqualDeep = __webpack_require__(426),
-    isObjectLike = __webpack_require__(52);
+var baseIsEqualDeep = __webpack_require__(340),
+    isObjectLike = __webpack_require__(36);
 
 /**
  * The base implementation of `_.isEqual` which supports partial comparisons
@@ -30813,12 +26777,12 @@ module.exports = baseIsEqual;
 
 
 /***/ }),
-/* 313 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(427),
-    arraySome = __webpack_require__(314),
-    cacheHas = __webpack_require__(430);
+var SetCache = __webpack_require__(341),
+    arraySome = __webpack_require__(237),
+    cacheHas = __webpack_require__(344);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -30903,7 +26867,7 @@ module.exports = equalArrays;
 
 
 /***/ }),
-/* 314 */
+/* 237 */
 /***/ (function(module, exports) {
 
 /**
@@ -30932,10 +26896,10 @@ module.exports = arraySome;
 
 
 /***/ }),
-/* 315 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(53);
+var isObject = __webpack_require__(37);
 
 /**
  * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -30953,7 +26917,7 @@ module.exports = isStrictComparable;
 
 
 /***/ }),
-/* 316 */
+/* 239 */
 /***/ (function(module, exports) {
 
 /**
@@ -30979,10 +26943,10 @@ module.exports = matchesStrictComparable;
 
 
 /***/ }),
-/* 317 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toFinite = __webpack_require__(445);
+var toFinite = __webpack_require__(359);
 
 /**
  * Converts `value` to an integer.
@@ -31021,20 +26985,17 @@ module.exports = toInteger;
 
 
 /***/ }),
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(244),
-    baseClone = __webpack_require__(336),
-    baseUnset = __webpack_require__(396),
-    castPath = __webpack_require__(106),
-    copyObject = __webpack_require__(84),
-    customOmitClone = __webpack_require__(402),
-    flatRest = __webpack_require__(404),
-    getAllKeysIn = __webpack_require__(296);
+var arrayMap = __webpack_require__(195),
+    baseClone = __webpack_require__(248),
+    baseUnset = __webpack_require__(309),
+    castPath = __webpack_require__(67),
+    copyObject = __webpack_require__(55),
+    customOmitClone = __webpack_require__(315),
+    flatRest = __webpack_require__(317),
+    getAllKeysIn = __webpack_require__(227);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -31087,36 +27048,11 @@ module.exports = omit;
 
 
 /***/ }),
-/* 322 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return symbolObservablePonyfill; });
-function symbolObservablePonyfill(root) {
-	var result;
-	var Symbol = root.Symbol;
-
-	if (typeof Symbol === 'function') {
-		if (Symbol.observable) {
-			result = Symbol.observable;
-		} else {
-			result = Symbol('observable');
-			Symbol.observable = result;
-		}
-	} else {
-		result = '@@observable';
-	}
-
-	return result;
-};
-
-
-/***/ }),
-/* 323 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isPrototype = __webpack_require__(237),
-    nativeKeys = __webpack_require__(371);
+var isPrototype = __webpack_require__(194),
+    nativeKeys = __webpack_require__(284);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -31148,7 +27084,7 @@ module.exports = baseKeys;
 
 
 /***/ }),
-/* 324 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -31156,82 +27092,78 @@ module.exports = baseKeys;
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "initStore", function() { return /* binding */ data_initStore; });
-__webpack_require__.d(__webpack_exports__, "getStore", function() { return /* binding */ data_getStore; });
+__webpack_require__.d(__webpack_exports__, "initStore", function() { return /* binding */ initStore; });
+__webpack_require__.d(__webpack_exports__, "getStore", function() { return /* binding */ getStore; });
 
-// EXTERNAL MODULE: ./node_modules/redux/es/redux.js
-var redux = __webpack_require__(16);
+// EXTERNAL MODULE: ./node_modules/redux/es/redux.js + 2 modules
+var redux = __webpack_require__(15);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/rsvp/index.js + 7 modules
-var rsvp = __webpack_require__(13);
+var rsvp = __webpack_require__(11);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/ticket/index.js + 9 modules
-var ticket = __webpack_require__(4);
+var ticket = __webpack_require__(5);
 
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/extends.js
-var helpers_extends = __webpack_require__(9);
-var extends_default = /*#__PURE__*/__webpack_require__.n(helpers_extends);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
+var defineProperty = __webpack_require__(14);
+var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/attendees/types.js
-var types = __webpack_require__(40);
+var types = __webpack_require__(32);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/attendees/reducer.js
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /**
  * Internal dependencies
  */
 
-
-var DEFAULT_STATE = {
-	title: '',
-	displayTitle: true,
-	displaySubtitle: true
+const DEFAULT_STATE = {
+  title: '',
+  displayTitle: true,
+  displaySubtitle: true
 };
-
 /* harmony default export */ var reducer = (function () {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case types["d" /* SET_ATTENDEES_TITLE */]:
-			return extends_default()({}, state, {
-				title: action.payload.title
-			});
-		case types["b" /* SET_ATTENDEES_DISPLAY_TITLE */]:
-			return extends_default()({}, state, {
-				displayTitle: action.payload.displayTitle
-			});
-		case types["a" /* SET_ATTENDEES_DISPLAY_SUBTITLE */]:
-			return extends_default()({}, state, {
-				displaySubtitle: action.payload.displaySubtitle
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case types["d" /* SET_ATTENDEES_TITLE */]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        title: action.payload.title
+      });
+
+    case types["b" /* SET_ATTENDEES_DISPLAY_TITLE */]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        displayTitle: action.payload.displayTitle
+      });
+
+    case types["a" /* SET_ATTENDEES_DISPLAY_SUBTITLE */]:
+      return _objectSpread(_objectSpread({}, state), {}, {
+        displaySubtitle: action.payload.displaySubtitle
+      });
+
+    default:
+      return state;
+  }
 });
 // EXTERNAL MODULE: ./src/modules/data/blocks/attendees/selectors.js
-var selectors = __webpack_require__(109);
+var selectors = __webpack_require__(70);
 
 // EXTERNAL MODULE: ./src/modules/data/blocks/attendees/actions.js
-var actions = __webpack_require__(55);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/regenerator/index.js
-var regenerator = __webpack_require__(12);
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+var actions = __webpack_require__(39);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/effects.js + 1 modules
 var effects = __webpack_require__(0);
 
 // CONCATENATED MODULE: ./src/modules/data/blocks/attendees/sagas.js
-
-
-var _marked = /*#__PURE__*/regenerator_default.a.mark(setInitialState),
-    _marked2 = /*#__PURE__*/regenerator_default.a.mark(watchers);
-
 /**
  * External Dependencies
  */
-
 
 /**
  * Internal dependencies
@@ -31240,45 +27172,19 @@ var _marked = /*#__PURE__*/regenerator_default.a.mark(setInitialState),
 
 
 
-function setInitialState(action) {
-	var get;
-	return regenerator_default.a.wrap(function setInitialState$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					get = action.payload.get;
-					_context.next = 3;
-					return Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["d" /* setTitle */](get('title', DEFAULT_STATE.title))), Object(effects["e" /* put */])(actions["b" /* setDisplayTitle */](get('displayTitle', DEFAULT_STATE.displayTitle))), Object(effects["e" /* put */])(actions["a" /* setDisplaySubtitle */](get('displaySubtitle', DEFAULT_STATE.displaySubtitle)))]);
-
-				case 3:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, _marked, this);
+function* setInitialState(action) {
+  const {
+    get
+  } = action.payload;
+  yield Object(effects["a" /* all */])([Object(effects["e" /* put */])(actions["d" /* setTitle */](get('title', DEFAULT_STATE.title))), Object(effects["e" /* put */])(actions["b" /* setDisplayTitle */](get('displayTitle', DEFAULT_STATE.displayTitle))), Object(effects["e" /* put */])(actions["a" /* setDisplaySubtitle */](get('displaySubtitle', DEFAULT_STATE.displaySubtitle)))]);
 }
-
-function watchers() {
-	return regenerator_default.a.wrap(function watchers$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					_context2.next = 2;
-					return Object(effects["h" /* takeEvery */])(types["c" /* SET_ATTENDEES_INITIAL_STATE */], setInitialState);
-
-				case 2:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, _marked2, this);
+function* watchers() {
+  yield Object(effects["h" /* takeEvery */])(types["c" /* SET_ATTENDEES_INITIAL_STATE */], setInitialState);
 }
 // CONCATENATED MODULE: ./src/modules/data/blocks/attendees/index.js
 /**
  * Internal dependencies
  */
-
-
 
 
 
@@ -31290,7 +27196,6 @@ function watchers() {
 /**
  * External dependencies
  */
-
 
 /**
  * Internal dependencies
@@ -31305,153 +27210,176 @@ function watchers() {
   attendees: attendees
 }));
 // CONCATENATED MODULE: ./src/modules/data/blocks/index.js
-
+/**
+ * Internal dependencies
+ */
 
 /* harmony default export */ var blocks = (blocks_reducer);
 // EXTERNAL MODULE: ./src/modules/data/shared/move/types.js
-var move_types = __webpack_require__(19);
+var move_types = __webpack_require__(18);
 
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/posts.js
 
+
+function posts_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function posts_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { posts_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { posts_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
 
-
-var posts_DEFAULT_STATE = {
-	isFetching: false,
-	posts: {}
+const posts_DEFAULT_STATE = {
+  isFetching: false,
+  posts: {}
 };
-
 function posts() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : posts_DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : posts_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case move_types["a" /* FETCH_POST_CHOICES */]:
-			return extends_default()({}, state, {
-				isFetching: true
-			});
-		case move_types["c" /* FETCH_POST_CHOICES_SUCCESS */]:
-			return extends_default()({}, state, action.data, {
-				isFetching: false
-			});
-		case move_types["b" /* FETCH_POST_CHOICES_ERROR */]:
-			return extends_default()({}, state, {
-				isFetching: false
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case move_types["a" /* FETCH_POST_CHOICES */]:
+      return posts_objectSpread(posts_objectSpread({}, state), {}, {
+        isFetching: true
+      });
+
+    case move_types["c" /* FETCH_POST_CHOICES_SUCCESS */]:
+      return posts_objectSpread(posts_objectSpread(posts_objectSpread({}, state), action.data), {}, {
+        isFetching: false
+      });
+
+    case move_types["b" /* FETCH_POST_CHOICES_ERROR */]:
+      return posts_objectSpread(posts_objectSpread({}, state), {}, {
+        isFetching: false
+      });
+
+    default:
+      return state;
+  }
 }
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/postTypes.js
 
+
+function postTypes_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function postTypes_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { postTypes_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { postTypes_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
 
-
-var postTypes_DEFAULT_STATE = {
-	isFetching: false,
-	posts: {}
+const postTypes_DEFAULT_STATE = {
+  isFetching: false,
+  posts: {}
 };
-
 function postTypes() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : postTypes_DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : postTypes_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case move_types["d" /* FETCH_POST_TYPES */]:
-			return extends_default()({}, state, {
-				isFetching: true
-			});
-		case move_types["f" /* FETCH_POST_TYPES_SUCCESS */]:
-			return extends_default()({}, state, action.data, {
-				isFetching: false
-			});
-		case move_types["e" /* FETCH_POST_TYPES_ERROR */]:
-			return extends_default()({}, state, {
-				isFetching: false
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case move_types["d" /* FETCH_POST_TYPES */]:
+      return postTypes_objectSpread(postTypes_objectSpread({}, state), {}, {
+        isFetching: true
+      });
+
+    case move_types["f" /* FETCH_POST_TYPES_SUCCESS */]:
+      return postTypes_objectSpread(postTypes_objectSpread(postTypes_objectSpread({}, state), action.data), {}, {
+        isFetching: false
+      });
+
+    case move_types["e" /* FETCH_POST_TYPES_ERROR */]:
+      return postTypes_objectSpread(postTypes_objectSpread({}, state), {}, {
+        isFetching: false
+      });
+
+    default:
+      return state;
+  }
 }
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/ui.js
 
+
+function ui_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function ui_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ui_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ui_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /**
  * Internal dependencies
  */
 
-
-var ui_DEFAULT_STATE = {
-	showModal: false
+const ui_DEFAULT_STATE = {
+  showModal: false
 };
-
 function ui() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ui_DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ui_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case move_types["n" /* SHOW_MODAL */]:
-			return extends_default()({}, state, {
-				showModal: true
-			});
-		case move_types["g" /* HIDE_MODAL */]:
-			return extends_default()({}, state, {
-				showModal: false
-			});
-		default:
-			return state;
-	}
+  switch (action.type) {
+    case move_types["n" /* SHOW_MODAL */]:
+      return ui_objectSpread(ui_objectSpread({}, state), {}, {
+        showModal: true
+      });
+
+    case move_types["g" /* HIDE_MODAL */]:
+      return ui_objectSpread(ui_objectSpread({}, state), {}, {
+        showModal: false
+      });
+
+    default:
+      return state;
+  }
 }
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/modal.js
 
+
+function modal_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function modal_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { modal_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { modal_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 /* eslint-disable camelcase */
+
 /**
  * Internal dependencies
  */
 
-
-var modal_DEFAULT_STATE = {
-	post_type: 'all',
-	search_terms: '',
-	target_post_id: null,
-	ticketId: null,
-	clientId: null,
-	isSubmitting: false
+const modal_DEFAULT_STATE = {
+  post_type: 'all',
+  search_terms: '',
+  target_post_id: null,
+  ticketId: null,
+  clientId: null,
+  isSubmitting: false
 };
-
 function modal() {
-	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : modal_DEFAULT_STATE;
-	var action = arguments[1];
+  let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : modal_DEFAULT_STATE;
+  let action = arguments.length > 1 ? arguments[1] : undefined;
 
-	switch (action.type) {
-		case move_types["m" /* SET_MODAL_DATA */]:
-			return extends_default()({}, state, action.payload);
+  switch (action.type) {
+    case move_types["m" /* SET_MODAL_DATA */]:
+      return modal_objectSpread(modal_objectSpread({}, state), action.payload);
 
-		case move_types["i" /* MOVE_TICKET */]:
-			return extends_default()({}, state, {
-				isSubmitting: true
-			});
+    case move_types["i" /* MOVE_TICKET */]:
+      return modal_objectSpread(modal_objectSpread({}, state), {}, {
+        isSubmitting: true
+      });
 
-		case move_types["j" /* MOVE_TICKET_ERROR */]:
-		case move_types["k" /* MOVE_TICKET_SUCCESS */]:
-			return extends_default()({}, state, {
-				isSubmitting: false
-			});
+    case move_types["j" /* MOVE_TICKET_ERROR */]:
+    case move_types["k" /* MOVE_TICKET_SUCCESS */]:
+      return modal_objectSpread(modal_objectSpread({}, state), {}, {
+        isSubmitting: false
+      });
 
-		case move_types["l" /* RESET_MODAL_DATA */]:
-			return modal_DEFAULT_STATE;
-		default:
-			return state;
-	}
+    case move_types["l" /* RESET_MODAL_DATA */]:
+      return modal_DEFAULT_STATE;
+
+    default:
+      return state;
+  }
 }
 // CONCATENATED MODULE: ./src/modules/data/shared/move/reducers/index.js
 /**
  * External dependencies
  */
-
 
 /**
  * Internal dependencies
@@ -31472,7 +27400,6 @@ function modal() {
  * External dependencies
  */
 
-
 /**
  * Internal dependencies
  */
@@ -31484,53 +27411,38 @@ function modal() {
   move: reducers
 }));
 // EXTERNAL MODULE: external "tribe.common.data.plugins"
-var external_tribe_common_data_plugins_ = __webpack_require__(265);
+var external_tribe_common_data_plugins_ = __webpack_require__(212);
 
 // EXTERNAL MODULE: external "tribe.common.store"
-var external_tribe_common_store_ = __webpack_require__(61);
-
-// EXTERNAL MODULE: ./node_modules/babel-runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(45);
-var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
+var external_tribe_common_store_ = __webpack_require__(46);
 
 // EXTERNAL MODULE: ./node_modules/redux-saga/es/index.js + 4 modules
-var es = __webpack_require__(73);
+var es = __webpack_require__(53);
 
 // EXTERNAL MODULE: external {"var":"wp.data","root":["wp","data"]}
-var external_var_wp_data_root_wp_data_ = __webpack_require__(18);
+var external_var_wp_data_root_wp_data_ = __webpack_require__(17);
 
 // EXTERNAL MODULE: external "tribe.common.utils"
 var external_tribe_common_utils_ = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/selectors.js
-var move_selectors = __webpack_require__(29);
+var move_selectors = __webpack_require__(27);
 
 // EXTERNAL MODULE: ./src/modules/data/shared/move/actions.js
-var move_actions = __webpack_require__(70);
+var move_actions = __webpack_require__(50);
 
 // CONCATENATED MODULE: ./src/modules/data/shared/move/sagas.js
 
 
+function sagas_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
-
-var sagas_marked = /*#__PURE__*/regenerator_default.a.mark(_fetch),
-    sagas_marked2 = /*#__PURE__*/regenerator_default.a.mark(fetchPostTypes),
-    _marked3 = /*#__PURE__*/regenerator_default.a.mark(fetchPostChoices),
-    _marked4 = /*#__PURE__*/regenerator_default.a.mark(moveTicket),
-    _marked5 = /*#__PURE__*/regenerator_default.a.mark(getCurrentPostId),
-    _marked6 = /*#__PURE__*/regenerator_default.a.mark(getPostChoices),
-    _marked7 = /*#__PURE__*/regenerator_default.a.mark(onModalChange),
-    _marked8 = /*#__PURE__*/regenerator_default.a.mark(onModalSubmit),
-    _marked9 = /*#__PURE__*/regenerator_default.a.mark(onModalShow),
-    _marked10 = /*#__PURE__*/regenerator_default.a.mark(onModalHide),
-    _marked11 = /*#__PURE__*/regenerator_default.a.mark(initialize),
-    _marked12 = /*#__PURE__*/regenerator_default.a.mark(sagas_watchers);
+function sagas_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { sagas_ownKeys(Object(source), true).forEach(function (key) { defineProperty_default()(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { sagas_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 /* eslint-disable camelcase */
+
 /**
  * External Dependencies
  */
-
 
 
 /**
@@ -31547,435 +27459,196 @@ var sagas_marked = /*#__PURE__*/regenerator_default.a.mark(_fetch),
 
 
 function createBody(params) {
-	return Object.entries(params).map(function (_ref) {
-		var _ref2 = slicedToArray_default()(_ref, 2),
-		    key = _ref2[0],
-		    value = _ref2[1];
-
-		return key + '=' + encodeURIComponent(value);
-	}).join('&');
+  return Object.entries(params).map(_ref => {
+    let [key, value] = _ref;
+    return `${key}=${encodeURIComponent(value)}`;
+  }).join('&');
 }
-
-function _fetch(params) {
-	var body, response;
-	return regenerator_default.a.wrap(function _fetch$(_context) {
-		while (1) {
-			switch (_context.prev = _context.next) {
-				case 0:
-					_context.prev = 0;
-					_context.next = 3;
-					return Object(effects["b" /* call */])(createBody, extends_default()({}, params, {
-						check: external_tribe_common_utils_["globals"].restNonce().move_tickets
-					}));
-
-				case 3:
-					body = _context.sent;
-					_context.next = 6;
-					return Object(effects["b" /* call */])(fetch, window.ajaxurl, {
-						method: 'POST',
-						body: body,
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-						},
-						credentials: 'include'
-					});
-
-				case 6:
-					response = _context.sent;
-					_context.next = 9;
-					return Object(effects["b" /* call */])([response, 'json']);
-
-				case 9:
-					return _context.abrupt('return', _context.sent);
-
-				case 12:
-					_context.prev = 12;
-					_context.t0 = _context['catch'](0);
-
-					console.error(_context.t0);
-
-				case 15:
-				case 'end':
-					return _context.stop();
-			}
-		}
-	}, sagas_marked, this, [[0, 12]]);
+function* _fetch(params) {
+  try {
+    const body = yield Object(effects["b" /* call */])(createBody, sagas_objectSpread(sagas_objectSpread({}, params), {}, {
+      check: external_tribe_common_utils_["globals"].restNonce().move_tickets
+    }));
+    const response = yield Object(effects["b" /* call */])(fetch, window.ajaxurl, {
+      method: 'POST',
+      body,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      credentials: 'include'
+    });
+    return yield Object(effects["b" /* call */])([response, 'json']);
+  } catch (error) {
+    console.error(error);
+  }
 }
-
 /**
  * Fetches usable oost types
- * @returns {Object} JSON response
+ *
+ * @yields
+ * @returns {object} JSON response
  */
-function fetchPostTypes() {
-	var _ref3, data;
 
-	return regenerator_default.a.wrap(function fetchPostTypes$(_context2) {
-		while (1) {
-			switch (_context2.prev = _context2.next) {
-				case 0:
-					_context2.prev = 0;
-					_context2.next = 3;
-					return Object(effects["e" /* put */])({
-						type: move_types["d" /* FETCH_POST_TYPES */]
-					});
-
-				case 3:
-					_context2.next = 5;
-					return Object(effects["b" /* call */])(_fetch, {
-						action: 'move_tickets_get_post_types'
-					});
-
-				case 5:
-					_ref3 = _context2.sent;
-					data = _ref3.data;
-					_context2.next = 9;
-					return Object(effects["e" /* put */])({
-						type: move_types["f" /* FETCH_POST_TYPES_SUCCESS */],
-						data: data
-					});
-
-				case 9:
-					return _context2.abrupt('return', data);
-
-				case 12:
-					_context2.prev = 12;
-					_context2.t0 = _context2['catch'](0);
-					_context2.next = 16;
-					return Object(effects["e" /* put */])({
-						type: move_types["e" /* FETCH_POST_TYPES_ERROR */],
-						error: _context2.t0
-					});
-
-				case 16:
-				case 'end':
-					return _context2.stop();
-			}
-		}
-	}, sagas_marked2, this, [[0, 12]]);
+function* fetchPostTypes() {
+  try {
+    yield Object(effects["e" /* put */])({
+      type: move_types["d" /* FETCH_POST_TYPES */]
+    });
+    const {
+      data
+    } = yield Object(effects["b" /* call */])(_fetch, {
+      action: 'move_tickets_get_post_types'
+    });
+    yield Object(effects["e" /* put */])({
+      type: move_types["f" /* FETCH_POST_TYPES_SUCCESS */],
+      data
+    });
+    return data;
+  } catch (error) {
+    yield Object(effects["e" /* put */])({
+      type: move_types["e" /* FETCH_POST_TYPES_ERROR */],
+      error
+    });
+  }
 }
-
 /**
  * Fetches filtered posts based on criteria
  *
  * @export
+ * @yields
  * @param {*} {
  * 	ignore,
  * 	post_type,
  * 	search_terms = '',
  * }
- * @returns {Object} JSON response
+ * @returns {object} JSON response
  */
-function fetchPostChoices(_ref4) {
-	var ignore = _ref4.ignore,
-	    post_type = _ref4.post_type,
-	    _ref4$search_terms = _ref4.search_terms,
-	    search_terms = _ref4$search_terms === undefined ? '' : _ref4$search_terms;
 
-	var _ref5, data;
+function* fetchPostChoices(_ref2) {
+  let {
+    ignore,
+    post_type,
+    search_terms = ''
+  } = _ref2;
 
-	return regenerator_default.a.wrap(function fetchPostChoices$(_context3) {
-		while (1) {
-			switch (_context3.prev = _context3.next) {
-				case 0:
-					_context3.prev = 0;
-					_context3.next = 3;
-					return Object(effects["e" /* put */])({
-						type: move_types["a" /* FETCH_POST_CHOICES */]
-					});
-
-				case 3:
-					_context3.next = 5;
-					return Object(effects["b" /* call */])(_fetch, {
-						action: 'move_tickets_get_post_choices',
-						ignore: ignore,
-						post_type: post_type,
-						search_terms: search_terms
-					});
-
-				case 5:
-					_ref5 = _context3.sent;
-					data = _ref5.data;
-					_context3.next = 9;
-					return Object(effects["e" /* put */])({
-						type: move_types["c" /* FETCH_POST_CHOICES_SUCCESS */],
-						data: data
-					});
-
-				case 9:
-					return _context3.abrupt('return', data);
-
-				case 12:
-					_context3.prev = 12;
-					_context3.t0 = _context3['catch'](0);
-					_context3.next = 16;
-					return Object(effects["e" /* put */])({
-						type: move_types["b" /* FETCH_POST_CHOICES_ERROR */],
-						error: _context3.t0
-					});
-
-				case 16:
-				case 'end':
-					return _context3.stop();
-			}
-		}
-	}, _marked3, this, [[0, 12]]);
+  try {
+    yield Object(effects["e" /* put */])({
+      type: move_types["a" /* FETCH_POST_CHOICES */]
+    });
+    const {
+      data
+    } = yield Object(effects["b" /* call */])(_fetch, {
+      action: 'move_tickets_get_post_choices',
+      ignore,
+      post_type,
+      search_terms
+    });
+    yield Object(effects["e" /* put */])({
+      type: move_types["c" /* FETCH_POST_CHOICES_SUCCESS */],
+      data
+    });
+    return data;
+  } catch (error) {
+    yield Object(effects["e" /* put */])({
+      type: move_types["b" /* FETCH_POST_CHOICES_ERROR */],
+      error
+    });
+  }
 }
-
 /**
  * Moves ticket/RSVP from one post to another
  *
  * @export
+ * @yields
  * @param {*} {
  * 	src_post_id,
  * 	ticket_type_id,
  * 	target_post_id,
  * }
- * @returns {Object} JSON response
+ * @returns {object} JSON response
  */
-function moveTicket(_ref6) {
-	var src_post_id = _ref6.src_post_id,
-	    ticket_type_id = _ref6.ticket_type_id,
-	    target_post_id = _ref6.target_post_id;
 
-	var _ref7, data;
+function* moveTicket(_ref3) {
+  let {
+    src_post_id,
+    ticket_type_id,
+    target_post_id
+  } = _ref3;
 
-	return regenerator_default.a.wrap(function moveTicket$(_context4) {
-		while (1) {
-			switch (_context4.prev = _context4.next) {
-				case 0:
-					_context4.prev = 0;
-					_context4.next = 3;
-					return Object(effects["e" /* put */])({
-						type: move_types["i" /* MOVE_TICKET */]
-					});
-
-				case 3:
-					_context4.next = 5;
-					return Object(effects["b" /* call */])(_fetch, {
-						action: 'move_ticket_type',
-						src_post_id: src_post_id,
-						ticket_type_id: ticket_type_id,
-						target_post_id: target_post_id
-					});
-
-				case 5:
-					_ref7 = _context4.sent;
-					data = _ref7.data;
-					_context4.next = 9;
-					return Object(effects["e" /* put */])({
-						type: move_types["k" /* MOVE_TICKET_SUCCESS */],
-						data: data
-					});
-
-				case 9:
-					return _context4.abrupt('return', data);
-
-				case 12:
-					_context4.prev = 12;
-					_context4.t0 = _context4['catch'](0);
-					_context4.next = 16;
-					return Object(effects["e" /* put */])({
-						type: move_types["j" /* MOVE_TICKET_ERROR */],
-						error: _context4.t0
-					});
-
-				case 16:
-				case 'end':
-					return _context4.stop();
-			}
-		}
-	}, _marked4, this, [[0, 12]]);
+  try {
+    yield Object(effects["e" /* put */])({
+      type: move_types["i" /* MOVE_TICKET */]
+    });
+    const {
+      data
+    } = yield Object(effects["b" /* call */])(_fetch, {
+      action: 'move_ticket_type',
+      src_post_id,
+      ticket_type_id,
+      target_post_id
+    });
+    yield Object(effects["e" /* put */])({
+      type: move_types["k" /* MOVE_TICKET_SUCCESS */],
+      data
+    });
+    return data;
+  } catch (error) {
+    yield Object(effects["e" /* put */])({
+      type: move_types["j" /* MOVE_TICKET_ERROR */],
+      error
+    });
+  }
 }
-
-function getCurrentPostId() {
-	return regenerator_default.a.wrap(function getCurrentPostId$(_context5) {
-		while (1) {
-			switch (_context5.prev = _context5.next) {
-				case 0:
-					_context5.next = 2;
-					return Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
-
-				case 2:
-					return _context5.abrupt('return', _context5.sent);
-
-				case 3:
-				case 'end':
-					return _context5.stop();
-			}
-		}
-	}, _marked5, this);
+function* getCurrentPostId() {
+  return yield Object(effects["b" /* call */])([Object(external_var_wp_data_root_wp_data_["select"])('core/editor'), 'getCurrentPostId']);
 }
-
-function getPostChoices() {
-	var params;
-	return regenerator_default.a.wrap(function getPostChoices$(_context6) {
-		while (1) {
-			switch (_context6.prev = _context6.next) {
-				case 0:
-					_context6.next = 2;
-					return Object(effects["a" /* all */])({
-						post_type: Object(effects["f" /* select */])(move_selectors["b" /* getModalPostType */]),
-						search_terms: Object(effects["f" /* select */])(move_selectors["c" /* getModalSearch */]),
-						ignore: Object(effects["b" /* call */])(getCurrentPostId)
-					});
-
-				case 2:
-					params = _context6.sent;
-					_context6.next = 5;
-					return Object(effects["b" /* call */])(fetchPostChoices, params);
-
-				case 5:
-				case 'end':
-					return _context6.stop();
-			}
-		}
-	}, _marked6, this);
+function* getPostChoices() {
+  const params = yield Object(effects["a" /* all */])({
+    post_type: Object(effects["f" /* select */])(move_selectors["b" /* getModalPostType */]),
+    search_terms: Object(effects["f" /* select */])(move_selectors["c" /* getModalSearch */]),
+    ignore: Object(effects["b" /* call */])(getCurrentPostId)
+  });
+  yield Object(effects["b" /* call */])(fetchPostChoices, params);
 }
-
-function onModalChange(action) {
-	return regenerator_default.a.wrap(function onModalChange$(_context7) {
-		while (1) {
-			switch (_context7.prev = _context7.next) {
-				case 0:
-					if (!(!action.payload.hasOwnProperty('target_post_id') && !action.payload.hasOwnProperty('ticketId'))) {
-						_context7.next = 5;
-						break;
-					}
-
-					_context7.next = 3;
-					return Object(effects["b" /* call */])(es["a" /* delay */], 500);
-
-				case 3:
-					_context7.next = 5;
-					return Object(effects["b" /* call */])(getPostChoices);
-
-				case 5:
-				case 'end':
-					return _context7.stop();
-			}
-		}
-	}, _marked7, this);
+function* onModalChange(action) {
+  if (!action.payload.hasOwnProperty('target_post_id') && !action.payload.hasOwnProperty('ticketId')) {
+    yield Object(effects["b" /* call */])(es["a" /* delay */], 500);
+    yield Object(effects["b" /* call */])(getPostChoices);
+  }
 }
+function* onModalSubmit() {
+  const params = yield Object(effects["a" /* all */])({
+    src_post_id: Object(effects["b" /* call */])(getCurrentPostId),
+    target_post_id: Object(effects["f" /* select */])(move_selectors["d" /* getModalTarget */]),
+    ticket_type_id: Object(effects["f" /* select */])(move_selectors["e" /* getModalTicketId */])
+  });
+  yield Object(effects["d" /* fork */])(moveTicket, params);
+  const action = yield Object(effects["g" /* take */])([move_types["k" /* MOVE_TICKET_SUCCESS */], move_types["j" /* MOVE_TICKET_ERROR */]]);
 
-function onModalSubmit() {
-	var params, action;
-	return regenerator_default.a.wrap(function onModalSubmit$(_context8) {
-		while (1) {
-			switch (_context8.prev = _context8.next) {
-				case 0:
-					_context8.next = 2;
-					return Object(effects["a" /* all */])({
-						src_post_id: Object(effects["b" /* call */])(getCurrentPostId),
-						target_post_id: Object(effects["f" /* select */])(move_selectors["d" /* getModalTarget */]),
-						ticket_type_id: Object(effects["f" /* select */])(move_selectors["e" /* getModalTicketId */])
-					});
-
-				case 2:
-					params = _context8.sent;
-					_context8.next = 5;
-					return Object(effects["d" /* fork */])(moveTicket, params);
-
-				case 5:
-					_context8.next = 7;
-					return Object(effects["g" /* take */])([move_types["k" /* MOVE_TICKET_SUCCESS */], move_types["j" /* MOVE_TICKET_ERROR */]]);
-
-				case 7:
-					action = _context8.sent;
-
-					if (!(action.type === move_types["k" /* MOVE_TICKET_SUCCESS */])) {
-						_context8.next = 11;
-						break;
-					}
-
-					_context8.next = 11;
-					return Object(effects["e" /* put */])(move_actions["a" /* hideModal */]());
-
-				case 11:
-				case 'end':
-					return _context8.stop();
-			}
-		}
-	}, _marked8, this);
+  if (action.type === move_types["k" /* MOVE_TICKET_SUCCESS */]) {
+    yield Object(effects["e" /* put */])(move_actions["a" /* hideModal */]());
+  }
 }
-
-function onModalShow(action) {
-	return regenerator_default.a.wrap(function onModalShow$(_context9) {
-		while (1) {
-			switch (_context9.prev = _context9.next) {
-				case 0:
-					_context9.next = 2;
-					return Object(effects["e" /* put */])({ type: move_types["m" /* SET_MODAL_DATA */], payload: action.payload });
-
-				case 2:
-				case 'end':
-					return _context9.stop();
-			}
-		}
-	}, _marked9, this);
+function* onModalShow(action) {
+  yield Object(effects["e" /* put */])({
+    type: move_types["m" /* SET_MODAL_DATA */],
+    payload: action.payload
+  });
 }
-
-function onModalHide() {
-	return regenerator_default.a.wrap(function onModalHide$(_context10) {
-		while (1) {
-			switch (_context10.prev = _context10.next) {
-				case 0:
-					_context10.next = 2;
-					return Object(effects["e" /* put */])({ type: move_types["l" /* RESET_MODAL_DATA */] });
-
-				case 2:
-				case 'end':
-					return _context10.stop();
-			}
-		}
-	}, _marked10, this);
+function* onModalHide() {
+  yield Object(effects["e" /* put */])({
+    type: move_types["l" /* RESET_MODAL_DATA */]
+  });
 }
-
-function initialize() {
-	return regenerator_default.a.wrap(function initialize$(_context11) {
-		while (1) {
-			switch (_context11.prev = _context11.next) {
-				case 0:
-					_context11.next = 2;
-					return Object(effects["a" /* all */])([Object(effects["b" /* call */])(fetchPostTypes), Object(effects["b" /* call */])(getPostChoices)]);
-
-				case 2:
-				case 'end':
-					return _context11.stop();
-			}
-		}
-	}, _marked11, this);
+function* initialize() {
+  yield Object(effects["a" /* all */])([Object(effects["b" /* call */])(fetchPostTypes), Object(effects["b" /* call */])(getPostChoices)]);
 }
-
-function sagas_watchers() {
-	return regenerator_default.a.wrap(function watchers$(_context12) {
-		while (1) {
-			switch (_context12.prev = _context12.next) {
-				case 0:
-					_context12.next = 2;
-					return Object(effects["i" /* takeLatest */])([move_types["h" /* INITIALIZE_MODAL */]], initialize);
-
-				case 2:
-					_context12.next = 4;
-					return Object(effects["i" /* takeLatest */])([move_types["m" /* SET_MODAL_DATA */]], onModalChange);
-
-				case 4:
-					_context12.next = 6;
-					return Object(effects["i" /* takeLatest */])([move_types["o" /* SUBMIT_MODAL */]], onModalSubmit);
-
-				case 6:
-					_context12.next = 8;
-					return Object(effects["i" /* takeLatest */])([move_types["n" /* SHOW_MODAL */]], onModalShow);
-
-				case 8:
-					_context12.next = 10;
-					return Object(effects["i" /* takeLatest */])([move_types["g" /* HIDE_MODAL */]], onModalHide);
-
-				case 10:
-				case 'end':
-					return _context12.stop();
-			}
-		}
-	}, _marked12, this);
+function* sagas_watchers() {
+  yield Object(effects["i" /* takeLatest */])([move_types["h" /* INITIALIZE_MODAL */]], initialize);
+  yield Object(effects["i" /* takeLatest */])([move_types["m" /* SET_MODAL_DATA */]], onModalChange);
+  yield Object(effects["i" /* takeLatest */])([move_types["o" /* SUBMIT_MODAL */]], onModalSubmit);
+  yield Object(effects["i" /* takeLatest */])([move_types["n" /* SHOW_MODAL */]], onModalShow);
+  yield Object(effects["i" /* takeLatest */])([move_types["g" /* HIDE_MODAL */]], onModalHide);
 }
 // CONCATENATED MODULE: ./src/modules/data/sagas.js
 /**
@@ -31986,11 +27659,8 @@ function sagas_watchers() {
 
 
 
-
-/* harmony default export */ var data_sagas = (function () {
-	[rsvp["c" /* sagas */], ticket["e" /* sagas */], watchers, sagas_watchers].forEach(function (sagas) {
-		return external_tribe_common_store_["store"].run(sagas);
-	});
+/* harmony default export */ var data_sagas = (() => {
+  [rsvp["c" /* sagas */], ticket["e" /* sagas */], watchers, sagas_watchers].forEach(sagas => external_tribe_common_store_["store"].run(sagas));
 });
 // CONCATENATED MODULE: ./src/modules/data/index.js
 /**
@@ -32000,958 +27670,52 @@ function sagas_watchers() {
 
 
 
-
-
-var data_initStore = function initStore() {
-	data_sagas();
-	var dispatch = external_tribe_common_store_["store"].dispatch,
-	    injectReducers = external_tribe_common_store_["store"].injectReducers;
-	var TICKETS = external_tribe_common_data_plugins_["constants"].TICKETS;
-
-	dispatch(external_tribe_common_data_plugins_["actions"].addPlugin(TICKETS));
-	injectReducers({ tickets: data_reducers });
+const initStore = () => {
+  data_sagas();
+  const {
+    dispatch,
+    injectReducers
+  } = external_tribe_common_store_["store"];
+  const {
+    TICKETS
+  } = external_tribe_common_data_plugins_["constants"];
+  dispatch(external_tribe_common_data_plugins_["actions"].addPlugin(TICKETS));
+  injectReducers({
+    tickets: data_reducers
+  });
 };
-
-var data_getStore = function getStore() {
-	return external_tribe_common_store_["store"];
-};
+const getStore = () => external_tribe_common_store_["store"];
 
 /***/ }),
-/* 325 */,
-/* 326 */,
-/* 327 */
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() { return this })() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(328);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
-
-/***/ }),
-/* 328 */
-/***/ (function(module, exports) {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-!(function(global) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  runtime.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  runtime.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  runtime.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  runtime.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration. If the Promise is rejected, however, the
-          // result for this iteration will be rejected with the same
-          // reason. Note that rejections of yielded Promises are not
-          // thrown back into the generator function, as is the case
-          // when an awaited Promise is rejected. This difference in
-          // behavior between yield and await is important, because it
-          // allows the consumer to decide what to do with the yielded
-          // rejection (swallow it and continue, manually .throw it back
-          // into the generator, abandon iteration, whatever). With
-          // await, by contrast, there is no opportunity to examine the
-          // rejection reason outside the generator function, so the
-          // only option is to throw it from the await expression, and
-          // let the generator function handle the exception.
-          result.value = unwrapped;
-          resolve(result);
-        }, reject);
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  runtime.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return runtime.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        if (delegate.iterator.return) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  runtime.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  runtime.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() { return this })() || Function("return this")()
-);
-
-
-/***/ }),
-/* 329 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(330), __esModule: true };
-
-/***/ }),
-/* 330 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(78);
-__webpack_require__(331);
-module.exports = __webpack_require__(36).Array.from;
-
-
-/***/ }),
-/* 331 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var ctx = __webpack_require__(97);
-var $export = __webpack_require__(49);
-var toObject = __webpack_require__(77);
-var call = __webpack_require__(332);
-var isArrayIter = __webpack_require__(333);
-var toLength = __webpack_require__(241);
-var createProperty = __webpack_require__(334);
-var getIterFn = __webpack_require__(243);
-
-$export($export.S + $export.F * !__webpack_require__(335)(function (iter) { Array.from(iter); }), 'Array', {
-  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-  from: function from(arrayLike /* , mapfn = undefined, thisArg = undefined */) {
-    var O = toObject(arrayLike);
-    var C = typeof this == 'function' ? this : Array;
-    var aLen = arguments.length;
-    var mapfn = aLen > 1 ? arguments[1] : undefined;
-    var mapping = mapfn !== undefined;
-    var index = 0;
-    var iterFn = getIterFn(O);
-    var length, result, step, iterator;
-    if (mapping) mapfn = ctx(mapfn, aLen > 2 ? arguments[2] : undefined, 2);
-    // if object isn't iterable or it's array with default iterator - use simple case
-    if (iterFn != undefined && !(C == Array && isArrayIter(iterFn))) {
-      for (iterator = iterFn.call(O), result = new C(); !(step = iterator.next()).done; index++) {
-        createProperty(result, index, mapping ? call(iterator, mapfn, [step.value, index], true) : step.value);
-      }
-    } else {
-      length = toLength(O.length);
-      for (result = new C(length); length > index; index++) {
-        createProperty(result, index, mapping ? mapfn(O[index], index) : O[index]);
-      }
-    }
-    result.length = index;
-    return result;
-  }
-});
-
-
-/***/ }),
-/* 332 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// call something on iterator step with safe closing on error
-var anObject = __webpack_require__(47);
-module.exports = function (iterator, fn, value, entries) {
-  try {
-    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-  // 7.4.6 IteratorClose(iterator, completion)
-  } catch (e) {
-    var ret = iterator['return'];
-    if (ret !== undefined) anObject(ret.call(iterator));
-    throw e;
-  }
-};
-
-
-/***/ }),
-/* 333 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// check on default Array iterator
-var Iterators = __webpack_require__(51);
-var ITERATOR = __webpack_require__(37)('iterator');
-var ArrayProto = Array.prototype;
-
-module.exports = function (it) {
-  return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
-};
-
-
-/***/ }),
-/* 334 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $defineProperty = __webpack_require__(44);
-var createDesc = __webpack_require__(68);
-
-module.exports = function (object, index, value) {
-  if (index in object) $defineProperty.f(object, index, createDesc(0, value));
-  else object[index] = value;
-};
-
-
-/***/ }),
-/* 335 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ITERATOR = __webpack_require__(37)('iterator');
-var SAFE_CLOSING = false;
-
-try {
-  var riter = [7][ITERATOR]();
-  riter['return'] = function () { SAFE_CLOSING = true; };
-  // eslint-disable-next-line no-throw-literal
-  Array.from(riter, function () { throw 2; });
-} catch (e) { /* empty */ }
-
-module.exports = function (exec, skipClosing) {
-  if (!skipClosing && !SAFE_CLOSING) return false;
-  var safe = false;
-  try {
-    var arr = [7];
-    var iter = arr[ITERATOR]();
-    iter.next = function () { return { done: safe = true }; };
-    arr[ITERATOR] = function () { return iter; };
-    exec(arr);
-  } catch (e) { /* empty */ }
-  return safe;
-};
-
-
-/***/ }),
-/* 336 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Stack = __webpack_require__(245),
-    arrayEach = __webpack_require__(365),
-    assignValue = __webpack_require__(287),
-    baseAssign = __webpack_require__(366),
-    baseAssignIn = __webpack_require__(372),
-    cloneBuffer = __webpack_require__(375),
-    copyArray = __webpack_require__(376),
-    copySymbols = __webpack_require__(377),
-    copySymbolsIn = __webpack_require__(379),
-    getAllKeys = __webpack_require__(294),
-    getAllKeysIn = __webpack_require__(296),
-    getTag = __webpack_require__(93),
-    initCloneArray = __webpack_require__(384),
-    initCloneByTag = __webpack_require__(385),
-    initCloneObject = __webpack_require__(390),
-    isArray = __webpack_require__(39),
-    isBuffer = __webpack_require__(236),
-    isMap = __webpack_require__(392),
-    isObject = __webpack_require__(53),
-    isSet = __webpack_require__(394),
-    keys = __webpack_require__(58),
-    keysIn = __webpack_require__(252);
+var Stack = __webpack_require__(196),
+    arrayEach = __webpack_require__(278),
+    assignValue = __webpack_require__(218),
+    baseAssign = __webpack_require__(279),
+    baseAssignIn = __webpack_require__(285),
+    cloneBuffer = __webpack_require__(288),
+    copyArray = __webpack_require__(289),
+    copySymbols = __webpack_require__(290),
+    copySymbolsIn = __webpack_require__(292),
+    getAllKeys = __webpack_require__(225),
+    getAllKeysIn = __webpack_require__(227),
+    getTag = __webpack_require__(60),
+    initCloneArray = __webpack_require__(297),
+    initCloneByTag = __webpack_require__(298),
+    initCloneObject = __webpack_require__(303),
+    isArray = __webpack_require__(31),
+    isBuffer = __webpack_require__(193),
+    isMap = __webpack_require__(305),
+    isObject = __webpack_require__(37),
+    isSet = __webpack_require__(307),
+    keys = __webpack_require__(40),
+    keysIn = __webpack_require__(203);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -33099,7 +27863,7 @@ module.exports = baseClone;
 
 
 /***/ }),
-/* 337 */
+/* 249 */
 /***/ (function(module, exports) {
 
 /**
@@ -33118,10 +27882,10 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 338 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(63);
 
 /** Used for built-in method references. */
 var arrayProto = Array.prototype;
@@ -33159,10 +27923,10 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 339 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(63);
 
 /**
  * Gets the list cache value for `key`.
@@ -33184,10 +27948,10 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 340 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(63);
 
 /**
  * Checks if a list cache value for `key` exists.
@@ -33206,10 +27970,10 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 341 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var assocIndexOf = __webpack_require__(102);
+var assocIndexOf = __webpack_require__(63);
 
 /**
  * Sets the list cache `key` to `value`.
@@ -33238,10 +28002,10 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 342 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(101);
+var ListCache = __webpack_require__(62);
 
 /**
  * Removes all key-value entries from the stack.
@@ -33259,7 +28023,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 343 */
+/* 255 */
 /***/ (function(module, exports) {
 
 /**
@@ -33283,7 +28047,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 344 */
+/* 256 */
 /***/ (function(module, exports) {
 
 /**
@@ -33303,7 +28067,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 345 */
+/* 257 */
 /***/ (function(module, exports) {
 
 /**
@@ -33323,12 +28087,12 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 346 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ListCache = __webpack_require__(101),
-    Map = __webpack_require__(246),
-    MapCache = __webpack_require__(247);
+var ListCache = __webpack_require__(62),
+    Map = __webpack_require__(197),
+    MapCache = __webpack_require__(198);
 
 /** Used as the size to enable large array optimizations. */
 var LARGE_ARRAY_SIZE = 200;
@@ -33363,13 +28127,13 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 347 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(283),
-    isMasked = __webpack_require__(350),
-    isObject = __webpack_require__(53),
-    toSource = __webpack_require__(286);
+var isFunction = __webpack_require__(215),
+    isMasked = __webpack_require__(263),
+    isObject = __webpack_require__(37),
+    toSource = __webpack_require__(217);
 
 /**
  * Used to match `RegExp`
@@ -33416,10 +28180,36 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 348 */
+/* 260 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71);
+var Symbol = __webpack_require__(51);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -33468,7 +28258,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 349 */
+/* 262 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -33496,10 +28286,10 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 350 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(351);
+var coreJsData = __webpack_require__(264);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -33522,10 +28312,10 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 351 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var root = __webpack_require__(46);
+var root = __webpack_require__(34);
 
 /** Used to detect overreaching core-js shims. */
 var coreJsData = root['__core-js_shared__'];
@@ -33534,7 +28324,7 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 352 */
+/* 265 */
 /***/ (function(module, exports) {
 
 /**
@@ -33553,12 +28343,12 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 353 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(354),
-    ListCache = __webpack_require__(101),
-    Map = __webpack_require__(246);
+var Hash = __webpack_require__(267),
+    ListCache = __webpack_require__(62),
+    Map = __webpack_require__(197);
 
 /**
  * Removes all key-value entries from the map.
@@ -33580,14 +28370,14 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 354 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(355),
-    hashDelete = __webpack_require__(356),
-    hashGet = __webpack_require__(357),
-    hashHas = __webpack_require__(358),
-    hashSet = __webpack_require__(359);
+var hashClear = __webpack_require__(268),
+    hashDelete = __webpack_require__(269),
+    hashGet = __webpack_require__(270),
+    hashHas = __webpack_require__(271),
+    hashSet = __webpack_require__(272);
 
 /**
  * Creates a hash object.
@@ -33618,10 +28408,10 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 355 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(65);
 
 /**
  * Removes all key-value entries from the hash.
@@ -33639,7 +28429,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 356 */
+/* 269 */
 /***/ (function(module, exports) {
 
 /**
@@ -33662,10 +28452,10 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 357 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(65);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -33698,10 +28488,10 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 358 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(65);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -33727,10 +28517,10 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 359 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var nativeCreate = __webpack_require__(104);
+var nativeCreate = __webpack_require__(65);
 
 /** Used to stand-in for `undefined` hash values. */
 var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -33756,10 +28546,10 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 360 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(66);
 
 /**
  * Removes `key` and its value from the map.
@@ -33780,7 +28570,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 361 */
+/* 274 */
 /***/ (function(module, exports) {
 
 /**
@@ -33801,10 +28591,10 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 362 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(66);
 
 /**
  * Gets the map value for `key`.
@@ -33823,10 +28613,10 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 363 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(66);
 
 /**
  * Checks if a map value for `key` exists.
@@ -33845,10 +28635,10 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 364 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getMapData = __webpack_require__(105);
+var getMapData = __webpack_require__(66);
 
 /**
  * Sets the map `key` to `value`.
@@ -33873,7 +28663,7 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 365 */
+/* 278 */
 /***/ (function(module, exports) {
 
 /**
@@ -33901,11 +28691,11 @@ module.exports = arrayEach;
 
 
 /***/ }),
-/* 366 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(84),
-    keys = __webpack_require__(58);
+var copyObject = __webpack_require__(55),
+    keys = __webpack_require__(40);
 
 /**
  * The base implementation of `_.assign` without support for multiple sources
@@ -33924,7 +28714,7 @@ module.exports = baseAssign;
 
 
 /***/ }),
-/* 367 */
+/* 280 */
 /***/ (function(module, exports) {
 
 /**
@@ -33950,11 +28740,11 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 368 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(66),
-    isObjectLike = __webpack_require__(52);
+var baseGetTag = __webpack_require__(45),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]';
@@ -33974,7 +28764,7 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 369 */
+/* 282 */
 /***/ (function(module, exports) {
 
 /**
@@ -33998,12 +28788,12 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 370 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(66),
-    isLength = __webpack_require__(249),
-    isObjectLike = __webpack_require__(52);
+var baseGetTag = __webpack_require__(45),
+    isLength = __webpack_require__(200),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var argsTag = '[object Arguments]',
@@ -34064,10 +28854,10 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 371 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var overArg = __webpack_require__(291);
+var overArg = __webpack_require__(222);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeKeys = overArg(Object.keys, Object);
@@ -34076,11 +28866,11 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 372 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(84),
-    keysIn = __webpack_require__(252);
+var copyObject = __webpack_require__(55),
+    keysIn = __webpack_require__(203);
 
 /**
  * The base implementation of `_.assignIn` without support for multiple sources
@@ -34099,12 +28889,12 @@ module.exports = baseAssignIn;
 
 
 /***/ }),
-/* 373 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(53),
-    isPrototype = __webpack_require__(237),
-    nativeKeysIn = __webpack_require__(374);
+var isObject = __webpack_require__(37),
+    isPrototype = __webpack_require__(194),
+    nativeKeysIn = __webpack_require__(287);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -34138,7 +28928,7 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 374 */
+/* 287 */
 /***/ (function(module, exports) {
 
 /**
@@ -34164,10 +28954,10 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 375 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(46);
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(34);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -34203,10 +28993,10 @@ function cloneBuffer(buffer, isDeep) {
 
 module.exports = cloneBuffer;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(83)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(54)(module)))
 
 /***/ }),
-/* 376 */
+/* 289 */
 /***/ (function(module, exports) {
 
 /**
@@ -34232,11 +29022,11 @@ module.exports = copyArray;
 
 
 /***/ }),
-/* 377 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(84),
-    getSymbols = __webpack_require__(253);
+var copyObject = __webpack_require__(55),
+    getSymbols = __webpack_require__(204);
 
 /**
  * Copies own symbols of `source` to `object`.
@@ -34254,7 +29044,7 @@ module.exports = copySymbols;
 
 
 /***/ }),
-/* 378 */
+/* 291 */
 /***/ (function(module, exports) {
 
 /**
@@ -34285,11 +29075,11 @@ module.exports = arrayFilter;
 
 
 /***/ }),
-/* 379 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var copyObject = __webpack_require__(84),
-    getSymbolsIn = __webpack_require__(293);
+var copyObject = __webpack_require__(55),
+    getSymbolsIn = __webpack_require__(224);
 
 /**
  * Copies own and inherited symbols of `source` to `object`.
@@ -34307,11 +29097,11 @@ module.exports = copySymbolsIn;
 
 
 /***/ }),
-/* 380 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65),
-    root = __webpack_require__(46);
+var getNative = __webpack_require__(44),
+    root = __webpack_require__(34);
 
 /* Built-in method references that are verified to be native. */
 var DataView = getNative(root, 'DataView');
@@ -34320,11 +29110,11 @@ module.exports = DataView;
 
 
 /***/ }),
-/* 381 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65),
-    root = __webpack_require__(46);
+var getNative = __webpack_require__(44),
+    root = __webpack_require__(34);
 
 /* Built-in method references that are verified to be native. */
 var Promise = getNative(root, 'Promise');
@@ -34333,11 +29123,11 @@ module.exports = Promise;
 
 
 /***/ }),
-/* 382 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65),
-    root = __webpack_require__(46);
+var getNative = __webpack_require__(44),
+    root = __webpack_require__(34);
 
 /* Built-in method references that are verified to be native. */
 var Set = getNative(root, 'Set');
@@ -34346,11 +29136,11 @@ module.exports = Set;
 
 
 /***/ }),
-/* 383 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getNative = __webpack_require__(65),
-    root = __webpack_require__(46);
+var getNative = __webpack_require__(44),
+    root = __webpack_require__(34);
 
 /* Built-in method references that are verified to be native. */
 var WeakMap = getNative(root, 'WeakMap');
@@ -34359,7 +29149,7 @@ module.exports = WeakMap;
 
 
 /***/ }),
-/* 384 */
+/* 297 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -34391,14 +29181,14 @@ module.exports = initCloneArray;
 
 
 /***/ }),
-/* 385 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(256),
-    cloneDataView = __webpack_require__(386),
-    cloneRegExp = __webpack_require__(387),
-    cloneSymbol = __webpack_require__(388),
-    cloneTypedArray = __webpack_require__(389);
+var cloneArrayBuffer = __webpack_require__(207),
+    cloneDataView = __webpack_require__(299),
+    cloneRegExp = __webpack_require__(300),
+    cloneSymbol = __webpack_require__(301),
+    cloneTypedArray = __webpack_require__(302);
 
 /** `Object#toString` result references. */
 var boolTag = '[object Boolean]',
@@ -34474,10 +29264,10 @@ module.exports = initCloneByTag;
 
 
 /***/ }),
-/* 386 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(256);
+var cloneArrayBuffer = __webpack_require__(207);
 
 /**
  * Creates a clone of `dataView`.
@@ -34496,7 +29286,7 @@ module.exports = cloneDataView;
 
 
 /***/ }),
-/* 387 */
+/* 300 */
 /***/ (function(module, exports) {
 
 /** Used to match `RegExp` flags from their coerced string values. */
@@ -34519,10 +29309,10 @@ module.exports = cloneRegExp;
 
 
 /***/ }),
-/* 388 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71);
+var Symbol = __webpack_require__(51);
 
 /** Used to convert symbols to primitives and strings. */
 var symbolProto = Symbol ? Symbol.prototype : undefined,
@@ -34543,10 +29333,10 @@ module.exports = cloneSymbol;
 
 
 /***/ }),
-/* 389 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cloneArrayBuffer = __webpack_require__(256);
+var cloneArrayBuffer = __webpack_require__(207);
 
 /**
  * Creates a clone of `typedArray`.
@@ -34565,12 +29355,12 @@ module.exports = cloneTypedArray;
 
 
 /***/ }),
-/* 390 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseCreate = __webpack_require__(391),
-    getPrototype = __webpack_require__(255),
-    isPrototype = __webpack_require__(237);
+var baseCreate = __webpack_require__(304),
+    getPrototype = __webpack_require__(206),
+    isPrototype = __webpack_require__(194);
 
 /**
  * Initializes an object clone.
@@ -34589,10 +29379,10 @@ module.exports = initCloneObject;
 
 
 /***/ }),
-/* 391 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(53);
+var isObject = __webpack_require__(37);
 
 /** Built-in value references. */
 var objectCreate = Object.create;
@@ -34625,12 +29415,12 @@ module.exports = baseCreate;
 
 
 /***/ }),
-/* 392 */
+/* 305 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMap = __webpack_require__(393),
-    baseUnary = __webpack_require__(250),
-    nodeUtil = __webpack_require__(251);
+var baseIsMap = __webpack_require__(306),
+    baseUnary = __webpack_require__(201),
+    nodeUtil = __webpack_require__(202);
 
 /* Node.js helper references. */
 var nodeIsMap = nodeUtil && nodeUtil.isMap;
@@ -34658,11 +29448,11 @@ module.exports = isMap;
 
 
 /***/ }),
-/* 393 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getTag = __webpack_require__(93),
-    isObjectLike = __webpack_require__(52);
+var getTag = __webpack_require__(60),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]';
@@ -34682,12 +29472,12 @@ module.exports = baseIsMap;
 
 
 /***/ }),
-/* 394 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsSet = __webpack_require__(395),
-    baseUnary = __webpack_require__(250),
-    nodeUtil = __webpack_require__(251);
+var baseIsSet = __webpack_require__(308),
+    baseUnary = __webpack_require__(201),
+    nodeUtil = __webpack_require__(202);
 
 /* Node.js helper references. */
 var nodeIsSet = nodeUtil && nodeUtil.isSet;
@@ -34715,11 +29505,11 @@ module.exports = isSet;
 
 
 /***/ }),
-/* 395 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getTag = __webpack_require__(93),
-    isObjectLike = __webpack_require__(52);
+var getTag = __webpack_require__(60),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var setTag = '[object Set]';
@@ -34739,13 +29529,13 @@ module.exports = baseIsSet;
 
 
 /***/ }),
-/* 396 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(106),
-    last = __webpack_require__(400),
-    parent = __webpack_require__(401),
-    toKey = __webpack_require__(85);
+var castPath = __webpack_require__(67),
+    last = __webpack_require__(313),
+    parent = __webpack_require__(314),
+    toKey = __webpack_require__(56);
 
 /**
  * The base implementation of `_.unset`.
@@ -34765,10 +29555,10 @@ module.exports = baseUnset;
 
 
 /***/ }),
-/* 397 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoizeCapped = __webpack_require__(398);
+var memoizeCapped = __webpack_require__(311);
 
 /** Used to match property names within property paths. */
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
@@ -34798,10 +29588,10 @@ module.exports = stringToPath;
 
 
 /***/ }),
-/* 398 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoize = __webpack_require__(399);
+var memoize = __webpack_require__(312);
 
 /** Used as the maximum memoize cache size. */
 var MAX_MEMOIZE_SIZE = 500;
@@ -34830,10 +29620,10 @@ module.exports = memoizeCapped;
 
 
 /***/ }),
-/* 399 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(247);
+var MapCache = __webpack_require__(198);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -34909,7 +29699,7 @@ module.exports = memoize;
 
 
 /***/ }),
-/* 400 */
+/* 313 */
 /***/ (function(module, exports) {
 
 /**
@@ -34935,11 +29725,11 @@ module.exports = last;
 
 
 /***/ }),
-/* 401 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(258),
-    baseSlice = __webpack_require__(300);
+var baseGet = __webpack_require__(209),
+    baseSlice = __webpack_require__(231);
 
 /**
  * Gets the parent value at `path` of `object`.
@@ -34957,10 +29747,10 @@ module.exports = parent;
 
 
 /***/ }),
-/* 402 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isPlainObject = __webpack_require__(403);
+var isPlainObject = __webpack_require__(316);
 
 /**
  * Used by `_.omit` to customize its `_.cloneDeep` use to only clone plain
@@ -34979,12 +29769,12 @@ module.exports = customOmitClone;
 
 
 /***/ }),
-/* 403 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(66),
-    getPrototype = __webpack_require__(255),
-    isObjectLike = __webpack_require__(52);
+var baseGetTag = __webpack_require__(45),
+    getPrototype = __webpack_require__(206),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var objectTag = '[object Object]';
@@ -35047,12 +29837,12 @@ module.exports = isPlainObject;
 
 
 /***/ }),
-/* 404 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var flatten = __webpack_require__(405),
-    overRest = __webpack_require__(408),
-    setToString = __webpack_require__(410);
+var flatten = __webpack_require__(318),
+    overRest = __webpack_require__(321),
+    setToString = __webpack_require__(323);
 
 /**
  * A specialized version of `baseRest` which flattens the rest array.
@@ -35069,10 +29859,10 @@ module.exports = flatRest;
 
 
 /***/ }),
-/* 405 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFlatten = __webpack_require__(406);
+var baseFlatten = __webpack_require__(319);
 
 /**
  * Flattens `array` a single level deep.
@@ -35097,11 +29887,11 @@ module.exports = flatten;
 
 
 /***/ }),
-/* 406 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayPush = __webpack_require__(254),
-    isFlattenable = __webpack_require__(407);
+var arrayPush = __webpack_require__(205),
+    isFlattenable = __webpack_require__(320);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -35141,12 +29931,12 @@ module.exports = baseFlatten;
 
 
 /***/ }),
-/* 407 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71),
-    isArguments = __webpack_require__(235),
-    isArray = __webpack_require__(39);
+var Symbol = __webpack_require__(51),
+    isArguments = __webpack_require__(192),
+    isArray = __webpack_require__(31);
 
 /** Built-in value references. */
 var spreadableSymbol = Symbol ? Symbol.isConcatSpreadable : undefined;
@@ -35167,10 +29957,10 @@ module.exports = isFlattenable;
 
 
 /***/ }),
-/* 408 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(409);
+var apply = __webpack_require__(322);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -35209,7 +29999,7 @@ module.exports = overRest;
 
 
 /***/ }),
-/* 409 */
+/* 322 */
 /***/ (function(module, exports) {
 
 /**
@@ -35236,11 +30026,11 @@ module.exports = apply;
 
 
 /***/ }),
-/* 410 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(411),
-    shortOut = __webpack_require__(413);
+var baseSetToString = __webpack_require__(324),
+    shortOut = __webpack_require__(326);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -35256,12 +30046,12 @@ module.exports = setToString;
 
 
 /***/ }),
-/* 411 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var constant = __webpack_require__(412),
-    defineProperty = __webpack_require__(289),
-    identity = __webpack_require__(301);
+var constant = __webpack_require__(325),
+    defineProperty = __webpack_require__(220),
+    identity = __webpack_require__(232);
 
 /**
  * The base implementation of `setToString` without support for hot loop shorting.
@@ -35284,7 +30074,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 412 */
+/* 325 */
 /***/ (function(module, exports) {
 
 /**
@@ -35316,7 +30106,7 @@ module.exports = constant;
 
 
 /***/ }),
-/* 413 */
+/* 326 */
 /***/ (function(module, exports) {
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -35359,10 +30149,35 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 414 */
+/* 327 */
+/***/ (function(module, exports) {
+
+/** Used to match a single whitespace character. */
+var reWhitespace = /\s/;
+
+/**
+ * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+ * character of `string`.
+ *
+ * @private
+ * @param {string} string The string to inspect.
+ * @returns {number} Returns the index of the last non-whitespace character.
+ */
+function trimmedEndIndex(string) {
+  var index = string.length;
+
+  while (index-- && reWhitespace.test(string.charAt(index))) {}
+  return index;
+}
+
+module.exports = trimmedEndIndex;
+
+
+/***/ }),
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSlice = __webpack_require__(300);
+var baseSlice = __webpack_require__(231);
 
 /**
  * Casts `array` to a slice if it's needed.
@@ -35383,10 +30198,10 @@ module.exports = castSlice;
 
 
 /***/ }),
-/* 415 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(259);
+var baseIndexOf = __webpack_require__(210);
 
 /**
  * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
@@ -35408,7 +30223,7 @@ module.exports = charsEndIndex;
 
 
 /***/ }),
-/* 416 */
+/* 330 */
 /***/ (function(module, exports) {
 
 /**
@@ -35426,7 +30241,7 @@ module.exports = baseIsNaN;
 
 
 /***/ }),
-/* 417 */
+/* 331 */
 /***/ (function(module, exports) {
 
 /**
@@ -35455,10 +30270,10 @@ module.exports = strictIndexOf;
 
 
 /***/ }),
-/* 418 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIndexOf = __webpack_require__(259);
+var baseIndexOf = __webpack_require__(210);
 
 /**
  * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
@@ -35481,12 +30296,12 @@ module.exports = charsStartIndex;
 
 
 /***/ }),
-/* 419 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var asciiToArray = __webpack_require__(420),
-    hasUnicode = __webpack_require__(421),
-    unicodeToArray = __webpack_require__(422);
+var asciiToArray = __webpack_require__(334),
+    hasUnicode = __webpack_require__(335),
+    unicodeToArray = __webpack_require__(336);
 
 /**
  * Converts `string` to an array.
@@ -35505,7 +30320,7 @@ module.exports = stringToArray;
 
 
 /***/ }),
-/* 420 */
+/* 334 */
 /***/ (function(module, exports) {
 
 /**
@@ -35523,7 +30338,7 @@ module.exports = asciiToArray;
 
 
 /***/ }),
-/* 421 */
+/* 335 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -35555,7 +30370,7 @@ module.exports = hasUnicode;
 
 
 /***/ }),
-/* 422 */
+/* 336 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -35601,12 +30416,12 @@ module.exports = unicodeToArray;
 
 
 /***/ }),
-/* 423 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIteratee = __webpack_require__(260),
-    isArrayLike = __webpack_require__(69),
-    keys = __webpack_require__(58);
+var baseIteratee = __webpack_require__(211),
+    isArrayLike = __webpack_require__(49),
+    keys = __webpack_require__(40);
 
 /**
  * Creates a `_.find` or `_.findLast` function.
@@ -35632,12 +30447,12 @@ module.exports = createFind;
 
 
 /***/ }),
-/* 424 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMatch = __webpack_require__(425),
-    getMatchData = __webpack_require__(435),
-    matchesStrictComparable = __webpack_require__(316);
+var baseIsMatch = __webpack_require__(339),
+    getMatchData = __webpack_require__(349),
+    matchesStrictComparable = __webpack_require__(239);
 
 /**
  * The base implementation of `_.matches` which doesn't clone `source`.
@@ -35660,11 +30475,11 @@ module.exports = baseMatches;
 
 
 /***/ }),
-/* 425 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(245),
-    baseIsEqual = __webpack_require__(312);
+var Stack = __webpack_require__(196),
+    baseIsEqual = __webpack_require__(235);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -35728,17 +30543,17 @@ module.exports = baseIsMatch;
 
 
 /***/ }),
-/* 426 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Stack = __webpack_require__(245),
-    equalArrays = __webpack_require__(313),
-    equalByTag = __webpack_require__(431),
-    equalObjects = __webpack_require__(434),
-    getTag = __webpack_require__(93),
-    isArray = __webpack_require__(39),
-    isBuffer = __webpack_require__(236),
-    isTypedArray = __webpack_require__(267);
+var Stack = __webpack_require__(196),
+    equalArrays = __webpack_require__(236),
+    equalByTag = __webpack_require__(345),
+    equalObjects = __webpack_require__(348),
+    getTag = __webpack_require__(60),
+    isArray = __webpack_require__(31),
+    isBuffer = __webpack_require__(193),
+    isTypedArray = __webpack_require__(213);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -35817,12 +30632,12 @@ module.exports = baseIsEqualDeep;
 
 
 /***/ }),
-/* 427 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var MapCache = __webpack_require__(247),
-    setCacheAdd = __webpack_require__(428),
-    setCacheHas = __webpack_require__(429);
+var MapCache = __webpack_require__(198),
+    setCacheAdd = __webpack_require__(342),
+    setCacheHas = __webpack_require__(343);
 
 /**
  *
@@ -35850,7 +30665,7 @@ module.exports = SetCache;
 
 
 /***/ }),
-/* 428 */
+/* 342 */
 /***/ (function(module, exports) {
 
 /** Used to stand-in for `undefined` hash values. */
@@ -35875,7 +30690,7 @@ module.exports = setCacheAdd;
 
 
 /***/ }),
-/* 429 */
+/* 343 */
 /***/ (function(module, exports) {
 
 /**
@@ -35895,7 +30710,7 @@ module.exports = setCacheHas;
 
 
 /***/ }),
-/* 430 */
+/* 344 */
 /***/ (function(module, exports) {
 
 /**
@@ -35914,15 +30729,15 @@ module.exports = cacheHas;
 
 
 /***/ }),
-/* 431 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Symbol = __webpack_require__(71),
-    Uint8Array = __webpack_require__(297),
-    eq = __webpack_require__(103),
-    equalArrays = __webpack_require__(313),
-    mapToArray = __webpack_require__(432),
-    setToArray = __webpack_require__(433);
+var Symbol = __webpack_require__(51),
+    Uint8Array = __webpack_require__(228),
+    eq = __webpack_require__(64),
+    equalArrays = __webpack_require__(236),
+    mapToArray = __webpack_require__(346),
+    setToArray = __webpack_require__(347);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -36032,7 +30847,7 @@ module.exports = equalByTag;
 
 
 /***/ }),
-/* 432 */
+/* 346 */
 /***/ (function(module, exports) {
 
 /**
@@ -36056,7 +30871,7 @@ module.exports = mapToArray;
 
 
 /***/ }),
-/* 433 */
+/* 347 */
 /***/ (function(module, exports) {
 
 /**
@@ -36080,10 +30895,10 @@ module.exports = setToArray;
 
 
 /***/ }),
-/* 434 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getAllKeys = __webpack_require__(294);
+var getAllKeys = __webpack_require__(225);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1;
@@ -36176,11 +30991,11 @@ module.exports = equalObjects;
 
 
 /***/ }),
-/* 435 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isStrictComparable = __webpack_require__(315),
-    keys = __webpack_require__(58);
+var isStrictComparable = __webpack_require__(238),
+    keys = __webpack_require__(40);
 
 /**
  * Gets the property names, values, and compare flags of `object`.
@@ -36206,16 +31021,16 @@ module.exports = getMatchData;
 
 
 /***/ }),
-/* 436 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqual = __webpack_require__(312),
-    get = __webpack_require__(437),
-    hasIn = __webpack_require__(438),
-    isKey = __webpack_require__(257),
-    isStrictComparable = __webpack_require__(315),
-    matchesStrictComparable = __webpack_require__(316),
-    toKey = __webpack_require__(85);
+var baseIsEqual = __webpack_require__(235),
+    get = __webpack_require__(351),
+    hasIn = __webpack_require__(352),
+    isKey = __webpack_require__(208),
+    isStrictComparable = __webpack_require__(238),
+    matchesStrictComparable = __webpack_require__(239),
+    toKey = __webpack_require__(56);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -36245,10 +31060,10 @@ module.exports = baseMatchesProperty;
 
 
 /***/ }),
-/* 437 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(258);
+var baseGet = __webpack_require__(209);
 
 /**
  * Gets the value at `path` of `object`. If the resolved value is
@@ -36284,11 +31099,11 @@ module.exports = get;
 
 
 /***/ }),
-/* 438 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHasIn = __webpack_require__(439),
-    hasPath = __webpack_require__(440);
+var baseHasIn = __webpack_require__(353),
+    hasPath = __webpack_require__(354);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -36324,7 +31139,7 @@ module.exports = hasIn;
 
 
 /***/ }),
-/* 439 */
+/* 353 */
 /***/ (function(module, exports) {
 
 /**
@@ -36343,15 +31158,15 @@ module.exports = baseHasIn;
 
 
 /***/ }),
-/* 440 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castPath = __webpack_require__(106),
-    isArguments = __webpack_require__(235),
-    isArray = __webpack_require__(39),
-    isIndex = __webpack_require__(248),
-    isLength = __webpack_require__(249),
-    toKey = __webpack_require__(85);
+var castPath = __webpack_require__(67),
+    isArguments = __webpack_require__(192),
+    isArray = __webpack_require__(31),
+    isIndex = __webpack_require__(199),
+    isLength = __webpack_require__(200),
+    toKey = __webpack_require__(56);
 
 /**
  * Checks if `path` exists on `object`.
@@ -36388,13 +31203,13 @@ module.exports = hasPath;
 
 
 /***/ }),
-/* 441 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseProperty = __webpack_require__(442),
-    basePropertyDeep = __webpack_require__(443),
-    isKey = __webpack_require__(257),
-    toKey = __webpack_require__(85);
+var baseProperty = __webpack_require__(356),
+    basePropertyDeep = __webpack_require__(357),
+    isKey = __webpack_require__(208),
+    toKey = __webpack_require__(56);
 
 /**
  * Creates a function that returns the value at `path` of a given object.
@@ -36426,7 +31241,7 @@ module.exports = property;
 
 
 /***/ }),
-/* 442 */
+/* 356 */
 /***/ (function(module, exports) {
 
 /**
@@ -36446,10 +31261,10 @@ module.exports = baseProperty;
 
 
 /***/ }),
-/* 443 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGet = __webpack_require__(258);
+var baseGet = __webpack_require__(209);
 
 /**
  * A specialized version of `baseProperty` which supports deep paths.
@@ -36468,12 +31283,12 @@ module.exports = basePropertyDeep;
 
 
 /***/ }),
-/* 444 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFindIndex = __webpack_require__(311),
-    baseIteratee = __webpack_require__(260),
-    toInteger = __webpack_require__(317);
+var baseFindIndex = __webpack_require__(234),
+    baseIteratee = __webpack_require__(211),
+    toInteger = __webpack_require__(240);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -36529,10 +31344,10 @@ module.exports = findIndex;
 
 
 /***/ }),
-/* 445 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toNumber = __webpack_require__(446);
+var toNumber = __webpack_require__(360);
 
 /** Used as references for various `Number` constants. */
 var INFINITY = 1 / 0,
@@ -36577,17 +31392,15 @@ module.exports = toFinite;
 
 
 /***/ }),
-/* 446 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(53),
-    isSymbol = __webpack_require__(107);
+var baseTrim = __webpack_require__(233),
+    isObject = __webpack_require__(37),
+    isSymbol = __webpack_require__(68);
 
 /** Used as references for various `Number` constants. */
 var NAN = 0 / 0;
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
 
 /** Used to detect bad signed hexadecimal string values. */
 var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
@@ -36638,7 +31451,7 @@ function toNumber(value) {
   if (typeof value != 'string') {
     return value === 0 ? value : +value;
   }
-  value = value.replace(reTrim, '');
+  value = baseTrim(value);
   var isBinary = reIsBinary.test(value);
   return (isBinary || reIsOctal.test(value))
     ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
@@ -36649,42 +31462,12 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 447 */
-/***/ (function(module, exports) {
-
-module.exports = function(originalModule) {
-	if (!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 448 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseGetTag = __webpack_require__(66),
-    isArray = __webpack_require__(39),
-    isObjectLike = __webpack_require__(52);
+var baseGetTag = __webpack_require__(45),
+    isArray = __webpack_require__(31),
+    isObjectLike = __webpack_require__(36);
 
 /** `Object#toString` result references. */
 var stringTag = '[object String]';
@@ -36715,11 +31498,11 @@ module.exports = isString;
 
 
 /***/ }),
-/* 449 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseValues = __webpack_require__(450),
-    keys = __webpack_require__(58);
+var baseValues = __webpack_require__(363),
+    keys = __webpack_require__(40);
 
 /**
  * Creates an array of the own enumerable string keyed property values of `object`.
@@ -36755,10 +31538,10 @@ module.exports = values;
 
 
 /***/ }),
-/* 450 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayMap = __webpack_require__(244);
+var arrayMap = __webpack_require__(195);
 
 /**
  * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -36780,10 +31563,10 @@ module.exports = baseValues;
 
 
 /***/ }),
-/* 451 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseEach = __webpack_require__(452);
+var baseEach = __webpack_require__(365);
 
 /**
  * The base implementation of `_.some` without support for iteratee shorthands.
@@ -36808,11 +31591,11 @@ module.exports = baseSome;
 
 
 /***/ }),
-/* 452 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseForOwn = __webpack_require__(453),
-    createBaseEach = __webpack_require__(456);
+var baseForOwn = __webpack_require__(366),
+    createBaseEach = __webpack_require__(369);
 
 /**
  * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -36828,11 +31611,11 @@ module.exports = baseEach;
 
 
 /***/ }),
-/* 453 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFor = __webpack_require__(454),
-    keys = __webpack_require__(58);
+var baseFor = __webpack_require__(367),
+    keys = __webpack_require__(40);
 
 /**
  * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -36850,10 +31633,10 @@ module.exports = baseForOwn;
 
 
 /***/ }),
-/* 454 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createBaseFor = __webpack_require__(455);
+var createBaseFor = __webpack_require__(368);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -36872,7 +31655,7 @@ module.exports = baseFor;
 
 
 /***/ }),
-/* 455 */
+/* 368 */
 /***/ (function(module, exports) {
 
 /**
@@ -36903,10 +31686,10 @@ module.exports = createBaseFor;
 
 
 /***/ }),
-/* 456 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isArrayLike = __webpack_require__(69);
+var isArrayLike = __webpack_require__(49);
 
 /**
  * Creates a `baseEach` or `baseEachRight` function.
@@ -36941,13 +31724,13 @@ module.exports = createBaseEach;
 
 
 /***/ }),
-/* 457 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var eq = __webpack_require__(103),
-    isArrayLike = __webpack_require__(69),
-    isIndex = __webpack_require__(248),
-    isObject = __webpack_require__(53);
+var eq = __webpack_require__(64),
+    isArrayLike = __webpack_require__(49),
+    isIndex = __webpack_require__(199),
+    isObject = __webpack_require__(37);
 
 /**
  * Checks if the given arguments are from an iteratee call.

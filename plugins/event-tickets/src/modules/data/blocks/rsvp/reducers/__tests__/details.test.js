@@ -5,7 +5,7 @@ import { actions } from '@moderntribe/tickets/data/blocks/rsvp';
 import reducer, { DEFAULT_STATE } from '@moderntribe/tickets/data/blocks/rsvp/reducers/details';
 
 jest.mock( 'moment', () => () => {
-	const moment = require.requireActual( 'moment' );
+	const moment = jest.requireActual( 'moment' );
 	return moment( 'July 19, 2018 7:30 pm', 'MMMM D, Y h:mm a' );
 } );
 
@@ -19,7 +19,8 @@ describe( 'Details reducer', () => {
 	} );
 
 	it( 'should set the description', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPDescription( 'new description' ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPDescription( 'new description' ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the capacity', () => {
@@ -31,11 +32,13 @@ describe( 'Details reducer', () => {
 	} );
 
 	it( 'should set the start date', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPStartDate( 'January 1, 2018' ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPStartDate( 'January 1, 2018' ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the start date input', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPStartDateInput( 'January 1, 2018' ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPStartDateInput( 'January 1, 2018' ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the start date moment', () => {
@@ -46,11 +49,13 @@ describe( 'Details reducer', () => {
 	} );
 
 	it( 'should set the end date', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPEndDate( 'January 1, 2018' ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPEndDate( 'January 1, 2018' ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the end date input', () => {
-		expect( reducer( DEFAULT_STATE, actions.setRSVPEndDateInput( 'January 1, 2018' ) ) ).toMatchSnapshot();
+		expect( reducer( DEFAULT_STATE, actions.setRSVPEndDateInput( 'January 1, 2018' ) ) )
+			.toMatchSnapshot();
 	} );
 
 	it( 'should set the end date moment', () => {

@@ -21,6 +21,7 @@ $singular = $pto->labels->singular_name;
  * @param Tribe__Tickets__Attendees $attendees  The attendees object.
  */
 $show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $attendees );
+$export_url = tribe( 'tickets.attendees' )->get_export_url();
 ?>
 
 <div class="wrap tribe-report-page">
@@ -39,10 +40,13 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $
 			 * Add an action to render content after text title.
 			 *
 			 * @since 5.1.0
+			 * @since 5.1.7 Added the attendees information.
 			 *
 			 * @param int $event_id Post ID.
+			 * @param Tribe__Tickets__Attendees $attendees The attendees object.
 			 */
-			do_action( 'tribe_report_page_after_text_label', $event_id );
+			do_action( 'tribe_report_page_after_text_label', $event_id, $attendees );
+
 			?>
 		</h1>
 	<?php endif; ?>
@@ -157,6 +161,16 @@ $show_title = apply_filters( 'tribe_tickets_attendees_show_title', is_admin(), $
 					do_action( 'tribe_events_tickets_attendees_totals_bottom', $event_id );
 					?>
 				</div>
+				<?php
+				/**
+				 * Fires after the last column so that "extra" content can be displayed.
+				 *
+				 * @since 5.3.4
+				 *
+				 * @param int $event_id Event ID.
+				 */
+				do_action( 'tec_tickets_attendees_event_summary_table_extra', $event_id );
+				?>
 			</div>
 		</div>
 	</div>
