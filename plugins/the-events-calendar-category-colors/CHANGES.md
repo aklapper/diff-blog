@@ -1,5 +1,32 @@
 #### [unreleased]
 
+#### 7.0.6 / 2022-05-20
+* move all Pro CSS to `CSS\Pro`
+* fix CSS for all day multiday week view
+* update hook name for Events Calendar settings to load admin resources
+
+#### 7.0.5 / 2022-05-17
+* load Superpowers JS on mobile too
+* improve Superpowers JS slug selection, use vanilla JS
+
+#### 7.0.4 / 2022-05-16
+* update Superpowers JS for jQuery `click` and slug selection
+
+#### 7.0.3 / 2022-05-13
+* update past event CSS
+* tooltip CSS no longer available
+
+#### 7.0.2 / 2022-05-08
+* fix PHP Warning
+
+#### 7.0.1 / 2022-05-04
+* hotfix, `Base_CSS` not being written, stupid mistake on my part
+
+#### 7.0.0 / 2022-05-04
+* rewrite to use `wp_add_inline_style()` for adding CSS, no more file writing
+* WPCS linting
+* update requirements, PHP 7.1, WP 5.2
+
 #### 6.7.1 / 2021-08-20
 * add some error checking, [#132](https://github.com/afragen/the-events-calendar-category-colors/issues/132)
 

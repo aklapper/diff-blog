@@ -5,8 +5,8 @@
 * Tags: events, color, modern tribe, tribe
 * License: GPLv2 or later
 * License URI: <https://www.gnu.org/licenses/gpl-2.0.html>
-* Requires at least: 4.7
-* Requires PHP: 5.6
+* Requires at least: 5.2
+* Requires PHP: 7.1
 
 Add event category background colors to The Events Calendar events.
 
@@ -26,7 +26,7 @@ Settings for The Events Calendar Category Colors plugin are located in their own
 
 ### Does the plugin require The Events Calendar plugin?
 
-Yes. [The Events Calendar plugin](http://wordpress.org/plugins/the-events-calendar/) is written by Modern Tribe, Inc. It requires at least The Events Calendar v3.0.
+Yes. [The Events Calendar plugin](http://wordpress.org/plugins/the-events-calendar/) is written by Modern Tribe, Inc. It requires at least The Events Calendar v5.0.
 
 
 ### What if I use a version of The Events Calendar 2.x?

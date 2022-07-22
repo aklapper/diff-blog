@@ -58,7 +58,9 @@ jQuery(document).ready(
 			}
 
 			// Look out for deselections!
-			let selection = $(this).data("categorySlug");
+			//let selection = $(this).data("categorySlug");
+			let selection = event.currentTarget.classList[1].replace(/tribe_events_cat-/, '');
+			console.log('legend slug: ' + selection);
 			if (selection === status.selected) {
 				deselect(selection);
 				event.stopPropagation();
@@ -119,7 +121,7 @@ jQuery(document).ready(
 		function setup() {
 			defaultStatus();
 			$(legendEntries).each(prepareElement);
-			$(legendEntries).click(categorySelection);
+			$(legendEntries).on('click', function (event) { categorySelection(event); });
 		}
 
 		/**
