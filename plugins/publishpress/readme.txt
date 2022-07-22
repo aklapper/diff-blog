@@ -5,8 +5,8 @@ Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.9
-Stable tag: 3.7.1
+Tested up to: 6.0
+Stable tag: 3.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ PublishPress is ideal for WordPress sites that publish high-quality content. Wit
 ## PublishPress Pro ##
 
 > <strong>Upgrade to PublishPress Pro</strong><br />
-> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPress content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -120,6 +120,20 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.8.1] - 7 Jun 2022 =
+
+* Fixed: Uncaught Error: syntax error, unexpected ')' in lower php version, #1071
+
+= [3.8.0] - 6 Jun 2022 =
+
+* Update: Improve content overview date filter, #969;
+* Update: Move content overview from general settings to it own tab, #971;
+* Added: Add support for more taxonomies in content overview screen, #970;
+* Added: Add metadata filter option to content overview screen, #935;
+* Fixed: Fix all users showing in dropdow on calendar and content overview screen, #1035;
+* Fixed: Fix status permissions on calendar, #1038;
+* Added: Add publishpress-instance-protection package, #1034;
 
 = [3.7.1] - 21 apr 2022 =
 
