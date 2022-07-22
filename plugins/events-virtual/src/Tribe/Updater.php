@@ -187,8 +187,8 @@ class Updater extends Tribe__Events__Updater {
 			}
 
 			// If a virtual event has zoom as the meeting provider
-			if ( Zoom_Meta::$key_zoom_source_id === $event->virtual_meeting_provider ) {
-				update_post_meta( $event_id, Event_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
+			if ( Zoom_Meta::$key_source_id === $event->virtual_meeting_provider ) {
+				update_post_meta( $event_id, Event_Meta::$key_video_source, Zoom_Meta::$key_source_id );
 
 				continue;
 			}

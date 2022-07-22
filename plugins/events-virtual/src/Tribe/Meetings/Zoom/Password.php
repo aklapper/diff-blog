@@ -121,16 +121,25 @@ class Password {
 	 * Get the Zoom meeting password requirements.
 	 *
 	 * @since 1.0.2
+	 * @since 1.11.0 - Add parameter of password requirements.
 	 *
-	 * @return array An array of password requirements.
+	 * @param array<string|mixed> An array of password requirements to use instead of the defaults.
+	 *
+	 * @return array<string|mixed> An array of password requirements.
 	 */
-	public function get_password_requirements() {
+	public function get_password_requirements( array $requirements = [] ) {
 		// Default Requirements.
-		$requirements = [
+		$default_requirements = [
 			'password_length'                 => 10,
 			'password_have_special_character' => true,
 			'password_only_allow_numeric'     => false,
 		];
+
+		// Convert to boolean, due to javascript sending the variable as a string.
+		$requirements['password_have_special_character'] = isset( $requirements['password_have_special_character'] ) ? tribe_is_truthy( $requirements['password_have_special_character'] ) : false;
+		$requirements['password_only_allow_numeric']     = isset( $requirements['password_only_allow_numeric'] ) ? tribe_is_truthy( $requirements['password_only_allow_numeric'] ) : false;
+
+		$requirements = wp_parse_args( $requirements, $default_requirements );
 
 		/**
 		 * Filters the Zoom meeting password requirements.
@@ -148,6 +157,7 @@ class Password {
 	 * Generates a random password drawn from the defined set of characters.
 	 *
 	 * @since 1.0.2
+	 * @since 1.11.0 - Modify password generation to always include 1 character from a required set.
 	 *
 	 * @param int  $length        Optional. The length of password to generate. Default 6.
 	 * @param bool $special_chars Optional. Whether to include standard special characters. Default false.
@@ -155,20 +165,32 @@ class Password {
 	 *
 	 * @return string The random password.
 	 */
-	public function generate_zoom_password( $length = 6, $special_chars = false, $only_numeric = false ) {
+	public function generate_zoom_password( $length = 6, bool $special_chars = false, bool $only_numeric = false ) {
 		// Build the chars pool.
-		$chars      = '0123456789';
-		$chars     .= ! $only_numeric ? 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' : '';
-		$chars     .= ! $only_numeric && $special_chars ? '@-_*' : '';
-		$chars_pool = str_split( $chars );// Let's minimize the rounds to fully leverage `array_rand`.
+		$sets   = [];
+		$sets[] = '0123456789';
+		if ( ! $only_numeric ) {
+			$sets[] = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+			$sets[] = 'abcdefghjkmnpqrstuvwxyz';
+		}
+		if ( ! $only_numeric && $special_chars ) {
+			$sets[] = '!@#-_*';
+		}
 
-		$num_req = min( $length, count( $chars_pool ) );
+		$password = '';
+		$chars    = '';
 
-		$password                = '';
-		$current_password_length = 0;
+		// Use at least one character from each set.
+		foreach ( $sets as $set ) {
+			$password                .= $set[ $this->get_random_point( str_split( $set ) ) ];
+			$current_password_length = strlen( $password );
+			$chars                   .= $set;
+		}
+
+		// Fill in the remaining password characters.
+		$chars_pool = str_split( $chars );
 		while ( $current_password_length < $length ) {
-			shuffle( $chars_pool );
-			$password .= implode( '', array_rand( array_flip( $chars_pool ), $num_req ) );
+			$password .= $chars_pool[ $this->get_random_point( $chars_pool ) ];
 
 			// Remove duplicates.
 			$password                = preg_replace( '~([' . preg_quote( $chars, '~' ) . '])\1+~', '$1', $password );
@@ -178,7 +200,29 @@ class Password {
 		// Let's make sure the password length is the expected one.
 		$password = substr( $password, 0, $length );
 
-		return (string) $password;
+		$password = str_shuffle( $password );
+
+		return $password;
+	}
+
+	/**
+	 * Get Random Point in an array using the most secure function available.∂
+	 * Source - https://gist.github.com/compermisos/cf11aed742d2e1fbd994e083b4b0fa78
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param array<string|string> $array An array of characters to include in a password.
+	 *
+	 * @return string
+	 */
+	private function get_random_point( $array ) {
+		if ( function_exists( 'random_int' ) ) {
+			return random_int( 0, count( $array ) - 1 );
+		} elseif ( function_exists( 'mt_rand' ) ) {
+			return mt_rand( 0, count( $array ) - 1 );
+		}
+
+		return array_rand( $array );
 	}
 
 	/**

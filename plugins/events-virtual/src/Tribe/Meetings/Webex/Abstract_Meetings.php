@@ -13,7 +13,6 @@ use Tribe\Events\Virtual\Event_Meta as Virtual_Events_Meta;
 use Tribe\Events\Virtual\Meetings\Webex\Event_Meta as Webex_Meta;
 use Tribe\Events\Virtual\Traits\With_AJAX;
 use Tribe__Date_Utils as Dates;
-use Tribe__Timezones as Timezones;
 
 /**
  * Class Abstract_Meetings

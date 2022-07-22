@@ -9,6 +9,7 @@
 
 namespace Tribe\Events\Virtual\Meetings;
 
+use Tribe\Events\Virtual\Integrations\Api_Response;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Export as Zoom_Event_Export;
 use Tribe\Events\Virtual\Meetings\Zoom\Classic_Editor;
 use Tribe\Events\Virtual\Meetings\Zoom\Migration;
@@ -493,9 +494,9 @@ class Zoom_Provider extends Meeting_Provider {
 
 		$video_sources[] = [
 			'text'     => _x( 'Zoom Account', 'The name of the video source.', 'events-virtual' ),
-			'id'       => Zoom_Meta::$key_zoom_source_id,
-			'value'    => Zoom_Meta::$key_zoom_source_id,
-			'selected' => Zoom_Meta::$key_zoom_source_id === $post->virtual_video_source,
+			'id'       => Zoom_Meta::$key_source_id,
+			'value'    => Zoom_Meta::$key_source_id,
+			'selected' => Zoom_Meta::$key_source_id === $post->virtual_video_source,
 		];
 
 		return $video_sources;
@@ -553,9 +554,9 @@ class Zoom_Provider extends Meeting_Provider {
 
 		$autodetect_sources[] = [
 			'text'     => _x( 'Zoom', 'The name of the autodetect source.', 'events-virtual' ),
-			'id'       => Zoom_Meta::$key_zoom_source_id,
-			'value'    => Zoom_Meta::$key_zoom_source_id,
-			'selected' => Zoom_Meta::$key_zoom_source_id === $autodetect_source,
+			'id'       => Zoom_Meta::$key_source_id,
+			'value'    => Zoom_Meta::$key_source_id,
+			'selected' => Zoom_Meta::$key_source_id === $autodetect_source,
 		];
 
 		return $autodetect_sources;
@@ -577,6 +578,22 @@ class Zoom_Provider extends Meeting_Provider {
 	public function filter_virtual_autodetect_field_accounts( $autodetect_fields, $video_url, $autodetect_source, $event, $ajax_data ) {
 		return $this->container->make( Classic_Editor::class )
 		                ->classic_autodetect_video_source_accounts( $autodetect_fields, $video_url, $autodetect_source, $event, $ajax_data );
+	}
+
+	/**
+	 * Filters the API error message.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string              $api_message The API error message.
+	 * @param array<string,mixed> $body        The json_decoded request body.
+	 * @param Api_Response        $response    The response that will be returned. A non `null` value
+	 *                                         here will short-circuit the response.
+	 *
+	 * @return string              $api_message        The API error message.
+	 */
+	public function filter_api_error_message( $api_message, $body, $response ) {
+		return $this->container->make( Api::class )->filter_api_error_message( $api_message, $body, $response );
 	}
 
 	/**
@@ -610,8 +627,9 @@ class Zoom_Provider extends Meeting_Provider {
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_zoom_source_google_calendar_parameters' ], 10, 5 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_zoom_source_ical_feed_items' ], 10, 5 );
 		add_filter( 'tec_events_virtual_autodetect_video_sources', [ $this, 'add_autodetect_source' ], 20, 3 );
-				add_filter( 'tec_events_virtual_video_source_autodetect_field_all', [ $this, 'filter_virtual_autodetect_field_accounts' ], 20, 5 );
-				add_filter( 'tec_events_virtual_video_source_autodetect_field_zoom-accounts', [ $this, 'filter_virtual_autodetect_field_accounts' ], 20, 5 );
+		add_filter( 'tec_events_virtual_video_source_autodetect_field_all', [ $this, 'filter_virtual_autodetect_field_accounts' ], 20, 5 );
+		add_filter( 'tec_events_virtual_video_source_autodetect_field_zoom-accounts', [ $this, 'filter_virtual_autodetect_field_accounts' ], 20, 5 );
+		add_filter( 'tec_events_virtual_meetings_api_error_message', [ $this, 'filter_api_error_message' ], 20, 3 );
 	}
 
 	/**

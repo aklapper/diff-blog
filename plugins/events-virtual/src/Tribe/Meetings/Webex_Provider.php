@@ -9,6 +9,7 @@
 
 namespace Tribe\Events\Virtual\Meetings;
 
+use Tribe\Events\Virtual\Integrations\Api_Response;
 use Tribe\Events\Virtual\Meetings\Webex\Api;
 use Tribe\Events\Virtual\Meetings\Webex\Classic_Editor;
 use Tribe\Events\Virtual\Meetings\Webex\Email;
@@ -96,6 +97,13 @@ class Webex_Provider extends Meeting_Provider {
 		add_filter( 'tec_events_virtual_webex_export_fields', [ $this, 'filter_source_google_calendar_webex_password' ], 10, 5 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_webex_source_ical_feed_items' ], 10, 5 );
 		add_filter( 'tec_events_virtual_webex_export_fields', [ $this, 'filter_source_ical_webex_password' ], 10, 5 );
+		add_filter( 'tec_events_virtual_meetings_api_error_message', [ $this, 'filter_api_error_message' ], 10, 3 );
+		add_filter(
+			'tribe_rest_event_data',
+			$this->container->callback( Webex_Meta::class, 'attach_rest_properties' ),
+			10,
+			2
+		);
 	}
 
 	/**
@@ -299,8 +307,8 @@ class Webex_Provider extends Meeting_Provider {
 	 * @since 1.9.0
 	 *
 	 * @param array<string|string>        An array of autodetect sources.
-	 * @param string   $autodetect_source The ID of the current selected video source.
-	 * @param WP_Post $post              The current event post object, as decorated by the `tribe_get_event` function.
+	 * @param string  $autodetect_source  The ID of the current selected video source.
+	 * @param WP_Post $post               The current event post object, as decorated by the `tribe_get_event` function.
 	 *
 	 * @return array<string|string> An array of video sources.
 	 */
@@ -324,7 +332,7 @@ class Webex_Provider extends Meeting_Provider {
 	 * @param array<string|mixed> $autodetect        An array of the autodetect resukts.
 	 * @param string              $video_url         The url to use to autodetect the video source.
 	 * @param string              $autodetect_source The optional name of the video source to attempt to autodetect.
-	 * @param WP_Post|null       $event             The event post object, as decorated by the `tribe_get_event` function.
+	 * @param WP_Post|null        $event             The event post object, as decorated by the `tribe_get_event` function.
 	 * @param array<string|mixed> $ajax_data         An array of extra values that were sent by the ajax script.
 	 *
 	 * @return array<string|mixed> An array of the autodetect results.
@@ -419,6 +427,22 @@ class Webex_Provider extends Meeting_Provider {
 	 */
 	public function filter_source_ical_webex_password( $fields, $event, $key_name, $type, $should_show ) {
 		return $this->container->make( Webex_Event_Export::class )->add_password_to_ical_description( $fields, $event, $key_name, $type, $should_show );
+	}
+
+	/**
+	 * Filters the API error message.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string              $api_message The API error message.
+	 * @param array<string,mixed> $body        The json_decoded request body.
+	 * @param Api_Response        $response    The response that will be returned. A non `null` value
+	 *                                         here will short-circuit the response.
+	 *
+	 * @return string              $api_message        The API error message.
+	 */
+	public function filter_api_error_message( $api_message, $body, $response ) {
+		return $this->container->make( Api::class )->filter_api_error_message( $api_message, $body, $response );
 	}
 
 	/**

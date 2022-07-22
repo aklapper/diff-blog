@@ -10,7 +10,6 @@
 namespace Tribe\Events\Virtual\Meetings\Webex;
 
 use Tribe\Events\Virtual\Meetings\Webex\Event_Meta as Webex_Event_Meta;
-use Tribe\Events\Virtual\Meetings\Webex_Provider;
 use Tribe\Events\Virtual\Template;
 use Tribe\Events\Virtual\Admin_Template;
 
@@ -160,17 +159,6 @@ class Template_Modifications {
 	}
 
 	/**
-	 * Gets Webex disabled connect button.
-	 *
-	 * @since 1.9.0
-	 *
-	 * @return string HTML for the authorize fields.
-	 */
-	public function get_disabled_button() {
-		return $this->admin_template->template( 'webex/api/authorize-fields/disabled-button', [], false );
-	}
-
-	/**
 	 * Get intro text for Webex API UI
 	 *
 	 * @since 1.9.0
@@ -188,5 +176,19 @@ class Template_Modifications {
 		];
 
 		return $this->admin_template->template( 'webex/api/intro-text', $args, false );
+	}
+
+	/**
+	 * Gets Webex disabled connect button.
+	 *
+	 * @since 1.9.0
+	 * @deprecated 1.11.0 - Replaced with Multiple Account Support, see Account_API class.
+	 *
+	 * @return string HTML for the authorize fields.
+	 */
+	public function get_disabled_button() {
+		_deprecated_function( __METHOD__, '1.11.0', 'No replacement, functionality moved to whodat server.' );
+
+		return $this->admin_template->template( 'webex/api/authorize-fields/disabled-button', [], false );
 	}
 }

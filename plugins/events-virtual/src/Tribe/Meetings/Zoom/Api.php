@@ -86,20 +86,6 @@ class Api extends Account_API {
 	}
 
 	/**
-	 * Checks whether the current Zoom API integration is authorized or not.
-	 *
-	 * The check is made on the existence of the refresh token, with it the token can be fetched on demand when
-	 * required.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool Whether the current Zoom API integration is authorized or not.
-	 */
-	public function is_authorized() {
-		return ! empty( $this->refresh_token );
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function refresh_access_token( $id, $refresh_token ) {
@@ -169,6 +155,7 @@ class Api extends Account_API {
 				'headers' => [
 					'Authorization' => $this->get_token_authorization_header(),
 					'Content-Type'  => 'application/json; charset=utf-8',
+					'accept'        => 'application/json;',
 				],
 				'body'    => null,
 			],
@@ -225,6 +212,7 @@ class Api extends Account_API {
 				'headers' => [
 					'Authorization' => $this->get_token_authorization_header( $access_token ),
 					'Content-Type'  => 'application/json; charset=utf-8',
+					'accept'        => 'application/json;',
 				],
 				'body'    => null,
 			],
@@ -353,6 +341,7 @@ class Api extends Account_API {
 				'headers' => [
 					'Authorization' => $this->get_token_authorization_header(),
 					'Content-Type'  => 'application/json; charset=utf-8',
+					'accept'        => 'application/json;',
 				],
 				'body'    => ! empty( $args ) ? $args : null,
 			],
@@ -431,7 +420,7 @@ class Api extends Account_API {
 		}
 
 		// All video sources are checked on the first autodetect run, only prevent checking of this source if it is set.
-		if ( ! empty( $video_source ) && Zoom_Meta::$key_zoom_source_id !== $video_source ) {
+		if ( ! empty( $video_source ) && Zoom_Meta::$key_source_id !== $video_source ) {
 			return $autodetect;
 		}
 
@@ -452,7 +441,7 @@ class Api extends Account_API {
 			return $autodetect;
 		}
 
-		$autodetect['guess'] = Zoom_Meta::$key_zoom_source_id;
+		$autodetect['guess'] = Zoom_Meta::$key_source_id;
 
 		// Use the zoom-account if available, otherwise try with the first account stored in the site.
 		$accounts = $this->get_list_of_accounts();
@@ -487,17 +476,17 @@ class Api extends Account_API {
 
 		// Set as virtual event and video source to zoom.
 		update_post_meta( $event->ID, Virtual_Events_Meta::$key_virtual, true );
-		update_post_meta( $event->ID, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
-		$event->virtual_video_source = Zoom_Meta::$key_zoom_source_id;
+		update_post_meta( $event->ID, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_source_id );
+		$event->virtual_video_source = Zoom_Meta::$key_source_id;
 
 		// Save Zoom data.
 		$new_response['body'] = json_encode( $data );
 		tribe( Meetings::class )->process_meeting_connection_response( $new_response, $event->ID );
 
 		// Set Zoom as the autodetect source and set up success data and send back to smart url ui.
-		update_post_meta( $event->ID, Virtual_Events_Meta::$key_autodetect_source, Zoom_Meta::$key_zoom_source_id );
+		update_post_meta( $event->ID, Virtual_Events_Meta::$key_autodetect_source, Zoom_Meta::$key_source_id );
 		$autodetect['detected']          = true;
-		$autodetect['autodetect-source'] = Zoom_Meta::$key_zoom_source_id;
+		$autodetect['autodetect-source'] = Zoom_Meta::$key_source_id;
 		$autodetect['message']           = _x( 'Zoom meeting successfully connected!', 'Zoom meeting/webinar connected success message.', 'events-virtual' );
 		$autodetect['html'] = tribe( Classic_Editor::class )->get_meeting_details( $event, false, $account_id, false );
 
@@ -526,5 +515,27 @@ class Api extends Account_API {
 			'events-virtual'
 			)
 		);
+	}
+
+	/**
+	 * Filters the API error message.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string              $api_message The API error message.
+	 * @param array<string,mixed> $body        The json_decoded request body.
+	 * @param Api_Response        $response    The response that will be returned. A non `null` value
+	 *                                         here will short-circuit the response.
+	 *
+	 * @return string              $api_message        The API error message.
+	 */
+	public function filter_api_error_message( $api_message, $body, $response ) {
+		if ( ! isset( $body['errors'][0]['message'] ) ) {
+			return $api_message;
+		}
+
+		$api_message .=  ' API Error: ' . $body['errors'][0]['message'];
+
+		return $api_message;
 	}
 }

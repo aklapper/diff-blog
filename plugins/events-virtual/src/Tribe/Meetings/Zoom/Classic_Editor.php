@@ -247,12 +247,14 @@ class Classic_Editor extends Abstract_Classic_Labels {
 			$message = $this->render_account_disabled_details( true, true, false );
 		}
 
-		$api_id = $this->api::$api_id;
+		$api_id                = $this->api::$api_id;
+		$settings              = $this->api->fetch_user( $account_id, true );
+		$password_requirements = $this->api->get_password_requirements( $settings );
 
 		return $this->template->template(
 			'virtual-metabox/zoom/setup',
 			[
-				'api_id'             => $api_id,
+				'api_id'                  => $api_id,
 				'event'                   => $post,
 				'attrs'                   => [
 					'data-account-id' => $account_id,
@@ -263,7 +265,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 					'The lowercase "or" label used to offer the creation of a Zoom Meetings or Webinars API link.',
 					'events-virtual'
 				),
-				'account_label'            => _x(
+				'account_label'           => _x(
 					'Account: ',
 					'The label used to designate the account of a Zoom Meeting or Webinar.',
 					'events-virtual'
@@ -275,12 +277,12 @@ class Classic_Editor extends Abstract_Classic_Labels {
 					'events-virtual'
 				),
 				'generation_urls'         => $this->get_link_creation_urls( $post ),
-				'generate_label'        => _x(
+				'generate_label'          => _x(
 					'Create ',
 					'The label used to designate the next step in generation of a Zoom Meeting or Webinar.',
 					'events-virtual'
 				),
-				'hosts' => [
+				'hosts'                   => [
 					'label'       => _x(
 						'Meeting Host',
 						'The label of the meeting or webinar host.',
@@ -310,6 +312,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 				],
 				'message'                  => $message,
 				'zoom_message_classes'     => [ 'tec-events-virtual-video-source-api-setup__messages-wrap' ],
+				'password_requirements'    => $password_requirements,
 			],
 			$echo
 		);
@@ -464,7 +467,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 
 		$connected_msg = '';
 		$manual_connected = get_post_meta( $post->ID, Virtual_Events_Meta::$key_autodetect_source, true );
-		if ( Zoom_Meta::$key_zoom_source_id === $manual_connected ) {
+		if ( Zoom_Meta::$key_source_id === $manual_connected ) {
 			$connected_msg = Webinars::$meeting_type === $meeting_type
 				? _x(
 					'This webinar is manually connected to the event and changes to the event will not alter the Zoom webinar.',
@@ -488,7 +491,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 					'data-zoom-id'            => $post->zoom_meeting_id,
 					'data-selected-alt-hosts' => $post->zoom_alternative_hosts,
 				],
-				'connected'                => Zoom_Meta::$key_zoom_source_id === $manual_connected,
+				'connected'                => Zoom_Meta::$key_source_id === $manual_connected,
 				'connected_msg'            => $connected_msg,
 				'event'                    => $post,
 				'details_title'            => $details_title,
@@ -580,7 +583,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 		$post_id = $event->ID;
 
 		// Set the video source to zoo.
-		update_post_meta( $post_id, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
+		update_post_meta( $post_id, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_source_id );
 
 		// get the setup
 		$this->render_meeting_link_generator( $event, true, false, $zoom_account_id );

@@ -13,6 +13,7 @@ use Tribe\Events\Virtual\Encryption;
 use Tribe\Events\Virtual\Event_Meta as Virtual_Events_Meta;
 use Tribe\Events\Virtual\Integrations\Abstract_Account_Api;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Meta;
+use Tribe__Utils__Array as Arr;
 
 /**
  * Class Account_API
@@ -235,12 +236,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * {@inheritDoc}
 	 */
 	public function save_account( array $response ) {
-		if ( ! (
-			isset( $response['body'] )
-			&& ( false !== $d = json_decode( $response['body'], true ) )
-			&& isset( $d['access_token'], $d['refresh_token'], $d['expires_in'] )
-		)
-		) {
+		if ( ! $this->has_proper_credentials( $response ) ) {
 			do_action( 'tribe_log', 'error', __CLASS__, [
 				'action'  => __METHOD__,
 				'code'    => wp_remote_retrieve_response_code( $response ),
@@ -251,9 +247,10 @@ abstract class Account_API extends Abstract_Account_Api {
 		}
 
 		// Set the access token here as we have to call fetch_user immediately, to get the user information.
-		$access_token  = $d['access_token'];
-		$refresh_token = $d['refresh_token'];
-		$expiration    = $this->get_expiration_time_stamp( $d['expires_in'] );
+		$credentials   = json_decode( $response['body'], true );
+		$access_token  = $credentials['access_token'];
+		$refresh_token = $credentials['refresh_token'];
+		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
 
 		// Get the user who authorized the account.
 		$user         = $this->fetch_user( 'me', false, $access_token);
@@ -284,12 +281,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * {@inheritDoc}
 	 */
 	public function save_access_and_expiration( $id, array $response ) {
-		if ( ! (
-			isset( $response['body'] )
-			&& ( false !== $d = json_decode( $response['body'], true ) )
-			&& isset( $d['access_token'], $d['refresh_token'], $d['expires_in'] )
-		)
-		) {
+		if ( ! $this->has_proper_credentials( $response ) ) {
 			do_action( 'tribe_log', 'error', __CLASS__, [
 				'action'  => __METHOD__,
 				'code'    => wp_remote_retrieve_response_code( $response ),
@@ -299,9 +291,10 @@ abstract class Account_API extends Abstract_Account_Api {
 			return false;
 		}
 
-		$access_token  = $d['access_token'];
-		$refresh_token = $d['refresh_token'];
-		$expiration    = $this->get_expiration_time_stamp( $d['expires_in'] );
+		$credentials   = json_decode( $response['body'], true );
+		$access_token  = $credentials['access_token'];
+		$refresh_token = $credentials['refresh_token'];
+		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
 
 		$this->set_account_access_by_id( $id, $access_token, $refresh_token, $expiration );
 
@@ -374,6 +367,29 @@ abstract class Account_API extends Abstract_Account_Api {
 		}
 
 		return $supports;
+	}
+
+	/**
+	 * Get password requirements for a user.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param array<string|mixed> $settings The user settings from Zoom.
+	 *
+	 * @return array<string|mixed> The password requirements for a user.
+	 */
+	public function get_password_requirements( $settings ) {
+		if ( empty( $settings['schedule_meeting']['meeting_password_requirement'] ) ) {
+			$settings['schedule_meeting']['meeting_password_requirement'] = [];
+		}
+
+		$password_requirements = $settings['schedule_meeting']['meeting_password_requirement'];
+
+		return [
+			'password_length'                 => (int) Arr::get( $password_requirements, 'length', 6 ),
+			'password_have_special_character' => (bool) Arr::get( $password_requirements, 'have_special_character', false ),
+			'password_only_allow_numeric'     => (bool) Arr::get( $password_requirements, 'only_allow_numeric', false ),
+		];
 	}
 
 	/**
@@ -471,7 +487,7 @@ abstract class Account_API extends Abstract_Account_Api {
 		$post_id = $event->ID;
 
 		// Set the video source to zoo.
-		update_post_meta( $post_id, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_zoom_source_id );
+		update_post_meta( $post_id, Virtual_Events_Meta::$key_video_source, Zoom_Meta::$key_source_id );
 
 		// get the setup
 		$classic_editor->render_meeting_link_generator( $event, true, false, $zoom_account_id );

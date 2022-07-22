@@ -58,13 +58,13 @@ if ( ! empty( $event->webex_join_url ) ) {
 			<div class="tec-events-virtual-single-api-details__meta-group-content tec-events-virtual-single-webex-details__meta-group-content">
 				<a
 					href="<?php echo esc_url( $event->webex_join_url ); ?>"
-					class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__link tec-events-virtual-single-api-details__webex-link"
+					class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__link tec-events-virtual-single-api-details__video-link tribe-events-virtual-single-webex-details__webex-link"
 					target="_blank"
 					<?php tribe_attributes( $webex_link_attrs ); ?>
 				>
 					<?php echo esc_html( $short_webex_url ); ?>
 				</a>
-				<span class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__webex-id">
+				<span class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__api-id">
 					<?php
 					echo esc_html(
 						sprintf(
@@ -97,7 +97,7 @@ if ( ! empty( $event->webex_join_url ) ) {
 			);
 			?>
 			<div class="tec-events-virtual-single-api-details__meta-group-content tec-events-virtual-single-webex-details__meta-group-content">
-				<span class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__webex-password">
+				<span class="tec-events-virtual-single-api-details__text tec-events-virtual-single-api-details__api-password">
 					<?php
 					echo esc_html(
 						sprintf(

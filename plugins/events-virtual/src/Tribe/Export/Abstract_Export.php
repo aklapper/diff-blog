@@ -41,4 +41,18 @@ abstract class Abstract_Export {
 
 		return $value;
 	}
+
+	/**
+	 * Checks if a string is found in another string.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string $haystack The string to search in.
+	 * @param string $needle   The string to search for.
+	 *
+	 * @return bool Whether or not the $needle was found.
+	 */
+	protected function str_contains( string $haystack, string $needle ) {
+		return $needle !== '' && mb_strpos( $haystack, $needle ) !== false;
+	}
 }

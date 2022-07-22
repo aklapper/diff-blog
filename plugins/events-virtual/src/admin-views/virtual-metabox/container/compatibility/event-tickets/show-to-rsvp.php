@@ -8,8 +8,9 @@
  * See more documentation about our views templating system.
  *
  * @since   1.0.4
+ * @since   1.10.0 Use new method to get the Tickets settings URL.
  *
- * @version 1.0.4
+ * @version 1.10.0
  *
  * @link    http://evnt.is/1aiy
  *
@@ -67,10 +68,7 @@ $classes = $disabled ? 'tribe-disabled' : '';
 							'events-virtual'
 						),
 						esc_url(
-							get_admin_url(
-								null,
-								'edit.php?post_type=tribe_events&page=tribe-common&tab=event-tickets'
-							)
+							tribe( 'events-virtual.compatibility.tribe-event-tickets' )->get_settings_url( [ 'tab' => 'event-tickets' ] )
 						)
 					),
 					[ 'a' => [ 'href' => [] ] ]

@@ -56,20 +56,6 @@ class Api extends Account_API {
 	}
 
 	/**
-	 * Checks whether the current Webex API integration is authorized or not.
-	 *
-	 * The check is made on the existence of the refresh token, with it the token can be fetched on demand when
-	 * required.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return bool Whether the current Webex API integration is authorized or not.
-	 */
-	public function is_authorized() {
-		return ! empty( $this->refresh_token );
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	public function refresh_access_token( $id, $refresh_token ) {
@@ -348,5 +334,27 @@ class Api extends Account_API {
 			'events-virtual'
 			)
 		);
+	}
+
+	/**
+	 * Filters the API error message.
+	 *
+	 * @since 1.11.0
+	 *
+	 * @param string              $api_message The API error message.
+	 * @param array<string,mixed> $body        The json_decoded request body.
+	 * @param Api_Response        $response    The response that will be returned. A non `null` value
+	 *                                         here will short-circuit the response.
+	 *
+	 * @return string              $api_message        The API error message.
+	 */
+	public function filter_api_error_message( $api_message, $body, $response ) {
+		if ( ! isset( $body['errors'][0]['description'] ) ) {
+			return $api_message;
+		}
+
+		$api_message .=  ' API Error: ' . $body['errors'][0]['description'];
+
+		return $api_message;
 	}
 }

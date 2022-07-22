@@ -26,6 +26,7 @@ use Tribe\Events\Virtual\Importer\Importer_Provider;
 use Tribe\Events\Virtual\Event_Status\Compatibility\Filter_Bar\Service_Provider as Event_Status_Filter_Bar_Provider;
 use Tribe\Events\Virtual\Event_Status\Status_Labels;
 use Tribe\Events\Virtual\Meetings\Facebook_Provider;
+use Tribe\Events\Virtual\Meetings\Google_Provider;
 use Tribe\Events\Virtual\Meetings\Webex_Provider;
 use Tribe\Events\Virtual\Meetings\YouTube_Provider;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
@@ -466,6 +467,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		}
 
 		$this->container->register( Facebook_Provider::class );
+		$this->container->register( Google_Provider::class );
 		$this->container->register( Webex_Provider::class );
 		$this->container->register( YouTube_Provider::class );
 		$this->container->register( Zoom_Provider::class );
