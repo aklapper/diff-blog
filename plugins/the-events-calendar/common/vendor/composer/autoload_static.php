@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d
+class ComposerStaticInit7604a0f54a8e958278f96bf616a32ea6
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -186,7 +186,9 @@ class ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d
         'Tribe\\Admin\\Notice\\Marketing\\Stellar_Sale' => __DIR__ . '/../..' . '/src/Tribe/Admin/Notice/Marketing/Stellar_Sale.php',
         'Tribe\\Admin\\Notice\\Service_Provider' => __DIR__ . '/../..' . '/src/Tribe/Admin/Notice/Service_Provider.php',
         'Tribe\\Admin\\Notice\\WP_Version' => __DIR__ . '/../..' . '/src/Tribe/Admin/Notice/WP_Version.php',
+        'Tribe\\Admin\\Pages' => __DIR__ . '/../..' . '/src/Tribe/Admin/Pages.php',
         'Tribe\\Admin\\Troubleshooting' => __DIR__ . '/../..' . '/src/Tribe/Admin/Troubleshooting.php',
+        'Tribe\\Admin\\Upsell_Notice\\Main' => __DIR__ . '/../..' . '/src/Tribe/Admin/Upsell_Notice/Main.php',
         'Tribe\\Customizer\\Control' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Control.php',
         'Tribe\\Customizer\\Controls\\Heading' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Controls/Heading.php',
         'Tribe\\Customizer\\Controls\\Number' => __DIR__ . '/../..' . '/src/Tribe/Customizer/Controls/Number.php',
@@ -267,10 +269,10 @@ class ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitdf0abf50cee040bbccac7a34e7e7442d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7604a0f54a8e958278f96bf616a32ea6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7604a0f54a8e958278f96bf616a32ea6::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit7604a0f54a8e958278f96bf616a32ea6::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit7604a0f54a8e958278f96bf616a32ea6::$classMap;
 
         }, null, ClassLoader::class);
     }
