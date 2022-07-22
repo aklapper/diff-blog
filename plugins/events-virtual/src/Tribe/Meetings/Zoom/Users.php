@@ -273,7 +273,8 @@ class Users {
 			wp_die();
 		}
 
-		$webinar_support = $this->api->get_webinars_support( $settings );
+		$webinar_support       = $this->api->get_webinars_support( $settings );
+		$password_requirements = $this->api->get_password_requirements( $settings );
 
 		/** @var \Tribe\Events\Virtual\Meetings\Zoom\Classic_editor */
 		$classic_editor = tribe( Classic_Editor::class );
@@ -282,9 +283,10 @@ class Users {
 		$this->admin_template->template(
 		'virtual-metabox/api/type-options',
 			[
-				'api_id'          => $this->api::$api_id,
-				'generation_urls' => $generation_urls,
-				'metabox_id'      => Metabox::$id,
+				'api_id'                => $this->api::$api_id,
+				'generation_urls'       => $generation_urls,
+				'password_requirements' => $password_requirements,
+				'metabox_id'            => Metabox::$id,
 			],
 			true
 		);

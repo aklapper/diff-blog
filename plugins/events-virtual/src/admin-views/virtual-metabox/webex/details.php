@@ -104,7 +104,7 @@ $short_webex_url = implode(
 			</div>
 		</div>
 
-		<div class=tec-events-virtual-meetings-api-standard-details__wrapper tec-events-virtual-meetings-api__url-wrapper">
+		<div class="tec-events-virtual-meetings-api-standard-details__wrapper tec-events-virtual-meetings-api__url-wrapper">
 			<?php
 			$this->template(
 				'components/icons/lock',

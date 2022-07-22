@@ -11,26 +11,28 @@
  * @since   1.5.0 - Add support for multiple accounts.
  * @since   1.6.0 - remove $offer_or_label.
  * @since   1.8.2 - Move create option links to their own template, add wrapper to messages, and add loader template.
- * @since 1.9.0 - Move create option links to their own template, add wrapper to messages, and add loader template.
+ * @since   1.9.0 - Move create option links to their own template, add wrapper to messages, and add loader template.
+ * @since 1.11.0 - Add password requirements array.
  *
- * @version 1.9.0
+ * @version 1.11.0
  *
  * @link    http://m.tri.be/1aiy
  *
- * @var string               $api_id                   The ID of the API rendering the template.
- * @var \WP_Post             $event                    The event post object, as decorated by the `tribe_get_event` function.
- * @var array<string,string> $attrs                    Associative array of attributes of the zoom account.
- * @var string               $account_label            The label used to designate the account of a Zoom Meeting or Webinar.
- * @var string               $account_name             The api account name of a Zoom Meeting or Webinar.
- * @var string               $generation_toogle_label  The label of the accordion button to show the generation links.
- * @var array<string,string> $generation_urls          A map of the available URL generation labels and URLs.
- * @var string               $generate_label           The label used to designate the next step in generation of a Zoom Meeting or Webinar.
- * @var array<string,string> $hosts                    An array of users to be able to select as a host, that are formatted to use as options.
- * @var string               $remove_link_url          The URL to remove the event Zoom Meeting.
- * @var string               $remove_link_label        The label of the button to remove the event Zoom Meeting link.
- * @var array<string,string> $remove_attrs             Associative array of attributes of the remove link.
- * @var string               $message                  A html message to display.
- * @var array<string|string> $zoom_message_classes     An array of message classes.
+ * @var string               $api_id                  The ID of the API rendering the template.
+ * @var \WP_Post             $event                   The event post object, as decorated by the `tribe_get_event` function.
+ * @var array<string,string> $attrs                   Associative array of attributes of the zoom account.
+ * @var string               $account_label           The label used to designate the account of a Zoom Meeting or Webinar.
+ * @var string               $account_name            The api account name of a Zoom Meeting or Webinar.
+ * @var string               $generation_toogle_label The label of the accordion button to show the generation links.
+ * @var array<string,string> $generation_urls         A map of the available URL generation labels and URLs.
+ * @var string               $generate_label          The label used to designate the next step in generation of a Zoom Meeting or Webinar.
+ * @var array<string,string> $hosts                   An array of users to be able to select as a host, that are formatted to use as options.
+ * @var string               $remove_link_url         The URL to remove the event Zoom Meeting.
+ * @var string               $remove_link_label       The label of the button to remove the event Zoom Meeting link.
+ * @var array<string,string> $remove_attrs            Associative array of attributes of the remove link.
+ * @var string               $message                 A html message to display.
+ * @var array<string|string> $zoom_message_classes    An array of message classes.
+ * @var array<string,string> $password_requirements   An array of password requirements when generating a meeting for an API.
  *
  * @see     tribe_get_event() For the format of the event object.
  */
@@ -74,9 +76,10 @@ $metabox_id = 'tribe-events-virtual';
 
 		<?php
 			$this->template( 'virtual-metabox/api/type-options', [
-					'api_id' => $api_id,
-					'generation_urls' => $generation_urls,
-					'metabox_id' => $metabox_id
+					'api_id'                => $api_id,
+					'generation_urls'       => $generation_urls,
+					'password_requirements' => $password_requirements,
+					'metabox_id'            => $metabox_id
 				]
 			);
 		?>

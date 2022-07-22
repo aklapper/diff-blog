@@ -75,9 +75,10 @@ $metabox_id = 'tribe-events-virtual';
 
 		<?php
 			$this->template( 'virtual-metabox/api/type-options', [
-					'api_id' => $api_id,
-					'generation_urls' => $generation_urls,
-					'metabox_id' => $metabox_id
+					'api_id'                => $api_id,
+					'generation_urls'       => $generation_urls,
+					'password_requirements' => [],
+					'metabox_id'            => $metabox_id
 				]
 			);
 		?>

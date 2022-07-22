@@ -3,9 +3,9 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro, filters, categories, sort, tags, taxonomy, find, search
 Donate link: http://evnt.is/29
-Requires at least: 4.9.18
-Tested up to: 5.8.1
-Stable tag: 5.2.1
+Requires at least: 5.6
+Tested up to: 6.0
+Stable tag: 5.3.1
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -194,6 +194,17 @@ Our Premium Plugins:
 * <a href="http://evnt.is/18h9" target="_blank">The Events Calendar: iCal Importer</a>
 
 == Changelog ==
+
+= [5.3.1] 2022-05-31 =
+
+* Tweak - Disable Divi jQuery Body on Single Events to prevent javascript errors. [FBAR-264]
+* Language - 0 new strings added, 13 updated, 0 fuzzied, and 0 obsoleted
+
+= [5.3.0] 2022-05-19 =
+
+* Version - Filter Bar 5.3.0 is only compatible with The Events Calendar 5.15.0 and higher
+* Feature - Add compatibility to the new TEC admin menu system. [ET-1335]
+* Language - 0 new strings added, 25 updated, 0 fuzzied, and 0 obsoleted
 
 = [5.2.1] 2021-09-14 =
 

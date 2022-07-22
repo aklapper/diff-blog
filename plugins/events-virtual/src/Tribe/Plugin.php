@@ -27,7 +27,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.9.0';
+	const VERSION = '1.11.0';
 
 	/**
 	 * Stores the base slug for the plugin.

@@ -39,6 +39,7 @@ class OAuth {
 	 * The name of the action used to autosave the client keys.
 	 *
 	 * @since 1.0.1
+	 * @deprecated 1.9.0 - 'No replacement, functionality moved to whodat server.'
 	 *
 	 * @var string
 	 */

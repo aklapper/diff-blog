@@ -23,12 +23,13 @@ trait With_Nonce_Routes {
 	/**
 	 * Routes a request to the admin area only if the user can manage the site options.
 	 *
+	 * @since 1.10.1 Refactored to move duplicate code to `route_by_nonce`.
 	 * @since 1.0.2.1 Created the method as part of the `Tribe\Events\Virtual\Meetings\Zoom_Provider` class.
 	 * @since 1.0.4 Refactored the method into the `Tribe\Events\Virtual\Traits\With_Nonce_Routes` trait.
 	 *
-	 * @param array<string,callable> $routes        A map of the routes to handle, from nonce actions to the callables
+	 * @param array<string,callable>    $routes A map of the routes to handle, from nonce actions to the callables
 	 *                                              that should handle each.
-	 * @param string                 ...$caps       One or more capabilities the current user should possess to proceed
+	 * @param string                    ...$caps One or more capabilities the current user should possess to proceed
 	 *                                              with the routing.
 	 *
 	 * @return false|callable The callback that will be used to handle the route, or `false` to indicate a no match.
@@ -51,14 +52,58 @@ trait With_Nonce_Routes {
 			return false;
 		}
 
+
+		return $this->route_by_nonce( $routes, $nonce );
+
+	}
+
+	/**
+	 * Routes a request to the admin area ignoring capabilities.
+	 *
+	 * @since 1.10.1
+	 *
+	 * @param array<string,callable> $routes A map of the routes to handle, from nonce actions to the callables
+	 *                                              that should handle each.
+	 *
+	 * @return false|callable The callback that will be used to handle the route, or `false` to indicate a no match.
+	 */
+	public function public_route_by_nonce( array $routes ) {
+		$routes = array_filter( $routes, 'is_callable' );
+
+		if ( empty( $routes ) ) {
+			// Let's not even start dealing with it if no route handler is callable.
+			return false;
+		}
+
+		$nonce = tribe_context()->get( 'events_virtual_request' );
+
+		if ( empty( $nonce ) ) {
+			return false;
+		}
+
+		return $this->route_by_nonce( $routes, $nonce );
+
+	}
+
+	/**
+	 * Routes a request to the admin area ignoring capabilities.
+	 *
+	 * @since 1.10.1
+	 *
+	 * @param string                    $nonce Nonce to be validated.
+	 *
+	 * @param array<string,callable>    $routes A map of the routes to handle, from nonce actions to the callables
+	 *                                              that should handle each.
+	 *
+	 * @return false|callable The callback that will be used to handle the route, or `false` to indicate a no match.
+	 */
+	private function route_by_nonce( array $routes, string $nonce ) {
+
 		// Remove the query arguments from the `$_SERVER['REQUEST_URI']` to avoid issues.
-		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
-			$_SERVER['REQUEST_URI'] = remove_query_arg(
-				[
-					Plugin::$request_slug,
-				],
-				$_SERVER['REQUEST_URI']
-			);
+		if ( isset( $_SERVER[ 'REQUEST_URI' ] ) ) {
+			$_SERVER[ 'REQUEST_URI' ] = remove_query_arg( [
+				Plugin::$request_slug,
+			], $_SERVER[ 'REQUEST_URI' ] );
 		}
 
 		$callback = false;

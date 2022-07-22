@@ -7,11 +7,11 @@ class Tribe__Events__Filterbar__Settings {
 	const OPTION_ACTIVE_FILTERS = 'tribe_events_filters_current_active_filters';
 
 	public function set_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'addAdminScriptsAndStyles' ) );
-		add_action( 'tribe_settings_do_tabs', array( $this, 'addSettingsTab' ), 10, 0 );
-		add_action( 'tribe_settings_after_content_tab_filter-view', array( $this, 'addSettingsContent' ) );
-		add_action( 'tribe_settings_save_tab_filter-view', array( $this, 'save_settings_tab' ), 10, 0 );
-		add_action( 'wp_before_admin_bar_render', array( $this, 'add_toolbar_item' ), 12 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'addAdminScriptsAndStyles' ] );
+		add_action( 'tribe_settings_do_tabs', [ $this, 'addSettingsTab' ], 10, 1 );
+		add_action( 'tribe_settings_after_content_tab_filter-view', [ $this, 'addSettingsContent' ] );
+		add_action( 'tribe_settings_save_tab_filter-view', [ $this, 'save_settings_tab' ], 10, 0 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'add_toolbar_item' ], 12 );
 		add_filter( 'tribe_events_liveupdate_automatic_label_text', [ $this, 'liveupdate_automatic_label_text' ] );
 		add_filter( 'tribe_events_liveupdate_manual_label_text', [ $this, 'liveupdate_manual_label_text' ] );
 
@@ -20,30 +20,61 @@ class Tribe__Events__Filterbar__Settings {
 	}
 
 	public function addAdminScriptsAndStyles() {
-		global $current_screen;
+		$admin_pages          = tribe( 'admin.pages' );
+		$current_page         = $admin_pages->get_current_page();
+		$tec_settings_page_id = tribe( \Tribe\Events\Admin\Settings::class )::$settings_page_id;
+		$tab                  = tribe_get_request_var( 'tab', false );
 
-		// settings screen
-		if ( isset( $current_screen->id ) && $current_screen->id == 'tribe_events_page_' . Tribe__Settings::$parent_slug ) {
-			wp_enqueue_style(
-				'TribeEventsFilterAdmin-css',
-				Tribe__Events__Filterbar__View::instance()->pluginUrl . 'src/resources/css/filter-admin.css',
-				array(),
-				apply_filters( 'tribe_events_filters_css_version', Tribe__Events__Filterbar__View::VERSION )
-			);
-
-			tribe_asset_enqueue( 'tribe-events-filterbar-admin-settings' );
+		if ( empty( $current_page ) || empty( $tab ) ) {
+			return;
 		}
+
+		if (
+			$tec_settings_page_id !== $current_page
+			&& 'filter-view' !== $tab
+		) {
+			return;
+		}
+
+		// Settings screen.
+		wp_enqueue_style(
+			'TribeEventsFilterAdmin-css',
+			Tribe__Events__Filterbar__View::instance()->pluginUrl . 'src/resources/css/filter-admin.css',
+			[],
+			apply_filters( 'tribe_events_filters_css_version', Tribe__Events__Filterbar__View::VERSION )
+		);
+
+		tribe_asset_enqueue( 'tribe-events-filterbar-admin-settings' );
 
 	}
 
 	/**
 	 * Add the Filters settings tab.
 	 *
+	 * @since 5.3.0 Added check to see if we are on TEC settings page.
+	 *
+	 * @param $admin_page The admin page ID.
+	 *
 	 * @return void
 	 */
-	public function addSettingsTab() {
+	public function addSettingsTab( $admin_page ) {
+		add_filter(
+			'tec_events_settings_tabs_ids',
+			function( $tabs ) {
+				$tabs[] = 'filter-view';
+				return $tabs;
+			}
+		);
+
+		$tec_settings_page_id = tribe( \Tribe\Events\Admin\Settings::class )::$settings_page_id;
+
+		if ( ! empty( $admin_page ) && $tec_settings_page_id !== $admin_page ) {
+			return;
+		}
+
 		$fields = $this->get_field_definitions();
-		new Tribe__Settings_Tab( 'filter-view', __( 'Filters', 'tribe-events-filter-view' ), array( 'priority' => 36, 'fields' => $fields ) );
+
+		new Tribe__Settings_Tab( 'filter-view', __( 'Filters', 'tribe-events-filter-view' ), [ 'priority' => 36, 'fields' => $fields ] );
 	}
 
 	/**
@@ -148,8 +179,8 @@ class Tribe__Events__Filterbar__Settings {
 	 */
 	public function add_toolbar_item() {
 		global $wp_admin_bar;
-		$parent = 'tribe-events-settings';
-		$link = Tribe__Settings::instance()->get_url( array( 'tab' => 'filter-view' ) );
+		$parent = 'tec-events-settings';
+		$link   = tribe( \Tribe\Events\Admin\Settings::class )->get_url( [ 'tab' => 'filter-view' ] );
 
 		if ( ! current_user_can( 'manage_options' ) || null === $wp_admin_bar->get_node( $parent ) ) return;
 
@@ -198,7 +229,7 @@ class Tribe__Events__Filterbar__Settings {
 	 */
 	public function add_links_to_plugin_actions( $actions ) {
 
-		$settings_url = Tribe__Settings::instance()->get_url( [ 'tab' => 'filter-view' ] );
+		$settings_url = tribe( \Tribe\Events\Admin\Settings::class )->get_url( [ 'tab' => 'filter-view' ] );
 
 		$actions['settings'] = '<a href="' . esc_url( $settings_url ) . '">' . esc_html__( 'Settings', 'tribe-events-filter-view' ) . '</a>';
 

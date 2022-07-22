@@ -58,13 +58,13 @@ if ( ! empty( $event->zoom_join_url ) ) {
 			<div class="tec-events-virtual-single-api-details__meta-group-content tribe-events-virtual-single-zoom-details__meta-group-content">
 				<a
 					href="<?php echo esc_url( $event->zoom_join_url ); ?>"
-					class="tribe-events-virtual-single-zoom-details__zoom-link"
+					class="tribe-events-virtual-single-api-details__video-link"
 					target="_blank"
 					<?php tribe_attributes( $zoom_link_attrs ); ?>
 				>
 					<?php echo esc_html( $short_zoom_url ); ?>
 				</a>
-				<span class="tribe-events-virtual-single-zoom-details__zoom-id">
+				<span class="tec-events-virtual-single-api-details__api-id tribe-events-virtual-single-zoom-details__zoom-id">
 					<?php
 					echo esc_html(
 						sprintf(
@@ -98,12 +98,12 @@ if ( ! empty( $event->zoom_join_url ) ) {
 			);
 			?>
 			<div class="tec-events-virtual-single-api-details__meta-group-content tribe-events-virtual-single-zoom-details__meta-group-content">
-				<ul class="tribe-events-virtual-single-zoom-details__phone-number-list">
+				<ul class="tec-events-virtual-single-api-details__phone-number-list tribe-events-virtual-single-zoom-details__phone-number-list">
 					<?php foreach ( $event->zoom_global_dial_in_numbers as $phone_number ) : ?>
-						<li class="tribe-events-virtual-single-zoom-details__phone-number-list-item">
+						<li class="tec-events-virtual-single-api-details__phone-number-list-item tribe-events-virtual-single-zoom-details__phone-number-list-item">
 							<a
 								href="<?php echo esc_url( 'tel:' . $phone_number['compact'] ); ?>"
-								class="tribe-events-virtual-single-zoom-details__phone-number"
+								class="tec-events-virtual-single-api-details__phone-number tribe-events-virtual-single-zoom-details__phone-number"
 							>
 								<?php
 								echo esc_html(

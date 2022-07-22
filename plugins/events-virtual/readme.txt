@@ -4,8 +4,8 @@ Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, 
 Tags: virtual events, events, calendar, event, venue, organizer, dates, date, schema, conference, online events, concert, meeting, seminar, summit, class, the events calendar, tec, zoom, livestream
 Donate link: https://evnt.is/29
 Requires at least: 5.6
-Tested up to: 5.9.2
-Stable tag: 1.9.0
+Tested up to: 6.0
+Stable tag: 1.11.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -120,6 +120,30 @@ Our premium products:
 * <a href="https://evnt.is/1ako" target="_blank">Image Widget Plus</a>
 
 == Changelog ==
+
+= [1.11.0] 2022-07-18 =
+
+* Feature - Add an option to generate a Google Event with Meet from the event editor and display meeting details on the event. [VE-517]
+* Feature - Connect existing Google Event with Meet to your events using the new 'Smart' url field. [VE-514]
+* Fix - Ensure if Zoom password requires a special character that the generated password includes at least 1. [VE-524]
+* Tweak - Include the Zoom error message returned from the API when trying to create a meeting or webinar. [VE-524]
+* Tweak - Get password requirements and use those requirements per host when generating a meeting or webinar password. [VE-524]
+* Tweak - Added filters: `tec_events_virtual_meetings_api_settings_fields`, `tec_events_virtual_meetings_`, `tec_events_virtual_meetings_`, `tec_events_virtual_meetings_api_error_message`, `tec_events_virtual_meetings_google_{$this::$meeting_type}_data`, `tec_events_virtual_google_get_users_arguments`, `tec_events_virtual_google_calendar_calendar_id`, `tec_events_virtual_google_calendar_api_url_with_placeholder`, `tec_events_virtual_google_{$type}_link_allow_generation`, `tec_events_virtual_meetings_google_hosts`, `tec_events_virtual_google_meeting_link_creation_urls`, `tec_events_virtual_google_export_fields`, `tec_events_virtual_google_regex_event_hash_url`, `tec_events_virtual_meetings_google_meet_include_pin`, `tec_events_virtual_link_button_new_window`, `tec_events_virtual_google_link_new_window`, `tec_events_virtual_meetings_google_user_cache`
+* Tweak - Removed filters: `tec_events_virtual_meetings_webex_settings_fields`, `tribe_events_virtual_meetings_zoom_settings_fields`
+* Tweak - Added actions: `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`
+* Tweak - Changed views: `google/email/details/dial-in-content`, `google/email/details/dial-in-header`, `google/email/details/join-content`, `google/email/details/join-header`, `google/email/ticket-email-google-details`, `google/single/google-details`, `webex/single/webex-details`, `zoom/single/zoom-details`, `zoom/zoom-details`
+* Language - 39 new strings added, 63 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.10.1] 2022-07-05 =
+
+* Enhancement - Updated Virtual Events to work properly with Community Events. [CE-160]
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted.
+
+= [1.10.0] 2022-05-19 =
+
+* Version - Virtual Events 1.10.0 is only compatible with The Events Calendar 5.15.0 and higher
+* Feature - Add compatibility to the new TEC admin menu system. [ET-1335]
+* Language - 1 new strings added, 34 updated, 0 fuzzied, and 1 obsoleted
 
 = [1.9.0] 2022-03-30 =
 

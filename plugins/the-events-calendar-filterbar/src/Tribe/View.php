@@ -3,9 +3,11 @@
  * Controls the filter views.
  */
 
-// Don't load directly
+// Don't load directly.
 if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); }
+
 use Tribe\Utils\Body_Classes as Body_Classes_Object;
+use \Tribe\Events\Filterbar\Compatibility\Divi\Service_Provider as Divi_Service_Provider;
 
 if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 	class Tribe__Events__Filterbar__View {
@@ -46,7 +48,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 */
 		protected static $defaultMuFilters;
 
-		const VERSION = '5.2.1';
+		const VERSION = '5.3.1';
 
 		/**
 		 * The Events Calendar Required Version
@@ -110,6 +112,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 
 			tribe_register_provider( Tribe\Events\Filterbar\Service_Providers\Context::class );
 			tribe_register_provider( Tribe\Events\Filterbar\Views\V2_1\Service_Provider::class );
+			tribe_register_provider( Divi_Service_Provider::class );
 		}
 
 		/**
@@ -551,19 +554,22 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * Detect the settings page.
 		 *
 		 * @since 3.5
+		 * @since 5.3.0 Use admin pages to determine if we're on the filterbar settings page.
 		 *
 		 * @return boolean Are we on the settings page?
 		 */
 		private function on_settings_page() {
-			global $current_screen;
+			$admin_pages          = tribe( 'admin.pages' );
+			$current_page         = $admin_pages->get_current_page();
+			$tec_settings_page_id = tribe( \Tribe\Events\Admin\Settings::class )::$settings_page_id;
+
 			if (
-				   isset( $current_screen )
-				&& $current_screen->id == 'tribe_events_page_tribe-common'
-				&& isset( $_GET['tab'] )
-				&& $_GET['tab'] == 'filter-view'
+				( ! empty( $current_page ) && $tec_settings_page_id === $current_page )
+				&& ( ! empty( $_GET['tab'] ) && 'filter-view' === $_GET['tab'] )
 			) {
 				return true;
 			}
+
 			return false;
 		}
 

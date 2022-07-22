@@ -6,7 +6,7 @@
 
 use Tribe__Utils__Array as Arr;
 
-// Don't load directly
+// Don't load directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__Filter' ) ) {
 		/**
 		 * @var array The query args the filter should add.
 		 */
-		public $queryArgs = array();
+		public $queryArgs = [];
 
 		public $joinClause = '';
 		public $whereClause = '';

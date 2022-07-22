@@ -76,7 +76,7 @@ class Events_Status_Virtual_Filter {
 
 		$moved_online_clauses[] = $wpdb->prepare(
 			" {$alias}.meta_value IN (%s) ",
-			self::MOVEDONLINE,
+			self::MOVEDONLINE
 		);
 
 		return ' AND ( ' . implode( ' OR ', $moved_online_clauses ) . ') ';

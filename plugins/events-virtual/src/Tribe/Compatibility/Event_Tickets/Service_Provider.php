@@ -296,4 +296,21 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 	public function filter_export_should_show( $should_show, $event ) {
 		return $this->filter_show_virtual_content( $should_show, $event );
 	}
+
+	/**
+	 * Get Tickets settings URL.
+	 *
+	 * @since 1.10.0
+	 *
+	 * @param array $args array of args to add to the url.
+	 * @return string The settings URL.
+	 */
+	public function get_settings_url( array $args = [] ) {
+		if ( ! tribe()->isBound( 'tickets.main' ) ) {
+			return tribe( 'settings' )->get_url( $args );
+		}
+
+		return tribe( 'tickets.main' )->settings()->get_url( $args );
+
+	}
 }

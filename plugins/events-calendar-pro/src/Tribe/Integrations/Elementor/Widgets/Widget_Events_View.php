@@ -16,6 +16,7 @@ use Tribe\Events\Views\V2\Manager;
 
 class Widget_Events_View extends Widget_Abstract {
 	use Traits\Categories;
+	use Traits\Tags;
 
 	/**
 	 * {@inheritdoc}
@@ -85,6 +86,8 @@ class Widget_Events_View extends Widget_Abstract {
 				'organizer',
 				'venue',
 				'author',
+				'tag',
+				'exclude-tag',
 			]
 		);
 
@@ -246,6 +249,28 @@ class Widget_Events_View extends Widget_Abstract {
 				'label'       => __( 'Category Exclusion', 'tribe-events-calendar-pro' ),
 				'type'        => Controls_Manager::SELECT2,
 				'options'     => $this->get_event_categories(),
+				'label_block' => true,
+				'multiple'    => true,
+			]
+		);
+
+		$this->add_control(
+			'tag',
+			[
+				'label'       => __( 'Tag', 'tribe-events-calendar-pro' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'     => $this->get_event_tags(),
+				'label_block' => true,
+				'multiple'    => true,
+			]
+		);
+
+		$this->add_control(
+			'exclude-tag',
+			[
+				'label'       => __( 'Tag Exclusion', 'tribe-events-calendar-pro' ),
+				'type'        => Controls_Manager::SELECT2,
+				'options'     => $this->get_event_tags(),
 				'label_block' => true,
 				'multiple'    => true,
 			]

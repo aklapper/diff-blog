@@ -199,21 +199,13 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 			$cap_properties['edit']['type'][]= 'edit_others_posts';
 			$cap_properties['edit']['type'] = array_merge( $cap_properties['edit']['type'], array( 'publish_posts', 'edit_published_posts', 'edit_private_posts' ) );
 
-			$cap_properties['edit']['taxonomy'] = array( 'manage_terms' );
-
-			if ( ! defined( 'OLD_PRESSPERMIT_ACTIVE' ) )
-				$cap_properties['edit']['taxonomy'] = array_merge( $cap_properties['edit']['taxonomy'], array( 'edit_terms', 'assign_terms' ) );
-
 			$cap_properties['delete']['type'] = array( 'delete_posts', 'delete_others_posts' );
 			$cap_properties['delete']['type'] = array_merge( $cap_properties['delete']['type'], array( 'delete_published_posts', 'delete_private_posts' ) );
 
-			if ( ! defined( 'OLD_PRESSPERMIT_ACTIVE' ) )
-				$cap_properties['delete']['taxonomy'] = array( 'delete_terms' );
-			else
-				$cap_properties['delete']['taxonomy'] = array();
 
 			$cap_properties['read']['type'] = array( 'read_private_posts' );
-			$cap_properties['read']['taxonomy'] = array();
+
+            $cap_properties['taxonomies']['taxonomy'] =  array( 'manage_terms', 'edit_terms', 'assign_terms', 'delete_terms' );
 
 			$stati = get_post_stati( array( 'internal' => false ) );
 
@@ -221,7 +213,8 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 				'' => __( '&nbsp;', 'capsman-enhanced' ),
 				'read' => __( 'Reading', 'capsman-enhanced' ),
 				'edit' => __( 'Editing', 'capsman-enhanced' ),
-				'delete' => __( 'Deletion', 'capsman-enhanced' )
+				'delete' => __( 'Deletion', 'capsman-enhanced' ),
+                'taxonomies' => __( 'Taxonomies', 'capsman-enhanced' ),
 			);
 
 			$cap_tips = array(
@@ -300,7 +293,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						if ($extra_tabs = apply_filters('pp_capabilities_extra_post_capability_tabs', [])) {
 							foreach($extra_tabs as $tab_slug => $tab_caption) {
 								$tab_slug = esc_attr($tab_slug);
-								
+
 								$tab_id = "cme-cap-type-tables-{$tab_slug}";
 								$tab_active = ($tab_id == $active_tab_id) ? $ppc_tab_active : '';
 
@@ -310,166 +303,316 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 							}
 						}
 
-						// caps: other
-						$tab_id = "cme-cap-type-tables-other";
-						$tab_active = ($tab_id == $active_tab_id) ? $ppc_tab_active : '';
-						$tab_caption = esc_html__( 'WordPress Core', 'capsman-enhanced' );
+                        //grouped capabilities
+                        $grouped_caps       = [];
+                        $grouped_caps_lists = [];
 
-						echo '<li data-slug="other" data-content="' . esc_attr($tab_id) . '" class="' . esc_attr($tab_active) . '">' . esc_html($tab_caption) . '</li>';
+                        //add media related caps
+                        $grouped_caps['Media'] = [
+                            'edit_files',
+                            'upload_files',
+                            'unfiltered_upload',
+                        ];
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Media']);
+
+                        //add comments related caps
+                        $grouped_caps['Comments'] = [
+                            'moderate_comments'
+                        ];
+                        if (isset($rcaps['edit_comment'])) {
+                            $type_metacaps['edit_comment'] = 1;
+                        }
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Comments']);
+
+                        //add users related caps
+                        $grouped_caps['Users'] = [
+                            'add_users',
+                            'create_users',
+                            'delete_users',
+                            'edit_users',
+                            'list_users',
+                            'promote_users',
+                            'remove_users',
+                        ];
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Users']);
+
+                        //add admin options related caps
+                        $grouped_caps['Admin'] = [
+                            'manage_options',
+                            'edit_dashboard',
+                            'export',
+                            'import',
+                            'read',
+                            'update_core',
+                            'unfiltered_html',
+                        ];
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Admin']);
+
+                        //add themes related caps
+                        $grouped_caps['Themes'] = [
+                            'delete_themes',
+                            'edit_themes',
+                            'install_themes',
+                            'switch_themes',
+                            'update_themes',
+                            'edit_theme_options',
+                            'manage_links',
+                        ];
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Themes']);
+
+                        //add plugin related caps
+                        $grouped_caps['Plugins'] = [
+                            'activate_plugins',
+                            'delete_plugins',
+                            'edit_plugins',
+                            'install_plugins',
+                            'update_plugins',
+                        ];
+                        $grouped_caps_lists = array_merge($grouped_caps_lists, $grouped_caps['Plugins']);
+
+						$grouped_caps = apply_filters('cme_grouped_capabilities', $grouped_caps);
+
+						foreach($grouped_caps as $grouped_title => $__grouped_caps) {
+							$grouped_title = esc_html($grouped_title);
+
+							$tab_slug = str_replace(' ', '-', strtolower(sanitize_title($grouped_title)));
+							$tab_id = 'cme-cap-type-tables-' . $tab_slug;
+							$tab_active = ($tab_id == $active_tab_id) ? $ppc_tab_active : '';
+
+							echo '<li data-slug="' . esc_attr($tab_slug) . '" data-content="' . esc_attr($tab_id) . '" class="' . esc_attr($tab_active) . '">'
+								. esc_html(str_replace('_', ' ', $grouped_title)) .
+							'</li>';
+						}
 
 						// caps: plugins
 						$plugin_caps = [];
-						if (defined('PUBLISHPRESS_VERSION')) {
-							$plugin_caps['PublishPress'] = apply_filters('cme_publishpress_capabilities',
-								array(
-								'edit_metadata',
-								'edit_post_subscriptions',
-								'pp_manage_roles',
-								'pp_set_notification_channel',
-								'pp_view_calendar',
-								'pp_view_content_overview',
-								)
-							);
-						}
 
 						//PublishPress Capabilities Capabilities
 						$plugin_caps['PublishPress Capabilities'] = apply_filters('cme_publishpress_capabilities_capabilities',
-							array(
-							'manage_capabilities',
-							)
+							[
+							    'manage_capabilities',
+                            ]
 						);
 
+						if (defined('PUBLISHPRESS_VERSION')) {
+							$plugin_caps['PublishPress'] = apply_filters('cme_publishpress_capabilities',
+                               [
+                                    'edit_metadata',
+                                    'edit_post_subscriptions',
+                                    'pp_manage_roles',
+                                    'pp_set_notification_channel',
+                                    'pp_view_calendar',
+                                    'pp_view_content_overview',
+								]
+							);
+						}
+
 						if (defined('PUBLISHPRESS_MULTIPLE_AUTHORS_VERSION')) {
-							if ($_caps = apply_filters('cme_multiple_authors_capabilities', array())) {
+							if ($_caps = apply_filters('cme_multiple_authors_capabilities', [])) {
 								$plugin_caps['PublishPress Authors'] = $_caps;
 							}
 						}
 
 						if (defined('PRESSPERMIT_VERSION')) {
 							$plugin_caps['PublishPress Permissions'] = apply_filters('cme_presspermit_capabilities',
-								array(
-								'edit_own_attachments',
-								'list_others_unattached_files',
-								'pp_administer_content',
-								'pp_assign_roles',
-								'pp_associate_any_page',
-								'pp_create_groups',
-								'pp_create_network_groups',
-								'pp_define_moderation',
-								'pp_define_post_status',
-								'pp_define_privacy',
-								'pp_delete_groups',
-								'pp_edit_groups',
-								'pp_exempt_edit_circle',
-								'pp_exempt_read_circle',
-								'pp_force_quick_edit',
-								'pp_list_all_files',
-								'pp_manage_capabilities',
-								'pp_manage_members',
-								'pp_manage_network_members',
-								'pp_manage_settings',
-								'pp_moderate_any',
-								'pp_set_associate_exceptions',
-								'pp_set_edit_exceptions',
-								'pp_set_read_exceptions',
-								'pp_set_revise_exceptions',
-								'pp_set_term_assign_exceptions',
-								'pp_set_term_associate_exceptions',
-								'pp_set_term_manage_exceptions',
-								'pp_unfiltered',
-								'set_posts_status',
-								)
+								[
+                                    'edit_own_attachments',
+                                    'list_others_unattached_files',
+                                    'pp_administer_content',
+                                    'pp_assign_roles',
+                                    'pp_associate_any_page',
+                                    'pp_create_groups',
+                                    'pp_create_network_groups',
+                                    'pp_define_moderation',
+                                    'pp_define_post_status',
+                                    'pp_define_privacy',
+                                    'pp_delete_groups',
+                                    'pp_edit_groups',
+                                    'pp_exempt_edit_circle',
+                                    'pp_exempt_read_circle',
+                                    'pp_force_quick_edit',
+                                    'pp_list_all_files',
+                                    'pp_manage_capabilities',
+                                    'pp_manage_members',
+                                    'pp_manage_network_members',
+                                    'pp_manage_settings',
+                                    'pp_moderate_any',
+                                    'pp_set_associate_exceptions',
+                                    'pp_set_edit_exceptions',
+                                    'pp_set_read_exceptions',
+                                    'pp_set_revise_exceptions',
+                                    'pp_set_term_assign_exceptions',
+                                    'pp_set_term_associate_exceptions',
+                                    'pp_set_term_manage_exceptions',
+                                    'pp_unfiltered',
+                                    'set_posts_status',
+								]
+							);
+						}
+
+						if (defined('GF_PLUGIN_DIR_PATH')) {
+							$plugin_caps['Gravity Forms'] = apply_filters('cme_gravityforms_capabilities',
+								[
+                                        'gravityforms_create_form',
+                                        'gravityforms_delete_forms',
+                                        'gravityforms_edit_forms',
+                                        'gravityforms_preview_forms',
+                                        'gravityforms_view_entries',
+                                        'gravityforms_edit_entries',
+                                        'gravityforms_delete_entries',
+                                        'gravityforms_view_entry_notes',
+                                        'gravityforms_edit_entry_notes',
+                                        'gravityforms_export_entries',
+                                        'gravityforms_view_settings',
+                                        'gravityforms_edit_settings',
+                                        'gravityforms_view_updates',
+                                        'gravityforms_view_addons',
+                                        'gravityforms_system_status',
+                                        'gravityforms_uninstall',
+                                        'gravityforms_logging',
+                                        'gravityforms_api_settings',
+								]
+							);
+						}
+
+						if (defined('WPML_PLUGIN_FILE')) {
+							$plugin_caps['WPML'] = apply_filters('cme_wpml_capabilities',
+								[
+								    'wpml_manage_translation_management',
+                                    'wpml_manage_languages',
+                                    'wpml_manage_translation_options',
+                                    'wpml_manage_troubleshooting',
+                                    'wpml_manage_taxonomy_translation',
+                                    'wpml_manage_wp_menus_sync',
+                                    'wpml_manage_translation_analytics',
+                                    'wpml_manage_string_translation',
+                                    'wpml_manage_sticky_links',
+                                    'wpml_manage_navigation',
+                                    'wpml_manage_theme_and_plugin_localization',
+                                    'wpml_manage_media_translation',
+                                    'wpml_manage_support',
+                                    'wpml_manage_woocommerce_multilingual',
+                                    'wpml_operate_woocommerce_multilingual',
+								]
+							);
+						}
+
+						if (defined('WS_FORM_VERSION')) {
+							$plugin_caps['WS Form'] = apply_filters('cme_wsform_capabilities',
+								[
+								    'create_form',
+                                    'delete_form',
+                                    'edit_form',
+                                    'export_form',
+                                    'import_form',
+                                    'publish_form',
+                                    'read_form',
+                                    'delete_submission',
+                                    'edit_submission',
+                                    'export_submission',
+                                    'read_submission',
+                                    'manage_options_wsform',
+								]
+							);
+						}
+
+						if (defined('STAGS_VERSION')) {
+							$plugin_caps['TaxoPress'] = apply_filters('cme_taxopress_capabilities',
+								[
+									'simple_tags',
+                                    'admin_simple_tags'
+								]
 							);
 						}
 
 						if (defined('WC_PLUGIN_FILE')) {
 							$plugin_caps['WooCommerce'] = apply_filters('cme_woocommerce_capabilities',
-								array(
-								'assign_product_terms',
-								'assign_shop_coupon_terms',
-								'assign_shop_discount_terms',
-								'assign_shop_order_terms',
-								'assign_shop_payment_terms',
-								'create_shop_orders',
-								'delete_others_products',
-								'delete_others_shop_coupons',
-								'delete_others_shop_discounts',
-								'delete_others_shop_orders',
-								'delete_others_shop_payments',
-								'delete_private_products',
-								'delete_private_shop_coupons',
-								'delete_private_shop_orders',
-								'delete_private_shop_discounts',
-								'delete_private_shop_payments',
-								'delete_product_terms',
-								'delete_products',
-								'delete_published_products',
-								'delete_published_shop_coupons',
-								'delete_published_shop_discounts',
-								'delete_published_shop_orders',
-								'delete_published_shop_payments',
-								'delete_shop_coupons',
-								'delete_shop_coupon_terms',
-								'delete_shop_discount_terms',
-								'delete_shop_discounts',
-								'delete_shop_order_terms',
-								'delete_shop_orders',
-								'delete_shop_payments',
-								'delete_shop_payment_terms',
-								'edit_others_products',
-								'edit_others_shop_coupons',
-								'edit_others_shop_discounts',
-								'edit_others_shop_orders',
-								'edit_others_shop_payments',
-								'edit_private_products',
-								'edit_private_shop_coupons',
-								'edit_private_shop_discounts',
-								'edit_private_shop_orders',
-								'edit_private_shop_payments',
-								'edit_product_terms',
-								'edit_products',
-								'edit_published_products',
-								'edit_published_shop_coupons',
-								'edit_published_shop_discounts',
-								'edit_published_shop_orders',
-								'edit_published_shop_payments',
-								'edit_shop_coupon_terms',
-								'edit_shop_coupons',
-								'edit_shop_discounts',
-								'edit_shop_discount_terms',
-								'edit_shop_order_terms',
-								'edit_shop_orders',
-								'edit_shop_payments',
-								'edit_shop_payment_terms',
-								'export_shop_payments',
-								'export_shop_reports',
-								'import_shop_discounts',
-								'import_shop_payments',
-								'manage_product_terms',
-								'manage_shop_coupon_terms',
-								'manage_shop_discounts',
-								'manage_shop_discount_terms',
-								'manage_shop_payment_terms',
-								'manage_shop_order_terms',
-								'manage_shop_settings',
-								'manage_woocommerce',
-								'publish_products',
-								'publish_shop_coupons',
-								'publish_shop_discounts',
-								'publish_shop_orders',
-								'publish_shop_payments',
-								'read_private_products',
-								'read_private_shop_coupons',
-								'read_private_shop_discounts',
-								'read_private_shop_payments',
-								'read_private_shop_orders',
-								'view_admin_dashboard',
-								'view_shop_discount_stats',
-								'view_shop_payment_stats',
-								'view_shop_reports',
-								'view_shop_sensitive_data',
-								'view_woocommerce_reports',
-								)
+								[
+                                    'assign_product_terms',
+                                    'assign_shop_coupon_terms',
+                                    'assign_shop_discount_terms',
+                                    'assign_shop_order_terms',
+                                    'assign_shop_payment_terms',
+                                    'create_shop_orders',
+                                    'delete_others_products',
+                                    'delete_others_shop_coupons',
+                                    'delete_others_shop_discounts',
+                                    'delete_others_shop_orders',
+                                    'delete_others_shop_payments',
+                                    'delete_private_products',
+                                    'delete_private_shop_coupons',
+                                    'delete_private_shop_orders',
+                                    'delete_private_shop_discounts',
+                                    'delete_private_shop_payments',
+                                    'delete_product_terms',
+                                    'delete_products',
+                                    'delete_published_products',
+                                    'delete_published_shop_coupons',
+                                    'delete_published_shop_discounts',
+                                    'delete_published_shop_orders',
+                                    'delete_published_shop_payments',
+                                    'delete_shop_coupons',
+                                    'delete_shop_coupon_terms',
+                                    'delete_shop_discount_terms',
+                                    'delete_shop_discounts',
+                                    'delete_shop_order_terms',
+                                    'delete_shop_orders',
+                                    'delete_shop_payments',
+                                    'delete_shop_payment_terms',
+                                    'edit_others_products',
+                                    'edit_others_shop_coupons',
+                                    'edit_others_shop_discounts',
+                                    'edit_others_shop_orders',
+                                    'edit_others_shop_payments',
+                                    'edit_private_products',
+                                    'edit_private_shop_coupons',
+                                    'edit_private_shop_discounts',
+                                    'edit_private_shop_orders',
+                                    'edit_private_shop_payments',
+                                    'edit_product_terms',
+                                    'edit_products',
+                                    'edit_published_products',
+                                    'edit_published_shop_coupons',
+                                    'edit_published_shop_discounts',
+                                    'edit_published_shop_orders',
+                                    'edit_published_shop_payments',
+                                    'edit_shop_coupon_terms',
+                                    'edit_shop_coupons',
+                                    'edit_shop_discounts',
+                                    'edit_shop_discount_terms',
+                                    'edit_shop_order_terms',
+                                    'edit_shop_orders',
+                                    'edit_shop_payments',
+                                    'edit_shop_payment_terms',
+                                    'export_shop_payments',
+                                    'export_shop_reports',
+                                    'import_shop_discounts',
+                                    'import_shop_payments',
+                                    'manage_product_terms',
+                                    'manage_shop_coupon_terms',
+                                    'manage_shop_discounts',
+                                    'manage_shop_discount_terms',
+                                    'manage_shop_payment_terms',
+                                    'manage_shop_order_terms',
+                                    'manage_shop_settings',
+                                    'manage_woocommerce',
+                                    'publish_products',
+                                    'publish_shop_coupons',
+                                    'publish_shop_discounts',
+                                    'publish_shop_orders',
+                                    'publish_shop_payments',
+                                    'read_private_products',
+                                    'read_private_shop_coupons',
+                                    'read_private_shop_discounts',
+                                    'read_private_shop_payments',
+                                    'read_private_shop_orders',
+                                    'view_admin_dashboard',
+                                    'view_shop_discount_stats',
+                                    'view_shop_payment_stats',
+                                    'view_shop_reports',
+                                    'view_shop_sensitive_data',
+                                    'view_woocommerce_reports',
+								]
 							);
 						}
 						$plugin_caps = apply_filters('cme_plugin_capabilities', $plugin_caps);
@@ -488,7 +631,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						$tab_id = "cme-cap-type-tables-invalid";
 						$tab_active = ($tab_id == $active_tab_id) ? $ppc_tab_active : '';
 						$tab_caption = esc_html__( 'Invalid Capabilities', 'capsman-enhanced' );
-						echo '<li id="cme_tab_invalid_caps" data-slug="invalid" data-content="cme-cap-type-tables-' . esc_attr($tab_id) . '" class="' . esc_attr($tab_active) . '" style="display:none;">' . esc_html($tab_caption) . '</li>';
+						echo '<li id="cme_tab_invalid_caps" data-slug="invalid" data-content="' . esc_attr($tab_id) . '" class="' . esc_attr($tab_active) . '" style="display:none;">' . esc_html($tab_caption) . '</li>';
 
 						$tab_id = "cme-cap-type-tables-additional";
 						$tab_active = ($tab_id == $active_tab_id) ? $ppc_tab_active : '';
@@ -503,23 +646,11 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 					foreach( array_keys($cap_properties) as $cap_type ) {
 
 						foreach( array_keys($defined) as $item_type ) {
-							if ( ( 'delete' == $cap_type ) && ( 'taxonomy' == $item_type ) ) {
-								if ( defined('OLD_PRESSPERMIT_ACTIVE') ) {
-									continue;
-								}
 
-								$any_term_deletion_caps = false;
-								foreach( array_keys($defined['taxonomy']) as $_tax ) {
-									if ( isset( $defined['taxonomy'][$_tax]->cap->delete_terms ) && ( 'manage_categories' != $defined['taxonomy'][$_tax]->cap->delete_terms ) && ! in_array( $_tax, $unfiltered['taxonomy'] ) ) {
-										$any_term_deletion_caps = true;
-										break;
-									}
-								}
 
-								if ( ! $any_term_deletion_caps )
-									continue;
-							}
-
+                            if (!isset($cap_properties[$cap_type][$item_type])) {
+                                continue;
+                            }
 							if ( ! count( $cap_properties[$cap_type][$item_type] ) )
 								continue;
 
@@ -582,8 +713,10 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 
 									$type_label = (defined('CME_LEGACY_MENU_NAME_LABEL') && !empty($type_obj->labels->menu_name)) ? $type_obj->labels->menu_name : $type_obj->labels->name;
 
-									$row .= "<td><a class='cap_type' href='#toggle_type_caps'>" . esc_html($type_label) . '</a>';
-									$row .= '<a href="#" class="neg-type-caps">&nbsp;x&nbsp;</a>';
+									$row .= "<td>";
+									$row .= '<input type="checkbox" class="pp-row-action-rotate excluded-input"> &nbsp;';
+									$row .= "<a class='cap_type' href='#toggle_type_caps'>" . esc_html($type_label) . '</a>';
+									$row .= '<a style="display: none;" href="#" class="neg-type-caps">&nbsp;x&nbsp;</a>';
 									$row .= '</td>';
 
 									$display_row = ! empty($force_distinct_ui);
@@ -659,6 +792,9 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 											$td_classes []= "cap-unreg";
 										}
 
+                                        $td_classes[] = 'capability-checkbox-rotate';
+                                        $td_classes[] = $cap_name;
+
 										$td_class = ( $td_classes ) ? implode(' ', $td_classes) : '';
 
 										$row .= '<td class="' . esc_attr($td_class) . '" title="' . esc_attr($cap_title) . '"' . "><span class='cap-x'>X</span>$checkbox";
@@ -672,20 +808,28 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 									}
 
 									if ('taxonomy' == $item_type) {
-										for ($i = $col_count; $i < 3; $i++) {
+										for ($i = $col_count; $i < 4; $i++) {
 											$row .= "<td></td>";
 										}
 									}
 
 									if (!empty($type_obj->map_meta_cap) && !defined('PP_CAPABILITIES_NO_INVALID_SECTION')) {
 										if ('type' == $item_type) {
-											$type_metacaps[$type_obj->cap->read_post] = true;
-											$type_metacaps[$type_obj->cap->edit_post] = isset($type_obj->cap->edit_posts) && ($type_obj->cap->edit_post != $type_obj->cap->edit_posts);
-											$type_metacaps[$type_obj->cap->delete_post] = isset($type_obj->cap->delete_posts) && ($type_obj->cap->delete_post != $type_obj->cap->delete_posts);
-
+											if (!in_array($type_obj->cap->read_post, $grouped_caps_lists)
+                                                && !in_array($type_obj->cap->edit_post, $grouped_caps_lists)
+                                                && !in_array($type_obj->cap->delete_post, $grouped_caps_lists)
+                                                ) {
+                                                    $type_metacaps[$type_obj->cap->read_post] = true;
+                                                    $type_metacaps[$type_obj->cap->edit_post] = isset($type_obj->cap->edit_posts) && ($type_obj->cap->edit_post != $type_obj->cap->edit_posts);
+                                                    $type_metacaps[$type_obj->cap->delete_post] = isset($type_obj->cap->delete_posts) && ($type_obj->cap->delete_post != $type_obj->cap->delete_posts);
+                                                }
 										} elseif ('taxonomy' == $item_type && !empty($type_obj->cap->edit_term) && !empty($type_obj->cap->delete_term)) {
-											$type_metacaps[$type_obj->cap->edit_term] = true;
-											$type_metacaps[$type_obj->cap->delete_term] = true;
+											if (!in_array($type_obj->cap->edit_term, $grouped_caps_lists)
+                                                && !in_array($type_obj->cap->delete_term, $grouped_caps_lists)
+                                                ) {
+                                                    $type_metacaps[$type_obj->cap->edit_term] = true;
+                                                    $type_metacaps[$type_obj->cap->delete_term] = true;
+                                                }
 										}
 									}
 								}
@@ -721,6 +865,122 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 					$type_caps = apply_filters('publishpress_caps_manager_typecaps', $type_caps);
 
 					// clicking on post type name toggles corresponding checkbox selections
+
+					// caps: grouped
+					$grouped_caps = apply_filters('cme_grouped_capabilities', $grouped_caps);
+
+					foreach($grouped_caps as $grouped_title => $__grouped_caps) {
+						$grouped_title = esc_html($grouped_title);
+
+						$_grouped_caps = array_fill_keys($__grouped_caps, true);
+
+						$tab_id = 'cme-cap-type-tables-' . esc_attr(str_replace( ' ', '-', strtolower($grouped_title)));
+						$div_display = ($tab_id == $active_tab_id) ? 'block' : 'none';
+
+						echo '<div id="' . esc_attr($tab_id) . '" style="display:' . esc_attr($div_display) . '">';
+
+						echo '<h3 class="cme-cap-section">' . esc_html(str_replace('_', ' ', $grouped_title)) . '</h3>';
+
+						echo '<div class="ppc-filter-wrapper">';
+							echo '<input type="text" class="regular-text ppc-filter-text" placeholder="' . esc_attr__('Filter by capability', 'capsman-enhanced') . '">';
+							echo ' <button class="button secondary-button ppc-filter-text-reset" type="button">' . esc_html__('Clear', 'capsman-enhanced') . '</button>';
+						echo '</div>';
+						echo '<div class="ppc-filter-no-results" style="display:none;">' . esc_html__( 'No results found. Please try again with a different word.', 'capsman-enhanced' ) . '</div>';
+
+						echo '<table class="widefat fixed striped form-table cme-checklist single-checkbox-table">';
+
+						$centinel_ = true;
+						$checks_per_row = get_option( 'cme_form-rows', 1 );
+						$i = 0; $first_row = true;
+
+                        ?>
+						<tr class="cme-bulk-select">
+                            <td colspan="<?php echo (int) $checks_per_row;?>">
+                                <input type="checkbox" class="cme-check-all" title="<?php esc_attr_e('check / uncheck all', 'capsman-enhanced');?>"> <span><?php _e('Capability Name', 'capsman-enhanced');?></span>
+								<span style="float:right">
+								&nbsp;&nbsp;<a class="cme-neg-all" href="#" title="<?php esc_attr_e('negate all (storing as disabled capabilities)', 'capsman-enhanced');?>">X</a> <a class="cme-switch-all" href="#" title="<?php esc_attr_e('negate none (add/remove all capabilities normally)', 'capsman-enhanced');?>">X</a>
+								</span>
+							</td>
+						</tr>
+                        <?php
+						foreach( array_keys($_grouped_caps) as $cap_name ) {
+							$cap_name = sanitize_key($cap_name);
+
+							if ( isset( $type_caps[$cap_name] ) || isset($type_metacaps[$cap_name]) ) {
+								continue;
+							}
+
+							if ( ! $is_administrator && ! current_user_can($cap_name) )
+								continue;
+
+							// Output first <tr>
+							if ( $centinel_ == true ) {
+								echo '<tr class="' . esc_attr($cap_name) . '">';
+								$centinel_ = false;
+							}
+
+							if ( $i == $checks_per_row ) {
+								echo '</tr><tr class="' . esc_attr($cap_name) . '">';
+								$i = 0;
+							}
+
+							if ( ! isset( $rcaps[$cap_name] ) )
+								$class = 'cap-no';
+							else
+								$class = ( $rcaps[$cap_name] ) ? 'cap-yes' : 'cap-neg';
+
+							if ( ! empty($pp_metagroup_caps[$cap_name]) ) {
+								$class .= ' cap-metagroup';
+								$title_text = sprintf( __( '%s: assigned by Permission Group', 'capsman-enhanced' ), $cap_name );
+							} else {
+								$title_text = $cap_name;
+							}
+
+							$disabled = '';
+							$checked = checked(1, ! empty($rcaps[$cap_name]), false );
+							$cap_title = $title_text;
+							?>
+							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($cap_title);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" class="pp-single-action-rotate" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
+							<span>
+							<?php
+							echo esc_html(str_replace( '_', ' ', $cap_name));
+							?>
+							</span></label><a href="#" class="neg-cap" style="visibility: hidden;">&nbsp;x&nbsp;</a>
+							<?php if ( false !== strpos( $class, 'cap-neg' ) ) :?>
+								<input type="hidden" class="cme-negation-input" name="caps[<?php echo esc_attr($cap_name); ?>]" value="" />
+							<?php endif; ?>
+							</td>
+
+							<?php
+							++$i;
+						}
+
+						if ( $i == $checks_per_row ) {
+							echo '</tr>';
+							$i = 0;
+						} elseif ( ! $first_row ) {
+							// Now close a wellformed table
+							for ( $i; $i < $checks_per_row; $i++ ){
+								echo '<td>&nbsp;</td>';
+							}
+							echo '</tr>';
+						}
+						?>
+
+						<tr class="cme-bulk-select">
+							<td colspan="<?php echo (int) $checks_per_row;?>">
+								<input type="checkbox" class="cme-check-all" autocomplete="off" title="<?php esc_attr_e('check / uncheck all', 'capsman-enhanced');?>"> <span><?php _e('Capability Name', 'capsman-enhanced');?></span>
+								<span style="float:right">
+								&nbsp;&nbsp;<a class="cme-neg-all" href="#" title="<?php esc_attr_e('negate all (storing as disabled capabilities)', 'capsman-enhanced');?>">X</a> <a class="cme-switch-all" href="#" title="<?php esc_attr_e('negate none (add/remove all capabilities normally)', 'capsman-enhanced');?>">X</a>
+								</span>
+							</td>
+						</tr>
+
+						</table>
+						</div>
+					<?php
+					}
+
 					// caps: other
 
 					$tab_id = "cme-cap-type-tables-other";
@@ -752,91 +1012,6 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 								</span>
 							</td>
 						</tr>
-
-                        <?php
-						$core_caps = _cme_core_caps();
-						foreach( array_keys($core_caps) as $cap_name ) {
-							$cap_name = sanitize_key($cap_name);
-
-							if ( ! $is_administrator && ! current_user_can($cap_name) )
-								continue;
-
-							// Output first <tr>
-							if ( $centinel_ == true ) {
-								echo '<tr class="' . esc_attr($cap_name) . '">';
-								$centinel_ = false;
-							}
-
-							if ( $i == $checks_per_row ) {
-								echo '</tr><tr class="' . esc_attr($cap_name) . '">';
-								$i = 0;
-							}
-
-							if ( ! isset( $rcaps[$cap_name] ) )
-								$class = 'cap-no';
-							else
-								$class = ( $rcaps[$cap_name] ) ? 'cap-yes' : 'cap-neg';
-
-							if ( ! empty($pp_metagroup_caps[$cap_name]) ) {
-								$class .= ' cap-metagroup';
-								$title_text = sprintf( __( '%s: assigned by Permission Group', 'capsman-enhanced' ), $cap_name );
-							} else {
-								$title_text = $cap_name;
-							}
-
-							$disabled = '';
-							$checked = checked(1, ! empty($rcaps[$cap_name]), false );
-							$lock_capability = false;
-							$cap_title = $title_text;
-
-							if ( 'read' == $cap_name ) {
-								if ( ! empty( $block_read_removal ) ) {
-									// prevent the read capability from being removed from a core role, but don't force it to be added
-									if ( $checked || apply_filters( 'pp_caps_force_capability_storage', false, 'read', $default ) ) {
-										if ( apply_filters( 'pp_caps_lock_capability', true, 'read', $default ) ) {
-											$lock_capability = true;
-											$class .= ' cap-locked';
-											$disabled = ' disabled ';
-											if ( 'administrator' != $this->current ) {
-												$cap_title = __('Lockout Prevention: To remove read capability, first remove WordPress admin / editing capabilities, or add "dashboard_lockout_ok" capability', 'capsman-enhanced' );
-											}
-										}
-									}
-								}
-							}
-
-							?>
-							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($cap_title);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
-							<span>
-							<?php
-							echo esc_html(str_replace( '_', ' ', $cap_name));
-							?>
-							</span></label><a href="#" class="neg-cap">&nbsp;x&nbsp;</a>
-							<?php if ( false !== strpos( $class, 'cap-neg' ) ) :?>
-								<input type="hidden" class="cme-negation-input" name="caps[<?php echo esc_attr($cap_name); ?>]" value="" />
-							<?php endif; ?>
-							</td>
-
-							<?php
-
-							if ( $lock_capability ) {
-								echo '<input type="hidden" name="caps[' . esc_attr($cap_name) . ']" value="1" />';
-							}
-
-							++$i;
-						}
-
-						if ( $i == $checks_per_row ) {
-							echo '</tr>';
-							$i = 0;
-						} elseif ( ! $first_row ) {
-							// Now close a wellformed table
-							for ( $i; $i < $checks_per_row; $i++ ){
-								echo '<td>&nbsp;</td>';
-							}
-							echo '</tr>';
-						}
-						?>
 
 						<tr class="cme-bulk-select">
 							<td colspan="<?php echo (int) $checks_per_row;?>">
@@ -875,7 +1050,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						echo '</div>';
 						echo '<div class="ppc-filter-no-results" style="display:none;">' . esc_html__( 'No results found. Please try again with a different word.', 'capsman-enhanced' ) . '</div>';
 
-						echo '<table class="widefat fixed striped form-table cme-checklist">';
+						echo '<table class="widefat fixed striped form-table cme-checklist single-checkbox-table">';
 
 						$centinel_ = true;
 						$checks_per_row = get_option( 'cme_form-rows', 1 );
@@ -894,7 +1069,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						foreach( array_keys($_plugin_caps) as $cap_name ) {
 							$cap_name = sanitize_key($cap_name);
 
-							if ( isset( $type_caps[$cap_name] ) || isset($core_caps[$cap_name]) || isset($type_metacaps[$cap_name]) ) {
+							if ( isset( $type_caps[$cap_name] ) || in_array($cap_name, $grouped_caps_lists) || isset($type_metacaps[$cap_name]) ) {
 								continue;
 							}
 
@@ -928,12 +1103,12 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 							$checked = checked(1, ! empty($rcaps[$cap_name]), false );
 							$cap_title = $title_text;
 							?>
-							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($cap_title);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
+							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($cap_title);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" class="pp-single-action-rotate" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
 							<span>
 							<?php
 							echo esc_html(str_replace( '_', ' ', $cap_name));
 							?>
-							</span></label><a href="#" class="neg-cap">&nbsp;x&nbsp;</a>
+							</span></label><a href="#" class="neg-cap" style="visibility: hidden;">&nbsp;x&nbsp;</a>
 							<?php if ( false !== strpos( $class, 'cap-neg' ) ) :?>
 								<input type="hidden" class="cme-negation-input" name="caps[<?php echo esc_attr($cap_name); ?>]" value="" />
 							<?php endif; ?>
@@ -978,25 +1153,17 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						echo '<h3 class="cme-cap-section">' . esc_html__( 'Invalid Capabilities', 'capsman-enhanced' ) . '</h3>';
 						?>
 
-						<script type="text/javascript">
-						/* <![CDATA[ */
-						jQuery(document).ready( function($) {
-							$('#cme_tab_invalid_caps').show();
-						});
-						/* ]]> */
-						</script>
-
 						<div>
 						<span class="cme-subtext">
-							<?php esc_html_e('The following entries have no effect. Please assign desired capabilities in the Read / Edit / Delete grid above.', 'capsman-enhanced');?>
+							<?php esc_html_e('The following entries have no effect. Please assign desired capabilities on the Editing / Deletion / Reading tabs.', 'capsman-enhanced');?>
 						</span>
 						</div>
 
-						<table class="widefat fixed striped form-table cme-checklist">
+						<table class="widefat fixed striped form-table cme-checklist single-checkbox-table">
 						<tr>
 						<?php
 						$i = 0; $first_row = true;
-
+                        $invalid_caps_capabilities = [];
 						foreach( $all_capabilities as $cap_name ) {
 							if ( ! isset($this->capabilities[$cap_name]) )
 								$this->capabilities[$cap_name] = str_replace( '_', ' ', $cap_name );
@@ -1029,13 +1196,14 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 
 							$disabled = '';
 							$checked = checked(1, ! empty($rcaps[$cap_name]), false );
+                            $invalid_caps_capabilities[] = $cap_name;
 						?>
-							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($title_text);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
+							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($title_text);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" class="pp-single-action-rotate" autocomplete="off" value="1" <?php echo esc_attr($checked) . esc_attr($disabled);?> />
 							<span>
 							<?php
 							echo esc_html(str_replace( '_', ' ', $cap ));
 							?>
-							</span></label><a href="#" class="neg-cap">&nbsp;x&nbsp;</a>
+							</span></label><a href="#" class="neg-cap" style="visibility: hidden;">&nbsp;x&nbsp;</a>
 							<?php if ( false !== strpos( $class, 'cap-neg' ) ) :?>
 								<input type="hidden" class="cme-negation-input" name="caps[<?php echo esc_attr($cap_name); ?>]" value="" />
 							<?php endif; ?>
@@ -1062,6 +1230,16 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						}
 						?>
 
+                        <?php if (!empty($invalid_caps_capabilities)) : ?>
+                            <script type="text/javascript">
+                            /* <![CDATA[ */
+                            jQuery(document).ready( function($) {
+                                $('#cme_tab_invalid_caps').show();
+                            });
+                            /* ]]> */
+                            </script>
+                        <?php endif; ?>
+
 					</table>
 					</div>
 						<?php
@@ -1081,7 +1259,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 						echo '</div>';
 						echo '<div class="ppc-filter-no-results" style="display:none;">' . esc_html__( 'No results found. Please try again with a different word.', 'capsman-enhanced' ) . '</div>';
 						?>
-						<table class="widefat fixed striped form-table cme-checklist">
+						<table class="widefat fixed striped form-table cme-checklist single-checkbox-table">
 
 						<tr class="cme-bulk-select">
                             <td colspan="<?php echo (int) $checks_per_row;?>">
@@ -1107,10 +1285,9 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 
 						foreach ($additional_caps as $cap_name => $cap) :
 							$cap_name = sanitize_key($cap_name);
-							
 
 							if ((isset($type_caps[$cap_name]) && !isset($type_metacaps[$cap_name]))
-							|| isset($core_caps[$cap_name])
+							|| in_array($cap_name, $grouped_caps_lists)
 							|| (isset($type_metacaps[$cap_name]) && !empty($rcaps[$cap_name])) ) {
 								continue;
 							}
@@ -1168,12 +1345,12 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 								}
 							}
 						?>
-							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($title_text);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" autocomplete="off" value="1" <?php echo esc_attr($checked) . ' ' . esc_attr($disabled);?> />
+							<td class="<?php echo esc_attr($class); ?>"><span class="cap-x">X</span><label title="<?php echo esc_attr($title_text);?>"><input type="checkbox" name="caps[<?php echo esc_attr($cap_name); ?>]" class="pp-single-action-rotate" autocomplete="off" value="1" <?php echo esc_attr($checked) . ' ' . esc_attr($disabled);?> />
 							<span>
 							<?php
 							echo esc_html(str_replace( '_', ' ', $cap ));
 							?>
-							</span></label><a href="#" class="neg-cap">&nbsp;x&nbsp;</a>
+							</span></label><a href="#" class="neg-cap" style="visibility: hidden;">&nbsp;x&nbsp;</a>
 							<?php if ( false !== strpos( $class, 'cap-neg' ) ) :?>
 								<input type="hidden" class="cme-negation-input" name="caps[<?php echo esc_attr($cap_name); ?>]" value="" />
 							<?php endif; ?>
@@ -1344,7 +1521,7 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 			<input type="hidden" name="action" value="update" />
 			<input type="hidden" name="current" value="<?php echo esc_attr($default); ?>" />
 
-			<?php 
+			<?php
 			$save_caption = (in_array(sanitize_key(get_locale()), ['en_EN', 'en_US'])) ? 'Save Capabilities' : __('Save Changes', 'capsman-enhanced');
 			?>
 			<input type="submit" name="SaveRole" value="<?php echo esc_attr($save_caption);?>" class="button-primary" /> &nbsp;
@@ -1364,7 +1541,9 @@ if( defined('PRESSPERMIT_ACTIVE') ) {
 restore an earlier version of your roles and capabilities.', 'capsman-enhanced' )
 			    ),
 			    admin_url( 'admin.php?page=pp-capabilities-backup' ),
-			    __( 'Go to the Backup feature', 'capsman-enhanced' )
+			    __( 'Go to the Backup feature', 'capsman-enhanced' ),
+				'',
+				'button'
 			);
 			?>
 

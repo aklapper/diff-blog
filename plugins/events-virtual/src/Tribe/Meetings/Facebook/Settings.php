@@ -13,6 +13,7 @@ use Tribe__Settings;
 use Tribe\Events\Virtual\Traits\With_AJAX;
 use Tribe__Settings_Manager as Manager;
 use Tribe__Main as Common;
+use \Tribe\Events\Admin\Settings as TEC_Settings;
 
 /**
  * Class Settings
@@ -96,9 +97,9 @@ class Settings {
 	 * @return string The URL of the Facebook Live API integration settings page.
 	 */
 	public static function admin_url() {
-		return add_query_arg( [
-			'tab' => 'addons',
-		], Tribe__Settings::instance()->get_url() );
+		$admin_page_url = tribe( TEC_Settings::class )->get_url( [ 'tab' => 'addons' ] );
+
+		return $admin_page_url;
 	}
 
 	/**

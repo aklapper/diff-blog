@@ -156,12 +156,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * {@inheritDoc}
 	 */
 	public function save_account( array $response ) {
-		if ( ! (
-			isset( $response['body'] )
-			&& ( false !== $d = json_decode( $response['body'], true ) )
-			&& isset( $d['access_token'], $d['refresh_token'], $d['expires_in'] )
-		)
-		) {
+		if ( ! $this->has_proper_credentials( $response ) ) {
 			do_action( 'tribe_log', 'error', __CLASS__, [
 				'action'  => __METHOD__,
 				'code'    => wp_remote_retrieve_response_code( $response ),
@@ -172,9 +167,10 @@ abstract class Account_API extends Abstract_Account_Api {
 		}
 
 		// Set the access token here as we have to call fetch_user immediately, to get the user information.
-		$access_token  = $d['access_token'];
-		$refresh_token = $d['refresh_token'];
-		$expiration    = $this->get_expiration_time_stamp( $d['expires_in'] );
+		$credentials   = json_decode( $response['body'], true );
+		$access_token  = $credentials['access_token'];
+		$refresh_token = $credentials['refresh_token'];
+		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
 
 		// Get the user who authorized the account.
 		$user_fields = $this->fetch_user( 'me', false, $access_token );
@@ -223,12 +219,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * {@inheritDoc}
 	 */
 	public function save_access_and_expiration( $id, array $response ) {
-		if ( ! (
-			isset( $response['body'] )
-			&& ( false !== $data = json_decode( $response['body'], true ) )
-			&& isset( $data['access_token'], $data['refresh_token'], $data['expires_in'] )
-		)
-		) {
+		if ( ! $this->has_proper_credentials( $response ) ) {
 			do_action( 'tribe_log', 'error', __CLASS__, [
 				'action'  => __METHOD__,
 				'code'    => wp_remote_retrieve_response_code( $response ),
@@ -238,9 +229,10 @@ abstract class Account_API extends Abstract_Account_Api {
 			return false;
 		}
 
-		$access_token  = $data['access_token'];
-		$refresh_token = $data['refresh_token'];
-		$expiration    = $this->get_expiration_time_stamp( $data['expires_in'] );
+		$credentials   = json_decode( $response['body'], true );
+		$access_token  = $credentials['access_token'];
+		$refresh_token = $credentials['refresh_token'];
+		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
 
 		$this->set_account_access_by_id( $id, $access_token, $refresh_token, $expiration );
 

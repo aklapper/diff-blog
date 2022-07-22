@@ -203,7 +203,18 @@ abstract class Request_Api {
 				&& false !== ( $body = json_decode( $response['body'], true ) )
 			) {
 				$api_message = isset( $body['message'] ) ? ' API Message: ' . $body['message'] : '';
-				$api_message .= isset( $body['errors'][0]['description'] ) ? ' API Error: ' . $body['errors'][0]['description'] : '';
+
+				/**
+				 * Filters the API error message.
+				 *
+				 * @since 1.11.0
+				 *
+				 * @param string              $url        The full URL this request is being made to.
+				 * @param array<string,mixed> $body       The json_decoded request body.
+				 * @param Api_Response        $response   The response that will be returned. A non `null` value
+				 *                                        here will short-circuit the response.
+				 */
+				$api_message = apply_filters( 'tec_events_virtual_meetings_api_error_message', $api_message, $body, $response );
 			}
 
 			$data = [

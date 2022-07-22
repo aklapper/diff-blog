@@ -2,10 +2,10 @@
 Contributors: afragen, barry.hughes
 Donate link: https://thefragens.com/category-colors-donate
 Tags: events, color, modern tribe, tribe
-Requires at least: 4.7
-Requires PHP: 5.6
-Tested up to: 5.8
-Stable tag: 6.7.1
+Requires at least: 5.2
+Requires PHP: 7.1
+Tested up to: 6.0
+Stable tag: 7.0.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,13 +17,13 @@ Add background colors to event categories displayed in the event views of The Ev
 
 Settings for The Events Calendar Category Colors plugin are located in their own tab on The Events Calendar Settings page.
 
-To force a refresh of your CSS, add `?refresh_css` to the end of your events URL.
+To force a refresh of your CSS, add `?refresh_css` to the end of your events URL, or re-save the Settings.
 
 ## Frequently Asked Questions
 
 ### Does the plugin require The Events Calendar plugin?
 
-Yes. [The Events Calendar plugin](http://wordpress.org/plugins/the-events-calendar/) is written by Modern Tribe, Inc. It requires at least The Events Calendar v3.0.
+Yes. [The Events Calendar plugin](http://wordpress.org/plugins/the-events-calendar/) is written by Modern Tribe, Inc. It requires at least The Events Calendar v5.0.
 
 
 ### What if I use a version of The Events Calendar 2.x?
@@ -46,6 +46,32 @@ There is more extensive documentation of the plugins features and usage on the [
 3. The Events Calendar Category Colors with Legend Superpowers in action
 
 ## Changelog
+
+#### 7.0.6 / 2022-05-20
+* move all Pro CSS to `CSS\Pro`
+* fix CSS for all day multiday week view
+* update hook name for Events Calendar settings to load admin resources
+
+#### 7.0.5 / 2022-05-17
+* load Superpowers JS on mobile too
+* improve Superpowers JS slug selection, use vanilla JS
+
+#### 7.0.4 / 2022-05-16
+* update Superpowers JS for jQuery `click` and slug selection
+
+#### 7.0.3 / 2022-05-13
+* update past event CSS
+
+#### 7.0.2 / 2022-05-08
+* fix PHP Warning
+
+#### 7.0.1 / 2022-05-04
+* hotfix, `Base_CSS` not being written, stupid mistake on my part
+
+#### 7.0.0 / 2022-05-04
+* rewrite to use `wp_add_inline_style()` for adding CSS, no more file writing
+* WPCS linting
+* update requirements, PHP 7.1, WP 5.2
 
 #### 6.7.1 / 2021-08-20
 * add some error checking, [#132](https://github.com/afragen/the-events-calendar-category-colors/issues/132)
