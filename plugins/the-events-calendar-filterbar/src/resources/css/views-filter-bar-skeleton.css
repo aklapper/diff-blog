@@ -749,12 +749,10 @@
 	}
 
 .tribe-filter-bar .tribe-filter-bar-c-range__slider .ui-slider-handle {
-			cursor: -webkit-grab;
 			cursor: grab;
 		}
 
 .tribe-filter-bar .tribe-filter-bar-c-range__slider .ui-slider-handle.ui-state-active {
-				cursor: -webkit-grabbing;
 				cursor: grabbing;
 			}
 
