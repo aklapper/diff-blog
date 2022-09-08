@@ -116,80 +116,82 @@ function diff_disable_jetpack_sso( $modules ) {
     return $modules;
 }
 
-add_filter( 'hidden_columns', 'diff_hide_language_columns' );
+add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 999 );
+add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 999 );
 /**
- * Hide the Polylang plugin admin language columns.
+ * Remove the Polylang plugin admin language columns.
  *
- * @param string[] $hidden_columns Array of hidden columns.
+ * We are using a very low priority to make sure this filter runs
+ * after the Polylang plugin is done loading its code.
  *
- * @return string[] $hidden_columns Modified array of hidden columns.
+ * @param string[] $columns Array of column header labels keyed by column ID.
+ *
+ * @return string[] $columns Modified array of column header labels.
  */
-function diff_hide_language_columns( $hidden_columns ) {
-	$hidden_columns = [
-		'language_ak',
-		'language_ar',
-		'language_arg',
-		'language_as',
-		'language_ast',
-		'language_ba',
-		'language_bg',
-		'language_bn',
-		'language_ca',
-		'language_cs',
-		'language_da',
-		'language_de',
-		'language_el',
-		'language_en',
-		'language_eo',
-		'language_es',
-		'language_et',
-		'language_fa',
-		'language_fi',
-		'language_fr',
-		'language_he',
-		'language_hi',
-		'language_hu',
-		'language_hy',
-		'language_id',
-		'language_it',
-		'language_ja',
-		'language_ka',
-		'language_kn',
-		'language_ko',
-		'language_lad',
-		'language_mai',
-		'language_mi',
-		'language_mk',
-		'language_mr',
-		'language_ms',
-		'language_nb',
-		'language_ne',
-		'language_nl',
-		'language_nn',
-		'language_or',
-		'language_pa',
-		'language_pl',
-		'language_pt',
-		'language_pt-br',
-		'language_ro',
-		'language_ru',
-		'language_sq',
-		'language_sr',
-		'language_sv',
-		'language_ta',
-		'language_th',
-		'language_tr',
-		'language_tt',
-		'language_uk',
-		'language_ur',
-		'language_vi',
-		'language_yua',
-		'language_zh',
-		'language_zh-hans',
-		'language_zh-hant',
-	];
+function diff_remove_language_columns( $columns ) {
+	unset( $columns['language_ak'] );
+	unset( $columns['language_ar'] );
+	unset( $columns['language_arg'] );
+	unset( $columns['language_as'] );
+	unset( $columns['language_ast'] );
+	unset( $columns['language_ba'] );
+	unset( $columns['language_bg'] );
+	unset( $columns['language_bn'] );
+	unset( $columns['language_ca'] );
+	unset( $columns['language_cs'] );
+	unset( $columns['language_da'] );
+	unset( $columns['language_de'] );
+	unset( $columns['language_el'] );
+	unset( $columns['language_en'] );
+	unset( $columns['language_eo'] );
+	unset( $columns['language_es'] );
+	unset( $columns['language_et'] );
+	unset( $columns['language_fa'] );
+	unset( $columns['language_fi'] );
+	unset( $columns['language_fr'] );
+	unset( $columns['language_he'] );
+	unset( $columns['language_hi'] );
+	unset( $columns['language_hu'] );
+	unset( $columns['language_hy'] );
+	unset( $columns['language_id'] );
+	unset( $columns['language_it'] );
+	unset( $columns['language_ja'] );
+	unset( $columns['language_ka'] );
+	unset( $columns['language_kn'] );
+	unset( $columns['language_ko'] );
+	unset( $columns['language_lad'] );
+	unset( $columns['language_mai'] );
+	unset( $columns['language_mi'] );
+	unset( $columns['language_mk'] );
+	unset( $columns['language_mr'] );
+	unset( $columns['language_ms'] );
+	unset( $columns['language_nb'] );
+	unset( $columns['language_ne'] );
+	unset( $columns['language_nl'] );
+	unset( $columns['language_nn'] );
+	unset( $columns['language_or'] );
+	unset( $columns['language_pa'] );
+	unset( $columns['language_pl'] );
+	unset( $columns['language_pt'] );
+	unset( $columns['language_pt-br'] );
+	unset( $columns['language_ro'] );
+	unset( $columns['language_ru'] );
+	unset( $columns['language_sq'] );
+	unset( $columns['language_sr'] );
+	unset( $columns['language_sv'] );
+	unset( $columns['language_ta'] );
+	unset( $columns['language_th'] );
+	unset( $columns['language_tr'] );
+	unset( $columns['language_tt'] );
+	unset( $columns['language_uk'] );
+	unset( $columns['language_ur'] );
+	unset( $columns['language_vi'] );
+	unset( $columns['language_yua'] );
+	unset( $columns['language_zh'] );
+	unset( $columns['language_zh-hans'] );
+	unset( $columns['language_zh-hant'] );
 
-	return $hidden_columns;
+	return $columns;
 }
 
 //disable full screen editing (it is confusing people)
