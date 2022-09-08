@@ -116,13 +116,19 @@ function diff_disable_jetpack_sso( $modules ) {
     return $modules;
 }
 
-add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 999 );
 add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 999 );
+add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 999 );
+add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 999 );
+add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 999 );
 /**
  * Remove the Polylang plugin admin language columns.
  *
  * We are using a very low priority to make sure this filter runs
  * after the Polylang plugin is done loading its code.
+ *
+ * To remove columns from custom post types, you can add additional filters in this format:
+ * 'manage_edit-{$post_type}_columns'
+ * replacing {$post_type} with the name of the custom post type.
  *
  * @param string[] $columns Array of column header labels keyed by column ID.
  *
