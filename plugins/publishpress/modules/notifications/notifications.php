@@ -99,7 +99,7 @@ if (! class_exists('PP_Notifications')) {
                     '<p><strong>For more information:</strong></p><p><a href="https://publishpress.com/features/notifications/">Notifications Documentation</a></p><p><a href="https://github.com/ostraining/PublishPress">PublishPress on Github</a></p>',
                     'publishpress'
                 ),
-                'general_options' => true,
+                'options_page' => true,
             ];
             $this->module = PublishPress()->register_module('notifications', $args);
         }
@@ -1832,8 +1832,41 @@ if (! class_exists('PP_Notifications')) {
          */
         public function print_configure_view()
         {
-            settings_fields($this->module->options_group_name);
-            do_settings_sections($this->module->options_group_name);
+            global $publishpress; ?>
+            <form class="basic-settings"
+                  action="<?php
+                  echo esc_url(menu_page_url($this->module->settings_slug, false)); ?>" method="post">
+                <?php
+                settings_fields($this->module->options_group_name); ?>
+                <?php
+                do_settings_sections($this->module->options_group_name); ?>
+
+                <?php
+                foreach ($publishpress->class_names as $slug => $class_name) {
+                    $mod_data = $publishpress->$slug->module;
+
+                    if ($mod_data->autoload
+                        || $mod_data->slug === $this->module->slug
+                        || ! isset($mod_data->notification_options)
+                        || $mod_data->options->enabled != 'on') {
+                        continue;
+                    }
+
+                    echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr(
+                            $mod_data->name
+                        ) . '" />';
+
+                    $publishpress->$slug->print_configure_view();
+                } ?>
+
+                <?php
+                echo '<input name="publishpress_module_name[]" type="hidden" value="' . esc_attr($this->module->name) . '" />'; ?>
+                <?php
+                wp_nonce_field('edit-publishpress-settings');
+
+                submit_button(null, 'primary', 'submit', false); ?>
+            </form>
+            <?php
         }
 
         /**

@@ -997,6 +997,8 @@ if (! class_exists('PP_Custom_Status')) {
 
                 // Only add the script to Edit Post and Edit Page pages -- don't want to bog down the rest of the admin with unnecessary javascript
                 if (! empty($post)) {
+                    //get raw post so custom post status is included
+                    $post = get_post($post);
                     // Get the status of the current post
                     if ($post->ID == 0 || $post->post_status == 'auto-draft' || $pagenow == 'edit.php') {
                         // TODO: check to make sure that the default exists
@@ -2384,7 +2386,7 @@ if (! class_exists('PP_Custom_Status')) {
 
             $ptype = get_post_type_object($post->post_type);
 
-            if ($ptype->hierarchical) {
+            if ($ptype->hierarchical && !in_array($post->post_status, array( 'draft', 'auto-draft'))) {
                 $post->filter = 'sample';
 
                 $uri = get_page_uri($post->ID) . $post_name;

@@ -2,46 +2,56 @@
 # This file is distributed under the same license as the The Events Calendar: Filter Bar package.
 msgid ""
 msgstr ""
-"Project-Id-Version: The Events Calendar: Filter Bar 5.3.1\n"
+"Project-Id-Version: The Events Calendar: Filter Bar 5.4.0\n"
 "Report-Msgid-Bugs-To: http://m.tri.be/191x\n"
-"POT-Creation-Date: 2022-05-26 11:33:03+00:00\n"
+"POT-Creation-Date: 2022-08-25 17:54:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2022-05-26 11:33\n"
+"PO-Revision-Date: 2022-08-25 17:54\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
-#: src/Tribe/Filter.php:348 src/views/v2_1/components/dropdown.php:38
+#: src/Filter_Bar/Custom_Tables/V1/Provider.php:148
+msgctxt "The name of the Series Filter Bar Filter."
+msgid "Series"
+msgstr ""
+
+#: src/Filter_Bar/Custom_Tables/V1/Provider.php:333
+msgctxt "The default Filter Bar Series filter title."
+msgid "Series"
+msgstr ""
+
+#: src/Tribe/Filter.php:357 src/views/v2_1/components/dropdown.php:38
 msgid "Select"
 msgstr ""
 
-#: src/Tribe/Filter.php:383
+#: src/Tribe/Filter.php:392
 msgid "Select an Item"
 msgstr ""
 
-#: src/Tribe/Filter.php:405 src/Tribe/View.php:274
+#: src/Tribe/Filter.php:414
 msgctxt "Featured Events active filter display label"
 msgid "Active"
 msgstr ""
 
-#: src/Tribe/Filter.php:669
+#: src/Tribe/Filter.php:678
 msgid "Title: %s"
 msgstr ""
 
-#: src/Tribe/Filter.php:687
+#: src/Tribe/Filter.php:696
 msgid "Type: %s %s %s"
 msgstr ""
 
-#: src/Tribe/Filter.php:691
+#: src/Tribe/Filter.php:700
 msgid "Dropdown"
 msgstr ""
 
-#: src/Tribe/Filter.php:696 src/Tribe/Filters/Cost.php:71
+#: src/Tribe/Filter.php:705 src/Tribe/Filters/Cost.php:71
 msgid "Checkboxes"
 msgstr ""
 
-#: src/Tribe/Filter.php:701
+#: src/Tribe/Filter.php:710
 msgid "Multi-Select"
 msgstr ""
 
@@ -129,23 +139,23 @@ msgstr ""
 msgid "Show featured %s only"
 msgstr ""
 
-#: src/Tribe/Filters/Time_Of_Day.php:17
+#: src/Tribe/Filters/Time_Of_Day.php:18
 msgid "All Day"
 msgstr ""
 
-#: src/Tribe/Filters/Time_Of_Day.php:18
+#: src/Tribe/Filters/Time_Of_Day.php:19
 msgid "Morning"
 msgstr ""
 
-#: src/Tribe/Filters/Time_Of_Day.php:19
+#: src/Tribe/Filters/Time_Of_Day.php:20
 msgid "Afternoon"
 msgstr ""
 
-#: src/Tribe/Filters/Time_Of_Day.php:20
+#: src/Tribe/Filters/Time_Of_Day.php:21
 msgid "Evening"
 msgstr ""
 
-#: src/Tribe/Filters/Time_Of_Day.php:21
+#: src/Tribe/Filters/Time_Of_Day.php:22
 msgid "Night"
 msgstr ""
 
@@ -208,47 +218,47 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/Tribe/View.php:592 src/Tribe/Views/V2/Filters/Context_Filter.php:234
+#: src/Tribe/View.php:516 src/Tribe/Views/V2/Filters/Context_Filter.php:234
 msgid "%s Category"
 msgstr ""
 
-#: src/Tribe/View.php:598
+#: src/Tribe/View.php:522
 msgid "Cost (%s)"
 msgstr ""
 
-#: src/Tribe/View.php:605 src/Tribe/Views/V2/Filters/Context_Filter.php:246
+#: src/Tribe/View.php:529 src/Tribe/Views/V2/Filters/Context_Filter.php:246
 msgid "Tags"
 msgstr ""
 
-#: src/Tribe/View.php:619 src/Tribe/Views/V2/Filters/Context_Filter.php:239
+#: src/Tribe/View.php:543 src/Tribe/Views/V2/Filters/Context_Filter.php:239
 msgid "Day"
 msgstr ""
 
-#: src/Tribe/View.php:623 src/Tribe/Views/V2/Filters/Context_Filter.php:247
+#: src/Tribe/View.php:547 src/Tribe/Views/V2/Filters/Context_Filter.php:247
 msgid "Time"
 msgstr ""
 
-#: src/Tribe/View.php:628 src/Tribe/Views/V2/Filters/Context_Filter.php:238
+#: src/Tribe/View.php:552 src/Tribe/Views/V2/Filters/Context_Filter.php:238
 msgid "Country"
 msgstr ""
 
-#: src/Tribe/View.php:633 src/Tribe/Views/V2/Filters/Context_Filter.php:236
+#: src/Tribe/View.php:557 src/Tribe/Views/V2/Filters/Context_Filter.php:236
 msgid "City"
 msgstr ""
 
-#: src/Tribe/View.php:638 src/Tribe/Views/V2/Filters/Context_Filter.php:244
+#: src/Tribe/View.php:562 src/Tribe/Views/V2/Filters/Context_Filter.php:244
 msgid "State/Province"
 msgstr ""
 
-#: src/Tribe/View.php:644 src/Tribe/Views/V2/Filters/Context_Filter.php:241
+#: src/Tribe/View.php:568 src/Tribe/Views/V2/Filters/Context_Filter.php:241
 msgid "Featured %s"
 msgstr ""
 
-#: src/Tribe/View.php:786
+#: src/Tribe/View.php:719
 msgid "Accessibility Form Notice"
 msgstr ""
 
-#: src/Tribe/View.php:787
+#: src/Tribe/View.php:720
 msgid "Notice: Utilizing the form controls will dynamically update the content"
 msgstr ""
 
@@ -316,45 +326,27 @@ msgid ""
 "latest version of PHP."
 msgstr ""
 
-#: src/views/filter-bar/filter-view-horizontal.php:25
-#: src/views/filter-bar/filter-view-vertical.php:29
 #: src/views/v2/filter-bar.php:25
 msgid "Narrow Your Results"
 msgstr ""
 
-#: src/views/filter-bar/filter-view-horizontal.php:27
-#: src/views/filter-bar/filter-view-horizontal.php:42
-#: src/views/filter-bar/filter-view-vertical.php:25
-#: src/views/v2/filter-bar.php:30 src/views/v2/filter-bar.php:50
-msgid "Show Advanced Filters"
-msgstr ""
-
-#: src/views/filter-bar/filter-view-horizontal.php:27
-#: src/views/filter-bar/filter-view-horizontal.php:42
-#: src/views/filter-bar/filter-view-vertical.php:25
-#: src/views/filter-bar/filter-view-vertical.php:42
-#: src/views/v2/filter-bar.php:30 src/views/v2/filter-bar.php:50
-msgid "Collapse Filters"
-msgstr ""
-
-#: src/views/filter-bar/filter-view-horizontal.php:28
-#: src/views/filter-bar/filter-view-horizontal.php:43
-#: src/views/filter-bar/filter-view-vertical.php:26
 #: src/views/v2/filter-bar.php:28 src/views/v2/filter-bar.php:52
 msgid "Show Filters"
 msgstr ""
 
-#: src/views/filter-bar/filter-view-horizontal.php:29
-#: src/views/filter-bar/filter-view-horizontal.php:44
-#: src/views/filter-bar/filter-view-vertical.php:39
-#: src/views/filter-bar/filter-view-vertical.php:43
+#: src/views/v2/filter-bar.php:30 src/views/v2/filter-bar.php:50
+msgid "Show Advanced Filters"
+msgstr ""
+
+#: src/views/v2/filter-bar.php:30 src/views/v2/filter-bar.php:50
+msgid "Collapse Filters"
+msgstr ""
+
 #: src/views/v2/filter-bar.php:31 src/views/v2/filter-bar.php:46
 #: src/views/v2/filter-bar.php:54
 msgid "Reset Filters"
 msgstr ""
 
-#: src/views/filter-bar/filter-view-horizontal.php:38
-#: src/views/filter-bar/filter-view-vertical.php:37
 #: src/views/v2/filter-bar.php:43
 msgid "Submit"
 msgstr ""
@@ -402,7 +394,7 @@ msgid ""
 "version of"
 msgstr ""
 
-#. #-#-#-#-#  tribe-events-filter-view.pot (The Events Calendar: Filter Bar 5.3.1)  #-#-#-#-#
+#. #-#-#-#-#  tribe-events-filter-view.pot (The Events Calendar: Filter Bar 5.4.0)  #-#-#-#-#
 #. Author of the plugin/theme
 #: the-events-calendar-filter-view.php:181
 #: the-events-calendar-filter-view.php:182

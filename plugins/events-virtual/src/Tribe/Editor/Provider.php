@@ -66,6 +66,7 @@ class Provider extends \tad_DI52_ServiceProvider {
 	 * Adds the required blocks into the Events Post Type default templates.
 	 *
 	 * @since 1.7.1
+	 * @since 1.12.0 - Removed early return that made the filter unreachable.
 	 *
 	 * @param  array               $template   Array of all the templates used by default.
 	 * @param  string              $post_type  Which post type we are filtering.
@@ -80,8 +81,6 @@ class Provider extends \tad_DI52_ServiceProvider {
 		if ( ! has_blocks( $post ) ) {
 			return $template;
 		}
-
-		return $template;
 
 		// To be safe, ensure we have an array.
 		if ( ! is_array( $template ) ) {

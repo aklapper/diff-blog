@@ -35,8 +35,7 @@ class Email {
 
 		// Get event if not an object and an integer.
 		if (
-			! ( $args['event'] instanceof \WP_Post )
-			&& is_integer( $args['event']  )
+			is_integer( $args['event']  )
 		) {
 			$event = tribe_get_event( $args['event'] );
 		}

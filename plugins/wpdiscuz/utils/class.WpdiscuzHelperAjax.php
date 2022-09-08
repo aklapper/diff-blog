@@ -792,7 +792,7 @@ class WpdiscuzHelperAjax implements WpDiscuzConstants {
             if ($form->isUserCanComment($currentUser, $post_id)) {
                 $response = "<div class='wpd-inline-form'>";
                 $response .= "<form method='post' class='wpd_inline_comm_form' autocomplete='off'>";
-                $response .= "<textarea name='wpd_inline_comment' class='wpd-inline-comment-content' placeholder='" . esc_attr($this->options->getPhrase("wc_inline_form_comment")) . "' required='required'></textarea>";
+                $response .= "<textarea name='wpd_inline_comment' class='wpd-inline-comment-content' placeholder='" . esc_attr($this->options->getPhrase("wc_inline_form_comment")) . "'></textarea>";
                 $response .= "<label class='wpd-inline-notification'><input name='wpd_inline_notify_me' class='wpd-inline-notify-me' type='checkbox' value='1' />&nbsp;" . esc_html($this->options->getPhrase("wc_inline_form_notify")) . '</label>';
                 $response .= "<div class='wpd-inline-form-second-row'>";
                 if (empty($currentUser->ID)) {

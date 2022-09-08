@@ -83,6 +83,27 @@ class Assets extends \tad_DI52_ServiceProvider {
 
 		tribe_asset(
 			$plugin,
+			'tribe-events-filterbar-views-v2-print',
+			'views-print.css',
+			[
+				'tribe-events-views-v2-skeleton',
+			],
+			'wp_enqueue_scripts',
+			[
+				'priority'     => 10,
+				'conditionals' => [
+					'operator' => 'AND',
+					[ $this, 'should_enqueue_frontend' ],
+					[ tribe( TEC_Assets::class ), 'should_enqueue_full_styles' ],
+				],
+				'groups'       => [ static::$group_key ],
+				'print'        => true,
+				'media'        => 'print',
+			]
+		);
+
+		tribe_asset(
+			$plugin,
 			'tribe-events-filterbar-views-filter-bar-state-js',
 			'views/filter-bar-state.js',
 			[

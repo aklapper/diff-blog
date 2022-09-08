@@ -57,7 +57,7 @@ class Virtual_Event extends \Tribe__Editor__Blocks__Abstract {
 		$args['attributes'] = $this->attributes( $attributes );
 		$args['post_id'] = $post_id = tribe( 'events.editor.template' )->get( 'post_id', null, false );
 
-		/* @var Tribe\Events\Virtual\Editor\Template\Frontend $frontend  */
+		/* @var Frontend $frontend  */
 		$frontend = tribe( Frontend::class );
 
 		// Add the rendering attributes into global context.

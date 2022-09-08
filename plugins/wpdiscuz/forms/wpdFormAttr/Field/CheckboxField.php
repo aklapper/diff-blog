@@ -41,6 +41,14 @@ class CheckboxField extends Field {
                 <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]"><?php esc_html_e("Display on comment", "wpdiscuz"); ?>:</label> 
                 <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_on_comment"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" />
             </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]"><?php esc_html_e("Display for Guests", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_guests"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" />
+            </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]"><?php esc_html_e("Display for Registered Users", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_users"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" />
+            </div>
             <div class="wpd-advaced-options wpd-field-option">
                 <small class="wpd-advaced-options-title"><?php esc_html_e("Advanced Options", "wpdiscuz"); ?></small>
                 <div class="wpd-field-option wpd-advaced-options-cont">
@@ -60,7 +68,7 @@ class CheckboxField extends Field {
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        if ($comment->comment_parent && !$data["is_show_sform"]) {
+        if (!$this->isShowForUser($data) || ($comment->comment_parent && !$data["is_show_sform"])) {
             return "";
         }
         $valuesMeta = maybe_unserialize($value);
@@ -68,7 +76,7 @@ class CheckboxField extends Field {
         $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-checkbox'><td class='first'>";
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
-        $required = $data["required"] ? " wpd-required-group" : "";
+        $required = $this->isValidateRequired($data) ? " wpd-required-group" : "";
         $html .= "<div class='wpdiscuz-item" . esc_attr($required) . " wpd-field-group'>";
         foreach ($data["values"] as $index => $val) {
             $uniqueId = uniqid();
@@ -82,7 +90,7 @@ class CheckboxField extends Field {
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (empty($args["values"]) || (!$isMainForm && !$args["is_show_sform"]))
+        if (empty($args["values"]) || !$this->isShowForUser($args, $currentUser) || (!$isMainForm && !$args["is_show_sform"]))
             return;
         $hasDesc = $args["desc"] ? true : false;
         $required = $args["required"] ? " wpd-required-group" : "";
@@ -126,6 +134,9 @@ class CheckboxField extends Field {
     }
 
     public function frontHtml($value, $args) {
+        if(!$this->isShowForUser($args)){
+            return "";
+        }
         $html = "<div class='wpd-custom-field wpd-cf-text'>";
         $html .= "<div class='wpd-cf-label'>" . esc_attr($args["name"]) . "</div> <div class='wpd-cf-value'> " . esc_html(apply_filters("wpdiscuz_custom_field_checkbox", implode(", ", $value), $args)) . "</div>";
         $html .= "</div>";
@@ -133,9 +144,6 @@ class CheckboxField extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        if (!$this->isCommentParentZero() && !$args["is_show_sform"]) {
-            return [];
-        }
         $values = filter_input(INPUT_POST, $fieldName, FILTER_VALIDATE_INT, FILTER_REQUIRE_ARRAY);
         $tempValues = is_array($values) ? array_filter($values) : [];
         $values = [];
@@ -146,7 +154,7 @@ class CheckboxField extends Field {
             $values[] = $args["values"][$val - 1];
         }
 
-        if (!$values && $args["required"]) {
+        if ($this->isValidateRequired($args, $currentUser) && !$values && $args["required"]) {
             wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
         return $values;

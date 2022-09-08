@@ -14,7 +14,7 @@ use Tribe\Events\Filterbar\Views\V2\Filters_Stack;
 use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
 use Tribe__Events__Filterbar__Filter as Filter;
-use Tribe__Events__Template__Month as Month;
+use Tribe\Events\Views\V2\Views\Month_View as Month;
 use Tribe__Utils__Array as Arr;
 
 /**

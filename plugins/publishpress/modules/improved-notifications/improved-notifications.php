@@ -94,7 +94,7 @@ if (! class_exists('PP_Improved_Notifications')) {
 
             // Register the module with PublishPress
             $args = [
-                'title' => __('Notification Workflows', 'publishpress'),
+                'title' => __('Advanced Notifications', 'publishpress'),
                 'short_description' => false,
                 'extended_description' => false,
                 'module_url' => $this->module_url,
@@ -106,7 +106,7 @@ if (! class_exists('PP_Improved_Notifications')) {
                     'default_channels' => apply_filters('psppno_filter_default_notification_channel', 'email'),
                     'duplicated_notification_threshold' => Notification::DEFAULT_DUPLICATED_NOTIFICATION_THRESHOLD_IN_MINUTES,
                 ],
-                'general_options' => true,
+                'notification_options' => true,
             ];
 
             // Apply a filter to the default options

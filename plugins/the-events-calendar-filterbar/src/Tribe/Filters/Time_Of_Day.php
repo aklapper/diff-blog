@@ -8,6 +8,7 @@ class Tribe__Events__Filterbar__Filters__Time_Of_Day extends Tribe__Events__Filt
 
 	// These are needed to make the join aliases unique
 	protected $alias = '';
+	protected $alias_prefix = 'all_day_';
 	protected $tod_start_alias = '';
 	protected $tod_duration_alias = '';
 
@@ -31,17 +32,55 @@ class Tribe__Events__Filterbar__Filters__Time_Of_Day extends Tribe__Events__Filt
 		return $time_of_day_values;
 	}
 
+	/**
+	 * Returns the alias prefix - for use in custom tables
+	 *
+	 * @since 5.4.0
+	 *
+	 * @return string The table alias prefix
+	 */
+	public function get_all_day_table_alias_prefix() {
+		return $this->alias_prefix;
+	}
+
+	/**
+	 * Returns the current table alias for Time of Day start.
+	 *
+	 * @since 5.4.0
+	 *
+	 * @return string
+	 */
+	public function get_tod_start_alias() {
+		return $this->tod_start_alias;
+	}
+
+	/**
+	 * Returns the current table alias for Time of Day duration.
+	 *
+	 * @since 5.4.0
+	 *
+	 * @return string
+	 */
+	public function get_tod_duration_alias() {
+		return $this->tod_duration_alias;
+	}
+
 	protected function setup_join_clause() {
-		add_filter( 'posts_join', array( 'Tribe__Events__Query', 'posts_join' ), 10, 2 );
 		global $wpdb;
 		$values = $this->currentValue;
 
+		// They've checked _everything_, let's not pile on the JOINs.
+		if ( empty( $values ) || count( $values ) === count( $this->get_values() ) ) {
+			return;
+		}
+
 		$all_day_index = array_search( 'allday', $values );
+
 		if ( $all_day_index !== false ) {
 			unset( $values[ $all_day_index ] );
 		}
 
-		$this->alias = 'all_day_' . uniqid();
+		$this->alias = $this->alias_prefix . uniqid();
 		$this->tod_start_alias = 'tod_start_date_' . uniqid();
 		$this->tod_duration_alias = 'tod_duration_' . uniqid();
 
@@ -58,16 +97,16 @@ class Tribe__Events__Filterbar__Filters__Time_Of_Day extends Tribe__Events__Filt
 	protected function setup_where_clause() {
 		global $wpdb;
 		$clauses = [];
+		$values = $this->currentValue;
 
-		if ( in_array( 'allday', $this->currentValue ) ) {
-			$clauses[] = "({$this->alias}.meta_value = 'yes')";
-		} else {
-			$this->whereClause = " AND ( {$this->alias}.meta_id IS NULL OR {$this->alias}.meta_value != 'yes' ) ";
+		// They've checked _everything_, let's not pile on the JOINs.
+		if ( empty( $values ) || count( $values ) === count( $this->get_values() ) ) {
+			return;
 		}
 
-		foreach ( $this->currentValue as $time_range_string ) {
+		foreach ( $values as $time_range_string ) {
 			if ( $time_range_string == 'allday' ) {
-				continue; // handled earlier
+				continue; // handled later.
 			}
 
 			$time_range_frags = explode( '-', $time_range_string );
@@ -100,6 +139,13 @@ class Tribe__Events__Filterbar__Filters__Time_Of_Day extends Tribe__Events__Filt
 				);
 			}
 		}
+
+		if ( in_array( 'allday', $values ) ) {
+			$clauses[] = "({$this->alias}.meta_value = 'yes')";
+		} else {
+			$this->whereClause .= " AND ( {$this->alias}.meta_id IS NULL OR {$this->alias}.meta_value != 'yes' ) ";
+		}
+
 		$this->whereClause .= ' AND (' . implode( ' OR ', $clauses ) . ')';
 	}
 }

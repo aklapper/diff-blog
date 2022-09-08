@@ -135,7 +135,7 @@ class CapabilityManager
 		$this->ID = 'capsman';
 		$this->mod_url = plugins_url( '', CME_FILE );
 
-		if (is_admin() && !empty($_REQUEST['page']) && ('pp-capabilities-settings' == $_REQUEST['page']) && (!empty($_POST['all_options']) || !empty($_POST['all_options_pro']))) {
+		if (is_admin() && !empty($_REQUEST['page']) && ('pp-capabilities-settings' == $_REQUEST['page']) && !empty($_POST['all_options'])) {
 			add_action('init', function() {
 				if (isset($_REQUEST['_wpnonce']) && wp_verify_nonce($_REQUEST['_wpnonce'], 'pp-capabilities-settings') && current_user_can('manage_capabilities')) {
 					require_once (dirname(CME_FILE) . '/includes/settings-handler.php');
@@ -380,9 +380,7 @@ class CapabilityManager
 
 		add_submenu_page('pp-capabilities-roles',  __('Backup', 'capsman-enhanced'), __('Backup', 'capsman-enhanced'), $cap_name, 'pp-capabilities-backup', array($this, 'backupTool'));
 
-		if (defined('PUBLISHPRESS_CAPS_PRO_VERSION')) {
-			add_submenu_page('pp-capabilities-roles',  __('Settings', 'capsman-enhanced'), __('Settings', 'capsman-enhanced'), $cap_name, 'pp-capabilities-settings', array($this, 'settingsPage'));
-		}
+		add_submenu_page('pp-capabilities-roles',  __('Settings', 'capsman-enhanced'), __('Settings', 'capsman-enhanced'), $cap_name, 'pp-capabilities-settings', array($this, 'settingsPage'));
 
 		if (!defined('PUBLISHPRESS_CAPS_PRO_VERSION')) {
 			add_submenu_page(
@@ -517,6 +515,10 @@ class CapabilityManager
 					$post_features_option[sanitize_key($_POST['ppc-editor-features-role'])] = $posted_settings;
 					update_option("capsman_feature_restrict_{$post_type}", $post_features_option, false);
 				}
+
+                if (isset($_POST['editor-features-classic-editor-toggle'])) {
+					update_option("cme_editor_features_classic_editor_tab", 1);
+                }
 
 				ak_admin_notify(__('Settings updated.', 'capsman-enhanced'));
 			}

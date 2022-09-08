@@ -75,6 +75,10 @@ class Factory extends Compatibility_Factory {
 		// Get available filters from active filters.
 		/** @var Context_Filter|\Tribe__Events__Filterbar__Filter $filter */
 		$available_filters = array_filter( $filters, static function( $filter ) {
+			if ( empty( $filter ) ) {
+				return false;
+			}
+
 			// Add the values to the values property to make them accessible.
 			$filter->set_values();
 

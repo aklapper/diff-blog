@@ -21,13 +21,21 @@ class HTMLField extends Field {
                 <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]"><?php esc_html_e("Display on reply form", "wpdiscuz"); ?>:</label> 
                 <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_sform"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_sform]" />
             </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]"><?php esc_html_e("Display for Guests", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_guests"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" />
+            </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]"><?php esc_html_e("Display for Registered Users", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_users"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" />
+            </div>
             <div style="clear:both;"></div>
         </div>
         <?php
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (!$isMainForm && !$args["is_show_sform"])
+        if (!$this->isShowForUser($args, $currentUser) || !$isMainForm && !$args["is_show_sform"])
             return;
         echo $args["value"];
     }
@@ -59,7 +67,9 @@ class HTMLField extends Field {
             "loc" => "top",
             "is_show_on_comment" => "0",
             "is_show_sform" => "1",
-            "no_insert_meta" => "1"
+            "no_insert_meta" => "1",
+            "show_for_guests" => 1,
+            "show_for_users" => 1,
         ];
     }
 

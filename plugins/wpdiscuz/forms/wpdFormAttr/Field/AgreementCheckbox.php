@@ -50,14 +50,14 @@ class AgreementCheckbox extends Field {
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        if (current_user_can("moderate_comments") || ($comment->comment_parent && !$data["is_show_sform"]) || !$this->displayField($key, $data)) {
+        if (current_user_can("moderate_comments") || !$this->isShowForUser($data) || ($comment->comment_parent && !$data["is_show_sform"]) || !$this->displayField($key, $data)) {
             return "";
         }
         $showAgainClass = $data["donot_show_again_if_checked"] == 1 ? " wpd_agreement_hide " : "";
         $uniqueId = uniqid();
         $html = "<tr class='" . esc_attr($key) . "-wrapper'><td class='first'>";
         $html .= "</td><td>";
-        $required = $data["required"] ? " wpd-required-group" : "";
+        $required = $this->isValidateRequired($data) ? " wpd-required-group" : "";
         $html .= "<div class='wpdiscuz-item" . esc_attr($required) . " wpd-field-group'>";
         $html .= "<input checked='checked'  id='" . esc_attr($key) . "-1_" . esc_attr($uniqueId) . "' type='checkbox' name='" . esc_attr($key) . "' value='1' class='" . esc_attr($key) . " wpd-field wpd-agreement-checkbox " . esc_attr($showAgainClass) . "' > <label class='wpd-field-label wpd-cursor-pointer' for='" . esc_attr($key) . "-1_" . esc_attr($uniqueId) . "'>" . $data["label"] . "</label>";
         $html .= "</div>";
@@ -66,8 +66,9 @@ class AgreementCheckbox extends Field {
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (empty($args["label"]) || (!$isMainForm && !$args["is_show_sform"]) || (!$args["show_for_users"] && $currentUser->exists()) || (!$args["show_for_guests"] && !$currentUser->exists()) || !$this->displayField($name, $args))
+        if (empty($args["label"]) || !$this->isShowForUser($args, $currentUser) || (!$isMainForm && !$args["is_show_sform"]) || !$this->displayField($name, $args)){
             return;
+        }
         $showAagainClass = $args["donot_show_again_if_checked"] == 1 ? " wpd_agreement_hide " : "";
         $hasDesc = $args["desc"] ? true : false;
         $required = $args["required"] ? " wpd-required-group" : "";
@@ -93,11 +94,11 @@ class AgreementCheckbox extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        if (current_user_can("moderate_comments") || (!$this->isCommentParentZero() && !$args["is_show_sform"]) || !$this->displayField($fieldName, $args)) {
+        if (current_user_can("moderate_comments") || !$this->displayField($fieldName, $args)) {
             return;
         }
         $value = filter_input(INPUT_POST, $fieldName, FILTER_VALIDATE_INT, FILTER_SANITIZE_NUMBER_INT);
-        if (($args["show_for_users"] && $currentUser->exists() && $args["required"] && !$value ) || ($args["show_for_guests"] && !$currentUser->exists() && $args["required"] && !$value)) {
+        if ($this->isValidateRequired($args, $currentUser) && !$value && $args["required"]) {
             wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
     }

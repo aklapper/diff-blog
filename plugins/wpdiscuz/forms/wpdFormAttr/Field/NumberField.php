@@ -49,6 +49,14 @@ class NumberField extends Field {
                 <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]"><?php esc_html_e("Display on comment", "wpdiscuz"); ?>:</label> 
                 <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_on_comment"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" />
             </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]"><?php esc_html_e("Display for Guests", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_guests"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" />
+            </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]"><?php esc_html_e("Display for Registered Users", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_users"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" />
+            </div>
             <div class="wpd-advaced-options wpd-field-option">
                 <small class="wpd-advaced-options-title"><?php esc_html_e("Advanced Options", "wpdiscuz"); ?></small>
                 <div class="wpd-field-option wpd-advaced-options-cont">
@@ -68,14 +76,14 @@ class NumberField extends Field {
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        if ($comment->comment_parent && !$data["is_show_sform"]) {
+        if (!$this->isShowForUser($data) || ($comment->comment_parent && !$data["is_show_sform"])) {
             return "";
         }
         $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-number'><td class='first'>";
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $html .= "<div class='wpdiscuz-item'>";
-        $required = $data["required"] ? "required='required' aria-required='true'" : "";
+        $required = $this->isValidateRequired($data) ? "required='required' aria-required='true'" : "";
         $min = is_numeric($data["min"]) ? "min='" . $data["min"] . "'" : "";
         $max = is_numeric($data["max"]) ? "max='" . $data["max"] . "'" : "";
         $html .= "<input " . $required . " class='wpd-field wpd-field-number' type='number' id='" . esc_attr($key) . "' value='" . esc_attr($value) . "'  name='" . esc_attr($key) . "'  " . $min . " " . $max . ">";
@@ -85,7 +93,7 @@ class NumberField extends Field {
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (!$isMainForm && !$args["is_show_sform"]) {
+        if (!$this->isShowForUser($args, $currentUser) || (!$isMainForm && !$args["is_show_sform"])) {
             return;
         }
         $hasIcon = $args["icon"] ? true : false;
@@ -110,6 +118,9 @@ class NumberField extends Field {
     }
 
     public function frontHtml($value, $args) {
+        if(!$this->isShowForUser($args)){
+            return "";
+        }
         $html = "<div class='wpd-custom-field wpd-cf-text'>";
         $html .= "<div class='wpd-cf-label'>" . esc_html($args["name"]) . "</div> <div class='wpd-cf-value'> " . esc_html(apply_filters("wpdiscuz_custom_field_number", $value, $args)) . "</div>";
         $html .= "</div>";
@@ -117,11 +128,8 @@ class NumberField extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        if (!$this->isCommentParentZero() && !$args["is_show_sform"]) {
-            return "";
-        }
         $value = Sanitizer::sanitize(INPUT_POST, $fieldName, FILTER_SANITIZE_NUMBER_INT);
-        if (!$value && $args["required"]) {
+        if ($this->isValidateRequired($args, $currentUser) && !$value && $args["required"]) {
             wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
         $value = intval($value);
@@ -192,7 +200,9 @@ class NumberField extends Field {
             "min" => "",
             "max" => "",
             "is_show_sform" => 0,
-            "is_show_on_comment" => 1
+            "is_show_on_comment" => 1,
+            "show_for_guests" => 1,
+            "show_for_users" => 1,
         ];
     }
 

@@ -243,10 +243,10 @@ class wpDiscuzForm implements wpdFormConst {
         global $post;
         $this->getForm($post->ID);
         $this->form->initFormMeta();
-        $this->form->renderFrontForm("main", "0_0", $commentsCount, $currentUser);
+        $this->form->renderFrontForm("main", "0_0", $commentsCount, $currentUser, $post->ID);
         ?>
         <div id="wpdiscuz_hidden_secondary_form" style="display: none;">
-            <?php $this->form->renderFrontForm(0, "wpdiscuzuniqueid", $commentsCount, $currentUser); ?>
+            <?php $this->form->renderFrontForm(0, "wpdiscuzuniqueid", $commentsCount, $currentUser, $post->ID); ?>
         </div>
         <?php
     }
@@ -307,7 +307,7 @@ class wpDiscuzForm implements wpdFormConst {
             } elseif (is_string($postType) && isset($this->formContentTypeRel[$postType])) {
                 $tempContentTypeRel = $this->formContentTypeRel[$postType];
                 $defaultFormID = array_shift($tempContentTypeRel);
-                $lang = get_locale();
+                $lang = !empty($_COOKIE['wp_lang']) && ($lng = $_COOKIE['wp_lang']) ? $lng : get_user_locale();;
                 $formID = isset($this->formContentTypeRel[$postType][$lang]) && $this->formContentTypeRel[$postType][$lang] ? $this->formContentTypeRel[$postType][$lang] : $defaultFormID;
             }
             $this->form->setFormID($formID);
@@ -377,7 +377,7 @@ class wpDiscuzForm implements wpdFormConst {
                 "comment_status" => "closed",
                 "ping_status" => "closed",
             ];
-            $lang = get_locale();
+            $lang = !empty($_COOKIE['wp_lang']) && ($lng = $_COOKIE['wp_lang']) ? $lng : get_user_locale();;
             $formId = wp_insert_post($form);
             $defaultFields = [];
             $postTypes = [

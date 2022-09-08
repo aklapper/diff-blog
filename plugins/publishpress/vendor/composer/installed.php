@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'e39f4337c0d2337240a8abc129d44d39d2735cdb',
+        'reference' => 'df01640a0a01a46ab91ec9cacbce6d17af3c3544',
         'name' => 'publishpress/publishpress',
         'dev' => false,
     ),
@@ -34,7 +34,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'e39f4337c0d2337240a8abc129d44d39d2735cdb',
+            'reference' => 'df01640a0a01a46ab91ec9cacbce6d17af3c3544',
             'dev_requirement' => false,
         ),
         'publishpress/publishpress-instance-protection' => array(

@@ -11,148 +11,79 @@ namespace Tribe\Events\Virtual\Meetings\Zoom;
 
 use Tribe\Events\Virtual\Admin_Template;
 use Tribe\Events\Virtual\Encryption;
+use Tribe\Events\Virtual\Integrations\Abstract_Users;
+use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Event_Meta;
 use Tribe\Events\Virtual\Metabox;
-use Tribe\Events\Virtual\Traits\With_AJAX;
 use Tribe__Utils__Array as Arr;
 
 /**
  * Class Users
  *
  * @since   1.4.0
+ * @since   1.13.0 - Utilize an abstract class.
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
-class Users {
-	use With_AJAX;
+class Users extends Abstract_Users {
 
 	/**
 	 * The name of the action used to get an account setup to generate a Zoom meeting or webinar.
 	 *
 	 * @since 1.8.2
+	 * @deprecated 1.13.0 - Use Actions::$validate_user_action.
 	 *
 	 * @var string
 	 */
 	public static $validate_user_action = 'events-virtual-zoom-user-validate';
 
 	/**
-	 * The template handler instance.
-	 *
-	 * @since 1.8.2
-	 *
-	 * @var Admin_Template
-	 */
-	public $admin_template;
-
-	/**
 	 * Users constructor.
 	 *
 	 * @since 1.4.0
 	 * @since 1.8.2 - Add the admin template class.
+	 * @since 1.13.0 - Add the Action class.
 	 *
 	 * @param Api            $api        An instance of the Zoom API handler.
 	 * @param Encryption     $encryption An instance of the Encryption handler.
 	 * @param Admin_Template $template   An instance of the Template class to handle the rendering of admin views.
+	 * @param Actions        $actions    An instance of the Actions name handler.
 	 */
-	public function __construct( Api $api, Encryption $encryption, Admin_Template $admin_template ) {
+	public function __construct( Api $api, Encryption $encryption, Admin_Template $admin_template, Actions $actions ) {
+		self::$api_id         = Zoom_Event_Meta::$key_source_id;
 		$this->api            = $api;
 		$this->encryption     = ( ! empty( $encryption ) ? $encryption : tribe( Encryption::class ) );
 		$this->admin_template = $admin_template;
+		$this->actions        = $actions;
 	}
 
 	/**
-	 * Get list of users from Zoom.
-	 *
-	 * @since 1.4.0
-	 * @since 1.5.0 - Add support for multiple accounts.
-	 *
-	 * @param null|string $account_id The account id to use to get the users with.
-	 *
-	 * @return array<string,mixed> An array of users from Zoom.
+	 * {@inheritDoc}
 	 */
-	public function get_users( $account_id = null ) {
-		$api = $this->api;
-		if ( $account_id ) {
-			$api->load_account_by_id( $account_id );
-		} else {
-			$api->load_account();
-		}
-
-		if ( empty( $this->api->is_ready() ) ) {
-			return [];
-		}
-
-		/** @var \Tribe__Cache $cache */
-		$cache    = tribe( 'cache' );
-		$cache_id = 'events_virtual_meetings_zoom_users' . md5( $this->api->id );
-
-		/**
-		 * Filters the time in seconds until the Zoom user cache expires.
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param int     The time in seconds until the user cache expires, default 1 hour.
-		 */
-		$expiration = apply_filters( 'tribe_events_virtual_meetings_zoom_user_cache', HOUR_IN_SECONDS );
-		$users      = $cache->get_transient( $cache_id );
-
-		if ( ! empty( $users ) ) {
-			return $this->encryption->decrypt( $users, true );
-		}
-
-		$available_hosts = $api->fetch_users();
-		$cache->set_transient( $cache_id, $this->encryption->encrypt( $available_hosts, true ), $expiration );
-
-		return $available_hosts;
-	}
-
-	/**
-	 * Get list of hosts formatted for options dropdown.
-	 *
-	 * @since 1.4.0
-	 * @since 1.5.0 - Add support for multiple accounts.
-	 *
-	 * @param null|string $account_id The account id to use to get the users with.
-	 *
-	 * @return array<string,mixed>  An array of Zoom Users to use as the host
-	 */
-	public function get_formatted_hosts_list( $account_id = null ) {
-		$available_hosts = $this->get_users( $account_id );
+	protected function get_users_array( $available_hosts ) {
 		if ( empty( $available_hosts['users'] ) ) {
 			return [];
 		}
 
-		$active_users    = $available_hosts['users'];
-		$hosts           = [];
-		foreach ( $active_users as $user ) {
-			$name  = Arr::get( $user, 'first_name', '' ) . ' ' .  Arr::get( $user, 'last_name', '' ) . ' - '. Arr::get( $user, 'email', '' );
-			$last_name = Arr::get( $user, 'last_name', '' );
-			$value = Arr::get( $user, 'id', '' );
-			$type  = Arr::get( $user, 'type', 0 );
+		return $available_hosts['users'];
+	}
 
-			if ( empty( $name ) || empty( $value ) ) {
-				continue;
-			}
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function get_formatted_user_info( $user ) {
+		$user_info              = [];
+		$user_info['email']     = Arr::get( $user, 'email', '' );
+		$user_info['name']      = Arr::get( $user, 'first_name', '' ) . ' ' . Arr::get( $user, 'last_name', '' ) . ' - ' . Arr::get( $user, 'email', '' );
+		$user_info['last_name'] = Arr::get( $user, 'last_name', '' );
+		$user_info['id']        = Arr::get( $user, 'id', '' );
+		$user_info['value']     = Arr::get( $user, 'id', '' );
+		$user_info['type']      = Arr::get( $user, 'type', 0 );
 
-			if ( empty( $last_name ) ) {
-				$last_name = Arr::get( $user, 'first_name', '' );
-			}
-
-			$hosts[] = [
-				'text'             => (string) trim( $name ),
-				'email'            => (string) Arr::get( $user, 'email', '' ),
-				'sort'             => (string) trim( $last_name ),
-				'id'               => (string) $value,
-				'value'            => (string) $value,
-				'alternative_host' => $type > 1 ? true : false,
-				'selected'         => $account_id === $value ? true : false,
-			];
+		if ( empty( $user_info['last_name'] ) ) {
+			$user_info['last_name'] = Arr::get( $user, 'first_name', '' );
 		}
 
-		// Sort the hosts array by text(email).
-		$sort_arr = array_column( $hosts, 'sort' );
-		array_multisort( $sort_arr, SORT_ASC, $hosts );
-
-		return $hosts;
+		return $user_info;
 	}
 
 	/**
@@ -209,7 +140,7 @@ class Users {
 	 * @return string The html from the request containing success or error information.
 	 */
 	public function validate_user( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$validate_user_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$validate_user_action, $nonce ) ) {
 			return false;
 		}
 

@@ -39,6 +39,14 @@ class RatingField extends Field {
                 <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]"><?php esc_html_e("Display on comment", "wpdiscuz"); ?>:</label> 
                 <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_on_comment"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" />
             </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]"><?php esc_html_e("Display for Guests", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_guests"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" />
+            </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]"><?php esc_html_e("Display for Registered Users", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_users"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" />
+            </div>
             <div class="wpd-advaced-options wpd-field-option">
                 <small class="wpd-advaced-options-title"><?php esc_html_e("Advanced Options", "wpdiscuz"); ?></small>
                 <div class="wpd-field-option wpd-advaced-options-cont">
@@ -58,14 +66,14 @@ class RatingField extends Field {
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        if ($comment->comment_parent) {
+        if ($comment->comment_parent || !$this->isShowForUser($data)) {
             return "";
         }
         $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-rating'><td class='first'>";
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $uniqueId = uniqid();
-        $required = $data["required"] ? " wpd-required-group " : "";
+        $required = $this->isValidateRequired($data) ? " wpd-required-group " : "";
         $html .= "<div class='wpdiscuz-item wpd-field-group wpd-field-rating " . esc_attr($required) . "'>";
         $html .= "<fieldset class='wpdiscuz-rating'>";
         for ($i = 5; $i >= 1; $i--) {
@@ -80,7 +88,7 @@ class RatingField extends Field {
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (!$isMainForm)
+        if (!$isMainForm || !$this->isShowForUser($args, $currentUser))
             return;
         $hasDesc = $args["desc"] ? true : false;
         $required = $args["required"] ? " wpd-required-group" : "";
@@ -111,6 +119,9 @@ class RatingField extends Field {
     }
 
     public function frontHtml($value, $args) {
+        if(!$this->isShowForUser($args)){
+            return "";
+        }
         $html = "<div class='wpd-custom-field wpd-cf-rating'>";
         $html .= "<div class='wpd-cf-label'>" . esc_html($args["name"]) . " : </div><div class='wpd-cf-value'>";
         for ($i = 0; $i < 5; $i++) {
@@ -124,10 +135,7 @@ class RatingField extends Field {
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
         $value = Sanitizer::sanitize(INPUT_POST, $fieldName, FILTER_SANITIZE_NUMBER_INT);
-        if (!$this->isCommentParentZero()) {
-            return 0;
-        }
-        if (!$value && $args["required"]) {
+        if ($this->isValidateRequired($args, $currentUser) && !$value && $args["required"]) {
             wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
         return $value;
@@ -141,7 +149,9 @@ class RatingField extends Field {
             "required" => "0",
             "loc" => "top",
             "icon" => "fas fa-star",
-            "is_show_on_comment" => 1
+            "is_show_on_comment" => 1,
+            "show_for_guests" => 1,
+            "show_for_users" => 1,
         ];
     }
 

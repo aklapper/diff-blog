@@ -3,10 +3,10 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, geoffgraham, jentheo, leahkoerper, lucatume, neillmcshea, paulskim, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro, filters, categories, sort, tags, taxonomy, find, search
 Donate link: http://evnt.is/29
-Requires at least: 5.6
-Tested up to: 6.0
-Stable tag: 5.3.1
-Requires PHP: 5.6
+Requires at least: 5.8.4
+Stable tag: 5.4.0
+Tested up to: 6.0.2
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -194,6 +194,18 @@ Our Premium Plugins:
 * <a href="http://evnt.is/18h9" target="_blank">The Events Calendar: iCal Importer</a>
 
 == Changelog ==
+
+= [5.4.0] 2022-09-06 =
+
+* Version - Filter Bar 5.4.0 is only compatible with The Events Calendar 6.0.0 and higher
+* Language - 2 new strings added, 31 updated, 0 fuzzied, and 0 obsoleted
+* Tweak - Files Removed: `src/views/filter-bar/filter-view-horizontal.php`, `src/views/filter-bar/filter-view-vertical.php`
+* Tweak - Methods marked as deprecated: `Tribe__Events__Filterbar__View::enqueueStylesAndScripts`, `Tribe__Events__Filterbar__View::template_paths`, `Tribe__Events__Filterbar__View::displaySidebar`, `Tribe__Events__Filterbar__View::is_tribe_query`, `Tribe__Events__Filterbar__View::maybe_initialize_filters_for_query`,  `Tribe__Events__Filterbar__View::plugin_url`
+
+= [5.3.2] 2022-08-09 =
+
+* Tweak - Update the calendar print design. [TEC-4425]
+* Language - 0 new strings added, 31 updated, 0 fuzzied, and 2 obsoleted.
 
 = [5.3.1] 2022-05-31 =
 

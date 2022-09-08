@@ -29,6 +29,7 @@ abstract class Abstract_Meetings {
 	 * The property also provides a reasonable default for the abstract class.
 	 *
 	 * @since 1.11.0
+	 * @deprecated 1.13.0 - Use Actions::$create_action.
 	 *
 	 * @var string
 	 */
@@ -39,6 +40,7 @@ abstract class Abstract_Meetings {
 	 * The property also provides a reasonable default for the abstract class.
 	 *
 	 * @since 1.11.0
+	 * @deprecated 1.13.0 - Use Actions::$remove_action.
 	 *
 	 * @var string
 	 */
@@ -86,13 +88,16 @@ abstract class Abstract_Meetings {
 	 * Meetings constructor.
 	 *
 	 * @since 1.11.0
+	 * @since 1.13.0 - Add the Action class.
 	 *
 	 * @param Api            $api            An instance of the Google API handler.
 	 * @param Classic_Editor $classic_editor An instance of the Classic Editor rendering handler.
+	 * @param Actions        $actions        An instance of the Actions name handler.
 	 */
-	public function __construct( Api $api, Classic_Editor $classic_editor) {
+	public function __construct( Api $api, Classic_Editor $classic_editor, Actions $actions ) {
 		$this->api            = $api;
 		$this->classic_editor = $classic_editor;
+		$this->actions        = $actions;
 	}
 
 	/**
@@ -120,7 +125,7 @@ abstract class Abstract_Meetings {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_create( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$create_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$create_action, $nonce ) ) {
 			return false;
 		}
 
@@ -292,7 +297,7 @@ abstract class Abstract_Meetings {
 	 * @return bool|string Whether the request was handled or a string with html for meeting creation.
 	 */
 	public function ajax_remove( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$remove_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$remove_action, $nonce ) ) {
 			return false;
 		}
 
@@ -478,10 +483,10 @@ abstract class Abstract_Meetings {
 			Api::GET_RESPONSE_CODE
 		)->then(
 			function ( array $response ) use ( $post_id, &$success ) {
-				$body = json_decode( $response['body'], true );
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->api->has_proper_response_body( $body, ['webLink'] );
 
-				// If the response is empty, then do not update the post.
-				if ( ! empty( $body ) && is_array( $body ) ) {
+				if ( $body_set ) {
 					$data = $this->prepare_meeting_data( $body );
 					$this->update_post_meta( $post_id, $body, $data );
 				}
@@ -571,12 +576,10 @@ abstract class Abstract_Meetings {
 	 * @return array<string,mixed> The Google Meet data.
 	 */
 	protected function process_meeting_creation_response( array $response, $post_id, $event = '', $account_id = '' ) {
-		if ( ! (
-			isset( $response['body'] )
-			// phpcs:ignore
-			&& false !== ( $body = json_decode( $response['body'], true ) )
-			&& isset( $body['id'], $body['hangoutLink'] )
-		) ) {
+		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+		$body_set = $this->api->has_proper_response_body( $body, [ 'hangoutLink' ] );
+
+		if ( ! $body_set ) {
 			do_action(
 				'tribe_log',
 				'error',
@@ -640,10 +643,10 @@ abstract class Abstract_Meetings {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @param string $date      The start date of the event.
-	 * @param string $time      The start time of the event.
-	 * @param string $time_zone The timezone of the event.
-	 * @param boolean $all_day Whether an event is all day.
+	 * @param string  $date      The start date of the event.
+	 * @param string  $time      The start time of the event.
+	 * @param string  $time_zone The timezone of the event.
+	 * @param boolean $all_day   Whether an event is all day.
 	 *
 	 * @return array<string|string> An array with dateTime and timezone formatted for Google using DateTime::RFC3339 - 'Y-m-d\TH:i:sP'.
 	 */

@@ -62,23 +62,6 @@ class Event {
 		return $event;
 	}
 
-
-	/**
-	 * Retrieves whether the event is marked as virtual or not.
-	 *
-	 * @since 1.0.0
-	 * @deprecated 1.0.4 Use is_virtual()
-	 * @see is_virtual()
-	 *
-	 * @param WP_Post $event Event post object.
-	 *
-	 * @return bool Whether an event is virtual event or not.
-	 */
-	public function is_event_virtual( $event ) {
-		_deprecated_function( __FUNCTION__, '1.0.4', get_class( $this ) . '::is_virtual()' );
-		return (boolean) self::is_virtual( $event );
-	}
-
 	/**
 	 * Retrieves whether the event is marked as virtual or not.
 	 *
@@ -235,7 +218,7 @@ class Event {
 
 		// Button won't display if there's no text. Set a default value.
 		if ( empty( $text ) ) {
-			$default_text;
+			return $default_text;
 		}
 
 		/**
@@ -303,7 +286,7 @@ class Event {
 	 *
 	 * @param WP_Post $event Event post object.
 	 *
-	 * @return string The user type (logged in or all) to display the video embed to.
+	 * @return array<string|string> The array of user types (logged in or all) to display the video embed to.
 	 */
 	protected function get_virtual_show_embed_to( WP_Post $event ) {
 		if ( ! self::is_new_virtual( $event ) ) {
@@ -332,7 +315,7 @@ class Event {
 	 *
 	 * @since 1.0.4
 	 *
-	 * @return string The user type (logged in or all) to display the video embed to.
+	 * @return array<string|string> The array of user types (logged in or all) to display the video embed to.
 	 */
 	protected function get_default_show_to() {
 		/**
@@ -574,22 +557,6 @@ class Event {
 				$event
 			)
 		);
-	}
-
-	/**
-	 * Testing if the event is virtual - taking into account new posts aren't automatically virtual events.
-	 * Useful for when we need to set default values.
-	 *
-	 * @since 1.0.0
-	 * @deprecated 1.0.4 Use is_new_virtual()
-	 * @see is_new_virtual()
-	 *
-	 * @param WP_Post $event Event post object.
-	 * @return bool Whether an event is a new virtual event or not.
-	 */
-	public function is_event_new_virtual( $event ) {
-		_deprecated_function( __FUNCTION__, '1.0.4', get_class( $this ) . '::is_new_virtual()' );
-		return (boolean) self::is_new_virtual( $event );
 	}
 
 	/**

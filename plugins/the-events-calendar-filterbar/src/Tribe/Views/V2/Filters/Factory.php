@@ -100,6 +100,12 @@ class Factory {
 	 * @return array A map relating the filters context keys with their class.
 	 */
 	public static function context_to_filters_map() {
+		$cached_map = tribe_cache()['filterbar_context_to_filters_map'];
+
+		if ( false !== $cached_map ) {
+			return $cached_map;
+		}
+
 		$map = [
 			'filterbar_category'       => Category::class,
 			'filterbar_cost'           => Cost::class,
@@ -134,6 +140,11 @@ class Factory {
 		 *                                  `[ <context_key> => <filter_class> ]`.
 		 */
 		$map = apply_filters( 'tribe_events_filter_bar_context_to_filter_map', $map );
+
+		if ( did_action( 'init' ) ) {
+			// Since we did `init`, we can assume the filtering is done: we can cache the filtered value.
+			tribe_cache()['filterbar_context_to_filters_map'] = $map;
+		}
 
 		return $map;
 	}
@@ -230,6 +241,10 @@ class Factory {
 			} else {
 				if ( ! Context_Filter::is_available( $filter_class, $filter_context_key ) ) {
 					// Never build a filter if the filter is not available at all.
+					continue;
+				}
+
+				if ( ! ( class_exists( $filter_class ) && method_exists( $filter_class, 'build_for_context' ) ) ) {
 					continue;
 				}
 

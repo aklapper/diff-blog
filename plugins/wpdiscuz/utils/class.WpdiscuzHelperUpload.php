@@ -799,12 +799,14 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
         $attachments = get_posts([
             "post_type" => "attachment",
             "posts_per_page" => apply_filters("wpdiscuz_delete_unattached_files_limit", 20),
+            /*
             "date_query" => [
                 [
                     "column" => "post_date_gmt",
                     "before" => "30 minutes ago",
                 ],
             ],
+            */
             "meta_query" => [
                 [
                     "key" => self::METAKEY_ATTCHMENT_COMMENT_ID,

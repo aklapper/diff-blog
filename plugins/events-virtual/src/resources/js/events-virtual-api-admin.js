@@ -64,6 +64,7 @@ tribe.events.virtualAdminAPI = tribe.events.virtualAdminAPI || {};
 		meetingDisplayLinkOption: '#tribe-events-virtual-meetings-api-display-details',
 		// API Selectors
 		googleMeetContainer: '#tribe-events-virtual-meetings-google',
+		microsoftTeamsContainer: '#tribe-events-virtual-meetings-microsoft',
 		webexMeetingContainer: '#tribe-events-virtual-meetings-webex',
 		zoomMeetingContainer: '#tribe-events-virtual-meetings-zoom',
 		// VE related selectors
@@ -184,6 +185,7 @@ tribe.events.virtualAdminAPI = tribe.events.virtualAdminAPI || {};
 		const apiId = $apiContainer.data( 'apiId' );
 		const meetingCreateType = obj.selectors.meetingCreateType;
 		const meetingApiCreateType = meetingCreateType.replace('%%APIID%%', apiId);
+		const meetingType = $( meetingApiCreateType ).data( 'type' );
 		const meetingApiPasswordRequirements = $( meetingApiCreateType ).data( 'passwordRequirements' );
 		const url = $apiContainer.find( meetingApiCreateType ).val();
 		const accountId = $apiContainer.data( 'accountId' );
@@ -216,6 +218,7 @@ tribe.events.virtualAdminAPI = tribe.events.virtualAdminAPI || {};
 					host_id: hostId,
 					account_id: accountId,
 					password_requirements: meetingApiPasswordRequirements,
+					meeting_type: meetingType,
 					EventStartDate: $( '#EventStartDate' ).val(),
 					EventStartTime: $( '#EventStartTime' ).val(),
 					EventEndDate: $( '#EventEndDate' ).val(),
@@ -308,6 +311,28 @@ tribe.events.virtualAdminAPI = tribe.events.virtualAdminAPI || {};
 
 		$apiContainer.html( $meetingDetails );
 		obj.setupApiFields( 'google' );
+	};
+
+	/**
+	 * Handle the Autodetect Response for Microsoft Teams.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param {Event} event The trigger event.
+	 * @param {data} data The data object included with the trigger event.
+	 */
+	obj.handleAutoDetectMicrosoft = function( event, data ) {
+		if ( ! data.html ) {
+			return;
+		}
+		const $apiContainer = $document.find( obj.selectors.microsoftTeamsContainer );
+		const $meetingDetails = $( data.html ).filter( obj.selectors.microsoftTeamsContainer );
+		if ( 0 === $meetingDetails.length ) {
+			return;
+		}
+
+		$apiContainer.html( $meetingDetails );
+		obj.setupApiFields( 'microsoft' );
 	};
 
 	/**
@@ -508,6 +533,7 @@ tribe.events.virtualAdminAPI = tribe.events.virtualAdminAPI || {};
 
 		$document
 			.on( 'autodetect.complete', obj.handleAutoDetectGoogle )
+			.on( 'autodetect.complete', obj.handleAutoDetectMicrosoft )
 			.on( 'autodetect.complete', obj.handleAutoDetectWebex )
 			.on( 'autodetect.complete', obj.handleAutoDetectZoom );
 	};
