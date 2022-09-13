@@ -37,6 +37,7 @@ Useful commands, all usable from within the theme directory:
  Command                   | Description
 -------------------------- | --------------------------------------------------------
 `npm run`                  | See a list of all available npm commands
+`npm run compile`          | Meta-command to lint and compile the CSS, including RTL
 `npm run compile:css`      | Build the sass files into a single CSS file
 `npm run watch:css`        | Monitor sass files for changes and automatically rebuild
 `npm run lint:scss`        | Check the sass code for errors
