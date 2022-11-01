@@ -66,7 +66,7 @@ class Api extends Account_API {
 		$refreshed = false;
 
 		$this->post(
-			Url::$request_url,
+			Url::to_refresh(),
 			[
 				'body'    => [
 					'grant_type'    => 'refresh_token',

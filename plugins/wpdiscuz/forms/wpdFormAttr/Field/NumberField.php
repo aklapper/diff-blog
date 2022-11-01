@@ -185,6 +185,16 @@ class NumberField extends Field {
         } else {
             $cleanData["is_show_sform"] = 0;
         }
+        if (isset($data["show_for_guests"])) {
+            $cleanData["show_for_guests"] = intval($data["show_for_guests"]);
+        } else {
+            $cleanData["show_for_guests"] = 0;
+        }
+        if (isset($data["show_for_users"])) {
+            $cleanData["show_for_users"] = intval($data["show_for_users"]);
+        } else {
+            $cleanData["show_for_users"] = 0;
+        }
 
         return wp_parse_args($cleanData, $this->fieldDefaultData);
     }

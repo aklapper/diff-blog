@@ -56,6 +56,7 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
 
             add_action("restrict_manage_posts", [$this, "wpdiscuzMediaFiler"]);
             add_filter("parse_query", [$this, "getWpdiscuzMedia"]);
+//            add_filter("manage_media_columns", [$this, "wpdiscuzMediaCommentColumn"], 10, 2);
         }
     }
 
@@ -64,7 +65,7 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
             $type = apply_filters("wpdiscuz_mu_upload_type", "");
             $faIcon = apply_filters("wpdiscuz_mu_upload_icon", "far fa-image");
             $allowedExts = apply_filters("wpdiscuz_mu_allowed_extensions", "accept='image/*'");
-            $html .= "<span class='wmu-upload-wrap' wpd-tooltip='" . esc_attr($this->options->getPhrase("wmuAttachImage", ["unique_id" => $uniqueId])) . "' wpd-tooltip-position='" . (!is_rtl() ? 'left' : 'right' ) . "'>";
+            $html .= "<span class='wmu-upload-wrap' wpd-tooltip='" . esc_attr($this->options->getPhrase("wmuAttachImage", ["unique_id" => $uniqueId])) . "' wpd-tooltip-position='" . (!is_rtl() ? 'left' : 'right') . "'>";
             $html .= "<label class='wmu-add'>";
             $html .= "<i class='$faIcon'></i>";
             $html .= "<input style='display:none;' class='wmu-add-files' type='file' name='" . self::INPUT_NAME . "[]' $type $allowedExts/>";
@@ -192,14 +193,16 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
                         $dataSrcValue = "";
                     }
 
-                    $images .= "<div class='wmu-attachment wmu-attachment-$attachment->ID'>";
+                    $attachmentId = self::encrypt($attachment->ID);
+
+                    $images .= "<div class='wmu-attachment wmu-attachment-$attachmentId'>";
                     if ($lightboxCls) {
                         $images .= "<a href='$url' class='wmu-attached-image-link $lightboxCls'>";
-                        $images .= "<img style='$style' alt='" . get_post_meta($attachment->ID, "_wp_attachment_image_alt", true) . "' title='" . esc_attr($attachment->post_excerpt) . "' id='wmu-attachemnt-$attachment->ID' class='attachment-$size size-$size wmu-attached-image' src='$srcValue' wmu-data-src='$dataSrcValue' $secondarySizeKey='$secondarySize' />";
+                        $images .= "<img style='$style' alt='" . get_post_meta($attachment->ID, "_wp_attachment_image_alt", true) . "' title='" . esc_attr($attachment->post_excerpt) . "' id='wmu-attachemnt-$attachmentId' class='attachment-$size size-$size wmu-attached-image' src='$srcValue' wmu-data-src='$dataSrcValue' $secondarySizeKey='$secondarySize' />";
                         $images .= "</a>";
                     } else {
                         $images .= apply_filters("wpdiscuz_mu_attached_image_before", "<a href='$url' class='wmu-attached-image-link' target='_blank' rel='noreferrer ugc'>", $attachment->ID);
-                        $images .= "<img style='$style' alt='" . get_post_meta($attachment->ID, "_wp_attachment_image_alt", true) . "' title='" . esc_attr($attachment->post_excerpt) . "' id='wmu-attachemnt-$attachment->ID' class='attachment-$size size-$size wmu-attached-image' src='$srcValue' wmu-data-src='$dataSrcValue' $secondarySizeKey='$secondarySize' />";
+                        $images .= "<img style='$style' alt='" . get_post_meta($attachment->ID, "_wp_attachment_image_alt", true) . "' title='" . esc_attr($attachment->post_excerpt) . "' id='wmu-attachemnt-$attachmentId' class='attachment-$size size-$size wmu-attached-image' src='$srcValue' wmu-data-src='$dataSrcValue' $secondarySizeKey='$secondarySize' />";
                         $images .= apply_filters("wpdiscuz_mu_attached_image_after", "</a>", $attachment->ID);
                     }
                     $images .= $deleteHtml;
@@ -214,15 +217,22 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
         if ($cId && !empty($_POST["wmu_attachments"])) {
             $wmuAttachments = json_decode(stripslashes($_POST["wmu_attachments"]), JSON_OBJECT_AS_ARRAY);
             if ($wmuAttachments && is_array($wmuAttachments)) {
-                update_comment_meta($cId, self::METAKEY_ATTACHMENTS, $wmuAttachments);
-                foreach ($wmuAttachments as $data) {
+
+                $attachments = [];
+
+                foreach ($wmuAttachments as $key => $data) {
                     if ($data && is_array($data)) {
-                        foreach ($data as $id) {
-                            if (!empty($id)) {
-                                update_post_meta($id, self::METAKEY_ATTCHMENT_COMMENT_ID, $cId);
+                        foreach ($data as $attachmentId) {
+                            if (!empty($attachmentId) && ($attachmentId = self::decrypt($attachmentId))) {
+                                $attachments[$key][] = $attachmentId;
+                                update_post_meta($attachmentId, self::METAKEY_ATTCHMENT_COMMENT_ID, $cId);
                             }
                         }
                     }
+                }
+
+                if ($attachments) {
+                    update_comment_meta($cId, self::METAKEY_ATTACHMENTS, $attachments);
                 }
             }
         }
@@ -367,17 +377,43 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
 
         if ($attachmentIds) {
             $response["attachmentsHtml"] = "<div class='wmu-attached-data-info wmu-hide'>";
-            $response["attachmentsHtml"] .= "<input class='wmu-attachments-ids' type='hidden' name='wmu_attachments' value='" . esc_attr(json_encode($attachmentIds)) . "'/>";
-            $response["attachmentsHtml"] .= "<input class='wmu-attachments-data' type='hidden' value='" . esc_attr(json_encode($attachmentsData)) . "'/>";
+//            $response["attachmentsHtml"] .= "<input class='wmu-attachments-ids' type='hidden' name='wmu_attachments' value='" . esc_attr(json_encode($attachmentIds)) . "'/>";
+            $response["attachmentsHtml"] .= "<textarea class='wmu-attachments-ids' name='wmu_attachments'>" . esc_attr(json_encode($attachmentIds)) . "</textarea>";
+            $response["attachmentsHtml"] .= "<textarea class='wmu-attachments-data'>" . esc_attr(json_encode($attachmentsData)) . "</textarea>";
+//            $response["attachmentsHtml"] .= "<input class='wmu-attachments-data' type='hidden' value='" . esc_attr(json_encode($attachmentsData)) . "'/>";
             $response["attachmentsHtml"] .= "</div>";
             $response["previewsData"] = $attachmentsData;
             if ($allowedCount == 1) {
                 $response["tooltip"] = esc_html($this->options->getPhrase("wmuChangeImage", ["unique_id" => $uniqueId]));
             }
         }
-
-
         wp_send_json_success($response);
+    }
+
+    public static function encrypt($data) {
+        $key = __FILE__;
+        $plaintext = $data;
+        $ivlen = openssl_cipher_iv_length($cipher = 'AES-128-CBC');
+        $iv = openssl_random_pseudo_bytes($ivlen);
+        $ciphertext_raw = openssl_encrypt($plaintext, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+        $hmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+        $ciphertext = base64_encode($iv . $hmac . $ciphertext_raw);
+        return $ciphertext;
+    }
+
+    public static function decrypt($data) {
+        $key = __FILE__;
+        $c = base64_decode($data);
+        $ivlen = openssl_cipher_iv_length($cipher = 'AES-128-CBC');
+        $iv = substr($c, 0, $ivlen);
+        $hmac = substr($c, $ivlen, $sha2len = 32);
+        $ciphertext_raw = substr($c, $ivlen + $sha2len);
+        $original_plaintext = openssl_decrypt($ciphertext_raw, $cipher, $key, $options = OPENSSL_RAW_DATA, $iv);
+        $calcmac = hash_hmac('sha256', $ciphertext_raw, $key, $as_binary = true);
+        if ($original_plaintext && hash_equals($hmac, $calcmac)) {
+            return $original_plaintext;
+        }
+        return false;
     }
 
     private function isAllowedFileType($mimeType, $extension) {
@@ -416,7 +452,8 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
     public function removeAttachmentPreview() {
         $this->helper->validateNonce();
         $response = ["errorCode" => "", "error" => "", "attachmentsHtml" => ""];
-        $attachmentId = WpdiscuzHelper::sanitize(INPUT_POST, "attachmentId", FILTER_SANITIZE_NUMBER_INT, 0);
+        $attachmentId = WpdiscuzHelper::sanitize(INPUT_POST, "attachmentId", "FILTER_SANITIZE_STRING", 0);
+        $attachmentId = self::decrypt($attachmentId);
         $uniqueId = WpdiscuzHelper::sanitize(INPUT_POST, "uniqueId", "FILTER_SANITIZE_STRING");
         $attachment = get_post($attachmentId);
 
@@ -447,7 +484,8 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
             foreach ($wmuAttachmentsData as $key => $value) {
                 if ($value && is_array($value)) {
                     foreach ($value as $v) {
-                        if ($v["id"] != $attachmentId) {
+                        $attachmentDataId = self::decrypt($v["id"]);
+                        if ($attachmentDataId != $attachmentId) {
                             $attachmentIds[$key][] = $v["id"];
                             $attachmentsData[$key][] = $v;
                             $filesCount++;
@@ -471,7 +509,8 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
     public function deleteAttachment() {
         $this->helper->validateNonce();
         $response = ["errorCode" => "", "error" => ""];
-        $attachmentId = isset($_POST["attachmentId"]) ? intval($_POST["attachmentId"]) : 0;
+        $attachmentId = isset($_POST["attachmentId"]) ? trim($_POST["attachmentId"]) : 0;
+        $attachmentId = self::decrypt($attachmentId);
         $attachment = get_post($attachmentId);
         $commentId = get_post_meta($attachmentId, self::METAKEY_ATTCHMENT_COMMENT_ID, true);
         $comment = get_comment($commentId);
@@ -489,7 +528,7 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
                 wp_send_json_success($response);
             }
         } else {
-            $response["error"] = esc_html__("The attachment not exists", "wpdiscuz");
+            $response["error"] = esc_html__("The attachment does not exist", "wpdiscuz");
             wp_send_json_error($response);
         }
     }
@@ -569,7 +608,7 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
                 $ip = WpdiscuzHelper::getRealIPAddr();
                 update_post_meta($attachId, self::METAKEY_ATTCHMENT_OWNER_IP, $ip);
                 update_post_meta($attachId, self::METAKEY_ATTCHMENT_COMMENT_ID, 0);
-                $attachmentData["id"] = $attachId;
+                $attachmentData["id"] = self::encrypt($attachId);
                 $attachmentData["url"] = empty($attachData["sizes"]["thumbnail"]["file"]) ? $this->wpUploadsUrl . "/" . $cleanFileName : $this->wpUploadsUrl . "/" . $attachData["sizes"]["thumbnail"]["file"];
                 $attachmentData["fullname"] = $cleanRealFileName;
                 $attachmentData["shortname"] = $this->getFileName($cleanRealFileName);
@@ -720,7 +759,8 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
     }
 
     public function getDeleteHtml($currentUser, $attachment, $type) {
-        $deleteHtml = "<div class='wmu-attachment-delete wmu-delete-$type' title='" . esc_html__("Delete", "wpdiscuz") . "' data-wmu-attachment='$attachment->ID'>&nbsp;</div>";
+        $attachmentId = self::encrypt($attachment->ID);
+        $deleteHtml = "<div class='wmu-attachment-delete wmu-delete-$type' title='" . esc_html__("Delete", "wpdiscuz") . "' data-wmu-attachment='$attachmentId'>&nbsp;</div>";
         return $this->canEditAttachments($currentUser, $attachment) ? $deleteHtml : "<div class='wmu-separator'></div>";
     }
 
@@ -842,11 +882,18 @@ class WpdiscuzHelperUpload implements WpDiscuzConstants {
         $mode = WpdiscuzHelper::sanitize(INPUT_GET, "mode", "FILTER_SANITIZE_STRING");
         $source = WpdiscuzHelper::sanitize(INPUT_GET, "media_source", "FILTER_SANITIZE_STRING");
 
-        if (is_admin() && "upload.php" === $pagenow && $mode === "list" && $source === "wpdiscuz") {            
+        if (is_admin() && "upload.php" === $pagenow && $mode === "list" && $source === "wpdiscuz") {
             $query->query_vars["meta_key"] = "_wmu_comment_id";
             $query->query_vars["meta_value"] = "";
             $query->query_vars["meta_compare"] = "!=";
         }
+    }
+
+    public function wpdiscuzMediaCommentColumn($columns, $detached) {
+        if ($columns && is_array($columns)) {
+            $columns['wpdcomment'] = __('Attached To Comment', 'wpdiscuz');
+        }
+        return $columns;
     }
 
 }

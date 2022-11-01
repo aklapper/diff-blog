@@ -1221,6 +1221,9 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function addRatingResetButton($postType, $post) {
+        if(!$post){
+            return;
+        }
         $form = $this->wpdiscuzForm->getForm($post->ID);
         if ($form->getFormID() && ($form->getEnableRateOnPost() || $form->getRatingsExists())) {
             add_meta_box("wpd_reset_ratings", __("Reset Ratings", "wpdiscuz"), [&$this, "resetRatingsButtons"], $postType, "side", "low");

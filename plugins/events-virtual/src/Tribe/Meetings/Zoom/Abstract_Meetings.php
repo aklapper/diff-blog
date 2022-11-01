@@ -811,7 +811,7 @@ class Abstract_Meetings {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_update( $nonce = null ) {
-		_deprecated_function( __METHOD__, 'TBD', 'No replacement.' );
+		_deprecated_function( __METHOD__, '1.13.1', 'No replacement.' );
 
 		if ( ! $this->check_ajax_nonce( static::$update_action, $nonce ) ) {
 			return false;

@@ -6,6 +6,9 @@ if (!defined("ABSPATH")) {
 class WpdiscuzHelperAjax implements WpDiscuzConstants {
 
     private $options;
+    /**
+     * @var WpdiscuzDBManager
+     */
     private $dbManager;
     private $helper;
     private $helperEmail;

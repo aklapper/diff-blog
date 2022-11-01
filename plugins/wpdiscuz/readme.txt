@@ -3,7 +3,7 @@ Contributors: gVectors Team
 Tags: comment, comments, ajax comments, comment form, comment fields
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 7.4.2
+Stable tag: 7.5
 Requires PHP: 5.6 and higher
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -185,13 +185,21 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 
 == Changelog ==
 
-= Comments - wpDiscuz v7.4.2 - 12.08.2022 =
+= Comments - wpDiscuz v7.5 - 12.10.2022 =
 
-* Fixed Bug: Undefined array key "wp_lang"
+Fixed Bug: Compatibility with wpForo user profiles
+Fixed Bug: Checkbox field save issue in HTML field type
+Fixed Bug: Compatibility issue with Akismet
+Fixed Vulnerability: Insecure Direct Object References (IDOR)
+
 
 **IMPORTANT!**
 
 * Please don't forget delete all caches and purge CDN after the update.
+
+= Comments - wpDiscuz v7.4.2 - 12.08.2022 =
+
+* Fixed Bug: Undefined array key "wp_lang"
 
 = Comments - wpDiscuz v7.4.1 - 11.08.2022 =
 

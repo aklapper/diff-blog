@@ -9,7 +9,7 @@
  *
  * @link http://evnt.is/1aiy
  *
- * @version TBD
+ * @version 1.13.1
  *
  * @var WP_Post $event The event post object with properties added by the `tribe_get_event` function.
  *

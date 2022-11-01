@@ -2,7 +2,7 @@
 /*
  * Plugin Name: wpDiscuz
  * Description: #1 WordPress Comment Plugin. Innovative, modern and feature-rich comment system to supercharge your website comment section.
- * Version: 7.4.2
+ * Version: 7.5
  * Author: gVectors Team
  * Author URI: https://gvectors.com/
  * Plugin URI: https://wpdiscuz.com/
@@ -421,7 +421,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                     if ($closedComment) {
                         add_comment_meta($new_comment_id, self::META_KEY_CLOSED, "1");
                     }
-                    $this->form->saveCommentMeta($new_comment_id);
+//                    $this->form->saveCommentMeta($new_comment_id);
                     $newComment = get_comment($new_comment_id);
                     $held_moderate = 1;
                     if ($newComment->comment_approved === "1") {
@@ -529,17 +529,25 @@ class WpdiscuzCore implements WpDiscuzConstants {
 
                 if ($isInRange || $highLevelUser) {
                     $response = [];
+                    $commentarr = [
+                        "comment_ID" => $commentId,
+                        "comment_content" => $comment->comment_content,
+                        "comment_approved" => $comment->comment_approved,
+                        "comment_post_ID" => $comment->comment_post_ID,
+                        "comment_author" => $comment->comment_author,
+                        "comment_author_url" => $comment->comment_author_url,
+                        "comment_author_email" => $comment->comment_author_email,
+                        "comment_type" => $comment->comment_type,
+                        "comment_parent" => $comment->comment_parent,
+                        "user_id" => $comment->user_id
+                    ];
                     if ($trimmedContent !== $comment->comment_content) {
 
                         $trimmedContent = $this->helper->replaceCommentContentCode($trimmedContent);
                         $commentContent = $this->helper->filterCommentText($trimmedContent);
                         $userAgent = isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "";
-                        $commentarr = [
-                            "comment_ID" => $commentId,
-                            "comment_content" => $commentContent,
-                            "comment_agent" => $userAgent,
-                            "comment_approved" => $comment->comment_approved
-                        ];
+                        $commentarr["comment_content"] = $commentContent;
+                        $commentarr["comment_agent"] = $userAgent;
 
 
                         if (class_exists("Akismet") && method_exists('Akismet', 'auto_check_comment')) {
@@ -551,19 +559,8 @@ class WpdiscuzCore implements WpDiscuzConstants {
                                 $commentarr["comment_approved"] = "spam";
                             }
                         }
-                        
-                        $commentdata = [
-                                "comment_post_ID" => $comment->comment_post_ID,
-                                "comment_author" => $comment->comment_author,
-                                "comment_author_email" => $comment->comment_author_email,
-                                "comment_author_url" => $comment->comment_author_url,
-                                "comment_content" => $commentContent,
-                                "comment_type" => $comment->comment_type,
-                                "comment_parent" => $comment->comment_parent,
-                                "user_id" => $comment->user_id
-                        ];
-                        
-                        $allow_empty_comment = apply_filters("allow_empty_comment", false, $commentdata);
+
+                        $allow_empty_comment = apply_filters("allow_empty_comment", false, $commentarr);
 
                         if ("" === $commentContent && !$allow_empty_comment) {
                             wp_send_json_error("wc_msg_required_fields");

@@ -32,6 +32,7 @@ use Tribe\Events\Virtual\Meetings\Webex_Provider;
 use Tribe\Events\Virtual\Meetings\YouTube_Provider;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
 use Tribe\Events\Virtual\Views\V2\Widgets\Widget;
+use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Context as Context;
 use Tribe__Events__Main as Events_Plugin;
 use Tribe__Template as Template;
@@ -1128,8 +1129,11 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		if ( empty( $post ) ) {
 			return false;
 		}
+		
+		// This is required to ensure virtual event details are embedded properly in the Elementor Event widget
+		$is_single_event = tribe( Template_Bootstrap::class )->is_single_event();
 
-		$no_blocks = ! function_exists( 'has_block' ) || has_block( 'tribe/virtual-event', $post );
+		$no_blocks = ! function_exists( 'has_block' ) || has_block( 'tribe/virtual-event', $post )  || ! $is_single_event;
 
 		// If the block is missing, show the legacy info HTML.
 		$new_block = ! $no_blocks ? false : true;

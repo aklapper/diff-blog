@@ -97,7 +97,7 @@ class OAuth {
 	 * @return boolean Whether the authorization request was handled.
 	 */
 	public function handle_auth_request( $nonce = null ) {
-		_deprecated_function( __METHOD__, 'TBD', 'Use API->handle_auth_request( $nonce )' );
+		_deprecated_function( __METHOD__, '1.13.1', 'Use API->handle_auth_request( $nonce )' );
 
 		if ( ! wp_verify_nonce( $nonce, self::$authorize_nonce_action ) ) {
 			wp_die( _x(
@@ -132,7 +132,7 @@ class OAuth {
 	 * @return string The full OAuth URL to authorize the application.
 	 */
 	public function authorize_url() {
-		_deprecated_function( __METHOD__, 'TBD', 'Use API->authorize_url()' );
+		_deprecated_function( __METHOD__, '1.13.1', 'Use API->authorize_url()' );
 
 		// Use the `state` query arg as described in Zoom API documentation.
 		$authorize_url = add_query_arg(

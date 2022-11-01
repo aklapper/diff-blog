@@ -101,25 +101,6 @@ abstract class Account_API extends Abstract_Account_Api {
 	public static $delete_action = 'events-virtual-meetings-zoom-settings-delete';
 
 	/**
-	 * Returns the full OAuth URL to authorize the application.
-	 *
-	 * @since 1.13.0
-	 *
-	 * @return string The full OAuth URL to authorize the application.
-	 */
-	public function authorize_url() {
-		// Use the `state` query arg as described in Zoom API documentation.
-		$authorize_url = add_query_arg(
-			[
-				'state' => wp_create_nonce( $this->actions::$authorize_nonce_action ),
-			],
-			admin_url()
-		);
-
-		return $authorize_url;
-	}
-
-	/**
 	 * Handles an OAuth authorization return request.
 	 *
 	 * The method will `wp_die` if the nonce is not valid.
@@ -214,10 +195,6 @@ abstract class Account_API extends Abstract_Account_Api {
 	public function delete_account_by_id( $account_id ) {
 		$revoked = $this->revoke_account_by_id( $account_id );
 
-		if ( ! $revoked ) {
-			return $revoked;
-		}
-
 		delete_option( $this->single_account_prefix . $account_id );
 
 		$this->delete_from_list_of_accounts( $account_id );
@@ -237,7 +214,7 @@ abstract class Account_API extends Abstract_Account_Api {
 			return $revoked;
 		}
 
-		$revoke_url = Url::$revoke_url;
+		$revoke_url = tribe( Url::class )::$revoke_url;
 		if ( defined( 'TEC_VIRTUAL_EVENTS_ZOOM_API_REVOKE_URL' ) ) {
 			$revoke_url = TEC_VIRTUAL_EVENTS_ZOOM_API_REVOKE_URL;
 		}
@@ -562,5 +539,27 @@ abstract class Account_API extends Abstract_Account_Api {
 		$this->save_account_id_to_post( $post_id, $zoom_account_id );
 
 		wp_die();
+	}
+
+	/**
+	 * Returns the full OAuth URL to authorize the application.
+	 *
+	 * @since 1.13.0
+	 * @deprecated 1.13.2
+	 *
+	 * @return string The full OAuth URL to authorize the application.
+	 */
+	public function authorize_url() {
+		_deprecated_function( __FUNCTION__, '1.13.2', 'Zoom/Url->get_authorize_url()' );
+
+		// Use the `state` query arg as described in Zoom API documentation.
+		$authorize_url = add_query_arg(
+			[
+				'state' => wp_create_nonce( $this->actions::$authorize_nonce_action ),
+			],
+			admin_url()
+		);
+
+		return $authorize_url;
 	}
 }

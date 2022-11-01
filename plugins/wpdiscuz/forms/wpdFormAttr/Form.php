@@ -596,7 +596,7 @@ class Form {
 
     private function validateGeneralOptions($options) {
         $validData = [
-            "lang" => !empty($_COOKIE['wp_lang']) && ($lng = $_COOKIE['wp_lang']) ? $lng : get_user_locale(),
+            "lang" => get_user_locale(),
             "roles_cannot_see_comments" => [],
             "guest_can_see_comments" => 1,
             "roles_cannot_comment" => [],

@@ -3,7 +3,7 @@
 Plugin Name: Co-Authors Plus
 Plugin URI: http://wordpress.org/extend/plugins/co-authors-plus/
 Description: Allows multiple authors to be assigned to a post. This plugin is an extended version of the Co-Authors plugin developed by Weston Ruter.
-Version: 3.5.2
+Version: 3.5.3
 Author: Mohammad Jangda, Daniel Bachhuber, Automattic
 Copyright: 2008-2015 Shared and distributed between Mohammad Jangda, Daniel Bachhuber, Weston Ruter
 
@@ -32,7 +32,7 @@ Co-author - in the context of a single post, a guest author or user assigned to 
 Author - user with the role of author
 */
 
-define( 'COAUTHORS_PLUS_VERSION', '3.5.2' );
+define( 'COAUTHORS_PLUS_VERSION', '3.5.3' );
 
 require_once dirname( __FILE__ ) . '/template-tags.php';
 require_once dirname( __FILE__ ) . '/deprecated.php';
@@ -220,7 +220,10 @@ class CoAuthors_Plus {
 		// Register new taxonomy so that we can store all of the relationships
 		$args = array(
 			'hierarchical' => false,
-			'label'        => false,
+			'labels' => array(
+				'name'			=> __( 'Authors' ),
+				'all_items' 	=> __( 'All Authors' ),
+			),
 			'query_var'    => false,
 			'rewrite'      => false,
 			'public'       => false,
@@ -1302,6 +1305,7 @@ class CoAuthors_Plus {
 				'user_email',
 				'user_login',
 			),
+			'capability'     => array( apply_filters( 'coauthors_edit_author_cap', 'edit_posts' ) ),
 			'fields'         => 'all_with_meta',
 		);
 		$found_users = get_users( $args );
@@ -1683,14 +1687,17 @@ class CoAuthors_Plus {
 	public function filter_jetpack_open_graph_tags( $og_tags, $image_dimensions ) {
 
 		if ( is_author() ) {
-			$author                        = get_queried_object();
-			$og_tags['og:title']           = $author->display_name;
-			$og_tags['og:url']             = get_author_posts_url( $author->ID, $author->user_nicename );
-			$og_tags['og:description']     = $author->description;
-			$og_tags['profile:first_name'] = $author->first_name;
-			$og_tags['profile:last_name']  = $author->last_name;
-			if ( isset( $og_tags['article:author'] ) ) {
-				$og_tags['article:author'] = get_author_posts_url( $author->ID, $author->user_nicename );
+			$author = get_queried_object();
+
+			if ( ! empty( $author ) ) {
+				$og_tags['og:title']           = $author->display_name;
+				$og_tags['og:url']             = get_author_posts_url( $author->ID, $author->user_nicename );
+				$og_tags['og:description']     = $author->description;
+				$og_tags['profile:first_name'] = $author->first_name;
+				$og_tags['profile:last_name']  = $author->last_name;
+				if ( isset( $og_tags['article:author'] ) ) {
+					$og_tags['article:author'] = get_author_posts_url( $author->ID, $author->user_nicename );
+				}
 			}
 		} elseif ( is_singular() && $this->is_post_type_enabled() ) {
 			$authors = get_coauthors();

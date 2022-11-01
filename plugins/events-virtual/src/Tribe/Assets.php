@@ -291,6 +291,8 @@ class Assets extends \tad_DI52_ServiceProvider {
 			[
 				'priority' => 15,
 				'conditionals' => [
+					'operator' => 'OR',
+					[ $this, 'should_enqueue_single_virtual_editor_assets' ],
 					[ tribe( Event_Assets::class ), 'should_enqueue_single_event_block_editor_styles' ],
 				],
 			]
@@ -555,5 +557,25 @@ class Assets extends \tad_DI52_ServiceProvider {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Determines whether or not we should enqueue single virtual editor assets.
+	 *
+	 * @since  1.13.2
+	 *
+	 * @return bool
+	 */
+	public function should_enqueue_single_virtual_editor_assets() {
+		$should_enqueue = false;
+
+		/**
+		 * Allow filtering of where the styles will be loaded.
+		 *
+		 * @since 1.13.2
+		 *
+		 * @param bool $should_enqueue Whether to enqueue the assets or not.
+		 */
+		return apply_filters( 'tec_events_virtual_enqueue_single_virtual_editor_assets', $should_enqueue );
 	}
 }

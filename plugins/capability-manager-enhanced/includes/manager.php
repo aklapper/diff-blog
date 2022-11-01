@@ -500,7 +500,7 @@ class CapabilityManager
                             $posted_settings = (isset($_POST["capsman_feature_restrict_classic_{$post_type}"])) ? array_map('sanitize_text_field', $_POST["capsman_feature_restrict_classic_{$post_type}"]) : [];
                         }
 
-						$post_features_option = get_option("capsman_feature_restrict_classic_{$post_type}", []);
+						$post_features_option = (array)get_option("capsman_feature_restrict_classic_{$post_type}", []);
 						$post_features_option[sanitize_key($_POST['ppc-editor-features-role'])] = $posted_settings;
 						update_option("capsman_feature_restrict_classic_{$post_type}", $post_features_option, false);
 					}
@@ -511,7 +511,7 @@ class CapabilityManager
 					    $posted_settings = (isset($_POST["capsman_feature_restrict_{$post_type}"])) ? array_map('sanitize_text_field', $_POST["capsman_feature_restrict_{$post_type}"]) : [];
                     }
 
-					$post_features_option = get_option("capsman_feature_restrict_{$post_type}", []);
+					$post_features_option = (array)get_option("capsman_feature_restrict_{$post_type}", []);
 					$post_features_option[sanitize_key($_POST['ppc-editor-features-role'])] = $posted_settings;
 					update_option("capsman_feature_restrict_{$post_type}", $post_features_option, false);
 				}
@@ -972,8 +972,8 @@ class CapabilityManager
             header( 'Content-Disposition: attachment; filename=capabilities-export-' . current_time('Y-m-d_g-i-s_a') . '.json' );
             header( "Expires: 0" );
 
-            // Serialize the export data.
-            echo serialize( $data );
+            // encode the export data.
+            echo json_encode($data);
 
             // Start the download.
             die();

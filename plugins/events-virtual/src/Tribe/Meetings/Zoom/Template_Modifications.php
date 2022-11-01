@@ -38,7 +38,7 @@ class Template_Modifications extends Abstract_Template_Modifications {
 	 * @deprecated 1.13.0 - Replaced with $this->add_event_single_api_details, see Abstract_Template_Modifications class.
 	 */
 	public function add_event_single_zoom_details() {
-		_deprecated_function( __METHOD__, 'TBD', 'Use $this->add_event_single_api_details() instead.' );
+		_deprecated_function( __METHOD__, '1.13.1', 'Use $this->add_event_single_api_details() instead.' );
 
 		// Don't show on password protected posts.
 		if ( post_password_required() ) {
