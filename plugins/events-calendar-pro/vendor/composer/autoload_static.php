@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit948bd937817b140cecd6033088837855
+class ComposerStaticInit17e677198621d0ef6e3f76a0877fff86
 {
     public static $prefixLengthsPsr4 = array (
         'T' => 
@@ -38,6 +38,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'RRule\\RRuleInterface' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RRuleInterface.php',
         'RRule\\RSet' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RSet.php',
         'RRule\\RfcParser' => __DIR__ . '/..' . '/rlanvin/php-rrule/src/RfcParser.php',
+        'TEC\\Events_Pro\\Base\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Base/Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Activation' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Activation.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Adapters\\Recurrence_Meta_Builder' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Adapters/Recurrence_Meta_Builder.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\Admin\\Links' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/Admin/Links.php',
@@ -161,6 +162,7 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Custom_Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Custom_Query_Filters.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Provider' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Provider.php',
         'TEC\\Events_Pro\\Custom_Tables\\V1\\WP_Query\\Replace_Results' => __DIR__ . '/../..' . '/src/Events_Pro/Custom_Tables/V1/WP_Query/Replace_Results.php',
+        'TEC\\Events_Pro\\Legacy\\Query_Filters' => __DIR__ . '/../..' . '/src/Events_Pro/Legacy/Query_Filters.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Assets' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Assets.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Events_Table' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Events_Table.php',
         'Tribe\\Events\\Pro\\Admin\\Manager\\Hooks' => __DIR__ . '/../..' . '/src/Tribe/Admin/Manager/Hooks.php',
@@ -259,9 +261,9 @@ class ComposerStaticInit948bd937817b140cecd6033088837855
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit948bd937817b140cecd6033088837855::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit948bd937817b140cecd6033088837855::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit948bd937817b140cecd6033088837855::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit17e677198621d0ef6e3f76a0877fff86::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit17e677198621d0ef6e3f76a0877fff86::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit17e677198621d0ef6e3f76a0877fff86::$classMap;
 
         }, null, ClassLoader::class);
     }

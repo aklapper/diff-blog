@@ -295,7 +295,24 @@ class Provisional_Post {
 			return $meta_value;
 		}
 
-		$this->post_cache->hydrate_caches( [ $object_id ] );
+		$post = get_post( $object_id );
+		// Maybe already hydrated? Use `get_object_vars` as `isset` will trigger the `WP_Post::__get` method.
+		$occurrence_id = get_object_vars( $post )['_tec_occurrence_id'] ?? null;
+
+		if ( empty( $occurrence_id ) ) {
+			// Not already hydrated, let's do it now.
+			$this->post_cache->hydrate_caches( [ $object_id ] );
+		}
+
+		// Avoid using a method that will either hit the database or cause another `get_post_meta` call.
+		$occurrence_id = get_object_vars( $post )['_tec_occurrence_id'] ?? null;
+
+		if (
+			! empty( $occurrence_id )
+			&& ( $occurrence = Occurrence::find( $occurrence_id, 'occurrence_id' ) ) instanceof Occurrence
+		) {
+			return $occurrence;
+		}
 
 		return $meta_value;
 	}

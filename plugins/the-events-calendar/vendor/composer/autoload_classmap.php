@@ -17,6 +17,8 @@ return array(
     'TEC\\Events\\Custom_Tables\\V1\\Integrations\\Dot_Com\\Clear_Event_Cache' => $baseDir . '/src/Events/Custom_Tables/V1/Integrations/Dot_Com/Clear_Event_Cache.php',
     'TEC\\Events\\Custom_Tables\\V1\\Integrations\\Dot_Com\\Provider' => $baseDir . '/src/Events/Custom_Tables/V1/Integrations/Dot_Com/Provider.php',
     'TEC\\Events\\Custom_Tables\\V1\\Integrations\\Provider' => $baseDir . '/src/Events/Custom_Tables/V1/Integrations/Provider.php',
+    'TEC\\Events\\Custom_Tables\\V1\\Integrations\\WP_Engine\\Clear_Event_Cache' => $baseDir . '/src/Events/Custom_Tables/V1/Integrations/WP_Engine/Clear_Event_Cache.php',
+    'TEC\\Events\\Custom_Tables\\V1\\Integrations\\WP_Engine\\Provider' => $baseDir . '/src/Events/Custom_Tables/V1/Integrations/WP_Engine/Provider.php',
     'TEC\\Events\\Custom_Tables\\V1\\Migration\\Admin\\Phase_View_Renderer' => $baseDir . '/src/Events/Custom_Tables/V1/Migration/Admin/Phase_View_Renderer.php',
     'TEC\\Events\\Custom_Tables\\V1\\Migration\\Admin\\Progress_Modal' => $baseDir . '/src/Events/Custom_Tables/V1/Migration/Admin/Progress_Modal.php',
     'TEC\\Events\\Custom_Tables\\V1\\Migration\\Admin\\Template' => $baseDir . '/src/Events/Custom_Tables/V1/Migration/Admin/Template.php',
