@@ -28,18 +28,18 @@ const ContentLicensingNotice = () => {
 	}, [ agreed ] );
 
 	return (
-		<PluginPrePublishPanel title={ 'Publish Checklist' } initialOpen>
+		<PluginPrePublishPanel title={ __( 'Publish Checklist', 'diff-blocks' ) } initialOpen>
 			<CheckboxControl
 				checked={ agreed }
 				onChange={ setDisclaimerAgreement }
 				help={
 					<p>
-						<a target="blank" href="https://creativecommons.org/licenses/by-sa/3.0/">
-							{ __( 'CC-BY-SA license details', 'diff-blocks' ) }
+						<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/3.0/">
+							{ __( 'CC BY-SA 3.0 license', 'diff-blocks' ) }
 						</a>
 					</p>
 				}
-				label={ __( 'I acknowledge that by submitting I license this content under Creative Commons Attribution-ShareAlike 3.0 (CC-BY-SA).', 'diff-blocks' ) }
+				label={ __( 'By clicking publish, you agree to license your work under the CC BY-SA 3.0 license. Please be aware that this license is irrevocable and allows others to use and remix your work off of Wikimedia websites.', 'diff-blocks' ) }
 			/>
 		</PluginPrePublishPanel>
 	);
