@@ -116,10 +116,10 @@ function diff_disable_jetpack_sso( $modules ) {
     return $modules;
 }
 
-add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 999 );
-add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 999 );
-add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 999 );
-add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 999 );
+add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 110 );
 /**
  * Remove the Polylang plugin admin language columns.
  *
@@ -135,67 +135,12 @@ add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 999 
  * @return string[] $columns Modified array of column header labels.
  */
 function diff_remove_language_columns( $columns ) {
-	unset( $columns['language_ak'] );
-	unset( $columns['language_ar'] );
-	unset( $columns['language_arg'] );
-	unset( $columns['language_as'] );
-	unset( $columns['language_ast'] );
-	unset( $columns['language_ba'] );
-	unset( $columns['language_bg'] );
-	unset( $columns['language_bn'] );
-	unset( $columns['language_ca'] );
-	unset( $columns['language_cs'] );
-	unset( $columns['language_da'] );
-	unset( $columns['language_de'] );
-	unset( $columns['language_el'] );
-	unset( $columns['language_en'] );
-	unset( $columns['language_eo'] );
-	unset( $columns['language_es'] );
-	unset( $columns['language_et'] );
-	unset( $columns['language_fa'] );
-	unset( $columns['language_fi'] );
-	unset( $columns['language_fr'] );
-	unset( $columns['language_he'] );
-	unset( $columns['language_hi'] );
-	unset( $columns['language_hu'] );
-	unset( $columns['language_hy'] );
-	unset( $columns['language_id'] );
-	unset( $columns['language_it'] );
-	unset( $columns['language_ja'] );
-	unset( $columns['language_ka'] );
-	unset( $columns['language_kn'] );
-	unset( $columns['language_ko'] );
-	unset( $columns['language_lad'] );
-	unset( $columns['language_mai'] );
-	unset( $columns['language_mi'] );
-	unset( $columns['language_mk'] );
-	unset( $columns['language_mr'] );
-	unset( $columns['language_ms'] );
-	unset( $columns['language_nb'] );
-	unset( $columns['language_ne'] );
-	unset( $columns['language_nl'] );
-	unset( $columns['language_nn'] );
-	unset( $columns['language_or'] );
-	unset( $columns['language_pa'] );
-	unset( $columns['language_pl'] );
-	unset( $columns['language_pt'] );
-	unset( $columns['language_pt-br'] );
-	unset( $columns['language_ro'] );
-	unset( $columns['language_ru'] );
-	unset( $columns['language_sq'] );
-	unset( $columns['language_sr'] );
-	unset( $columns['language_sv'] );
-	unset( $columns['language_ta'] );
-	unset( $columns['language_th'] );
-	unset( $columns['language_tr'] );
-	unset( $columns['language_tt'] );
-	unset( $columns['language_uk'] );
-	unset( $columns['language_ur'] );
-	unset( $columns['language_vi'] );
-	unset( $columns['language_yua'] );
-	unset( $columns['language_zh'] );
-	unset( $columns['language_zh-hans'] );
-	unset( $columns['language_zh-hant'] );
+	// Remove any column with the $columns['language_*'] key pattern.
+	foreach ( $columns as $language => $column ) {
+		if ( preg_match( '/language_\w+/', $language ) ) {
+			unset( $columns[ $language ] );
+		}
+	}
 
 	return $columns;
 }
