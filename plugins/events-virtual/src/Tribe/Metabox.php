@@ -328,35 +328,4 @@ class Metabox {
 			);
 		}
 	}
-
-	/**
-	 * Renders the video input fields.
-	 *
-	 * @since 1.6.0
-	 * @deprecated 1.8.0
-	 *
-	 * @param null|\WP_Post|int $post            The post object or ID of the event to generate the controls for, or `null` to use
-	 *                                           the global post object.
-	 * @param bool              $echo            Whether to echo the template contents to the page (default) or to return it.
-	 *
-	 * @return string The template contents, if not rendered to the page or empty string if no post object.
-	 */
-	public function classic_meeting_video_source_ui( $post = null, $echo = true ) {
-		_deprecated_function( __FUNCTION__, '1.8.0', 'Deprecated for autodetect support, use classic_meeting_autodetect_video_source_ui()' );
-
-		$post = tribe_get_event( get_post( $post ) );
-
-		if ( ! $post instanceof \WP_Post ) {
-			return '';
-		}
-
-		return $this->template->template(
-			'virtual-metabox/video/input',
-			[
-				'event'      => $post,
-				'metabox_id' => Metabox::$id,
-			],
-			$echo
-		);
-	}
 }

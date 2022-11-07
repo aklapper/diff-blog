@@ -3,10 +3,10 @@
 Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, juanfra, leahkoerper, lirianojoel, lucatume, neillmcshea, rafsuntaskin, zbtirrell
 Tags: virtual events, events, calendar, event, venue, organizer, dates, date, schema, conference, online events, concert, meeting, seminar, summit, class, the events calendar, tec, zoom, livestream
 Donate link: https://evnt.is/29
-Requires at least: 5.6
-Tested up to: 6.0
-Stable tag: 1.11.0
-Requires PHP: 7.1
+Requires at least: 5.8.5
+Tested up to: 6.0.3
+Stable tag: 1.13.2
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,36 @@ Our premium products:
 
 == Changelog ==
 
+= [1.13.2] 2022-10-20 =
+
+* Fix - Ensure virtual event details are embedded properly in the Elementor Event widget. [VE-547]
+* Fix - Change how the Zoom automatic access token refresh gets the url to prevent it from being empty causing numerous error log entries. [VE-563]
+* Fix - Always enable Zoom Accounts to be deleted. [VE-562]
+* Language - 0 new strings added, 9 updated, 0 fuzzied, and 0 obsoleted.
+
+= [1.13.1] 2022-09-22 =
+
+* Fix - Correct some text domains. [VE-555]
+* Fix - Fix issue with Webex not able to refresh the access token due to access to undeclared static property error. [VE-560]
+* Language - 0 new strings added, 1 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.13.0] 2022-09-08 =
+
+* Feature - Add an option to generate a Microsoft Team Link through an Outlook Event from the event editor and display meeting details on the event. [VE-537]
+* Feature - Connect existing Microsoft Team Link through an Outlook Event to your events using the new 'Smart' url field. [VE-533]
+* Feature - Add Zoom/Google Meet/Webex/Microsoft Teams links to the single event Outlook export urls. [VE-544]
+* Tweak - Added filters: `tec_custom_tables_v1_events_virtual_assets_should_enqueue_series_single`, `tec_events_virtual_{$api_id}_export_fields`, `tec_events_virtual_outlook_{$api_id}_export_url`, `tec_events_virtual_export_should_show`, `tec_events_virtual_outlook_single_event_export_url`, `tec_events_virtual_meetings_api_settings_fields`, `tec_events_virtual_meetings_`, `tec_events_virtual_meetings_`, `tec_events_virtual_link_button_new_window`, `tec_events_virtual_{$api_id}_link_new_window`, `tribe_events_virtual_meetings_{$api_id}_user_cache`, `tec_events_virtual_meetings_api_error_message`, `tec_events_virtual_meetings_google_{$this::$meeting_type}_data`, `tec_events_virtual_google_get_users_arguments`, `tec_events_virtual_google_calendar_calendar_id`, `tec_events_virtual_google_calendar_api_url_with_placeholder`, `tec_events_virtual_google_{$type}_link_allow_generation`, `tec_events_virtual_meetings_google_hosts`, `tec_events_virtual_google_meeting_link_creation_urls`, `tec_events_virtual_google_regex_event_hash_url`, `tec_events_virtual_meetings_google_meet_include_pin`, `tec_events_virtual_link_button_new_window`, `tec_events_virtual_google_link_new_window`, `tec_events_virtual_microsoft_regex_team_meeting_id`, `tec_events_virtual_meetings_microsoft_{$this::$meeting_type}_data`, `tribe_events_virtual_meetings_zoom_password_requirements`, `tec_events_virtual_microsoft_get_users_arguments`, `tec_events_virtual_microsoft_{$type}_link_allow_generation`, `tec_events_virtual_meetings_microsoft_hosts`, `tec_events_virtual_microsoft_meeting_link_creation_urls`, `tec_events_virtual_microsoft_regex_event_hash_url`
+* Tweak - Removed filters: `tec_events_virtual_webex_export_fields`, `tec_events_virtual_meetings_webex_settings_fields`, `tec_events_virtual_meetings_webex_user_cache`, `tribe_events_virtual_meetings_zoom_settings_fields`, `tribe_events_virtual_meetings_zoom_user_cache`
+* Tweak - Changed views: `google/email/details/dial-in-content`, `google/email/details/dial-in-header`, `google/email/details/join-content`, `google/email/details/join-header`, `google/email/ticket-email-google-details`, `google/single/google-details`, `microsoft/email/details/join-content`, `microsoft/email/details/join-header`, `microsoft/email/ticket-email-microsoft-details`, `microsoft/single/microsoft-details`, `webex/single/webex-details`, `zoom/single/zoom-details`, `zoom/zoom-details`
+* Language - 43 new strings added, 123 updated, 0 fuzzied, and 0 obsoleted.
+
+= [1.12.0] 2022-09-06 =
+
+* Version - Virtual Events 1.12.0 is only compatible with The Events Calendar 6.0.0 and higher
+* Tweak - Deprecate maybe_enqueue_accordion_for_v1() as legacy views are removed. [VE-493]
+* Tweak - Remove creation of Virtual Filters for removed legacy views. [VE-493]
+* Language - 0 new strings added, 14 updated, 0 fuzzied, and 4 obsoleted
+
 = [1.11.0] 2022-07-18 =
 
 * Feature - Add an option to generate a Google Event with Meet from the event editor and display meeting details on the event. [VE-517]
@@ -130,7 +160,6 @@ Our premium products:
 * Tweak - Get password requirements and use those requirements per host when generating a meeting or webinar password. [VE-524]
 * Tweak - Added filters: `tec_events_virtual_meetings_api_settings_fields`, `tec_events_virtual_meetings_`, `tec_events_virtual_meetings_`, `tec_events_virtual_meetings_api_error_message`, `tec_events_virtual_meetings_google_{$this::$meeting_type}_data`, `tec_events_virtual_google_get_users_arguments`, `tec_events_virtual_google_calendar_calendar_id`, `tec_events_virtual_google_calendar_api_url_with_placeholder`, `tec_events_virtual_google_{$type}_link_allow_generation`, `tec_events_virtual_meetings_google_hosts`, `tec_events_virtual_google_meeting_link_creation_urls`, `tec_events_virtual_google_export_fields`, `tec_events_virtual_google_regex_event_hash_url`, `tec_events_virtual_meetings_google_meet_include_pin`, `tec_events_virtual_link_button_new_window`, `tec_events_virtual_google_link_new_window`, `tec_events_virtual_meetings_google_user_cache`
 * Tweak - Removed filters: `tec_events_virtual_meetings_webex_settings_fields`, `tribe_events_virtual_meetings_zoom_settings_fields`
-* Tweak - Added actions: `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`, `tribe_log`
 * Tweak - Changed views: `google/email/details/dial-in-content`, `google/email/details/dial-in-header`, `google/email/details/join-content`, `google/email/details/join-header`, `google/email/ticket-email-google-details`, `google/single/google-details`, `webex/single/webex-details`, `zoom/single/zoom-details`, `zoom/zoom-details`
 * Language - 39 new strings added, 63 updated, 0 fuzzied, and 0 obsoleted
 

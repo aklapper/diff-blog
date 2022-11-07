@@ -291,6 +291,8 @@ class Assets extends \tad_DI52_ServiceProvider {
 			[
 				'priority' => 15,
 				'conditionals' => [
+					'operator' => 'OR',
+					[ $this, 'should_enqueue_single_virtual_editor_assets' ],
 					[ tribe( Event_Assets::class ), 'should_enqueue_single_event_block_editor_styles' ],
 				],
 			]
@@ -331,36 +333,6 @@ class Assets extends \tad_DI52_ServiceProvider {
 			]
 		);
 
-		$this->maybe_enqueue_accordion_for_v1();
-	}
-
-	/**
-	 * If V1 is active enqueue the accordion script for YouTube feature.
-	 *
-	 * @since 1.6.1
-	 */
-	protected function maybe_enqueue_accordion_for_v1() {
-		if ( tribe_events_views_v2_is_enabled() ) {
-			return;
-		}
-		$admin_helpers = Admin_Helpers::instance();
-
-		tribe_asset(
-			TEC::instance(),
-			'tribe-events-views-v2-accordion',
-			'views/accordion.js',
-			[
-				'jquery',
-				'tribe-common',
-			],
-			'admin_enqueue_scripts',
-			[
-				'conditionals' => [
-					'operator' => 'OR',
-					[ $admin_helpers, 'is_screen' ],
-				],
-			]
-		);
 	}
 
 	/**
@@ -375,7 +347,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 			return $this->should_enqueue_frontend;
 		}
 
-		$should_enqueue = tribe_events_views_v2_is_enabled() && tribe( Template_Bootstrap::class )->should_load();
+		$should_enqueue = tribe( Template_Bootstrap::class )->should_load();
 
 		/**
 		 * Allow filtering of where the base Frontend Assets will be loaded.
@@ -420,18 +392,14 @@ class Assets extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Verifies if we are on V2 and on Event Single in order to enqueue the override styles for Single Event
+	 * Verifies if on Event Single in order to enqueue the override styles for Single Event
 	 *
 	 * @since 1.2.0
+	 * @since 1.12.0 - Remove check for V2 as it is the only views active.
 	 *
 	 * @return boolean
 	 */
 	public function should_enqueue_single_event_styles() {
-		// Bail if not V2.
-		if ( ! tribe_events_single_view_v2_is_enabled() ) {
-			return false;
-		}
-
 		// Bail if not Single Event.
 		if ( ! tribe( Template_Bootstrap::class )->is_single_event() ) {
 			return false;
@@ -542,7 +510,7 @@ class Assets extends \tad_DI52_ServiceProvider {
 	 *
 	 * @since  1.8.3
 	 *
-	 * @return bool
+	 * @return bool Whether to load assets.
 	 */
 	public function should_enqueue_admin() {
 		if ( ! is_admin() ) {
@@ -554,9 +522,60 @@ class Assets extends \tad_DI52_ServiceProvider {
 		}
 
 		if ( ! tribe( 'admin.helpers' )->is_post_type_screen() ) {
-			return;
+			return false;
 		}
 
 		return true;
+	}
+
+	/**
+	 * If V1 is active enqueue the accordion script for YouTube feature.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @deprecated 1.12.0 - Deprecated with removal of Legacy-V1 views.
+	 */
+	protected function maybe_enqueue_accordion_for_v1() {
+		if ( tribe_events_views_v2_is_enabled() ) {
+			return;
+		}
+		$admin_helpers = Admin_Helpers::instance();
+
+		tribe_asset(
+			TEC::instance(),
+			'tribe-events-views-v2-accordion',
+			'views/accordion.js',
+			[
+				'jquery',
+				'tribe-common',
+			],
+			'admin_enqueue_scripts',
+			[
+				'conditionals' => [
+					'operator' => 'OR',
+					[ $admin_helpers, 'is_screen' ],
+				],
+			]
+		);
+	}
+
+	/**
+	 * Determines whether or not we should enqueue single virtual editor assets.
+	 *
+	 * @since  1.13.2
+	 *
+	 * @return bool
+	 */
+	public function should_enqueue_single_virtual_editor_assets() {
+		$should_enqueue = false;
+
+		/**
+		 * Allow filtering of where the styles will be loaded.
+		 *
+		 * @since 1.13.2
+		 *
+		 * @param bool $should_enqueue Whether to enqueue the assets or not.
+		 */
+		return apply_filters( 'tec_events_virtual_enqueue_single_virtual_editor_assets', $should_enqueue );
 	}
 }

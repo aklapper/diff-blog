@@ -1,5 +1,5 @@
 <?php
-
+use Tribe__Utils__Array as Arr;
 
 /**
  * Class Tribe__Events__Filterbar__Filters__Category
@@ -183,7 +183,8 @@ class Tribe__Events__Filterbar__Filters__Category extends Tribe__Events__Filterb
 				}
 			}
 		} elseif ( 'multiselect' === $this->type ) {
-			$values = ! empty( $values[0] ) ? explode( ',', $values[0] ) : $values;
+			// Any value that will evaluate to empty, we drop.
+			$values = array_filter( Arr::list_to_array( $values ) );
 		}
 
 		$new_rules[] = array(

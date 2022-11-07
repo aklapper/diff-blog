@@ -2,8 +2,8 @@
 Contributors: gVectors Team
 Tags: comment, comments, ajax comments, comment form, comment fields
 Requires at least: 5.0
-Tested up to: 5.9
-Stable tag: 7.3.17
+Tested up to: 6.0
+Stable tag: 7.5
 Requires PHP: 5.6 and higher
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -185,15 +185,67 @@ Nothing will be lost!  **Comments - wpDiscuz** will show all old comments.
 
 == Changelog ==
 
-= Comments - wpDiscuz v7.3.17 - 30.03.2022 =
+= Comments - wpDiscuz v7.5 - 12.10.2022 =
 
-* Fixed Bug: Conflict with Redis based cache plugins
-* Fixed Bug: Conflict with Memcached based cache plugins
+Fixed Bug: Compatibility with wpForo user profiles
+Fixed Bug: Checkbox field save issue in HTML field type
+Fixed Bug: Compatibility issue with Akismet
+Fixed Vulnerability: Insecure Direct Object References (IDOR)
+
 
 **IMPORTANT!**
 
 * Please don't forget delete all caches and purge CDN after the update.
 
+= Comments - wpDiscuz v7.4.2 - 12.08.2022 =
+
+* Fixed Bug: Undefined array key "wp_lang"
+
+= Comments - wpDiscuz v7.4.1 - 11.08.2022 =
+
+* Added: Support for dynamic language switcher on WP login page
+
+= Comments - wpDiscuz v7.4 - 09.08.2022 =
+
+* Added: Fields displaying options (logged-in users | guests)
+* Added: Allowing empty comments using a hook - 'allow_empty_comment'
+* Fixed Bug: Supporting plus(+) sign in name or email fields
+* Fixed Bug: Some of the field(s) are invalid unknown error
+* Fixed Bug: Getting comment form in correct locale set by user
+* Fixed Bug: Compatibility with Akismet plugin (on edit comment)
+
+= Comments - wpDiscuz v7.3.20 - 20.07.2022 =
+
+* Fixed bug: document.querySelectorAll().forEach is not a function. (old browsers)
+* Fixed bug: Restriction commenting by roles doesn't work until the page refresh
+* Fixed bug: Comment rating calculation issue
+* Added: new wpd-blog-[role-name]  class for every registered user
+* Added: Template function to get all options - wpdiscuzGetOptions()
+* Added: Template function to get single option by key / (tab optional) - wpDiscuzGetOption($key, $tab)
+
+= Comments - wpDiscuz v7.3.19 - 15.06.2022 =
+
+* Fixed bug: Uncaught TypeError: array_key_exists()
+
+= Comments - wpDiscuz v7.3.18 - 14.06.2022 =
+
+* Added: Preventing multiple clicks on subscription button
+* Fixed Bug: Problem with comments Lazy Loading of mobile devices
+* Fixed Bug: jQuery events not triggered
+* Fixed Bug: Problem with most reacted comment
+* Fixed Bug: Cache conflict with voting buttons highlighting
+* Fixed Bug: Problems with Subscription, Follow and other notification messages
+* Fixed Bug: Untranslated UI element, reply button in the bubble notification area
+* Fixed Bug: PHP Error: Undefined variable $options in sanitizer function
+* Fixed Bug: Warning - Illegal string offset 'enable_post_rating'
+* Fixed Bug: PHP Fatal error: Cannot use string offset as an array in class.WpdiscuzWalker.php:45
+* Fixed Bug: PHP Fatal error: array_key_exists() in Form.php (when creating a new form)
+* Fixed Bug: PHP Fatal error: Call to a member function get_children() on null in class.WpdiscuzHelper.php:421
+
+= Comments - wpDiscuz v7.3.17 - 30.03.2022 =
+
+* Fixed Bug: Conflict with Redis based cache plugins
+* Fixed Bug: Conflict with Memcached based cache plugins
 
 
 = Comments - wpDiscuz v7.3.16 - 19.03.2022 =

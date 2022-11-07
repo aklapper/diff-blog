@@ -215,7 +215,7 @@ class SocialLogin {
         }
         $token = $fbAccesTokenData["access_token"];
         $appsecret_proof = hash_hmac("sha256", $token, trim($this->generalOptions->social["fbAppSecret"]));
-        $fbGetUserDataURL = add_query_arg(["fields" => "id,first_name,last_name,picture,email", "access_token" => $token, "appsecret_proof" => $appsecret_proof], "https://graph.facebook.com/v7.0/me");
+        $fbGetUserDataURL = add_query_arg(["fields" => "id,first_name,last_name,email", "access_token" => $token, "appsecret_proof" => $appsecret_proof], "https://graph.facebook.com/v7.0/me");
         $getFbUserResponse = wp_remote_get($fbGetUserDataURL);
         if (is_wp_error($getFbUserResponse)) {
             $this->redirect($postID, $getFbUserResponse->get_error_message());

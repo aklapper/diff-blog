@@ -27,7 +27,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.11.0';
+	const VERSION = '1.13.2';
 
 	/**
 	 * Stores the base slug for the plugin.
@@ -123,6 +123,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$this->container->register( ORM\ORM_Provider::class );
 		$this->container->register( Views\V2\Views_Provider::class );
 		$this->container->register( Editor\Provider::class );
+
+		if ( class_exists( '\\TEC\\Events_Virtual\\Custom_Tables\\V1\\Provider' ) ) {
+			tribe_register_provider( '\\TEC\\Events_Virtual\\Custom_Tables\\V1\\Provider' );
+		}
 	}
 
 	/**

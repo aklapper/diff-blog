@@ -9,7 +9,6 @@
 namespace Tribe\Events\Virtual\Views\V2;
 
 use Tribe__Context as Context;
-use Tribe\Events\Views\V2\View;
 
 /**
  * Class Title

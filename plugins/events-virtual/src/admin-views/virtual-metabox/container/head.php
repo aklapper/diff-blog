@@ -46,8 +46,7 @@ $metabox_id = Metabox::$id;
 		<td class="tribe-configure-virtual-button__container">
 			<div>
 				<button
-					class="tribe-configure-virtual-button button"
-					class="tribe-dependent"
+					class="tribe-configure-virtual-button button tribe-dependent"
 					type="button"
 					data-depends="#<?php echo esc_attr( "{$metabox_id}-setup" ); ?>"
 					data-condition-not-checked

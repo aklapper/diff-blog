@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Tribe\\Events\\Filterbar\\' => array($baseDir . '/src/Tribe'),
+    'TEC\\Filter_Bar\\' => array($baseDir . '/src/Filter_Bar'),
 );

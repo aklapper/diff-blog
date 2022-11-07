@@ -34,6 +34,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * The name of the action used to generate the OAuth authentication URL.
 	 *
 	 * @since 1.11.0
+	 * @deprecated 1.13.0 - Use Actions::$authorize_nonce_action.
 	 *
 	 * @var string
 	 */
@@ -46,16 +47,19 @@ abstract class Account_API extends Abstract_Account_Api {
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$select_action.
 	 */
 	public static $select_action = 'events-virtual-google-account-setup';
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$status_action.
 	 */
 	public static $status_action = 'tec-events-virtual-meetings-google-settings-status';
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$delete_action.
 	 */
 	public static $delete_action = 'tec-events-virtual-meetings-google-settings-delete';
 
@@ -89,11 +93,11 @@ abstract class Account_API extends Abstract_Account_Api {
 			Api::OAUTH_POST_RESPONSE_CODE
 		)->then(
 			function ( array $response ) use ( &$revoked ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->has_proper_response_body( $body, [ 'status' ] );
 				if (
 					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-						&& isset( $body['status'] )
+						$body_set
 						&& 'success' === $body['status']
 					)
 				) {
@@ -127,7 +131,7 @@ abstract class Account_API extends Abstract_Account_Api {
 	 * @return bool Whether the authorization request is valid and was handled or not.
 	 */
 	public function handle_auth_request( $nonce = null ) {
-		if ( ! wp_verify_nonce( $nonce, self::$authorize_nonce_action ) ) {
+		if ( ! wp_verify_nonce( $nonce, $this->actions::$authorize_nonce_action ) ) {
 			wp_die( _x(
 					'You are not authorized to do this.',
 					'The message shown to a user providing a wrong Google API OAuth authorization nonce.',
@@ -165,7 +169,7 @@ abstract class Account_API extends Abstract_Account_Api {
 		}
 
 		// Set the access token here as we have to call fetch_user immediately, to get the user information.
-		$credentials   = json_decode( $response['body'], true );
+		$credentials   = json_decode( wp_remote_retrieve_body( $response ), true );
 		$access_token  = $credentials['access_token'];
 		$refresh_token = isset( $credentials['refresh_token'] ) ? $credentials['refresh_token'] : '';
 		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
@@ -232,7 +236,7 @@ abstract class Account_API extends Abstract_Account_Api {
 			return false;
 		}
 
-		$credentials   = json_decode( $response['body'], true );
+		$credentials   = json_decode( wp_remote_retrieve_body( $response ), true );
 		$access_token  = $credentials['access_token'];
 		$refresh_token = isset( $credentials['refresh_token'] ) ? $credentials['refresh_token'] : '';
 

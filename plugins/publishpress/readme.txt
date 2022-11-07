@@ -1,12 +1,12 @@
 === PublishPress: Editorial Calendar, Workflow, Comments, Notifications and Statuses===
-Contributors: publishpress, kevinB, stevejburge, andergmartins
+Contributors: publishpress, kevinB, stevejburge, andergmartins, olatechpro
 Author: PublishPress
 Author URI: https://publishpress.com
 Tags: editorial calendar, notifications, custom statuses, editorial comments, workflow
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 6.0
-Stable tag: 3.8.1
+Tested up to: 6.1
+Stable tag: 3.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ PublishPress is ideal for WordPress sites that publish high-quality content. Wit
 ## PublishPress Pro ##
 
 > <strong>Upgrade to PublishPress Pro</strong><br />
-> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPress content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
+> This plugin is the free version of the PublishPress plugin. The Pro versio comes with all the features you need to plan and schedule WordPresss content. <a href="https://publishpress.com/publishpress"  title="PublishPress Pro">Click here to purchase the best premium WordPress content scheduling plugin now!</a>
 
 = Editorial Calendar =
 
@@ -120,6 +120,44 @@ PublishPress is based on the EditFlow plugin. It is easy for Edit Flow users to 
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+
+= [3.9.0] - 3 Nov 2022 =
+
+* Update: Add Editorial Comments menu, #319
+* Update: Add file upload option to Editorial Comments, #757
+* Fixed: Notification User Role Keeps Reverting, #1136
+* Fixed: No Save Button on Editorial Comment Setting, #1134
+* Fixed: Error on console when accessing Widget, #1135
+* Fixed: Fatal error preventing user update, #1152
+* Fixed: Editorial Notifications channel not updating when user is updated, #1151
+* Fixed: PHP Notice: Undefined property warning on notification add/edit screen, #1147
+* Fixed: Add editorial comments metabox priority filter, #1084
+* Fixed: Extra "General" heading in "Slack" and "Reminders", #1122
+* Fixed: Publishpress-v3.8.4-ES-FR-IT_TranslationUpdate-5_October2022, #1133
+* Fixed: Press-ES-FR-IT-Translation-Update-September2022, #1124
+
+= [3.8.4] - 3 Oct 2022 =
+
+* Changed: Removed Twig dependency, refactoring the views for using plain PHP templates, #1125;
+
+= [3.8.3] - 8 Sep 2022 =
+
+* Fixed: Custom Status Conflict – PublishPress, #1105
+* Update: Show Content Overview Post Types Content Together, #1062
+* Update: Change to Content Overview "Start Date" and "End Date" filter, #1064
+* Update: Update to Settings tabs #443
+* Update: Publishpress-ES-FR-IT-translation-update_August2022, #1104
+
+= [3.8.2] - 17 Aug 2022 =
+
+* Update: Sticky filters on the Calendar, #1088
+* Update: Allow users to choose whether or not to show the whole page title, #1089
+* Fixed: Double slug on hierarchical page when in draft mode, #1087
+* Fixed: Metadata box shows errors if there are no fields, #1085
+* Fixed: Problem with html characters on calendar, #1037
+* Fixed: Metadata filters don't work on Content Overview, #1070
+* Fixed: Fix calendar time picker time picker, #914
+* Update: Stop loading assets on non-PublishPress /wp-admin/ pages, #330
 
 = [3.8.1] - 7 Jun 2022 =
 

@@ -4,7 +4,9 @@
  */
 
 // Don't load directly.
-if ( ! defined( 'ABSPATH' ) ) { die( '-1' ); }
+if ( ! defined( 'ABSPATH' ) ) {
+	die( '-1' );
+}
 
 use Tribe\Utils\Body_Classes as Body_Classes_Object;
 use \Tribe\Events\Filterbar\Compatibility\Divi\Service_Provider as Divi_Service_Provider;
@@ -48,7 +50,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 */
 		protected static $defaultMuFilters;
 
-		const VERSION = '5.3.1';
+		const VERSION = '5.4.0';
 
 		/**
 		 * The Events Calendar Required Version
@@ -57,7 +59,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * @deprecated 4.6
 		 *
 		 */
-		const REQUIRED_TEC_VERSION = '5.7.0';
+		const REQUIRED_TEC_VERSION = '6.0.0';
 
 		/**
 		 * Where in the themes we will look for templates
@@ -99,19 +101,17 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			}
 
 			require_once self::instance()->pluginPath . 'src/functions/views/provider.php';
-			self::$plugin_file = $plugin_file_path;
-			self::$instance = self::instance();
-
-			// Load Filter Bar V1.
-			if ( tribe_events_filterbar_views_v1_is_enabled() ) {
-				tribe_register_provider( Tribe\Events\Filterbar\Service_Providers\Context::class );
-				tribe_register_provider( Tribe\Events\Filterbar\Views\V2\Service_Provider::class );
-
-				return;
-			}
+			static::$plugin_file = $plugin_file_path;
+			static::$instance    = static::instance();
 
 			tribe_register_provider( Tribe\Events\Filterbar\Service_Providers\Context::class );
 			tribe_register_provider( Tribe\Events\Filterbar\Views\V2_1\Service_Provider::class );
+
+			// Custom tables v1 implementation.
+			if ( class_exists( '\\TEC\\Filter_Bar\\Custom_Tables\\V1\\Provider' ) ) {
+				tribe_register_provider( '\\TEC\\Filter_Bar\\Custom_Tables\\V1\\Provider' );
+			}
+
 			tribe_register_provider( Divi_Service_Provider::class );
 		}
 
@@ -123,10 +123,11 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * @return Tribe__Events__Filterbar__View The instance.
 		 */
 		public static function instance() {
-			if ( ! self::$instance instanceof self ) {
-				self::$instance = new self();
+			if ( ! static::$instance instanceof static ) {
+				static::$instance = new static();
 			}
-			return self::$instance;
+
+			return static::$instance;
 		}
 
 		/**
@@ -144,11 +145,8 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			$this->sidebarDisplayed = false;
 			$this->register_active_plugin();
 
-			add_action( 'wp', array( $this, 'setSidebarDisplayed' ) );
-			add_action( 'tribe_events_ajax_accessibility_check', array( $this, 'display_dynamic_a11y_notice' ) );
-			add_action( 'parse_query', array( $this, 'maybe_initialize_filters_for_query' ), 10, 1 );
-			add_action( 'tribe_repository_events_query', array( $this, 'maybe_initialize_filters_for_query' ), 1, 1 );
-			add_action( 'current_screen', array( $this, 'maybe_initialize_filters_for_screen' ), 10, 0 );
+			add_action( 'tribe_events_ajax_accessibility_check', [ $this, 'display_dynamic_a11y_notice' ] );
+			add_action( 'current_screen', [ $this, 'maybe_initialize_filters_for_screen' ], 10, 0 );
 			/**
 			 * Run on 'wp' to be sure all functions we may rely on are available.
 			 * Priority ensures we run after TEC & ECP.
@@ -157,9 +155,8 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			// Priority ensures we run after TEC & ECP.
 			add_filter( 'tribe_body_class_should_add_to_queue', [ $this, 'should_add_body_class_to_queue' ], 20, 3 );
 			add_filter( 'tribe_body_classes_should_add', [ $this, 'filter_body_classes_should_add' ], 20, 4 );
-			add_filter( 'tribe_events_template_paths', array( $this, 'template_paths' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueueStylesAndScripts' ), 11 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueueAdminScripts' ) );
+
+			add_action( 'admin_enqueue_scripts', [ $this, 'enqueueAdminScripts' ] );
 
 			$settings_page = new Tribe__Events__Filterbar__Settings();
 			$settings_page->set_hooks();
@@ -168,24 +165,25 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 
 			// Load multisite defaults
 			if ( is_multisite() ) {
-				$tribe_events_filters_default_mu_filters = array();
-				if ( file_exists( WP_CONTENT_DIR . '/tribe-events-mu-defaults.php' ) )
+				$tribe_events_filters_default_mu_filters = [];
+				if ( file_exists( WP_CONTENT_DIR . '/tribe-events-mu-defaults.php' ) ) {
 					include( WP_CONTENT_DIR . '/tribe-events-mu-defaults.php' );
+				}
 				self::$defaultMuFilters = apply_filters( 'tribe_events_mu_filters_default_filters', $tribe_events_filters_default_mu_filters );
 			}
 
-			add_action( 'admin_init', array( $this, 'run_updates' ), 10, 0 );
+			add_action( 'admin_init', [ $this, 'run_updates' ], 10, 0 );
 
 			/** Load the main filter-view.css stylesheet */
 			tribe_asset(
 				$this,
 				'tribe-filterbar-styles',
 				'filter-view.css',
-				array( 'tribe-select2-css', 'tribe-common-admin', 'dashicons' ),
+				[ 'tribe-select2-css', 'tribe-common-admin', 'dashicons' ],
 				'wp_enqueue_scripts',
-				array(
-					'conditionals' => array( $this, 'should_enqueue_assets' ),
-				)
+				[
+					'conditionals' => [ $this, 'should_enqueue_assets' ],
+				]
 			);
 
 			/** Load the mobile filter-view stylesheet */
@@ -193,12 +191,12 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 				$this,
 				'tribe-filterbar-mobile-styles',
 				'filter-view-mobile.css',
-				array( 'tribe-select2-css', 'tribe-common-admin', 'dashicons' ),
+				[ 'tribe-select2-css', 'tribe-common-admin', 'dashicons' ],
 				'wp_enqueue_scripts',
-				array(
+				[
 					'media'        => 'only screen and (max-width: ' . tribe_get_mobile_breakpoint() . 'px)',
-					'conditionals' => array( $this, 'should_enqueue_assets' ),
-				)
+					'conditionals' => [ $this, 'should_enqueue_assets' ],
+				]
 			);
 
 			/** Load JS */
@@ -206,11 +204,11 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 				$this,
 				'tribe-filterbar-js',
 				'filter-scripts.js',
-				array( 'tribe-dropdowns', 'jquery-ui-slider' ),
+				[ 'tribe-dropdowns', 'jquery-ui-slider' ],
 				'wp_enqueue_scripts',
-				array(
-					'conditionals' => array( $this, 'should_enqueue_assets' ),
-				)
+				[
+					'conditionals' => [ $this, 'should_enqueue_assets' ],
+				]
 			);
 		}
 
@@ -231,48 +229,12 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * Enqueue the plugin stylesheet(s).
 		 *
 		 * @since 3.4
+		 * @depecated 5.4.0
 		 *
 		 * @return void
 		 */
 		public function enqueueStylesAndScripts() {
-
-			if ( ! $this->should_enqueue_assets() ) {
-				return false;
-			}
-
-			$show_filter = apply_filters( 'tribe_events_filters_should_show', in_array( get_post_type(), array( Tribe__Events__Main::VENUE_POST_TYPE, Tribe__Events__Main::ORGANIZER_POST_TYPE ) ) ? false : true );
-
-			if ( $show_filter ) {
-				// Only display filters before template if the layout is horizontal
-				if ( tribe_get_option( 'events_filters_layout', 'vertical' ) == 'vertical' ) {
-					add_action( 'tribe_events_bar_after_template', array( $this, 'displaySidebar' ), 25 );
-				} else {
-					if ( tribe_get_option( 'tribeDisableTribeBar', false ) == true ) {
-						add_action( 'tribe_events_before_template', array( $this, 'displaySidebar' ), 25 );
-					} else {
-						add_action( 'tribe_events_bar_after_template', array( $this, 'displaySidebar' ), 25 );
-					}
-				}
-			}
-
-			tribe_asset_enqueue( 'tribe-events-calendar-script' );
-
-			wp_enqueue_style( 'custom-jquery-styles' );
-
-			// Check for override stylesheet.
-			$user_stylesheet_url = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/filterbar/filter-view.css' );
-			$user_stylesheet_url = apply_filters( 'tribe_events_filterbar_stylesheet_url', $user_stylesheet_url );
-
-			// If override stylesheet exists, then enqueue it.
-			if ( $user_stylesheet_url ) {
-				wp_enqueue_style( 'tribe-events-filterbar-override-style', $user_stylesheet_url );
-			}
-
-			wp_localize_script( 'tribe-filterbar-js', 'tribe_filter', array(
-				'reverse_position'       => tribe_get_option( 'reverseCurrencyPosition', false ),
-				'currency_symbol'        => tribe_get_option( 'defaultCurrencySymbol' ),
-				'featured_active_filter' => _x( 'Active', 'Featured Events active filter display label', 'tribe-events-filter-view' ),
-			) );
+			_deprecated_function( __METHOD__, '5.4.0', 'No replacement method available. This method was only used for legacy views.' );
 		}
 
 		/**
@@ -314,19 +276,20 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * @return boolean Should Filter Bar assets be loaded?
 		 */
 		public function should_enqueue_assets() {
-			return tribe_is_event_query() ||  tribe_is_event_organizer() || tribe_is_event_venue();
+			return tribe_is_event_query() || tribe_is_event_organizer() || tribe_is_event_venue();
 		}
 
 		/**
 		 * Add the filters body class.
 		 *
 		 *
-		 * @since 3.4
+		 * @since      3.4
 		 * @deprecated 5.0.0
 		 *
 		 * @return array<string> The new set of body classes.
 		 */
 		public function addBodyClass( $classes ) {
+			_deprecated_function( __METHOD__, '5.4.0', 'No replacement method available. This method was only used for legacy views.' );
 			$classes[] = 'tribe-events-filter-view';
 			$classes[] = 'tribe-filters-' . tribe_get_option( 'events_filters_default_state', 'closed' );
 			$classes[] = 'tribe-filters-' . tribe_get_option( 'events_filters_layout', 'vertical' );
@@ -384,7 +347,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			}
 
 			// We should not add classes to pages where we don't enqueue assets.
-			if( ! $this->should_enqueue_assets() ) {
+			if ( ! $this->should_enqueue_assets() ) {
 				return false;
 			}
 
@@ -425,7 +388,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 *
 		 * @return boolean Whether to add our queue of classes to the body or not.
 		 */
-		public function filter_body_classes_should_add( $add, $queue, $add_classes, $unused_existing_classes) {
+		public function filter_body_classes_should_add( $add, $queue, $add_classes, $unused_existing_classes ) {
 			// Bail on non-FE queues.
 			if ( 'display' !== $queue ) {
 				return $add;
@@ -446,17 +409,14 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * Add premium plugin paths for each file in the templates array
 		 *
 		 * @since 3.4
+		 * @deprecated 5.4.0
 		 *
 		 * @param $template_paths array
 		 *
 		 * @return array
 		 */
-		public function template_paths( $template_paths = array() ) {
-			// To prevent problems with Backwards compatibility
-			$template_paths['filter-bar'] = $this->pluginPath;
-
-			// New Path
-			$template_paths['filterbar'] = $this->pluginPath;
+		public function template_paths( $template_paths = [] ) {
+			_deprecated_function( __METHOD__, '5.4.0' );
 			return $template_paths;
 		}
 
@@ -464,18 +424,12 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * Display the filters sidebar.
 		 *
 		 * @since 3.4
+		 * @deprecated 5.4.0
 		 *
 		 * @return void
 		 */
 		public function displaySidebar( $html ) {
-			if ( $this->sidebarDisplayed ) {
-				if ( ! is_single() || tribe_is_showing_all() ) {
-					ob_start();
-					tribe_get_template_part( 'filter-bar/filter-view-' . tribe_get_option( 'events_filters_layout', 'vertical' ) );
-					$html = ob_get_clean() . $html;
-				}
-				echo $html;
-			}
+			_deprecated_function( __METHOD__, '5.4.0' );
 		}
 
 		/**
@@ -483,19 +437,12 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 *
 		 * @param WP_Query $query Query object
 		 *
+		 * @deprecated 5.4.0
+		 *
 		 * @return boolean Are there are tribe specific query vars in the query object?
 		 */
 		public function is_tribe_query( $query ) {
-			// if the post type is the event post type, we're in a tribe query
-			if ( $query->get( 'post_type' ) === Tribe__Events__Main::POSTTYPE ) {
-				return true;
-			}
-
-			foreach ( array_keys( $query->query ) as $key ) {
-				if ( 0 === strpos( $key, 'tribe_' ) ) {
-					return true;
-				}
-			}
+			_deprecated_function( __METHOD__, '5.4.0' );
 
 			return false;
 		}
@@ -506,35 +453,12 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 *
 		 * @param WP_Query $query
 		 *
+		 * @deprecated 5.4.0
+		 *
 		 * @return void
 		 */
 		public function maybe_initialize_filters_for_query( $query = null ) {
-			/**
-			 * Filters whether to initialize Filterbar filters for the query or not.
-			 *
-			 * @since 4.9.0
-			 *
-			 * @param bool          $initialize_filters Whether to initialize Filterbar filters for the query or not.
-			 * @param WP_Query|null $query              The current query object, if any.
-			 */
-			$initialize_filters = apply_filters( 'tribe_events_filter_bar_initialize_filters', true, $query );
-
-			if ( ! $initialize_filters ) {
-				return;
-			}
-
-			if ( $this->is_tribe_query( $query ) ) {
-				if (
-					$query->is_main_query()
-					|| ( defined( 'DOING_AJAX' ) && DOING_AJAX )
-					|| (
-						! empty( $query->query['tribe_render_context'] )
-						&& 'default' === $query->query['tribe_render_context']
-					)
-				) {
-					$this->initialize_filters();
-				}
-			}
+			_deprecated_function( __METHOD__, '5.4.0' );
 		}
 
 		/**
@@ -683,6 +607,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			if ( empty( self::$defaultMuFilters ) ) {
 				return false;
 			}
+
 			return self::$defaultMuFilters;
 		}
 
@@ -698,6 +623,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			if ( ! is_array( $current_filters ) ) { // everything is active
 				$current_filters = $this->get_registered_filters();
 			}
+
 			return apply_filters( 'tribe_events_active_filters', array_keys( $current_filters ) );
 		}
 
@@ -709,15 +635,16 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 * @return array<array> An array of registered filters.
 		 */
 		public function get_registered_filters() {
-			$filters = apply_filters( 'tribe_events_all_filters_array', array() );
+			$filters = apply_filters( 'tribe_events_all_filters_array', [] );
+
 			return $filters;
 		}
 
 		/**
 		 * Load the plugin's textdomain.
 		 *
-		 * @return void
 		 * @since 3.4
+		 * @return void
 		 */
 		public function loadTextDomain() {
 			$mopath = $this->pluginDir . 'lang/';
@@ -734,8 +661,11 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 
 		/**
 		 * Get the absolute system path to the plugin directory, or a file therein
+		 *
 		 * @static
+		 *
 		 * @param string $path
+		 *
 		 * @return string
 		 */
 		public static function plugin_path( $path ) {
@@ -749,12 +679,15 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 
 		/**
 		 * Get the absolute URL to the plugin directory, or a file therein
-		 * @static
+		 *
+		 * @deprecated
+		 *
 		 * @param string $path
+		 *
 		 * @return string
 		 */
 		public static function plugin_url( $path ) {
-			return plugins_url( $path, self::$plugin_file );
+			_deprecated_function( __METHOD__, '5.4.0' );
 		}
 
 		/**
@@ -789,27 +722,6 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 			}
 
 			return false;
-		}
-
-		/**
-		 * Initialize the addon to make sure the versions line up.
-		 *
-		 * @deprecated 4.6
-		 *
-		 * @since 0.1
-		 * @param array $plugins The array of registered plugins.
-		 * @return array The array of registered plugins.
-		 */
-		public static function initAddon( $plugins ) {
-			_deprecated_function( __METHOD__, '4.6', '' );
-
-			$plugins['TribeFilterView'] = array(
-				'plugin_name'      => 'The Events Calendar: Filter Bar',
-				'required_version' => self::REQUIRED_TEC_VERSION,
-				'current_version'  => self::VERSION,
-				'plugin_dir_file'  => basename( dirname( dirname( __FILE__ ) ) ) . '/the-events-calendar-filter-view.php',
-			);
-			return $plugins;
 		}
 	}
 }

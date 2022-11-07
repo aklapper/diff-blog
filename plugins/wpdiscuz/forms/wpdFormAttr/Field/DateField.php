@@ -39,6 +39,14 @@ class DateField extends Field {
                 <label for="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]"><?php esc_html_e("Display on comment", "wpdiscuz"); ?>:</label> 
                 <input type="checkbox" value="1" <?php checked($this->fieldData["is_show_on_comment"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" id="<?php echo esc_attr($this->fieldInputName); ?>[is_show_on_comment]" />
             </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]"><?php esc_html_e("Display for Guests", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_guests"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_guests]" />
+            </div>
+            <div class="wpd-field-option">
+                <label for="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]"><?php esc_html_e("Display for Registered Users", "wpdiscuz"); ?>:</label> 
+                <input type="checkbox" value="1" <?php checked($this->fieldData["show_for_users"], 1, true); ?> name="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" id="<?php echo esc_attr($this->fieldInputName); ?>[show_for_users]" />
+            </div>
             <div class="wpd-advaced-options wpd-field-option">
                 <small class="wpd-advaced-options-title"><?php esc_html_e("Advanced Options", "wpdiscuz"); ?></small>
                 <div class="wpd-field-option wpd-advaced-options-cont">
@@ -58,14 +66,14 @@ class DateField extends Field {
     }
 
     public function editCommentHtml($key, $value, $data, $comment) {
-        if ($comment->comment_parent && !$data["is_show_sform"]) {
+        if (!$this->isShowForUser($data) || ($comment->comment_parent && !$data["is_show_sform"])) {
             return "";
         }
         $html = "<tr class='" . esc_attr($key) . "-wrapper wpd-edit-date'><td class='first'>";
         $html .= "<label for='" . esc_attr($key) . "'>" . esc_html($data["name"]) . ": </label>";
         $html .= "</td><td>";
         $html .= "<div class='wpdiscuz-item'>";
-        $required = $data["required"] ? "required='required' aria-required='true'" : "";
+        $required = $this->isValidateRequired($data) ? "required='required' aria-required='true'" : "";
         $html .= "<input " . $required . " class='wpd-field wpd-field-date' type='date' id='" . esc_attr($key) . "' value='" . esc_attr($value) . "'  name='" . esc_attr($key) . "' pattern='^(1[0-2]|0[1-9])/(3[01]|[12][0-9]|0[1-9])/[0-9]{4}$' title='03/28/2016'>";
         $html .= "</div>";
         $html .= "</td></tr>";
@@ -73,7 +81,7 @@ class DateField extends Field {
     }
 
     public function frontFormHtml($name, $args, $options, $currentUser, $uniqueId, $isMainForm) {
-        if (!$isMainForm && !$args["is_show_sform"]) {
+        if (!$this->isShowForUser($args, $currentUser) || (!$isMainForm && !$args["is_show_sform"])) {
             return;
         }
         $hasIcon = $args["icon"] ? true : false;
@@ -97,6 +105,9 @@ class DateField extends Field {
     }
 
     public function frontHtml($value, $args) {
+        if(!$this->isShowForUser($args)){
+            return "";
+        }
         $html = "<div class='wpd-custom-field wpd-cf-text'>";
         $html .= "<div class='wpd-cf-label'>" . esc_html($args["name"]) . "</div> <div class='wpd-cf-value'> " . esc_html(apply_filters("wpdiscuz_custom_field_date", $value, $args)) . "</div>";
         $html .= "</div>";
@@ -104,14 +115,11 @@ class DateField extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        if (!$this->isCommentParentZero() && !$args["is_show_sform"]) {
-            return "";
-        }
         $value = Sanitizer::sanitize(INPUT_POST, $fieldName, "FILTER_SANITIZE_STRING");
         if ($value && !preg_match("@^[0-9]{4}-[0-9]{2}-[0-9]{2}$@is", $value)) {
             $value = "";
         }
-        if (!$value && $args["required"]) {
+        if ($this->isValidateRequired($args, $currentUser) && !$value && $args["required"]) {
             wp_die(esc_html__($args["name"], "wpdiscuz") . " : " . esc_html__("field is required!", "wpdiscuz"));
         }
         return $value;
@@ -126,6 +134,8 @@ class DateField extends Field {
             "loc" => "bottom",
             "is_show_on_comment" => 1,
             "is_show_sform" => 1,
+            "show_for_guests" => 1,
+            "show_for_users" => 1,
         ];
     }
 

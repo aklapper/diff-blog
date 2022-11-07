@@ -29,6 +29,7 @@ abstract class Abstract_Meetings {
 	 * The property also provides a reasonable default for the abstract class.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 1.13.0 - Use Actions::$create_action.
 	 *
 	 * @var string
 	 */
@@ -39,6 +40,7 @@ abstract class Abstract_Meetings {
 	 * The property also provides a reasonable default for the abstract class.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 1.13.0 - Use Actions::$remove_action.
 	 *
 	 * @var string
 	 */
@@ -86,13 +88,16 @@ abstract class Abstract_Meetings {
 	 * Meetings constructor.
 	 *
 	 * @since 1.9.0
+	 * @since 1.13.0 - Add the Action class.
 	 *
 	 * @param Api            $api            An instance of the Webex API handler.
 	 * @param Classic_Editor $classic_editor An instance of the Classic Editor rendering handler.
+	 * @param Actions        $actions        An instance of the Actions name handler.
 	 */
-	public function __construct( Api $api, Classic_Editor $classic_editor) {
+	public function __construct( Api $api, Classic_Editor $classic_editor, Actions $actions ) {
 		$this->api            = $api;
 		$this->classic_editor = $classic_editor;
+		$this->actions        = $actions;
 	}
 
 	/**
@@ -120,7 +125,7 @@ abstract class Abstract_Meetings {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_create( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$create_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$create_action, $nonce ) ) {
 			return false;
 		}
 
@@ -298,7 +303,7 @@ abstract class Abstract_Meetings {
 	 * @return bool|string Whether the request was handled or a string with html for meeting creation.
 	 */
 	public function ajax_remove( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$remove_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$remove_action, $nonce ) ) {
 			return false;
 		}
 
@@ -485,10 +490,10 @@ abstract class Abstract_Meetings {
 			Api::GET_RESPONSE_CODE
 		)->then(
 			function ( array $response ) use ( $post_id, &$success ) {
-				$body = json_decode( $response['body'], true );
 
-				// If the response is empty, then do not update the post.
-				if ( ! empty( $body ) && is_array( $body ) ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->api->has_proper_response_body( $body );
+				if ( $body_set ) {
 					$data = $this->prepare_meeting_data( $body );
 					$this->update_post_meta( $post_id, $body, $data );
 				}
@@ -577,12 +582,10 @@ abstract class Abstract_Meetings {
 	 * @return array<string,mixed> The Webex Meeting data.
 	 */
 	protected function process_meeting_creation_response( array $response, $post_id ) {
-		if ( ! (
-			isset( $response['body'] )
-			// phpcs:ignore
-			&& false !== ( $body = json_decode( $response['body'], true ) )
-			&& isset( $body['webLink'], $body['id'] )
-		) ) {
+
+		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+		$body_set = $this->api->has_proper_response_body( $body, [ 'webLink', 'id' ] );
+		if ( ! $body_set ) {
 			do_action(
 				'tribe_log',
 				'error',

@@ -27,10 +27,12 @@ use Tribe\Events\Virtual\Event_Status\Compatibility\Filter_Bar\Service_Provider 
 use Tribe\Events\Virtual\Event_Status\Status_Labels;
 use Tribe\Events\Virtual\Meetings\Facebook_Provider;
 use Tribe\Events\Virtual\Meetings\Google_Provider;
+use Tribe\Events\Virtual\Meetings\Microsoft_Provider;
 use Tribe\Events\Virtual\Meetings\Webex_Provider;
 use Tribe\Events\Virtual\Meetings\YouTube_Provider;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
 use Tribe\Events\Virtual\Views\V2\Widgets\Widget;
+use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Context as Context;
 use Tribe__Events__Main as Events_Plugin;
 use Tribe__Template as Template;
@@ -468,6 +470,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 
 		$this->container->register( Facebook_Provider::class );
 		$this->container->register( Google_Provider::class );
+		$this->container->register( Microsoft_Provider::class );
 		$this->container->register( Webex_Provider::class );
 		$this->container->register( YouTube_Provider::class );
 		$this->container->register( Zoom_Provider::class );
@@ -1126,11 +1129,14 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		if ( empty( $post ) ) {
 			return false;
 		}
+		
+		// This is required to ensure virtual event details are embedded properly in the Elementor Event widget
+		$is_single_event = tribe( Template_Bootstrap::class )->is_single_event();
 
-		$no_blocks = ! function_exists( 'has_block' ) || has_block( 'tribe/virtual-event', $post );
+		$no_blocks = ! function_exists( 'has_block' ) || has_block( 'tribe/virtual-event', $post )  || ! $is_single_event;
 
 		// If the block is missing, show the legacy info HTML.
-		$new_block = ! $no_blocks ? false : tribe_events_single_view_v2_is_enabled();
+		$new_block = ! $no_blocks ? false : true;
 
 		/**
 		 * Allows filtering whether to load the legacy virtual info HTML over the new block.
@@ -1142,33 +1148,5 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		 * @param WP_Post $post      The current global post object.
 		 */
 		return apply_filters( 'tec_events_virtual_should_inject_new_block', $new_block, $post );
-	}
-
-	/**
-	 * Ajax function to test an oembed link for "embeddability".
-	 *
-	 * @since 1.0.0
-	 * @deprecated 1.8.0
-	 */
-	public function ajax_test_embed_url() {
-		_deprecated_function( __FUNCTION__, '1.8.0', 'Deprecated for autodetect support.' );
-
-		$this->container->make( OEmbed::class )->ajax_test_oembed_url();
-	}
-
-	/**
-	 * Renders the video input fields.
-	 *
-	 * @since 1.6.0
-	 * @deprecated 1.8.0
-	 *
-	 * @param string           $file        The path to the template file, unused.
-	 * @param string           $entry_point The name of the template entry point, unused.
-	 * @param \Tribe__Template $template    The current template instance.
-	 */
-	public function render_classic_meeting_video_source_ui( $file, $entry_point, \Tribe__Template $template ) {
-		_deprecated_function( __FUNCTION__, '1.8.0', 'Deprecated for autodetect support, use Autodetect_Metabox::classic_autodetect_video_source_ui()' );
-		$this->container->make( Metabox::class )
-		                ->classic_meeting_video_source_ui( $template->get( 'post' ) );
 	}
 }

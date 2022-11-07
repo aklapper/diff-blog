@@ -49,7 +49,7 @@ if (! class_exists('PP_Settings')) {
          */
         public function __construct()
         {
-            $this->twigPath = __DIR__ . '/twig';
+            $this->viewsPath = __DIR__ . '/views';
 
             parent::__construct();
 
@@ -259,15 +259,16 @@ if (! class_exists('PP_Settings')) {
         public function print_default_footer($current_module, $echo = true)
         {
             if (apply_filters('publishpress_show_footer', true)) {
-                $html = $this->twig->render(
-                    'footer-base.twig',
+                $html = $this->view->render(
+                    'footer-base',
                     [
                         'current_module' => $current_module,
                         'plugin_name'    => __('PublishPress', 'publishpress'),
                         'plugin_slug'    => 'publishpress',
                         'plugin_url'     => PUBLISHPRESS_URL,
                         'rating_message' => __('If you like %s please leave us a %s rating. Thank you!', 'publishpress'),
-                    ]
+                    ],
+                    $this->viewsPath
                 );
 
                 if (! $echo) {
@@ -303,8 +304,8 @@ if (! class_exists('PP_Settings')) {
                             $url = $mod_data->page_link;
                         }
 
-                        echo $this->twig->render(
-                            'module.twig',
+                        echo $this->view->render(
+                            'module',
                             [
                                 'has_config_link' => isset($mod_data->configure_page_cb) && !empty($mod_data->configure_page_cb),
                                 'slug'            => $mod_data->slug,
@@ -313,7 +314,8 @@ if (! class_exists('PP_Settings')) {
                                 'title'           => $mod_data->title,
                                 'description'     => wp_kses($mod_data->short_description, 'a'),
                                 'url'             => $url,
-                            ]
+                            ],
+                            $this->viewsPath
                         );
                     }
                 }
@@ -443,7 +445,18 @@ if (! class_exists('PP_Settings')) {
         {
             global $publishpress;
 
-            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+            $default_module = PP_Modules_Settings::SETTINGS_SLUG . '-settings';
+
+            if ($publishpress->modules && is_object($publishpress->modules) && !empty($publishpress->modules)) {
+                foreach ($publishpress->modules as $mod_name => $mod_data) {
+                    if (!$mod_data->autoload && $mod_data->options->enabled !== 'off') {
+                        $default_module = 'pp-' . $mod_data->slug . '-settings';
+                        break;
+                    }
+                }
+            }
+
+            $module_settings_slug = isset($_GET['settings_module']) && !empty($_GET['settings_module']) ? sanitize_text_field($_GET['settings_module']) : $default_module;
             $requested_module     = $publishpress->get_module_by('settings_slug', $module_settings_slug);
             $display_text         = '';
 
@@ -485,17 +498,27 @@ if (! class_exists('PP_Settings')) {
             $publishpress->$requested_module_name->$configure_callback();
             $module_output = ob_get_clean();
 
-            echo $this->twig->render(
-                'settings.twig',
+            $all_modules = (array)$publishpress->modules;
+            //force notification tab if dependent tab is enabled
+            foreach ($all_modules as $mod_name => $mod_data) {
+                if (isset($mod_data->notification_options) && $mod_data->options->enabled === 'on') {
+                    $all_modules['notifications']->options->enabled = 'on';
+                    break;
+                }
+            }
+
+            echo $this->view->render(
+                'settings',
                 [
-                    'modules'        => (array)$publishpress->modules,
+                    'modules'        => $all_modules,
                     'settings_slug'  => $module_settings_slug,
                     'slug'           => PP_Modules_Settings::SETTINGS_SLUG,
                     'module_output'  => $module_output,
                     'sidebar_output' => '',
                     'text'           => $display_text,
                     'show_sidebar'   => false,
-                ]
+                ],
+                $this->viewsPath
             );
 
             $this->print_default_footer($requested_module);

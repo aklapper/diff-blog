@@ -74,7 +74,7 @@ class AJAX {
 	 * @return false|string The html of the autodetect fields or false if not authorized.
 	 */
 	public function detect_source( $nonce ) {
-		if ( ! $this->check_ajax_nonce( self::$autodetect_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( static::$autodetect_action, $nonce ) ) {
 			return false;
 		}
 
