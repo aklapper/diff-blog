@@ -121,6 +121,9 @@ add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 110 );
 add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 110 );
 add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 110 );
 add_filter( 'manage_edit-tribe_events_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_events_cat_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_venue_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_organizer_columns', 'diff_remove_language_columns', 110 );
 
 /**
  * Remove the Polylang plugin admin language columns.
