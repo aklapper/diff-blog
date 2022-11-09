@@ -3,8 +3,8 @@
 
 
 # Load VIP plugins & configuration settings
-wpcom_vip_legacy_load_plugin( 'fieldmanager', 'plugins', '1.1' );
-wpcom_vip_legacy_load_plugin( 'co-authors-plus', 'plugins', '3.2' );
+wpcom_vip_load_plugin( 'fieldmanager' );
+wpcom_vip_load_plugin( 'co-authors-plus' );
 wpcom_vip_load_category_base( 'c' );
 
 # Load libraries and includes
