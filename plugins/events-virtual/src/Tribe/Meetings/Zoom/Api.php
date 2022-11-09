@@ -19,7 +19,7 @@ use Tribe\Events\Virtual\Template_Modifications;
  *
  * @since  1.0.0
  * @since  1.5.0 - Extends Account_API Class to support multiple accounts.
- * @since 1.9.0 - Extends Request_Api Class a shared class for connections to an API.
+ * @since  1.9.0 - Extends Request_Api Class a shared class for connections to an API.
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
@@ -74,12 +74,16 @@ class Api extends Account_API {
 	 * @since 1.4.0  - Add encryption handler.
 	 * @since 1.5.0 - Add Account_API to support multiple accounts.
 	 * @since 1.9.0 - Move request methods to a new class and load through construct.
+	 * @since 1.13.0 - Add the Action class.
 	 *
-	 * @param Encryption $encryption An instance of the Encryption handler.
+	 * @param Encryption             $encryption             An instance of the Encryption handler.
+	 * @param Template_Modifications $template_modifications An instance of the Template_Modifications handler.
+	 * @param Actions                $actions                An instance of the Actions name handler.
 	 */
-	public function __construct( Encryption $encryption, Template_Modifications $template_modifications ) {
-		$this->encryption    = ( ! empty( $encryption ) ? $encryption : tribe( Encryption::class ) );
+	public function __construct( Encryption $encryption, Template_Modifications $template_modifications, Actions $actions ) {
+		$this->encryption             = ( ! empty( $encryption ) ? $encryption : tribe( Encryption::class ) );
 		$this->template_modifications = $template_modifications;
+		$this->actions                = $actions;
 
 		// Attempt to load an account.
 		$this->load_account();
@@ -92,7 +96,7 @@ class Api extends Account_API {
 		$refreshed = false;
 
 		$this->post(
-			OAuth::$token_request_url,
+			Url::to_refresh(),
 			[
 				'body'    => [
 					'grant_type'    => 'refresh_token',
@@ -103,13 +107,9 @@ class Api extends Account_API {
 		)->then(
 			function ( array $response ) use ( &$id, &$refreshed ) {
 
-				if (
-					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-						&& isset( $body['access_token'], $body['refresh_token'], $body['expires_in'] )
-					)
-				) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->has_proper_response_body( $body, [ 'access_token', 'refresh_token', 'expires_in' ] );
+				if ( ! $body_set ) {
 					do_action( 'tribe_log', 'error', __CLASS__, [
 						'action'   => __METHOD__,
 						'message'  => 'Zoom API access token refresh response is malformed.',
@@ -163,13 +163,9 @@ class Api extends Account_API {
 		)->then(
 			function ( array $response ) use ( &$data ) {
 
-				if (
-					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-						&& isset( $body['join_url'] )
-					)
-				) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->has_proper_response_body( $body, [ 'join_url' ] );
+				if ( ! $body_set ) {
 					do_action( 'tribe_log', 'error', __CLASS__, [
 						'action'   => __METHOD__,
 						'message'  => 'Zoom API meetings settings response is malformed.',
@@ -219,15 +215,10 @@ class Api extends Account_API {
 			200
 		)->then(
 			static function ( array $response ) use ( &$data ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = self::has_proper_response_body( $body );
 
-				$body = json_decode( $response['body'] );
-
-				if (
-					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-					)
-				) {
+				if ( ! $body_set ) {
 					do_action( 'tribe_log', 'error', __CLASS__, [
 						'action'   => __METHOD__,
 						'message'  => 'Zoom API user response is malformed.',
@@ -348,16 +339,10 @@ class Api extends Account_API {
 			200
 		)->then(
 			static function ( array $response ) use ( &$data ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = self::has_proper_response_body( $body, [ 'users' ] );
 
-				$body = json_decode( $response['body'] );
-
-				if (
-					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-						&& isset( $body['users'] )
-					)
-				) {
+				if ( ! $body_set ) {
 					do_action( 'tribe_log', 'error', __CLASS__, [
 						'action'   => __METHOD__,
 						'message'  => 'Zoom API users response is malformed.',

@@ -40,19 +40,23 @@ class Classic_Editor extends Abstract_Classic_Labels {
 	 * Classic_Editor constructor.
 	 *
 	 * @since 1.9.0 - Add Settings Dependency
+	 * @since 1.13.0 - Add the Action class.
 	 *
-	 * @param Url            $url      The URLs handler for the integration.
-	 * @param Api            $api      An instance of the Zoom API handler.
-	 * @param Admin_Template $template An instance of the Template class to handle the rendering of admin views.
-	 * @param Settings       $settings An instance of the Webex Settings handler.
-	 * @param Users          $users    The Users handler for the integration.
+	 * @param Url                    $url                    The URLs handler for the integration.
+	 * @param Api                    $api                    An instance of the Zoom API handler.
+	 * @param Admin_Template         $template               An instance of the Template class to handle the rendering of admin views.
+	 * @param Settings               $settings               An instance of the Webex Settings handler.
+	 * @param Users                  $users                  The Users handler for the integration.
+	 * @param Template_Modifications $template_modifications An instance of the Template_Modifications handler.
+	 * @param Actions                $actions                An instance of the Actions name handler.
 	 */
-	public function __construct( Url $url, Api $api, Admin_Template $template, Settings $settings, Users $users ) {
+	public function __construct( Url $url, Api $api, Admin_Template $template, Settings $settings, Users $users, Actions $actions ) {
 		$this->url      = $url;
 		$this->api      = $api;
 		$this->template = $template;
 		$this->settings = $settings;
 		$this->users    = $users;
+		$this->actions  = $actions;
 	}
 
 	/**
@@ -425,11 +429,6 @@ class Classic_Editor extends Abstract_Classic_Labels {
 			? Meetings::$meeting_type
 			: Webinars::$meeting_type;
 
-		// Set the url to update the meeting or webinar using AJAX.
-		$update_link_url = Webinars::$meeting_type === $meeting_type
-			?  $this->url->to_update_webinar_link( $post )
-			:  $this->url->to_update_meeting_link( $post );
-
 		$details_title = Webinars::$meeting_type === $meeting_type
 			? _x(
 				'Zoom Webinar:',
@@ -487,7 +486,6 @@ class Classic_Editor extends Abstract_Classic_Labels {
 				'attrs'                    => [
 					'data-depends'            => '#tribe-events-virtual-video-source',
 					'data-condition'          => static::$api_id,
-					'data-update-url'         => $update_link_url,
 					'data-zoom-id'            => $post->zoom_meeting_id,
 					'data-selected-alt-hosts' => $post->zoom_alternative_hosts,
 				],
@@ -495,7 +493,6 @@ class Classic_Editor extends Abstract_Classic_Labels {
 				'connected_msg'            => $connected_msg,
 				'event'                    => $post,
 				'details_title'            => $details_title,
-				'update_link_url'          => $update_link_url,
 				'remove_link_url'          => $this->get_remove_link( $post ),
 				'remove_link_label'        => $this->get_remove_link_label(),
 				'remove_attrs'             => [
@@ -548,7 +545,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 	 * {@inheritDoc}
 	 */
 	public function ajax_selection( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( $this->api::$select_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$select_action, $nonce ) ) {
 			return false;
 		}
 
@@ -590,73 +587,6 @@ class Classic_Editor extends Abstract_Classic_Labels {
 		$this->api->save_account_id_to_post( $post_id, $zoom_account_id );
 
 		wp_die();
-	}
-
-	/**
-	 * Returns the link generation URLs and label for a post.
-	 *
-	 * @since 1.1.1
-	 * @deprecated 1.8.2 Use get_link_creation_urls()
-	 *
-	 * @param \WP_Post $post                  The post object of the Event context of the link generation.
-	 * @param bool     $include_generate_text Whether to include the "Generate" text in the labels or not.
-	 *
-	 * @return array<string,array<string>> A map (by meeting type) of unpackable arrays, each one containing the URL and
-	 *                                     label for the generation link HTML code.
-	 */
-	protected function get_link_generation_urls( \WP_Post $post, $include_generate_text = false ) {
-		_deprecated_function( __FUNCTION__, '1.8.2', get_class( $this ) . '::get_link_creation_urls()' );
-
-		// Do not make these dynamic or "smart" in any way: "Generate" might not be a prefix in some languages.
-		$w_generate_meeting_label  = _x(
-			'Generate Zoom Meeting',
-			'Label for the control to generate a Zoom meeting link in the event classic editor UI.',
-			'events-virtual'
-		);
-		$wo_generate_meeting_label = _x(
-			'Meeting',
-			'Label for the control to generate a Zoom meeting link in the event classic editor UI, w/o the "Generate" prefix.',
-			'events-virtual'
-		);
-		$w_generate_webinar_label  = _x(
-			'Generate Zoom Webinar',
-			'Label for the control to generate a Zoom webinar link in the event classic editor UI.',
-			'events-virtual'
-		);
-		$wo_generate_webinar_label = _x(
-			'Webinar',
-			'Label for the control to generate a Zoom webinar link in the event classic editor UI, w/o the "Generate" prefix.',
-			'events-virtual'
-		);
-
-		$data = [
-			Meetings::$meeting_type => [
-				$this->url->to_generate_meeting_link( $post ),
-				$include_generate_text ? $w_generate_meeting_label : $wo_generate_meeting_label,
-			]
-		];
-
-		// Add webinar if supported.
-		if ( $this->api->supports_webinars() ) {
-			$data[ Webinars::$meeting_type ] = [
-				$this->url->to_generate_webinar_link( $post ),
-				$include_generate_text ? $w_generate_webinar_label : $wo_generate_webinar_label,
-			];
-		}
-
-		/**
-		 * Allows filtering the generation links URL and label before rendering them on the admin UI.
-		 *
-		 * @since 1.1.1
-		 * @deprecated 1.8.2 Use tec_events_virtual_zoom_meeting_link_creation_urls
-		 *
-		 * @param array<string,array<string>> A map (by meeting type) of unpackable arrays, each one containing the URL and
-		 *                                    label for the generation link HTML code.
-		 * @param \WP_Post $post              The post object of the Event context of the link generation.
-		 */
-		$data = apply_filters_deprecated( 'tribe_events_virtual_zoom_meeting_link_generation_urls', $data, $post );
-
-		return $data;
 	}
 
 	/**

@@ -78,7 +78,6 @@ class Hooks extends \tad_DI52_ServiceProvider {
 		 * In the context of Views V2_1 filters will work differently and their hooking to queries is handled
 		 * in the `tribe_events_filter_bar_initialize_filters` filter.
 		 */
-		add_filter( 'tribe_events_filter_bar_initialize_filters', '__return_false' );
 		add_filter( 'tribe_events_views_v2_view_repository_args', [ $this, 'filter_view_repository_args' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_url_query_args', [ $this, 'filter_view_url_query_args' ], 10, 2 );
 		add_filter( 'tribe_events_views_v2_rest_params', [ $this, 'filter_view_rest_params' ], 10, 2 );

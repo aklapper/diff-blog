@@ -42,6 +42,7 @@ class Abstract_Meetings {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.1 Moved to the Tribe\Events\Virtual\Meetings\Zoom\Abstract_Meetings class.
+	 * @deprecated 1.13.0 - Use Actions::$create_action.
 	 *
 	 * @var string
 	 */
@@ -52,6 +53,7 @@ class Abstract_Meetings {
 	 * The property also provides a reasonable default for the abstract class.
 	 *
 	 * @since 1.4.0
+	 * @deprecated 1.13.0 - No replacement.
 	 *
 	 * @var string
 	 */
@@ -63,6 +65,7 @@ class Abstract_Meetings {
 	 *
 	 * @since 1.0.0
 	 * @since 1.1.1 Moved to the Tribe\Events\Virtual\Meetings\Zoom\Abstract_Meetings class.
+	 * @deprecated 1.13.0 - Use Actions::$remove_action.
 	 *
 	 * @var string
 	 */
@@ -119,23 +122,36 @@ class Abstract_Meetings {
 	protected $classic_editor;
 
 	/**
+	 * The Actions name handler.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @var Actions
+	 */
+	protected $actions;
+
+	/**
 	 * Meetings constructor.
 	 *
 	 * @since 1.0.0
 	 * @since 1.0.2 - Add the Password Class.
 	 * @since 1.1.1 Moved to the Tribe\Events\Virtual\Meetings\Zoom\Abstract_Meetings class.
 	 * @since 1.4.0 - Add Encryption Class.
+	 * @since 1.4.0 - Add Encryption Class.
+	 * @since 1.13.0 - Add the Action class.
 	 *
 	 * @param Api            $api            An instance of the Zoom API handler.
 	 * @param Classic_Editor $classic_editor An instance of the Classic Editor rendering handler.
 	 * @param Password       $password       An instance of the Password handler.
 	 * @param Encryption     $encryption     An instance of the Encryption handler.
+	 * @param Actions        $actions        An instance of the Actions name handler.
 	 */
-	public function __construct( Api $api, Classic_Editor $classic_editor, Password $password, Encryption $encryption = NULL ) {
+	public function __construct( Api $api, Classic_Editor $classic_editor, Password $password, Encryption $encryption = NULL, Actions $actions = NULL ) {
 		$this->api            = $api;
 		$this->classic_editor = $classic_editor;
 		$this->password       = $password;
 		$this->encryption     = ( ! empty( $encryption ) ? $encryption : tribe( Encryption::class ) );
+		$this->actions        = $actions;
 	}
 
 	/**
@@ -149,7 +165,11 @@ class Abstract_Meetings {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_create( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$create_action, $nonce ) ) {
+		$action = $this->actions::$create_action;
+		if ( static::$meeting_type === 'webinar' ) {
+			$action = $this->actions::$webinar_create_action;
+		}
+		if ( ! $this->check_ajax_nonce( $action, $nonce ) ) {
 			return false;
 		}
 
@@ -329,108 +349,6 @@ class Abstract_Meetings {
 	}
 
 	/**
-	 * Handles the request to update a Zoom meeting or webinar.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @param string|null $nonce The nonce that should accompany the request.
-	 *
-	 * @return bool Whether the request was handled or not.
-	 */
-	public function ajax_update( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$update_action, $nonce ) ) {
-			return false;
-		}
-
-		$event = $this->check_ajax_post();
-
-		if ( ! $event ) {
-			return false;
-		}
-
-		$post_id = $event->ID;
-
-		$zoom_id = tribe_get_request_var( 'zoom_id' );
-		if ( empty( $zoom_id ) ) {
-			return false;
-		}
-
-		$alternative_hosts = tribe_get_request_var( 'zoom_alternative_hosts' );
-
-		$body = [
-			'settings' => [
-				'alternative_hosts' => esc_attr( implode( ";", $alternative_hosts ) ),
-			]
-		];
-
-		/**
-		 * Filters the contents of the request that will be made to the Zoom API to update a meeting or webinar.
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param array<string,mixed> The current content of the request body.
-		 * @param \WP_Post $event The event post object, as decorated by the `tribe_get_event` function.
-		 * @param Meetings $this  The current API handler object instance.
-		 */
-		$body = apply_filters(
-			"tribe_events_virtual_ajax_update_meetings_zoom_{$this::$meeting_type}_request_body",
-			$body,
-			$event,
-			$this
-		);
-
-		$success = false;
-
-		// Update.
-		$this->api->patch(
-			Api::$api_base . "{$this::$api_endpoint}/{$zoom_id}",
-			[
-				'headers' => [
-					'Authorization' => $this->api->token_authorization_header(),
-					'Content-Type'  => 'application/json; charset=utf-8',
-					'accept'        => 'application/json;',
-				],
-				'body'    => wp_json_encode( $body ),
-			],
-			Api::PATCH_RESPONSE_CODE
-		)->then(
-			function ( array $response ) use ( $post_id, $event, &$success ) {
-				$this->process_meeting_update_response( $response, $event, $post_id );
-
-				$success = true;
-
-				wp_die();
-			}
-
-		)->or_catch(
-			static function ( \WP_Error $error ) use ( $event ) {
-				do_action(
-					'tribe_log',
-					'error',
-					__CLASS__,
-					[
-						'action'  => __METHOD__,
-						'code'    => $error->get_error_code(),
-						'message' => $error->get_error_message(),
-					]
-				);
-
-				$error_data    = wp_json_encode( $error->get_error_data() );
-				$decoded       = json_decode( $error_data, true );
-				$error_message = null;
-				if ( false !== $decoded && is_array( $decoded ) && isset( $decoded['message'] ) ) {
-					$error_message = $decoded['message'];
-				}
-
-				// Do something to indicate failure with $error_message?
-				$this->classic_editor->render_meeting_generation_error_details( $event, $error_message, true );
-			}
-		);
-
-		return $success;
-	}
-
-	/**
 	 * Processes the Zoom API Meeting connection response.
 	 *
 	 * @since 1.8.0
@@ -455,12 +373,10 @@ class Abstract_Meetings {
 	 * @return array<string,mixed> The Zoom Meeting data.
 	 */
 	protected function process_meeting_creation_response( array $response, $post_id ) {
-		if ( ! (
-			isset( $response['body'] )
-			// phpcs:ignore
-			&& false !== ( $body = json_decode( $response['body'], true ) )
-			&& isset( $body['join_url'], $body['id'] )
-		) ) {
+
+		$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+		$body_set = $this->api->has_proper_response_body( $body, [ 'join_url', 'id' ] );
+		if ( ! $body_set ) {
 			do_action(
 				'tribe_log',
 				'error',
@@ -587,7 +503,15 @@ class Abstract_Meetings {
 	 * @return bool|string Whether the request was handled or a string with html for meeting creation.
 	 */
 	public function ajax_remove( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$remove_action, $nonce ) ) {
+		$action = $this->actions::$remove_action;
+		if ( static::$meeting_type === 'webinar' ) {
+			$action = $this->actions::$webinar_remove_action;
+		}
+		if ( ! $this->check_ajax_nonce( $action, $nonce ) ) {
+			return false;
+		}
+
+		if ( ! $this->check_ajax_nonce( $action, $nonce ) ) {
 			return false;
 		}
 
@@ -793,10 +717,10 @@ class Abstract_Meetings {
 			Api::GET_RESPONSE_CODE
 		)->then(
 			function ( array $response ) use ( $post_id, &$success ) {
-				$body = json_decode( $response['body'], true );
 
-				// If the response is empty, then do not update the post.
-				if ( ! empty( $body ) && is_array( $body ) ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->api->has_proper_response_body( $body );
+				if ( $body_set ) {
 					$data = $this->prepare_meeting_data( $body );
 					$this->update_post_meta( $post_id, $body, $data );
 				}
@@ -874,5 +798,110 @@ class Abstract_Meetings {
 		$end_timestamp = Dates::build_date_object( $end_date_time, $time_zone )->setTimezone( $timezone_object )->getTimestamp();
 
 		return absint( $end_timestamp - $start_timestamp );
+	}
+
+	/**
+	 * Handles the request to update a Zoom meeting or webinar.
+	 *
+	 * @since 1.4.0
+	 * @deprecated 1.13.0 - No replacement.
+	 *
+	 * @param string|null $nonce The nonce that should accompany the request.
+	 *
+	 * @return bool Whether the request was handled or not.
+	 */
+	public function ajax_update( $nonce = null ) {
+		_deprecated_function( __METHOD__, '1.13.1', 'No replacement.' );
+
+		if ( ! $this->check_ajax_nonce( static::$update_action, $nonce ) ) {
+			return false;
+		}
+
+		$event = $this->check_ajax_post();
+
+		if ( ! $event ) {
+			return false;
+		}
+
+		$post_id = $event->ID;
+
+		$zoom_id = tribe_get_request_var( 'zoom_id' );
+		if ( empty( $zoom_id ) ) {
+			return false;
+		}
+
+		$alternative_hosts = tribe_get_request_var( 'zoom_alternative_hosts' );
+
+		$body = [
+			'settings' => [
+				'alternative_hosts' => esc_attr( implode( ";", $alternative_hosts ) ),
+			]
+		];
+
+		/**
+		 * Filters the contents of the request that will be made to the Zoom API to update a meeting or webinar.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param array<string,mixed> The current content of the request body.
+		 * @param \WP_Post $event The event post object, as decorated by the `tribe_get_event` function.
+		 * @param Meetings $this  The current API handler object instance.
+		 */
+		$body = apply_filters(
+			"tribe_events_virtual_ajax_update_meetings_zoom_{$this::$meeting_type}_request_body",
+			$body,
+			$event,
+			$this
+		);
+
+		$success = false;
+
+		// Update.
+		$this->api->patch(
+			Api::$api_base . "{$this::$api_endpoint}/{$zoom_id}",
+			[
+				'headers' => [
+					'Authorization' => $this->api->token_authorization_header(),
+					'Content-Type'  => 'application/json; charset=utf-8',
+					'accept'        => 'application/json;',
+				],
+				'body'    => wp_json_encode( $body ),
+			],
+			Api::PATCH_RESPONSE_CODE
+		)->then(
+			function ( array $response ) use ( $post_id, $event, &$success ) {
+				$this->process_meeting_update_response( $response, $event, $post_id );
+
+				$success = true;
+
+				wp_die();
+			}
+
+		)->or_catch(
+			static function ( \WP_Error $error ) use ( $event ) {
+				do_action(
+					'tribe_log',
+					'error',
+					__CLASS__,
+					[
+						'action'  => __METHOD__,
+						'code'    => $error->get_error_code(),
+						'message' => $error->get_error_message(),
+					]
+				);
+
+				$error_data    = wp_json_encode( $error->get_error_data() );
+				$decoded       = json_decode( $error_data, true );
+				$error_message = null;
+				if ( false !== $decoded && is_array( $decoded ) && isset( $decoded['message'] ) ) {
+					$error_message = $decoded['message'];
+				}
+
+				// Do something to indicate failure with $error_message?
+				$this->classic_editor->render_meeting_generation_error_details( $event, $error_message, true );
+			}
+		);
+
+		return $success;
 	}
 }

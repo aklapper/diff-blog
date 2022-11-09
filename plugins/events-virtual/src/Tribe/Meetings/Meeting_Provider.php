@@ -9,8 +9,6 @@
 
 namespace Tribe\Events\Virtual\Meetings;
 
-use Tribe\Events\Virtual\Plugin;
-
 /**
  * Class Meeting_Provider
  *

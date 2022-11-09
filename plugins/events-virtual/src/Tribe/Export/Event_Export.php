@@ -160,4 +160,67 @@ class Event_Export extends Abstract_Export {
 
 		return $should_show;
 	}
+
+	/**
+	 * Filter the Outlook single event export url for a Zoom source event.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string               $url             The url used to subscribe to a calendar in Outlook.
+	 * @param string               $base_url        The base url used to subscribe in Outlook.
+	 * @param array<string|string> $params          An array of parameters added to the base url.
+	 * @param Outlook_Methods      $outlook_methods An instance of the link abstract.
+	 *
+	 * @return string The export url used to generate an Outlook event for the single event.
+	 */
+	public function filter_outlook_single_event_export_url( $url, $base_url, $params, $outlook_methods ) {
+		if ( ! is_single() ) {
+			return $url;
+		}
+
+		// Getting the event details.
+		$event = tribe_get_event();
+		if ( ! $event instanceof \WP_Post ) {
+			return $url;
+		}
+
+		// If it is not a virtual event, return url.
+		if ( ! $event->virtual ) {
+			return $url;
+		}
+
+		// If there is a venue, return url as is.
+		if ( isset( $event->venues[0] ) ) {
+			return $url;
+		}
+
+		/**
+		 * Allows filtering of whether the current user should have export fields modified.
+		 *
+		 * Utilizes the values from the Show To field and provides the result to each video source
+		 * where it can be overridden.
+		 *
+		 * @since 1.13.0
+		 *
+		 * @param boolean   Whether to modify the export fields for the current user, default to false.
+		 * @param \WP_Post $event The WP_Post of this event.
+		 */
+		$should_show = apply_filters( 'tec_events_virtual_export_should_show', false, $event );
+
+		/**
+		 * Allow filtering of the export fields by the active video source.
+		 *
+		 * @since 1.13.0
+		 *
+		 * @param string               $url             The url used to subscribe to a calendar in Outlook.
+		 * @param string               $base_url        The base url used to subscribe in Outlook.
+		 * @param array<string|string> $params          An array of parameters added to the base url.
+		 * @param Outlook_Methods      $outlook_methods An instance of the link abstract.
+		 * @param \WP_Post             $event           The WP_Post of this event.
+		 * @param boolean              $should_show     Whether to modify the export fields for the current user, default to false.
+		 */
+		$url = apply_filters( 'tec_events_virtual_outlook_single_event_export_url', $url, $base_url, $params, $outlook_methods, $event, $should_show );
+
+		return $url;
+	}
 }

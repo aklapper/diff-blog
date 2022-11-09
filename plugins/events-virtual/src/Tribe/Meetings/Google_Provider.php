@@ -16,6 +16,7 @@ use Tribe\Events\Virtual\Meetings\Google\Event_Meta as Google_Meta;
 use Tribe\Events\Virtual\Meetings\Google\Meetings;
 use Tribe\Events\Virtual\Meetings\Google\Event_Export as Google_Event_Export;
 use Tribe\Events\Virtual\Meetings\Google\Template_Modifications;
+use Tribe\Events\Virtual\Meetings\Google\Actions;
 use Tribe\Events\Virtual\Traits\With_Nonce_Routes;
 use WP_Post;
 
@@ -78,6 +79,7 @@ class Google_Provider extends Meeting_Provider {
 		add_filter( 'tribe_events_virtual_display_embed_video_hidden', [ $this, 'filter_display_embed_video_hidden' ], 10, 2 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_google_source_google_calendar_parameters' ], 10, 5 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_google_source_ical_feed_items' ], 10, 5 );
+		add_filter( 'tec_events_virtual_outlook_single_event_export_url', [ $this, 'filter_outlook_single_event_export_url_by_api' ], 10, 6 );
 		add_filter( 'tec_events_virtual_meetings_api_error_message', [ $this, 'filter_api_error_message' ], 10, 3 );
 		add_filter(
 			'tribe_rest_event_data',
@@ -221,6 +223,24 @@ class Google_Provider extends Meeting_Provider {
 	}
 
 	/**
+	 * Filter the Outlook single event export url for a Google source event.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string               $url             The url used to subscribe to a calendar in Outlook.
+	 * @param string               $base_url        The base url used to subscribe in Outlook.
+	 * @param array<string|string> $params          An array of parameters added to the base url.
+	 * @param Outlook_Methods      $outlook_methods An instance of the link abstract.
+	 * @param \WP_Post             $event           The WP_Post of this event.
+	 * @param boolean              $should_show     Whether to modify the export fields for the current user, default to false.
+	 *
+	 * @return string The export url used to generate an Outlook event for the single event.
+	 */
+	public function filter_outlook_single_event_export_url_by_api( $url, $base_url, $params, $outlook_methods, $event, $should_show ) {
+		return $this->container->make( Google_Event_Export::class )->filter_outlook_single_event_export_url_by_api( $url, $base_url, $params, $outlook_methods, $event, $should_show );
+	}
+
+	/**
 	 * Filters the API error message.
 	 *
 	 * @since 1.11.0
@@ -246,13 +266,15 @@ class Google_Provider extends Meeting_Provider {
 	 * @return array<string,callable> A map from the nonce actions to the corresponding handlers.
 	 */
 	public function admin_routes() {
+		$actions = tribe( Actions::class );
+
 		return [
-			Api::$authorize_nonce_action => $this->container->callback( Api::class, 'handle_auth_request' ),
-			Api::$status_action          => $this->container->callback( Api::class, 'ajax_status' ),
-			Api::$delete_action          => $this->container->callback( Api::class, 'ajax_delete' ),
-			Api::$select_action          => $this->container->callback( Classic_Editor::class, 'ajax_selection' ),
-			Meetings::$create_action     => $this->container->callback( Meetings::class, 'ajax_create' ),
-			Meetings::$remove_action     => $this->container->callback( Meetings::class, 'ajax_remove' ),
+			$actions::$authorize_nonce_action => $this->container->callback( Api::class, 'handle_auth_request' ),
+			$actions::$status_action          => $this->container->callback( Api::class, 'ajax_status' ),
+			$actions::$delete_action          => $this->container->callback( Api::class, 'ajax_delete' ),
+			$actions::$select_action          => $this->container->callback( Classic_Editor::class, 'ajax_selection' ),
+			$actions::$create_action          => $this->container->callback( Meetings::class, 'ajax_create' ),
+			$actions::$remove_action          => $this->container->callback( Meetings::class, 'ajax_remove' ),
 		];
 	}
 
@@ -445,6 +467,6 @@ class Google_Provider extends Meeting_Provider {
 		}
 
 		$template_modifications = $this->container->make( Template_Modifications::class );
-		$template_modifications->add_event_single_google_details();
+		$template_modifications->add_event_single_api_details();
 	}
 }

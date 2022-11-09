@@ -20,6 +20,7 @@
  */
 
 use Tribe\Events\Virtual\Meetings\Google\Event_Meta as Google_Event_Meta;
+use Tribe\Events\Virtual\Meetings\Microsoft\Event_Meta as Microsoft_Event_Meta;;
 use Tribe\Events\Virtual\Meetings\Webex\Event_Meta as Webex_Event_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Event_Meta;
 
@@ -28,6 +29,7 @@ $is_api = $event->virtual_meeting &&
 				Zoom_Event_Meta::$key_source_id === $event->virtual_video_source
 				|| Webex_Event_Meta::$key_source_id === $event->virtual_video_source
 				|| Google_Event_Meta::$key_source_id === $event->virtual_video_source
+				|| Microsoft_Event_Meta::$key_source_id === $event->virtual_video_source
 			);
 
 $classes = [

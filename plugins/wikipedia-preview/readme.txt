@@ -2,7 +2,7 @@
 Contributors: wikimediafoundation
 Donate link: https://donate.wikimedia.org/wiki/Ways_to_Give
 Tags: wikipedia, facts, popup, card, wiki
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 Tested up to: 6.0
 License: MIT
 License URI: https://github.com/wikimedia/wikipedia-preview/blob/main/LICENSE
@@ -42,8 +42,8 @@ https://youtu.be/_m6YzR0j8Fs
 
 **How to use**
 
-1. Download and install the Wikipedia Preview plug-in for free.
-2. Add a Preview link to your site’s content (i.e. a word or a phrase you want to provide context for).
+1. [Download and install](https://wordpress.org/support/article/managing-plugins/#finding-and-installing-plugins) the Wikipedia Preview plug-in for free.
+2. [Add a Preview link](https://wordpress.org/support/article/paragraph-block/#insert-hyperlinks) to your site’s content (i.e. a word or a phrase you want to provide context for).
 3. Wikipedia Preview will automatically turn the link into a preview of the relevant Wikipedia article.
 
 == Screenshots ==

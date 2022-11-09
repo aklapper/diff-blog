@@ -77,8 +77,6 @@ class Tribe__Events__Filterbar__Filters__Day_Of_Week extends Tribe__Events__Filt
 	}
 
 	protected function setup_join_clause() {
-		add_filter( 'posts_join', array( 'Tribe__Events__Query', 'posts_join' ), 10, 2 );
-
 		// Default behavior is to *not* force local TZ; so let's reset to the default behavior
 		// to make sure we don't interfere with queries other than the Day-filter one.
 		add_filter( 'tribe_events_query_force_local_tz', '__return_false' );
@@ -119,6 +117,14 @@ class Tribe__Events__Filterbar__Filters__Day_Of_Week extends Tribe__Events__Filt
 			$distance_to_next_matching_day = reset( $distance_to_day );
 		}
 		$clauses[] = "(DATE(DATE_ADD($start_date, INTERVAL $distance_to_next_matching_day DAY)) < $end_date)";
+
+		/**
+		 * There was some leftover requirement from Legacy Views that required us to include this LEFT JOIN.
+		 * Our goal should be to figure out a less expensive way of preventing bad SQL from missing `tribe_event_end_date`
+		 */
+		if ( ! preg_match( '/tribe_event_end_date/', $this->joinClause ) ) {
+			$this->joinClause .= " LEFT JOIN {$wpdb->postmeta} AS tribe_event_end_date ON {$wpdb->posts}.ID = tribe_event_end_date.post_id AND tribe_event_end_date.meta_key = '_EventEndDate' ";
+		}
 
 		$this->whereClause = ' AND (' . implode( ' OR ', $clauses ) . ')';
 

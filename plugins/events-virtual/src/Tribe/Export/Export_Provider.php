@@ -31,6 +31,7 @@ class Export_Provider extends \tad_DI52_ServiceProvider {
 
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_video_source_google_calendar_parameters' ], 10, 5 );
 		add_filter( 'tec_events_virtual_export_fields', [ $this, 'filter_video_source_ical_feed_items' ], 10, 5 );
+		add_filter( 'tec_events_ical_outlook_single_event_import_url', [ $this, 'filter_outlook_single_event_export_url' ], 10, 4 );
 
 		add_filter( 'tec_events_virtual_export_should_show', [ $this, 'filter_export_should_show' ], 5, 2 );
 	}
@@ -99,6 +100,22 @@ class Export_Provider extends \tad_DI52_ServiceProvider {
 	 */
 	public function filter_video_source_ical_feed_items( $fields, $event, $key_name, $type, $should_show ) {
 		return $this->container->make( Event_Export::class )->modify_video_source_export_output( $fields, $event, $key_name, $type, $should_show );
+	}
+
+	/**
+	 * Filter the Outlook single event export url for a Zoom source event.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string               $url             The url used to subscribe to a calendar in Outlook.
+	 * @param string               $base_url        The base url used to subscribe in Outlook.
+	 * @param array<string|string> $params          An array of parameters added to the base url.
+	 * @param Outlook_Methods      $outlook_methods An instance of the link abstract.
+	 *
+	 * @return string The export url used to generate an Outlook event for the single event.
+	 */
+	public function filter_outlook_single_event_export_url( $url, $base_url, $params, $outlook_methods ) {
+		return $this->container->make( Event_Export::class )->filter_outlook_single_event_export_url( $url, $base_url, $params, $outlook_methods );
 	}
 
 	/**

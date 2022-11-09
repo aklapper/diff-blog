@@ -26,6 +26,16 @@ use Tribe__Utils__Array as Arr;
 abstract class Account_API extends Abstract_Account_Api {
 
 	/**
+	 * The name of the action used to generate the OAuth authentication URL.
+	 *
+	 * @since 1.13.0
+	 * @deprecated 1.13.0 - Use Actions::$authorize_nonce_action.
+	 *
+	 * @var string
+	 */
+	public static $authorize_nonce_action = 'events-virtual-meetings-zoom-oauth-authorize';
+
+	/**
 	 * Whether a Zoom account supports webinars.
 	 *
 	 * @since 1.5.0
@@ -74,18 +84,57 @@ abstract class Account_API extends Abstract_Account_Api {
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$select_action.
 	 */
 	public static $select_action = 'events-virtual-zoom-account-setup';
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$status_action.
 	 */
 	public static $status_action = 'events-virtual-meetings-zoom-settings-status';
 
 	/**
 	 * {@inheritDoc}
+	 * @deprecated 1.13.0 - Use Actions::$delete_action.
 	 */
 	public static $delete_action = 'events-virtual-meetings-zoom-settings-delete';
+
+	/**
+	 * Handles an OAuth authorization return request.
+	 *
+	 * The method will `wp_die` if the nonce is not valid.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string|null $nonce The nonce string to authorize the authorization request.
+	 *
+	 * @return boolean Whether the authorization request was handled.
+	 */
+	public function handle_auth_request( $nonce = null ) {
+		if ( ! wp_verify_nonce( $nonce, $this->actions::$authorize_nonce_action ) ) {
+			wp_die( _x(
+					'You are not authorized to do this',
+					'The message shown to a user providing a wrong Zoom API OAuth authorization nonce.',
+					'events-virtual'
+				)
+			);
+		}
+
+		$handled = false;
+
+		// This is response from our OAuth proxy service.
+		$service_response_body = tribe_get_request_var( 'response_body', false );
+		if ( $service_response_body ) {
+			$this->save_account( [ 'body' => base64_decode( $service_response_body ) ] );
+
+			$handled = true;
+		}
+
+		wp_safe_redirect( Settings::admin_url() );
+
+		return $handled;
+	}
 
 	/**
 	 * Get the listing of Zoom Accounts.
@@ -146,10 +195,6 @@ abstract class Account_API extends Abstract_Account_Api {
 	public function delete_account_by_id( $account_id ) {
 		$revoked = $this->revoke_account_by_id( $account_id );
 
-		if ( ! $revoked ) {
-			return $revoked;
-		}
-
 		delete_option( $this->single_account_prefix . $account_id );
 
 		$this->delete_from_list_of_accounts( $account_id );
@@ -169,7 +214,7 @@ abstract class Account_API extends Abstract_Account_Api {
 			return $revoked;
 		}
 
-		$revoke_url = Url::$revoke_url;
+		$revoke_url = tribe( Url::class )::$revoke_url;
 		if ( defined( 'TEC_VIRTUAL_EVENTS_ZOOM_API_REVOKE_URL' ) ) {
 			$revoke_url = TEC_VIRTUAL_EVENTS_ZOOM_API_REVOKE_URL;
 		}
@@ -187,11 +232,11 @@ abstract class Account_API extends Abstract_Account_Api {
 			Api::OAUTH_POST_RESPONSE_CODE
 		)->then(
 			function ( array $response ) use ( &$revoked ) {
+				$body     = json_decode( wp_remote_retrieve_body( $response ), true );
+				$body_set = $this->has_proper_response_body( $body, [ 'status' ] );
 				if (
 					! (
-						isset( $response['body'] )
-						&& false !== ( $body = json_decode( $response['body'], true ) )
-						&& isset( $body['status'] )
+						$body_set
 						&& 'success' === $body['status']
 					)
 				) {
@@ -247,7 +292,7 @@ abstract class Account_API extends Abstract_Account_Api {
 		}
 
 		// Set the access token here as we have to call fetch_user immediately, to get the user information.
-		$credentials   = json_decode( $response['body'], true );
+		$credentials   = json_decode( wp_remote_retrieve_body( $response ), true );
 		$access_token  = $credentials['access_token'];
 		$refresh_token = $credentials['refresh_token'];
 		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
@@ -291,7 +336,7 @@ abstract class Account_API extends Abstract_Account_Api {
 			return false;
 		}
 
-		$credentials   = json_decode( $response['body'], true );
+		$credentials   = json_decode( wp_remote_retrieve_body( $response ), true );
 		$access_token  = $credentials['access_token'];
 		$refresh_token = $credentials['refresh_token'];
 		$expiration    = $this->get_expiration_time_stamp( $credentials['expires_in'] );
@@ -494,5 +539,27 @@ abstract class Account_API extends Abstract_Account_Api {
 		$this->save_account_id_to_post( $post_id, $zoom_account_id );
 
 		wp_die();
+	}
+
+	/**
+	 * Returns the full OAuth URL to authorize the application.
+	 *
+	 * @since 1.13.0
+	 * @deprecated 1.13.2
+	 *
+	 * @return string The full OAuth URL to authorize the application.
+	 */
+	public function authorize_url() {
+		_deprecated_function( __FUNCTION__, '1.13.2', 'Zoom/Url->get_authorize_url()' );
+
+		// Use the `state` query arg as described in Zoom API documentation.
+		$authorize_url = add_query_arg(
+			[
+				'state' => wp_create_nonce( $this->actions::$authorize_nonce_action ),
+			],
+			admin_url()
+		);
+
+		return $authorize_url;
 	}
 }

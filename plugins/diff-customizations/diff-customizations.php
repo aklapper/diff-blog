@@ -116,78 +116,39 @@ function diff_disable_jetpack_sso( $modules ) {
     return $modules;
 }
 
-//disable languages columns from list views by default
-// need to add for page, categories, and tags view
+add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_events_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_events_cat_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_venue_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_organizer_columns', 'diff_remove_language_columns', 110 );
 
-add_filter( 'default_hidden_columns', 'diff_hide_list_columns', 10, 2 );
+/**
+ * Remove the Polylang plugin admin language columns.
+ *
+ * We are using a very low priority to make sure this filter runs
+ * after the Polylang plugin is done loading its code.
+ *
+ * To remove columns from custom post types, you can add additional filters in this format:
+ * 'manage_edit-{$post_type}_columns'
+ * replacing {$post_type} with the name of the custom post type.
+ *
+ * @param string[] $columns Array of column header labels keyed by column ID.
+ *
+ * @return string[] $columns Modified array of column header labels.
+ */
+function diff_remove_language_columns( $columns ) {
+	// Remove any column with the $columns['language_*'] key pattern.
+	foreach ( $columns as $language => $column ) {
+		if ( preg_match( '/language_\w+/', $language ) ) {
+			unset( $columns[ $language ] );
+		}
+	}
 
-function diff_hide_list_columns( $hidden, $screen ) {
-    if( isset( $screen->id ) && 'edit-post' === $screen->id ){
-			$hidden = array(	'language_de',
-								'language_es',
-								'language_fr',
-								'language_it',
-								'language_ca',
-								'language_pt',
-								'language_tr',
-								'language_ru',
-								'language_mr',
-								'language_hi',
-								'language_bn',
-								'language_ta',
-								'language_kn',
-								'language_zh',
-								'language_ja',
-								'language_en',
-								'language_ar',
-								'language_ak',
-								'language_sq',
-								'language_arg',
-								'language_hy',
-								'language_as',
-								'language_ast',
-								'language_ba',
-								'language_bg',
-								'language_zh-hans',
-								'language_zh-hant',
-								'language_cs',
-								'language_da',
-								'language_nl',
-								'language_eo',
-								'language_et',
-								'language_fa',
-								'language_fi',
-								'language_el',
-								'language_he',
-								'language_hu',
-								'language_id',
-								'language_ko',
-								'language_lad',
-								'language_mk',
-								'language_mai',
-								'language_ms',
-								'language_yua',
-								'language_ne',
-								'language_nb',
-								'language_or',
-								'language_pl',
-								'language_pt-br',
-								'language_pa',
-								'language_ro',
-								'language_sr',
-								'language_sv',
-								'language_tt',
-								'language_uk',
-								'language_ur',
-								'language_vi',
-								'language_nn'
-
-
-			);
-    }
-    return $hidden;
+	return $columns;
 }
-
 
 //disable full screen editing (it is confusing people)
 

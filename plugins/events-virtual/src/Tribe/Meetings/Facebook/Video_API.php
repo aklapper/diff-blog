@@ -352,12 +352,8 @@ abstract class Video_API {
 		)->then(
 			function ( array $response ) use ( &$video ) {
 
-				if (
-					! (
-				       isset( $response['body'] ) &&
-				       false !== ( $body = json_decode( $response['body'], false ) )
-				   )
-				 ) {
+				$body = json_decode( wp_remote_retrieve_body( $response ) );
+				if ( empty( $body ) ) {
 					do_action( 'tribe_log', 'error', __CLASS__, [
 						'action'   => __METHOD__,
 						'message'  => 'Facebook API response is missing the required information to display the live stream.',
@@ -420,12 +416,8 @@ abstract class Video_API {
 	    )->then(
 			function ( array $response ) use ( &$fb_permalink ) {
 
-				if (
-				   ! (
-				       isset( $response['body'] ) &&
-				       false !== ( $body = json_decode( $response['body'], false ) )
-				   )
-				) {
+				$body = json_decode( wp_remote_retrieve_body( $response ) );
+				if ( empty( $body ) ) {
 				   do_action( 'tribe_log', 'error', __CLASS__, [
 				       'action'   => __METHOD__,
 				       'message'  => 'Facebook API response is missing the required information to get the video permalink.',

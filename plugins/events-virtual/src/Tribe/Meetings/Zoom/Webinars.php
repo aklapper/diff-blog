@@ -21,6 +21,7 @@ class Webinars extends Abstract_Meetings {
 	 * The name of the action used to generate a webinar creation link.
 	 *
 	 * @since 1.1.1
+	 * @deprecated 1.13.0 - Use Actions::$webinar_create_action.
 	 *
 	 * @var string
 	 */
@@ -30,6 +31,7 @@ class Webinars extends Abstract_Meetings {
 	 * The name of the action used to update a webinar.
 	 *
 	 * @since 1.4.0
+	 * @deprecated 1.13.0 - No replacement.
 	 *
 	 * @var string
 	 */
@@ -39,6 +41,7 @@ class Webinars extends Abstract_Meetings {
 	 * The name of the action used to remove a webinar link.
 	 *
 	 * @since 1.1.1
+	 * @deprecated 1.13.0 - Use Actions::$webinar_remove_action.
 	 *
 	 * @var string
 	 */

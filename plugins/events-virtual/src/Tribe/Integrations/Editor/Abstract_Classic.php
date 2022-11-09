@@ -87,6 +87,15 @@ Abstract class Abstract_Classic {
 	protected $url;
 
 	/**
+	 * The Actions name handler.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @var Abstract_Actions
+	 */
+	protected $actions;
+
+	/**
 	 * Adds Event Properties to an event post object.
 	 *
 	 * @since 1.9.0

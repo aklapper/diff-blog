@@ -2,7 +2,7 @@
 /*
  * Plugin Name: wpDiscuz
  * Description: #1 WordPress Comment Plugin. Innovative, modern and feature-rich comment system to supercharge your website comment section.
- * Version: 7.3.17
+ * Version: 7.5
  * Author: gVectors Team
  * Author URI: https://gvectors.com/
  * Plugin URI: https://wpdiscuz.com/
@@ -39,6 +39,10 @@ class WpdiscuzCore implements WpDiscuzConstants {
     public $helperOptimization;
     public $helperUpload;
     public $wpdiscuzOptionsJs;
+
+    /**
+     * @var WpdiscuzOptions
+     */
     public $options;
     public $commentsArgs;
     private $version;
@@ -320,12 +324,12 @@ class WpdiscuzCore implements WpDiscuzConstants {
         // $comment_content is filtered in function "$this->helper->filterCommentText" by WP's native function wp_kses
         $comment_content = isset($_POST["wc_comment"]) ? $_POST["wc_comment"] : "";
 
-        if ($uniqueId && $postId && $comment_content) {
+        if ($uniqueId && $postId) {
             $this->isWpdiscuzLoaded = true;
             $this->form = $this->wpdiscuzForm->getForm($postId);
             $this->form->initFormFields();
             $currentUser = WpdiscuzHelper::getCurrentUser();
-            if ($this->form->isUserCanSeeComments($currentUser, $postId)) {
+            if ($this->form->isUserCanSeeComments($currentUser, $postId) && $this->form->isUserCanComment($currentUser, $postId)) {
                 do_action("wpdiscuz_before_comment_post");
                 if (!comments_open($postId)) {
                     wp_die(esc_html($this->options->getPhrase("wc_commenting_is_closed")));
@@ -366,10 +370,6 @@ class WpdiscuzCore implements WpDiscuzConstants {
                 $comment_content = ($this->options->form["richEditor"] === "both" || (!wp_is_mobile() && $this->options->form["richEditor"] === "desktop")) && !$this->options->showEditorToolbar() ? html_entity_decode($comment_content) : $comment_content;
                 $comment_content = $this->helper->replaceCommentContentCode($comment_content);
                 $comment_content = $this->helper->filterCommentText($comment_content);
-                if (!$comment_content) {
-                    wp_send_json_error("wc_msg_required_fields");
-                }
-
                 $uid_data = $this->helper->getUIDData($uniqueId);
                 $comment_parent = intval($uid_data[0]);
                 $parentComment = $comment_parent ? get_comment($comment_parent) : null;
@@ -394,7 +394,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                     wp_send_json_error("wc_msg_input_max_length");
                 }
 
-                if ($name && $email && $comment_content) {
+                if ($name && $email) {
                     $website_url = $website_url ? urldecode($website_url) : "";
                     $stickyComment = WpdiscuzHelper::sanitize(INPUT_POST, "wc_sticky_comment", FILTER_SANITIZE_NUMBER_INT, "");
                     $closedComment = absint(WpdiscuzHelper::sanitize(INPUT_POST, "wc_closed_comment", FILTER_SANITIZE_NUMBER_INT, 0));
@@ -413,11 +413,15 @@ class WpdiscuzCore implements WpDiscuzConstants {
                         "comment_type" => $wooExists ? "review" : ($stickyComment ? self::WPDISCUZ_STICKY_COMMENT : self::$DEFAULT_COMMENT_TYPE),
                     ];
 
+                    $allow_empty_comment = apply_filters("allow_empty_comment", false, $new_commentdata);
+                    if ("" === $comment_content && !$allow_empty_comment) {
+                        wp_send_json_error("wc_msg_required_fields");
+                    }
                     $new_comment_id = wp_new_comment(wp_slash($new_commentdata));
                     if ($closedComment) {
                         add_comment_meta($new_comment_id, self::META_KEY_CLOSED, "1");
                     }
-                    $this->form->saveCommentMeta($new_comment_id);
+//                    $this->form->saveCommentMeta($new_comment_id);
                     $newComment = get_comment($new_comment_id);
                     $held_moderate = 1;
                     if ($newComment->comment_approved === "1") {
@@ -477,7 +481,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                     wp_send_json_error("wc_invalid_field");
                 }
             } else {
-                wp_send_json_error("wc_msg_required_fields");
+                wp_die(esc_html($this->options->getPhrase("wc_commenting_is_closed")));
             }
         } else {
             wp_send_json_error("wc_msg_required_fields");
@@ -491,9 +495,6 @@ class WpdiscuzCore implements WpDiscuzConstants {
         $this->helper->validateNonce();
         $commentId = WpdiscuzHelper::sanitize(INPUT_POST, "commentId", FILTER_SANITIZE_NUMBER_INT, 0);
         $trimmedContent = isset($_POST["wc_comment"]) ? trim($_POST["wc_comment"]) : "";
-        if (!$trimmedContent || !strip_tags($trimmedContent)) {
-            wp_send_json_error("wc_msg_required_fields");
-        }
         $trimmedContent = ($this->options->form["richEditor"] === "both" || (!wp_is_mobile() && $this->options->form["richEditor"] === "desktop")) && !$this->options->showEditorToolbar() ? html_entity_decode($trimmedContent) : $trimmedContent;
         if ($commentId) {
             $this->isWpdiscuzLoaded = true;
@@ -505,7 +506,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
             $this->form = $this->wpdiscuzForm->getForm($comment->comment_post_ID);
             $this->form->initFormFields();
             $this->form->validateFields($currentUser);
-            if (!intval(get_comment_meta($comment->comment_ID, self::META_KEY_CLOSED, true)) && ($highLevelUser || $isCurrentUserCanEdit) && $this->form->isUserCanSeeComments($currentUser, $comment->comment_post_ID)) {
+            if (!intval(get_comment_meta($comment->comment_ID, self::META_KEY_CLOSED, true)) && ($highLevelUser || $isCurrentUserCanEdit) && $this->form->isUserCanSeeComments($currentUser, $comment->comment_post_ID) && $this->form->isUserCanComment($currentUser, $comment->comment_post_ID)) {
                 $isInRange = $this->helper->isContentInRange($trimmedContent, $comment->comment_parent);
 
                 if (!$isInRange && !$highLevelUser) {
@@ -528,16 +529,43 @@ class WpdiscuzCore implements WpDiscuzConstants {
 
                 if ($isInRange || $highLevelUser) {
                     $response = [];
+                    $commentarr = [
+                        "comment_ID" => $commentId,
+                        "comment_content" => $comment->comment_content,
+                        "comment_approved" => $comment->comment_approved,
+                        "comment_post_ID" => $comment->comment_post_ID,
+                        "comment_author" => $comment->comment_author,
+                        "comment_author_url" => $comment->comment_author_url,
+                        "comment_author_email" => $comment->comment_author_email,
+                        "comment_type" => $comment->comment_type,
+                        "comment_parent" => $comment->comment_parent,
+                        "user_id" => $comment->user_id
+                    ];
                     if ($trimmedContent !== $comment->comment_content) {
+
                         $trimmedContent = $this->helper->replaceCommentContentCode($trimmedContent);
                         $commentContent = $this->helper->filterCommentText($trimmedContent);
                         $userAgent = isset($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "";
-                        $commentarr = [
-                            "comment_ID" => $commentId,
-                            "comment_content" => $commentContent,
-                            "comment_agent" => $userAgent,
-                            "comment_approved" => $comment->comment_approved
-                        ];
+                        $commentarr["comment_content"] = $commentContent;
+                        $commentarr["comment_agent"] = $userAgent;
+
+
+                        if (class_exists("Akismet") && method_exists('Akismet', 'auto_check_comment')) {
+
+                            $commentarr = Akismet::auto_check_comment($commentarr);
+                            if ($commentarr["akismet_result"] === "false" && $comment->comment_approved == "spam") {
+                                $commentarr["comment_approved"] = 0;
+                            } else if ($commentarr["akismet_result"] === "true") {
+                                $commentarr["comment_approved"] = "spam";
+                            }
+                        }
+
+                        $allow_empty_comment = apply_filters("allow_empty_comment", false, $commentarr);
+
+                        if ("" === $commentContent && !$allow_empty_comment) {
+                            wp_send_json_error("wc_msg_required_fields");
+                        }
+
                         wp_update_comment(wp_slash($commentarr));
                         $lastEditedAt = current_time("mysql", 1);
                         update_comment_meta($commentId, self::META_KEY_LAST_EDITED_AT, $lastEditedAt);
@@ -584,10 +612,14 @@ class WpdiscuzCore implements WpDiscuzConstants {
                         $feedbackForm = $this->dbManager->getFeedbackForm($inlineFormID);
                         $inlineContent = "<div class='wpd-inline-feedback-wrapper'><span class='wpd-inline-feedback-info'>" . esc_html($this->options->getPhrase("wc_feedback_content_text")) . "</span> <i class='fas fa-quote-left'></i>" . wp_trim_words($feedbackForm->content, apply_filters("wpdiscuz_feedback_content_words_count", 20)) . "&quot;  <a class='wpd-feedback-content-link' data-feedback-content-id='{$feedbackForm->id}' href='#wpd-inline-{$feedbackForm->id}'>" . esc_html($this->options->getPhrase("wc_read_more")) . "</a></div>";
                     }
+                    if ($commentarr["comment_approved"] === "spam") {
+                        $commentContent = "<span style='color:#fc9007;'>" . esc_html($this->options->getPhrase("wc_awaiting_for_approval", ["comment" => $comment])) . ": " . __("Spam") . "</span>";
+                    }
                     $response["message"] = str_replace(["{TEXT_WRAPPER_CLASSES}", "{TEXT}"], [
                         "wpd-comment-text",
                         $inlineContent . $commentContent
                             ], $components["text.html"]);
+
                     $response["callbackFunctions"] = [];
                     $response = apply_filters("wpdiscuz_comment_edit_save", $response);
                     wp_send_json_success($response);
@@ -764,6 +796,13 @@ class WpdiscuzCore implements WpDiscuzConstants {
         if ($commentCache = $this->cache->getCommentsCache($this->commentsArgs)) {
             $commentList = $commentCache["commentList"];
             $commentData = $commentCache["commentData"];
+            if ($commentList && $this->options->thread_layouts["highlightVotingButtons"]) {
+                if (!empty($commentListArgs["current_user"]->ID)) {
+                    $commentListArgs["user_votes"] = $this->dbManager->getUserVotes($commentList, $commentListArgs['current_user']->ID);
+                } else {
+                    $commentListArgs["user_votes"] = $this->dbManager->getUserVotes($commentList, md5($this->helper->getRealIPAddr()));
+                }
+            }
             if ($this->options->wp["isPaginate"]) {
                 $commentListArgs["page"] = 0;
                 $commentListArgs["per_page"] = 0;
@@ -1044,10 +1083,8 @@ class WpdiscuzCore implements WpDiscuzConstants {
             &$this->options,
             "tools"
         ]);
-        add_submenu_page(self::PAGE_WPDISCUZ, "&raquo; " . esc_html__("Addons", "wpdiscuz"), "&raquo; " . esc_html__("Addons", "wpdiscuz"), "manage_options", self::PAGE_ADDONS, [
-            &$this->options,
-            "addons"
-        ]);
+
+        do_action("wpdiscuz_submenu_page");
     }
 
     /**
@@ -1428,6 +1465,10 @@ class WpdiscuzCore implements WpDiscuzConstants {
                 wp_clear_scheduled_hook("wpdiscuz_gravatars_cache_delete");
                 $this->cache->deleteGravatarsFolder();
                 $this->dbManager->deleteGravatarsTable();
+            }
+            // adding email templates as options            
+            if (version_compare($this->version, "7.3.17", "<=")) {
+                $this->options->addEmailTemplates(true);
             }
             do_action("wpdiscuz_clean_all_caches", $pluginData["Version"], $this->version);
         }
@@ -1987,7 +2028,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                 echo "</div>";
                 echo "<div id='wpd-bubble-comment'>";
                 echo "<span id='wpd-bubble-comment-text'></span>";
-                echo "<span id='wpd-bubble-comment-reply-link'>| <a href='#'>Reply</a></span>";
+                echo "<span id='wpd-bubble-comment-reply-link'>| <a href='#'>" . $this->options->getPhrase("wc_reply_text") . "</a></span>";
                 echo "</div>";
                 echo "</div>";
             }
@@ -2246,9 +2287,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                     // $comment_content is filtered in function "$this->helper->filterCommentText" by WP's native function wp_kses
                     $comment_content = !empty($_POST["wpd_inline_comment"]) ? stripslashes(trim($_POST["wpd_inline_comment"])) : "";
                     $comment_content = $this->helper->filterCommentText($comment_content);
-                    if (!$comment_content) {
-                        wp_send_json_error("wc_msg_required_fields");
-                    }
+
                     $commentMinLength = intval($this->options->content["commentTextMinLength"]);
                     $commentMaxLength = intval($this->options->content["commentTextMaxLength"]);
                     $contentLength = function_exists("mb_strlen") ? mb_strlen($comment_content) : strlen($comment_content);
@@ -2259,7 +2298,7 @@ class WpdiscuzCore implements WpDiscuzConstants {
                         wp_send_json_error("wc_msg_input_max_length");
                     }
 
-                    if ($name && $email && $comment_content) {
+                    if ($name && $email) {
                         $wc_user_agent = !empty($_SERVER["HTTP_USER_AGENT"]) ? $_SERVER["HTTP_USER_AGENT"] : "";
                         $new_commentdata = [
                             "user_id" => $user_id,
@@ -2272,6 +2311,12 @@ class WpdiscuzCore implements WpDiscuzConstants {
                             "comment_agent" => $wc_user_agent,
                             "comment_type" => self::$DEFAULT_COMMENT_TYPE,
                         ];
+
+                        $allow_empty_comment = apply_filters('allow_empty_comment', false, $new_commentdata);
+                        if ('' === $comment_content && !$allow_empty_comment) {
+                            wp_send_json_error("wc_msg_required_fields");
+                        }
+
                         $this->helper->restrictCommentingPerUser($email, 0, $inline_form->post_id);
                         $new_comment_id = wp_new_comment(wp_slash($new_commentdata));
                         add_comment_meta($new_comment_id, self::META_KEY_FEEDBACK_FORM_ID, $inline_form->id);
@@ -2451,6 +2496,13 @@ class WpdiscuzCore implements WpDiscuzConstants {
                 }
             }
         }
+    }
+
+    /**
+     * @return WpdiscuzOptions
+     */
+    public function getOptions() {
+        return $this->options;
     }
 
 }

@@ -72,7 +72,7 @@ class Name extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        $name = isset($_POST[$fieldName]) ? sanitize_text_field(wp_unslash($_POST[$fieldName])) : "";
+        $name = isset($_POST[$fieldName]) ? urlencode(sanitize_text_field(wp_unslash($_POST[$fieldName]))) : "";
         if (!$args["required"]) {
             $name = !($name) ? esc_html($options->getPhrase("wc_anonymous")) : $name;
         }

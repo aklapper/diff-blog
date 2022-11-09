@@ -9,56 +9,37 @@
 
 namespace Tribe\Events\Virtual\Meetings\Zoom;
 
+use Tribe\Events\Virtual\Integrations\Abstract_Template_Modifications;
+use Tribe\Events\Virtual\Meetings\Zoom\Event_Meta as Zoom_Event_Meta;
 use Tribe\Events\Virtual\Meetings\Zoom_Provider;
-use Tribe\Events\Virtual\Template;
-use Tribe\Events\Virtual\Admin_Template;
 
 /**
  * Class Template_Modifications
  *
  * @since   1.0.0
+ * @since 1.13.0 - Utilize an abstract class.
  *
  * @package Tribe\Events\Virtual\Meetings\Zoom
  */
-class Template_Modifications {
+class Template_Modifications extends Abstract_Template_Modifications {
 
 	/**
-	 * An instance of the front-end template handler.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var Template
+	 * {@inheritDoc}
 	 */
-	protected $template;
-
-	/**
-	 * An instance of the admin template handler.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @var Admin_Template
-	 */
-	protected $admin_template;
-
-	/**
-	 * Template_Modifications constructor.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param Template       $template An instance of the front-end template handler.
-	 * @param Admin_Template $template An instance of the backend template handler.
-	 */
-	public function __construct( Template $template, Admin_Template $admin_template ) {
-		$this->template       = $template;
-		$this->admin_template = $admin_template;
+	public function setup() {
+		self::$api_id = Zoom_Event_Meta::$key_source_id;
+		self::$option_prefix = Settings::$option_prefix;
 	}
 
 	/**
 	 * Adds Zoom details to event single.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 1.13.0 - Replaced with $this->add_event_single_api_details, see Abstract_Template_Modifications class.
 	 */
 	public function add_event_single_zoom_details() {
+		_deprecated_function( __METHOD__, '1.13.1', 'Use $this->add_event_single_api_details() instead.' );
+
 		// Don't show on password protected posts.
 		if ( post_password_required() ) {
 			return;
@@ -111,88 +92,6 @@ class Template_Modifications {
 		];
 
 		$this->template->template( 'zoom/single/zoom-details', $context );
-	}
-
-	/**
-	 * Adds Zoom authorize fields to events->settings->api.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param Api $api An instance of the Zoom API handler.
-	 * @param Url $url The URLs handler for the integration.
-	 *
-	 * @return string HTML for the authorize fields.
-	 */
-	public function get_api_authorize_fields( Api $api, Url $url ) {
-		$message = get_transient( Settings::$option_prefix . 'account_message' );
-		if ( $message ) {
-			delete_transient( Settings::$option_prefix . 'account_message' );
-		}
-
-		$args = [
-			'api'     => $api,
-			'url'     => $url,
-			'message' => $message,
-		];
-
-		return $this->admin_template->template( 'zoom/api/authorize-fields', $args, false );
-	}
-
-	/**
-	 * Gets Zoom connect link.
-	 *
-	 * @since 1.0.1
-	 * @since 1.5.0 - Change to an add link for multiple account support.
-	 *
-	 * @param Api $api An instance of the Zoom API handler.
-	 * @param Url $url The URLs handler for the integration.
-	 *
-	 * @return string HTML for the authorize fields.
-	 */
-	public function get_connect_link( Api $api, Url $url ) {
-		$args = [
-			'api' => $api,
-			'url' => $url,
-		];
-
-		return $this->admin_template->template( 'zoom/api/authorize-fields/add-link', $args, false );
-	}
-
-	/**
-	 * Get intro text for Zoom API UI
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return string HTML for the intro text.
-	 */
-	public function get_intro_text() {
-		$args = [
-			'allowed_html' => [
-				'a' => [
-					'href'   => [],
-					'target' => [],
-				],
-			],
-		];
-
-		return $this->admin_template->template( 'zoom/api/intro-text', $args, false );
-	}
-
-	/**
-	 * The message template to display on user account changes.
-	 *
-	 * @since 1.5.0
-	 *
-	 * @param string $message The message to display.
-	 * @param string $type    The type of message, either updated or error.
-	 *
-	 * @return string The message with html to display
-	 */
-	public function get_settings_message_template( $message, $type = 'updated' ) {
-		return $this->admin_template->template( 'components/message', [
-			'message' => $message,
-			'type'    => $type,
-		] );
 	}
 
 	/**

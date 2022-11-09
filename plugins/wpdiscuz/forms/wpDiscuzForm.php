@@ -44,6 +44,7 @@ class wpDiscuzForm implements wpdFormConst {
         add_action("add_meta_boxes", [$this, "formCustomCssMetabox"]);
         add_action("add_meta_boxes_comment", [&$this, "renderEditCommentForm"], 10);
         add_filter("comment_save_pre", [&$this, "validateMetaCommentSavePre"], 10);
+        add_action("comment_post", [&$this, "addCommentMeta"], 5);
         add_action("edit_comment", [&$this, "updateCommentMeta"], 10);
         add_filter("comment_text", [&$this, "renderCommentMetaHtml"], 10, 2);
         add_filter("wpdiscuz_after_read_more", [&$this, "afterReadMore"], 10, 2);
@@ -73,6 +74,17 @@ class wpDiscuzForm implements wpdFormConst {
         return $commentContent;
     }
 
+    public function addCommentMeta($commentID) {
+        if (Sanitizer::sanitize(INPUT_POST, "action", "FILTER_SANITIZE_STRING") === "wpdAddComment") {
+            $postID = Sanitizer::sanitize(INPUT_POST, "postId", FILTER_SANITIZE_NUMBER_INT);
+            $this->getForm($postID);
+            if ($this->form) {
+                $this->form->saveCommentMeta($commentID);
+            }
+        }
+    }
+    
+    
     public function updateCommentMeta($commentID) {
         if (Sanitizer::sanitize(INPUT_POST, "action", "FILTER_SANITIZE_STRING") === "editedcomment") {
             $postID = Sanitizer::sanitize(INPUT_POST, "comment_post_ID", FILTER_SANITIZE_NUMBER_INT);
@@ -243,10 +255,10 @@ class wpDiscuzForm implements wpdFormConst {
         global $post;
         $this->getForm($post->ID);
         $this->form->initFormMeta();
-        $this->form->renderFrontForm("main", "0_0", $commentsCount, $currentUser);
+        $this->form->renderFrontForm("main", "0_0", $commentsCount, $currentUser, $post->ID);
         ?>
         <div id="wpdiscuz_hidden_secondary_form" style="display: none;">
-            <?php $this->form->renderFrontForm(0, "wpdiscuzuniqueid", $commentsCount, $currentUser); ?>
+            <?php $this->form->renderFrontForm(0, "wpdiscuzuniqueid", $commentsCount, $currentUser, $post->ID); ?>
         </div>
         <?php
     }
@@ -307,7 +319,7 @@ class wpDiscuzForm implements wpdFormConst {
             } elseif (is_string($postType) && isset($this->formContentTypeRel[$postType])) {
                 $tempContentTypeRel = $this->formContentTypeRel[$postType];
                 $defaultFormID = array_shift($tempContentTypeRel);
-                $lang = get_locale();
+                $lang = get_user_locale();
                 $formID = isset($this->formContentTypeRel[$postType][$lang]) && $this->formContentTypeRel[$postType][$lang] ? $this->formContentTypeRel[$postType][$lang] : $defaultFormID;
             }
             $this->form->setFormID($formID);
@@ -377,7 +389,7 @@ class wpDiscuzForm implements wpdFormConst {
                 "comment_status" => "closed",
                 "ping_status" => "closed",
             ];
-            $lang = get_locale();
+            $lang = get_user_locale();
             $formId = wp_insert_post($form);
             $defaultFields = [];
             $postTypes = [

@@ -9,64 +9,25 @@
 namespace Tribe\Events\Virtual\Meetings\Webex;
 
 use Tribe\Events\Virtual\Export\Abstract_Export;
+use Tribe\Events\Virtual\Meetings\Webex\Event_Meta as Webex_Event_Meta;
+
 /**
  * Class Event_Export
  *
  * @since 1.9.0
+ * @since 1.13.0 - Moved modify_video_source_export_output() to the abstract class.
  *
  * @package Tribe\Events\Virtual\Meetings\Webex;
  */
 class Event_Export extends Abstract_Export {
 
 	/**
-	 * Modify the export parameters for the Webex source.
+	 * Event_Export constructor.
 	 *
-	 * @since 1.9.0
-	 *
-	 * @param array    $fields      The various file format components for this specific event.
-	 * @param \WP_Post $event       The WP_Post of this event.
-	 * @param string   $key_name    The name of the array key to modify.
-	 * @param string   $type        The name of the export type.
-	 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
-	 *
-	 * @return array The various file format components for this specific event.
+	 * @since 1.13.0
 	 */
-	public function modify_video_source_export_output( $fields, $event, $key_name, $type, $should_show ) {
-		if ( 'webex' !== $event->virtual_video_source ) {
-			return $fields;
-		}
-
-		// If it should not show or no linked button and details, set the permalink and return.
-		if (
-			! $should_show ||
-			(
-				! $event->virtual_linked_button &&
-				! $event->virtual_meeting_display_details
-			)
-		 ) {
-			$fields[ $key_name ] = $this->format_value( get_the_permalink( $event->ID ), $key_name, $type );
-
-			return $fields;
-		}
-
-		$url = empty( $event->virtual_meeting_url ) ? $event->virtual_url : $event->virtual_meeting_url;
-
-		$fields[ $key_name ] = $this->format_value( $url, $key_name, $type );
-
-		/**
-		 * Allow filtering of the export fields for Webex.
-		 *
-		 * @since 1.9.0
-		 *
-		 * @param array    $fields      The various file format components for this specific event.
-		 * @param \WP_Post $event       The WP_Post of this event.
-		 * @param string   $key_name    The name of the array key to modify.
-		 * @param string   $type        The name of the export type.
-		 * @param boolean  $should_show Whether to modify the export fields for the current user, default to false.
-		 */
-		$fields = apply_filters( 'tec_events_virtual_webex_export_fields', $fields, $event, $key_name, $type, $should_show );
-
-		return $fields;
+	public function __construct() {
+		self::$api_id = Webex_Event_Meta::$key_source_id;
 	}
 
 	/**
@@ -141,6 +102,42 @@ class Event_Export extends Abstract_Export {
 		}
 
 		return $fields;
+	}
+
+	/**
+	 * Filter the Outlook body component to add the password.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param string               $url             The url used to subscribe to a calendar in Outlook.
+	 * @param string               $base_url        The base url used to subscribe in Outlook.
+	 * @param array<string|string> $params          An array of parameters added to the base url.
+	 * @param Outlook_Methods      $outlook_methods An instance of the link abstract.
+	 * @param \WP_Post             $event           The WP_Post of this event.
+	 * @param boolean              $should_show     Whether to modify the export fields for the current user, default to false.
+	 *
+	 * @return string The export url used to generate an Outlook event for the single event.
+	 */
+	public function add_password_to_outlook_description( $url, $base_url, $params, $outlook_methods, $event, $should_show ) {
+		if ( ! $should_show ) {
+			return $url;
+		}
+
+		if ( ! isset( $params['body'] ) ) {
+			return $url;
+		}
+
+		if ( $this->str_contains( $params['body'], $event->webex_password ) ) {
+			return $url;
+		}
+
+		if ( isset( $params['body'] ) ) {
+			$params['body'] .= ' - ' . $this->get_password_label_with_password( $event );
+		}
+
+		$url = add_query_arg( $params, $base_url );
+
+		return $url;
 	}
 
 	/**

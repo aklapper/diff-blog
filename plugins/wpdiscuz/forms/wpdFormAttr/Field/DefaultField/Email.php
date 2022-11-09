@@ -76,7 +76,7 @@ class Email extends Field {
     }
 
     public function validateFieldData($fieldName, $args, $options, $currentUser) {
-        $email = isset($_POST[$fieldName]) ? sanitize_email(trim($_POST[$fieldName])) : "";
+        $email = isset($_POST[$fieldName]) ? urlencode(sanitize_email(trim($_POST[$fieldName]))) : "";
         if (!$args["required"]) {
             if (!$email) {
                 $email = uniqid() . "@example.com";
@@ -84,7 +84,7 @@ class Email extends Field {
             }
         }
 
-        if ($email !== "" && filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+        if ($email !== "" && filter_var(urldecode($email), FILTER_VALIDATE_EMAIL) === false) {
             wp_send_json_error("wc_error_email_text");
         }
 

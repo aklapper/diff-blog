@@ -309,16 +309,6 @@ class OEmbed {
 		/**
 		 * Allow filtering of the virtual event video url.
 		 *
-		 * @since 1.6.0
-		 * @deprecated 1.8.0 - replaced with tec_events_virtual_video_source_virtual_url.
-		 *
-		 * @param string The virtual url string.
-		 * @param \WP_Post $event The current event post object, as decorated by the `tribe_get_event` function.
-		 */
-		$video_url = apply_filters_deprecated( 'tribe_events_virtual_video_source_virtual_url', [ $video_url, $event ], '1.8.0', 'tec_events_virtual_video_source_virtual_url' );
-		/**
-		 * Allow filtering of the virtual event video url.
-		 *
 		 * @since 1.8.0
 		 *
 		 * @param string The virtual url string.
@@ -327,25 +317,14 @@ class OEmbed {
 		$video_url = apply_filters( 'tec_events_virtual_video_source_virtual_url', $video_url, $event );
 
 		/**
-		 * Allow filtering to disable the video url field.
-		 *
-		 * @since 1.6.0
-		 * @deprecated 1.8.0 - replaced with tec_events_virtual_video_source_virtual_url.
-		 *
-		 * @param bool Whether to disable the video url field or not.
-		 * @param \WP_Post $event The current event post object, as decorated by the `tribe_get_event` function.
-		 */
-		$virtual_url_disabled = apply_filters_deprecated( 'tribe_events_virtual_video_source_virtual_url_disabled', [ false, $event ], '1.8.0', 'tec_events_virtual_video_source_virtual_url_disabled' );
-
-		/**
-		 * Allow filtering to disable the video url field.
+		 * Allow filtering` to disable the video url field.
 		 *
 		 * @since 1.8.0
 		 *
 		 * @param bool Whether to disable the video url field or not.
 		 * @param \WP_Post $event The current event post object, as decorated by the `tribe_get_event` function.
 		 */
-		$virtual_url_disabled = apply_filters( 'tec_events_virtual_video_source_virtual_url_disabled', $virtual_url_disabled, $event );
+		$virtual_url_disabled = apply_filters( 'tec_events_virtual_video_source_virtual_url_disabled', false, $event );
 
 		$autodetect_fields[] = [
 			'path' => 'components/text',
@@ -393,33 +372,5 @@ class OEmbed {
 		// Set for the preview video to always show in the admin.
 		$event->virtual_embed_video = $event->virtual_should_show_embed = true;
 		return $this->template->template( 'single/video-embed', [ 'event' => $event ] );
-	}
-
-	/**
-	 * Ajax function to test an oembed link for "embeddability".
-	 *
-	 * @since 1.0.0
-	 *
-	 * @deprecated 1.8.0
-	 */
-	public function ajax_test_oembed_url() {
-		_deprecated_function( __FUNCTION__, '1.8.0', 'Deprecated for autodetect support.' );
-
-		if (
-			! check_ajax_referer( 'tribe-check-embed', 'nonce' )
-			|| empty( $_REQUEST['url'] )
-		) {
-			wp_send_json_error( null, 401 );
-		}
-
-		$url  = filter_input( INPUT_POST, 'url', FILTER_VALIDATE_URL );
-		$test = $this->is_embeddable( $url );
-
-		if ( false === $test || is_wp_error( $test ) ) {
-			$message = $this->get_unembeddable_message( $url );
-			wp_send_json_error( $message, 400 );
-		}
-
-		wp_send_json_success( $test, 200 );
 	}
 }

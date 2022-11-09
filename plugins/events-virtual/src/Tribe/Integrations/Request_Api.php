@@ -198,10 +198,9 @@ abstract class Request_Api {
 
 			// Add error message from the API if available.
 			$api_message = '';
-			if (
-				isset( $response['body'] )
-				&& false !== ( $body = json_decode( $response['body'], true ) )
-			) {
+			$body        = json_decode( wp_remote_retrieve_body( $response ), true );
+			$body_set    = $this->has_proper_response_body( $response );
+			if ( $body_set ) {
 				$api_message = isset( $body['message'] ) ? ' API Message: ' . $body['message'] : '';
 
 				/**
@@ -321,5 +320,32 @@ abstract class Request_Api {
 		$args['method'] = 'GET';
 
 		return $this->request( $url, $args, $expect_code );
+	}
+
+	/**
+	 * Check if a response body has proper attributes.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @param array<string|mixed>  $body              A response body array.
+	 * @param array<string|string> $additional_checks An array of keys to check for in the body array.
+	 *
+	 * @return boolean Whether the response body has the proper attributes.
+	 */
+	public static function has_proper_response_body( $body, $additional_checks = [] ) {
+		if ( empty( $body ) || ! is_array( $body ) ) {
+			return false;
+		}
+
+		if ( empty( $additional_checks ) ) {
+			return true;
+		}
+
+		// Additional array keys to check for in the body response.
+		if ( array_diff_key( array_flip( $additional_checks ), $body ) ) {
+			return false;
+		}
+
+		return true;
 	}
 }

@@ -96,8 +96,9 @@ class WpdiscuzHelperOptimization implements WpDiscuzConstants {
         do_action("wpdiscuz_reset_users_cache", $userId . "_" . $user->user_email . "_" . $user->display_name);
     }
 
-    public function wpfProfileUpdate() {
-        do_action("wpdiscuz_reset_users_cache", WPF()->current_object["user"]["userid"] . "_" . WPF()->current_object["user"]["user_email"] . "_" . WPF()->current_object["user"]["display_name"]);
+    public function wpfProfileUpdate($user) {
+        $wpUser = get_user_by("id", $user["userid"]);
+        do_action("wpdiscuz_reset_users_cache", $wpUser->ID . "_" . $wpUser->user_email . "_" . $wpUser->display_name);
         do_action("wpdiscuz_reset_comments_cache");
     }
 
@@ -242,6 +243,8 @@ class WpdiscuzHelperOptimization implements WpDiscuzConstants {
                 \SiteGround_Optimizer\Supercacher\Supercacher::delete_assets();
             }
         }
+
+        update_post_meta($postId, self::POSTMETA_STATISTICS, []);
     }
 
     public function cleanAllCaches() {

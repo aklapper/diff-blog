@@ -223,7 +223,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     public function isCommentEditable($comment) {
         $commentTimestamp = strtotime($comment->comment_date);
         $timeDiff = self::$current_time - $commentTimestamp;
-        $editableTimeLimit = $this->options->moderation["commentEditableTime"] === "unlimit" ? abs($timeDiff) + 1 : intval($this->options->moderation["commentEditableTime"]);
+        $editableTimeLimit = $this->options->moderation["commentEditableTime"] === "unlimit" ? abs($timeDiff) + 100 : intval($this->options->moderation["commentEditableTime"]);
         return apply_filters("wpdiscuz_is_comment_editable", $editableTimeLimit && ($timeDiff < $editableTimeLimit), $comment);
     }
 
@@ -240,7 +240,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         }
         $commentContent = trim(strip_tags($commentContent));
         $contentLength = function_exists("mb_strlen") ? mb_strlen($commentContent) : strlen($commentContent);
-        return ($commentMinLength && $contentLength >= $commentMinLength) && ($commentMaxLength == 0 || $contentLength <= $commentMaxLength);
+        return ($contentLength >= $commentMinLength) && ($commentMaxLength == 0 || $contentLength <= $commentMaxLength);
     }
 
     /**
@@ -413,6 +413,9 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function canUserEditComment($comment, $currentUser, $commentListArgs = []) {
+        if (!($comment instanceof WP_Comment)) {
+            return false;
+        }
         if (isset($commentListArgs["comment_author_email"])) {
             $storedCookieEmail = $commentListArgs["comment_author_email"];
         } else {
@@ -1145,34 +1148,35 @@ class WpdiscuzHelper implements WpDiscuzConstants {
         $user["author_title"] = "";
         $user["commentWrapRoleClass"] = [];
         if ($user["user"]) {
+            if ($this->options->labels["blogRoles"]) {
+                if ($user["user"]->roles && is_array($user["user"]->roles)) {
+                    foreach ($user["user"]->roles as $k => $role) {
+                        if (isset($this->options->labels["blogRoles"][$role])) {
+                            $user["commentWrapRoleClass"][] = "wpd-blog-user";
+                            $user["commentWrapRoleClass"][] = "wpd-blog-" . $role;
+                            $rolePhrase = esc_html($this->options->getPhrase("wc_blog_role_" . $role, ["default" => ""]));
+                            if (!empty($this->options->labels["blogRoleLabels"][$role])) {
+                                $user["author_title"] = apply_filters("wpdiscuz_user_label", $rolePhrase, $user["user"]);
+                            }
+                            break;
+                        }
+                    }
+                } else {
+                    $user["commentWrapRoleClass"][] = "wpd-blog-guest";
+                    if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
+                        $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
+                    }
+                }
+            }
+
             if ($user["user"]->ID == $args["post_author"]) {
                 $user["commentWrapRoleClass"][] = "wpd-blog-user";
                 $user["commentWrapRoleClass"][] = "wpd-blog-post_author";
                 if (!empty($this->options->labels["blogRoleLabels"]["post_author"])) {
                     $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_post_author"));
                 }
-            } else {
-                if ($this->options->labels["blogRoles"]) {
-                    if ($user["user"]->roles && is_array($user["user"]->roles)) {
-                        foreach ($user["user"]->roles as $k => $role) {
-                            if (isset($this->options->labels["blogRoles"][$role])) {
-                                $user["commentWrapRoleClass"][] = "wpd-blog-user";
-                                $user["commentWrapRoleClass"][] = "wpd-blog-" . $role;
-                                $rolePhrase = esc_html($this->options->getPhrase("wc_blog_role_" . $role, ["default" => ""]));
-                                if (!empty($this->options->labels["blogRoleLabels"][$role])) {
-                                    $user["author_title"] = apply_filters("wpdiscuz_user_label", $rolePhrase, $user["user"]);
-                                }
-                                break;
-                            }
-                        }
-                    } else {
-                        $user["commentWrapRoleClass"][] = "wpd-blog-guest";
-                        if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
-                            $user["author_title"] = esc_html($this->options->getPhrase("wc_blog_role_guest"));
-                        }
-                    }
-                }
             }
+            
         } else {
             $user["commentWrapRoleClass"][] = "wpd-blog-guest";
             if (!empty($this->options->labels["blogRoleLabels"]["guest"])) {
@@ -1217,6 +1221,9 @@ class WpdiscuzHelper implements WpDiscuzConstants {
     }
 
     public function addRatingResetButton($postType, $post) {
+        if(!$post){
+            return;
+        }
         $form = $this->wpdiscuzForm->getForm($post->ID);
         if ($form->getFormID() && ($form->getEnableRateOnPost() || $form->getRatingsExists())) {
             add_meta_box("wpd_reset_ratings", __("Reset Ratings", "wpdiscuz"), [&$this, "resetRatingsButtons"], $postType, "side", "low");
@@ -1490,7 +1497,7 @@ class WpdiscuzHelper implements WpDiscuzConstants {
             $glob = INPUT_POST === $action ? $_POST : $_GET;
             if (key_exists($variable_name, $glob)) {
                 return sanitize_text_field($glob[$variable_name]);
-            }else{
+            } else {
                 return $default;
             }
         }

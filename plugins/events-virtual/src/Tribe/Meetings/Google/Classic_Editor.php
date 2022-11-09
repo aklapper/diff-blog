@@ -37,18 +37,22 @@ class Classic_Editor extends Abstract_Classic_Labels {
 	/**
 	 * Classic_Editor constructor.
 	 *
+	 * @since 1.13.0 - Add the Action class.
+	 *
 	 * @param Api            $api      An instance of the Google API handler.
 	 * @param Settings       $settings An instance of the Google Settings handler.
 	 * @param Admin_Template $template An instance of the Template class to handle the rendering of admin views.
 	 * @param Users          $users    The Users handler for the integration.
 	 * @param Url            $url      The URLs handler for the integration.
+	 * @param Actions        $actions  An instance of the Actions name handler.
 	 */
-	public function __construct( Api $api, Settings $settings, Admin_Template $template, Users $users, Url $url ) {
+	public function __construct( Api $api, Settings $settings, Admin_Template $template, Users $users, Url $url, Actions $actions ) {
 		$this->api      = $api;
 		$this->settings = $settings;
 		$this->template = $template;
 		$this->users    = $users;
 		$this->url      = $url;
+		$this->actions  = $actions;
 	}
 
 	/**
@@ -356,7 +360,7 @@ class Classic_Editor extends Abstract_Classic_Labels {
 	 * {@inheritDoc}
 	 */
 	public function ajax_selection( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( $this->api::$select_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$select_action, $nonce ) ) {
 			return false;
 		}
 

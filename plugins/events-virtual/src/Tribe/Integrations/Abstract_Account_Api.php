@@ -91,6 +91,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * The name of the action used to get an account setup to generate use an API.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 1.13.0 - Use Abstract_Actions::$select_action
 	 *
 	 * @var string
 	 */
@@ -100,6 +101,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * The name of the action used to change the status of an account to enabled or disabled.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 1.13.0 - Use Abstract_Actions::$select_action
 	 *
 	 * @var string
 	 */
@@ -109,6 +111,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * The name of the action used to delete an account.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 1.13.0 - Use Abstract_Actions::$select_action
 	 *
 	 * @var string
 	 */
@@ -122,6 +125,15 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * @var Template_Modifications
 	 */
 	protected $template_modifications;
+
+	/**
+	 * The Actions name handler.
+	 *
+	 * @since 1.13.0
+	 *
+	 * @var Abstract_Actions
+	 */
+	protected $actions;
 
 	/**
 	 * Checks whether the current API is ready to use.
@@ -543,7 +555,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 			return false;
 		}
 
-		$credentials = json_decode( $response['body'], true );
+		$credentials = json_decode( wp_remote_retrieve_body( $response ), true );
 
 		if ( false === $credentials ) {
 			return false;
@@ -687,14 +699,14 @@ abstract class Abstract_Account_Api extends Request_Api {
 	}
 
 	/**
-	 * Checks whether the current Google API integration is authorized or not.
+	 * Checks whether the current API integration is authorized or not.
 	 *
 	 * The check is made on the existence of the refresh token, with it the token can be fetched on demand when
 	 * required.
 	 *
 	 * @since 1.11.0
 	 *
-	 * @return bool Whether the current Google API integration is authorized or not.
+	 * @return bool Whether the current API integration is authorized or not.
 	 */
 	public function is_authorized() {
 		return ! empty( $this->refresh_token );
@@ -767,7 +779,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_status( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$status_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$status_action, $nonce ) ) {
 			return false;
 		}
 
@@ -866,7 +878,7 @@ abstract class Abstract_Account_Api extends Request_Api {
 	 * @return bool Whether the request was handled or not.
 	 */
 	public function ajax_delete( $nonce = null ) {
-		if ( ! $this->check_ajax_nonce( static::$delete_action, $nonce ) ) {
+		if ( ! $this->check_ajax_nonce( $this->actions::$delete_action, $nonce ) ) {
 			return false;
 		}
 

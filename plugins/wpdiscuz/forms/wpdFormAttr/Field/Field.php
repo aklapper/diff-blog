@@ -10,6 +10,8 @@ abstract class Field {
     private static $instance = [];
     protected $isDefault;
     protected $display;
+    protected $displayForGuest;
+    protected $displayForUser;
     protected $name;
     protected $type;
     protected $fieldInputName;
@@ -56,14 +58,14 @@ abstract class Field {
         ?>
         <div class="wpd-field <?php echo $this->isDefault ? "wpd-default-field" : ""; ?>">
             <div class="wpd-field-head">
-                <?php echo htmlentities($args["name"]); ?>
+                <?php echo htmlentities($this->fieldData["name"]); ?>
                 <?php
-                if ($args["type"] === "wpdFormAttr\Field\DefaultField\Submit") {
+                if ($this->fieldData["type"] === "wpdFormAttr\Field\DefaultField\Submit") {
                     esc_html_e(" (Submit Button)", "wpdiscuz");
-                } elseif ($args["type"] === "wpdFormAttr\Field\DefaultField\Captcha") {
+                } elseif ($this->fieldData["type"] === "wpdFormAttr\Field\DefaultField\Captcha") {
                     esc_html_e("Google reCAPTCHA", "wpdiscuz");
-                } elseif (strpos($args["type"], "wpdFormAttr\Field\DefaultField") === false) {
-                    $fieldLable = str_replace("wpdFormAttr\Field\\", "", $args["type"]);
+                } elseif (strpos($this->fieldData["type"], "wpdFormAttr\Field\DefaultField") === false) {
+                    $fieldLable = str_replace("wpdFormAttr\Field\\", "", $this->fieldData["type"]);
                     echo " ( " . htmlentities(str_replace("Field", "", $fieldLable)) . " )";
                 }
                 ?>
@@ -77,7 +79,7 @@ abstract class Field {
                 </div>
             </div>
             <?php
-            $this->dashboardForm($row, $col, $name, $args);
+            $this->dashboardForm($row, $col, $name, $this->fieldData);
             ?>
         </div>
         <?php
@@ -145,7 +147,6 @@ abstract class Field {
                 $cleanData["values"][] = trim($value);
             }
         }
-
         if (isset($data["icon"])) {
             $cleanData["icon"] = trim(strip_tags($data["icon"]));
         }
@@ -162,7 +163,48 @@ abstract class Field {
         } else {
             $cleanData["is_show_sform"] = 0;
         }
+        if (isset($data["show_for_guests"])) {
+            $cleanData["show_for_guests"] = intval($data["show_for_guests"]);
+        } else {
+            $cleanData["show_for_guests"] = 0;
+        }
+        if (isset($data["show_for_users"])) {
+            $cleanData["show_for_users"] = intval($data["show_for_users"]);
+        } else {
+            $cleanData["show_for_users"] = 0;
+        }
         return wp_parse_args($cleanData, $this->fieldDefaultData);
+    }
+
+    protected function isShowForUser($args, $currentUser = null) {
+        $isShowForUser = true;
+        if(is_admin() && !wp_doing_ajax() && current_user_can("manage_options")){
+            return $isShowForUser;
+        }
+        if (is_null($currentUser)) {
+            $currentUser = wp_get_current_user();
+        }
+        if(!isset($args["show_for_users"])){
+            $args["show_for_users"] = 1;
+        }
+        if(!isset($args["show_for_guests"])){
+            $args["show_for_guests"] = 1;
+        }
+        if ($currentUser->exists() && !$args["show_for_users"]) {
+            $isShowForUser = false;
+        }
+
+        if (!$currentUser->exists() && !$args["show_for_guests"]) {
+            $isShowForUser = false;
+        }
+        return apply_filters("wpdiscuz_show_field_for_user", $isShowForUser, $currentUser, $args);
+    }
+
+    protected function isValidateRequired($args, $currentUser = null) {
+        if (!$args["required"] || !$this->isShowForUser($args, $currentUser) || (!$this->isCommentParentZero() && !$args["is_show_sform"]) || (is_admin() && !wp_doing_ajax() && current_user_can("manage_options"))) {
+            return false;
+        }
+        return true;
     }
 
     protected function isCommentParentZero() {
@@ -185,7 +227,9 @@ abstract class Field {
             "required" => "0",
             "loc" => "bottom",
             "is_show_on_comment" => 1,
-            "is_show_sform" => 0
+            "is_show_sform" => 0,
+            "show_for_guests" => 1,
+            "show_for_users" => 1,
         ];
     }
 

@@ -9,6 +9,8 @@
 
 namespace Tribe\Events\Virtual;
 
+use WP_Post;
+
 /**
  * Class Event_Meta.
  *

@@ -26,18 +26,18 @@ namespace  Tribe\Extensions\EventsControl;
 			id="<?php echo esc_attr( "{$metabox::$id}-status" ); ?>"
 			name="<?php echo esc_attr( "{$metabox::$id}[status]" ); ?>"
 		>
-			<option value=""><?php echo esc_html_x( 'Scheduled', 'Event status default option', 'tribe-ext-events-control' ); ?></option>
+			<option value=""><?php echo esc_html_x( 'Scheduled', 'Event status default option', 'events-virtual' ); ?></option>
 			<option
 				value="canceled"
 				<?php selected( 'canceled' === $fields['status'] ); ?>
 			>
-				<?php echo esc_html_x( 'Canceled', 'Event status of being canceled in the select field', 'tribe-ext-events-control' ); ?>
+				<?php echo esc_html_x( 'Canceled', 'Event status of being canceled in the select field', 'events-virtual' ); ?>
 			</option>
 			<option
 				value="postponed"
 				<?php selected( 'postponed' === $fields['status'] ); ?>
 			>
-				<?php echo esc_html_x( 'Postponed', 'Event status of being postponed in the select field', 'tribe-ext-events-control' ); ?>
+				<?php echo esc_html_x( 'Postponed', 'Event status of being postponed in the select field', 'events-virtual' ); ?>
 			</option>
 		</select>
 	</p>

@@ -34,7 +34,10 @@ if (!class_exists('PP_Module')) {
      */
     class PP_Module
     {
-        protected $twig;
+        /**
+         * @var \PublishPress\Core\ViewInterface
+         */
+        protected $view;
 
         protected $debug = false;
 
@@ -46,21 +49,12 @@ if (!class_exists('PP_Module')) {
             'private',
         ];
 
-        protected $twigPath;
+        protected $viewsPath;
 
         public function __construct()
         {
-            if (!empty($this->twigPath)) {
-                $loader     = new Twig_Loader_Filesystem($this->twigPath);
-                $this->twig = new Twig_Environment(
-                    $loader, [
-                               'debug' => $this->debug,
-                           ]
-                );
-
-                if ($this->debug) {
-                    $this->twig->addExtension(new Twig_Extension_Debug());
-                }
+            if (!empty($this->viewsPath)) {
+                $this->view = new \PublishPress\Core\View();
             }
 
             foreach(get_post_stati(['public' => true, 'private' => true], 'names', 'OR') as $status) {
@@ -448,7 +442,13 @@ if (!class_exists('PP_Module')) {
          */
         protected function is_whitelisted_functional_view($module_name = null)
         {
-            return true;
+            $whitelisted_pages = ['pp-calendar', 'pp-content-overview', 'pp-notif-log', 'pp-modules-settings'];
+            
+            if (isset($_GET['page']) &&  in_array($_GET['page'], $whitelisted_pages)) {
+                return true;
+            }
+            
+            return false;
         }
 
         /**

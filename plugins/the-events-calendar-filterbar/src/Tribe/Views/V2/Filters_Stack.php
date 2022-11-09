@@ -9,6 +9,7 @@
 
 namespace Tribe\Events\Filterbar\Views\V2;
 
+use TEC\Filter_Bar\Custom_Tables\V1\Builder_Where_Contract;
 use Tribe\Events\Filterbar\Views\V2\Filters\Context_Filter;
 use Tribe__Context as Context;
 use Tribe__Date_Utils as Dates;
@@ -225,12 +226,34 @@ class Filters_Stack {
 
 		// No need to JOIN on any table, the stack will operate on the posts table, already part of the query.
 		$join_clause->setValue( $filter, '' );
-		// Include only the matching post IDs.
-		$ids_interval       = implode( ',', array_map( static function ( $id ) use ( $wpdb ) {
-			return $wpdb->prepare( '%d', $id );
-		}, $this->post_ids_pool ) );
-		$comment            = static::$query_id_comment;
-		$this->where_clause = " {$comment} AND {$wpdb->posts}.ID IN ( {$ids_interval} )";
+		if ( $filter instanceof Builder_Where_Contract ) {
+			$this->where_clause = $filter->build_where( $this );
+		} else {
+			// Include only the matching post IDs.
+			$where_data = [ 'table' => $wpdb->posts, 'field' => 'ID', 'ids' => $this->post_ids_pool ];
+
+			/**
+			 * Filters the WHERE clause table, field and IDs for the Stack filter query.
+			 *
+			 * @since 5.4.0
+			 *
+			 * @param array<string,string|array> $where_data An map containing the table, field and IDs to use in the
+			 *                                               stack WHERE clause.
+			 */
+			$table_field_ids = apply_filters( 'tec_events_filter_stack_where_table_field_ids', $where_data );
+
+			$table = $table_field_ids['table'] ?? $wpdb->posts;
+			$field = $table_field_ids['field'] ?? 'ID';
+			$ids   = $table_field_ids['ids'] ?? $this->post_ids_pool;
+
+			$comment = static::$query_id_comment;
+			$ids_interval = implode( ',', array_map( static function ( $id ) use ( $wpdb ) {
+				return $wpdb->prepare( '%d', $id );
+			}, $ids ) );
+
+			$this->where_clause = " {$comment} AND {$table}.{$field} IN ( {$ids_interval} )";
+		}
+
 		$where_clause->setValue( $filter, $this->where_clause );
 		$filter->stack_managed = true;
 

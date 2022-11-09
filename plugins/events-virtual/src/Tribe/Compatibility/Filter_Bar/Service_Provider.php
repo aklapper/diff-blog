@@ -9,8 +9,6 @@
 
 namespace Tribe\Events\Virtual\Compatibility\Filter_Bar;
 
-use Tribe\Events\Virtual\Compatibility\Filter_Bar\Events_Virtual_Filter;
-
 /**
  * Class Service_Provider
  *
@@ -34,22 +32,10 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 			return;
 		}
 
-		// Make it work in v1.
-		add_action( 'tribe_events_filters_create_filters', [ $this, 'create_filter' ] );
-
 		// Make it work in v2.
 		add_filter( 'tribe_context_locations', [ $this, 'filter_context_locations' ], 15 );
 		add_filter( 'tribe_events_filter_bar_context_to_filter_map', [ $this, 'filter_context_to_filter_map' ] );
 		add_filter( 'tribe_events_filter_bar_default_filter_names_map', [ $this, 'filter_default_filter_names_map' ] );
-	}
-
-	/**
-	 * Includes the custom filter class and creates an instance of it.
-	 *
-	 * @since 1.0.4
-	 */
-	public function create_filter() {
-		return $this->container->make( Events_Virtual_Filter::class );
 	}
 
 	/**
@@ -107,5 +93,16 @@ class Service_Provider extends \tad_DI52_ServiceProvider {
 		];
 
 		return $locations;
+	}
+
+	/**
+	 * Includes the custom filter class and creates an instance of it.
+	 *
+	 * @since 1.0.4
+	 *
+	 * @deprecated 1.12.0- Deprecated with removal of Legacy-V1 views.
+	 */
+	public function create_filter() {
+		return $this->container->make( Events_Virtual_Filter::class );
 	}
 }
