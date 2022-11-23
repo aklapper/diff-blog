@@ -27,7 +27,7 @@ const ContentLicensingNotice = () => {
 		};
 	} );
 	const showCheckbox = postStatus === 'draft' && ! currentUserRoles.includes( 'administrator' );
-	const shouldLock = showCheckbox && ! agreed;
+	const shouldLock = ! agreed && showCheckbox;
 
 	// Put all the logic in the useEffect hook.
 	useEffect( () => {
