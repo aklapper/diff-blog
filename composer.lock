@@ -4,12 +4,71 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b80906c95d2625bee3d3e56431a29c54",
-    "packages": [],
+    "content-hash": "d86ec2685c563b11e456415617cccbe9",
+    "packages": [
+        {
+            "name": "wikimedia/interconnection-wordpress-theme",
+            "version": "dev-release",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
+                "reference": "52cc08a72f0eff4fcabed7c90371cefe06fb10da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/52cc08a72f0eff4fcabed7c90371cefe06fb10da",
+                "reference": "52cc08a72f0eff4fcabed7c90371cefe06fb10da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "php-parallel-lint/php-parallel-lint": "^1.2.0",
+                "wp-cli/i18n-command": "^2.2",
+                "wptrt/wpthemereview": "^0.2.1"
+            },
+            "type": "wordpress-theme",
+            "scripts": {
+                "lint:wpcs": [
+                    "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs"
+                ],
+                "lint:php": [
+                    "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor ."
+                ],
+                "make-pot": [
+                    "wp i18n make-pot . languages/interconnection.pot"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/graphs/contributors"
+                }
+            ],
+            "description": "Interconnection is a theme based on http://underscores.me/ intended for use on the Wikimedia Diff blog.",
+            "homepage": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org",
+            "keywords": [
+                "Themes",
+                "WordPress"
+            ],
+            "support": {
+                "issues": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/issues",
+                "source": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org"
+            },
+            "time": "2023-01-19T23:07:26+00:00"
+        }
+    ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "wikimedia/interconnection-wordpress-theme": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

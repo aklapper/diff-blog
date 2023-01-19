@@ -13,7 +13,8 @@
 /plugins/two-factor/
 /plugins/vaultpress/
 
-# Composer-managed plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
+# Composer-managed themes & plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
+/themes/interconnection
 
 # Files built in CI: DO NOT INCLUDE THESE LINES in .deployignore file.
 /client-mu-plugins/diff-blocks/dist
