@@ -16,6 +16,7 @@
 # Composer-managed plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
 
 # Files built in CI: DO NOT INCLUDE THESE LINES in .deployignore file.
+/client-mu-plugins/diff-blocks/dist
 
 # Related to PHP Code Sniffer
 **/vendor/*
