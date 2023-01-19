@@ -1,0 +1,46 @@
+{
+  "name": "wpcomvip/wikimedia-blog-wikimedia-org",
+  "description": "diff.wikimedia.org web application",
+  "keywords": [],
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org",
+  "authors": [
+    {
+      "name": "Diff Wikimedia",
+      "homepage": "http://diff.wikimedia.org",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/issues",
+    "source": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org"
+  },
+  "config": {
+    "sort-order": true,
+    "allow-plugins": {
+      "composer/installers": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^8"
+  },
+  "extra": {
+    "installer-types": [
+      "wordpress-plugin"
+    ],
+    "installer-paths": {
+      "plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ]
+    }
+  }
+}
