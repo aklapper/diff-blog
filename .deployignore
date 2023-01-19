@@ -13,9 +13,11 @@
 /plugins/two-factor/
 /plugins/vaultpress/
 
-# Composer-managed plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
-
-# Files built in CI: DO NOT INCLUDE THESE LINES in .deployignore file.
+# ===================================================================
+# Composer dependencies must NOT be listed in this deployignore --
+# this overrides the gitignore so that composer-managed plugins WILL
+# be included in the generated build.
+# ===================================================================
 
 # Related to PHP Code Sniffer
 **/vendor/*
