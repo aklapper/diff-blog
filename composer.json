@@ -26,12 +26,27 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Automattic/Post-Meta-Inspector.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Automattic/Co-Authors-Plus.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:wikimedia/wikipediapreview-wordpress.git"
     }
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^8"
+    "php": "^8|^7.4.2",
+    "wpackagist-plugin/publishpress": "^3.9.0",
+    "automattic/post-meta-inspector": "*",
+    "automattic/co-authors-plus": "3.5.3"
   },
   "extra": {
     "installer-types": [
