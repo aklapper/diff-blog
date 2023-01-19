@@ -54,17 +54,31 @@
           "type": "zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/events-virtual",
+        "version": "1.13.2",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&version=1.13.4&key=***REMOVED***",
+          "type": "zip"
+        }
+      }
     }
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": "^7.4|^8",
-    "wpackagist-plugin/publishpress": "^3.9.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "3.5.3",
     "publishpress/capability-manager-enhanced": "2.6.0",
-    "the-events-calendar/events-calendar-pro": "6.0.2.1"
+    "the-events-calendar/events-calendar-pro": "6.0.2.1",
+    "the-events-calendar/events-virtual": "1.13.2",
+    "wpackagist-plugin/publishpress": "^3.9.0"
+    
   },
   "extra": {
     "installer-types": [
