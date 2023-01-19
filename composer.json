@@ -42,6 +42,18 @@
     {
       "type": "vcs",
       "url": "git@github.com:wikimedia/wikipediapreview-wordpress.git"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/events-calendar-pro",
+        "version": "6.0.2.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.2.1",
+          "type": "zip"
+        }
+      }
     }
   ],
   "minimum-stability": "dev",
@@ -51,7 +63,8 @@
     "wpackagist-plugin/publishpress": "^3.9.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "3.5.3",
-    "publishpress/capability-manager-enhanced": "2.6.0"
+    "publishpress/capability-manager-enhanced": "2.6.0",
+    "the-events-calendar/events-calendar-pro": "6.0.2.1"
   },
   "extra": {
     "installer-types": [
