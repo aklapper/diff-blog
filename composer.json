@@ -72,6 +72,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^7.4|^8",
+    "alleyinteractive/wordpress-fieldmanager": "1.5.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "3.5.3",
     "publishpress/capability-manager-enhanced": "2.6.0",
@@ -85,6 +86,9 @@
       "wordpress-plugin"
     ],
     "installer-paths": {
+      "plugins/fieldmanager": [
+        "alleyinteractive/wordpress-fieldmanager"
+      ],
       "plugins/{$name}/": [
         "type:wordpress-plugin"
       ]
