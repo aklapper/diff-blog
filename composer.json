@@ -95,7 +95,8 @@
     "wikimedia/wikipediapreview-wordpress": "*",
     "wpackagist-plugin/publishpress": "^3.9.0",
     "wpackagist-plugin/the-events-calendar":"6.0.3",
-    "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1"
+    "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1",
+    "wpackagist-plugin/wikipedia-preview":"1.6.0"
   },
   "extra": {
     "installer-types": [
