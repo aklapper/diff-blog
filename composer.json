@@ -105,9 +105,6 @@
       "plugins/fieldmanager": [
         "alleyinteractive/wordpress-fieldmanager"
       ],
-      "plugind/mw-oauth-client": [
-        "mediawiki/oauthclient"
-      ],
       "plugins/{$name}/": [
         "type:wordpress-plugin"
       ]
