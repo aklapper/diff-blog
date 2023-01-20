@@ -66,6 +66,18 @@
           "type": "zip"
         }
       }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/the-events-calendar-filterbar",
+        "version": "5.4.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&version=5.4.1&key=***REMOVED***",
+          "type": "zip"
+        }
+      }
     }
   ],
   "minimum-stability": "dev",
@@ -79,8 +91,10 @@
     "publishpress/capability-manager-enhanced": "2.6.0",
     "the-events-calendar/events-calendar-pro": "6.0.2.1",
     "the-events-calendar/events-virtual": "1.13.2",
+    "the-events-calendar/the-events-calendar-filterbar": "5.4.1",
     "wikimedia/wikipediapreview-wordpress": "*",
     "wpackagist-plugin/publishpress": "^3.9.0",
+    "wpackagist-plugin/the-events-calendar":"6.0.3",
     "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1"
   },
   "extra": {
