@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "52cc08a72f0eff4fcabed7c90371cefe06fb10da"
+                "reference": "7f9f301312e6ae71d3ef8bbc62b50b993cf38719"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/52cc08a72f0eff4fcabed7c90371cefe06fb10da",
-                "reference": "52cc08a72f0eff4fcabed7c90371cefe06fb10da",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/7f9f301312e6ae71d3ef8bbc62b50b993cf38719",
+                "reference": "7f9f301312e6ae71d3ef8bbc62b50b993cf38719",
                 "shasum": ""
             },
             "require": {
@@ -60,7 +60,7 @@
                 "issues": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/issues",
                 "source": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org"
             },
-            "time": "2023-01-19T23:07:26+00:00"
+            "time": "2023-01-20T00:12:09+00:00"
         }
     ],
     "packages-dev": [],
