@@ -87,16 +87,14 @@
     "alleyinteractive/wordpress-fieldmanager": "1.5.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "3.5.3",
-    "mediawiki/oauthclient": "^1.2",
     "publishpress/capability-manager-enhanced": "2.6.0",
     "the-events-calendar/events-calendar-pro": "6.0.2.1",
     "the-events-calendar/events-virtual": "1.13.2",
     "the-events-calendar/the-events-calendar-filterbar": "5.4.1",
-    "wikimedia/wikipediapreview-wordpress": "*",
     "wpackagist-plugin/publishpress": "^3.9.0",
     "wpackagist-plugin/the-events-calendar":"6.0.3",
     "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1",
-    "wpackagist-plugin/wikipedia-preview":"1.6.0",
+    "wpackagist-plugin/wikipedia-preview":"^1.6",
     "wpackagist-plugin/wpdiscuz":"7.5"
   },
   "extra": {
@@ -106,6 +104,9 @@
     "installer-paths": {
       "plugins/fieldmanager": [
         "alleyinteractive/wordpress-fieldmanager"
+      ],
+      "plugind/mw-oauth-client": [
+        "mediawiki/oauthclient"
       ],
       "plugins/{$name}/": [
         "type:wordpress-plugin"
