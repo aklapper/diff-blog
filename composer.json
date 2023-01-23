@@ -47,7 +47,7 @@
         "type:wordpress-plugin"
       ],
       "themes/interconnection": [
-        "wikimedia/interconnection"
+        "wikimedia/interconnection-wordpress-theme"
       ]
     }
   }

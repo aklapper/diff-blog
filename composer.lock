@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d86ec2685c563b11e456415617cccbe9",
+    "content-hash": "d13abc40686589e89dfac7718b2fc4ca",
     "packages": [
         {
             "name": "wikimedia/interconnection-wordpress-theme",
@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "7f9f301312e6ae71d3ef8bbc62b50b993cf38719"
+                "reference": "3a206aa644046622ac8bef2e5750a112db9e4c44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/7f9f301312e6ae71d3ef8bbc62b50b993cf38719",
-                "reference": "7f9f301312e6ae71d3ef8bbc62b50b993cf38719",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/3a206aa644046622ac8bef2e5750a112db9e4c44",
+                "reference": "3a206aa644046622ac8bef2e5750a112db9e4c44",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.0"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
@@ -47,20 +47,20 @@
             "authors": [
                 {
                     "name": "Contributors",
-                    "homepage": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/graphs/contributors"
+                    "homepage": "https://github.com/wikimedia/interconnection-wordpress-theme/graphs/contributors"
                 }
             ],
             "description": "Interconnection is a theme based on http://underscores.me/ intended for use on the Wikimedia Diff blog.",
-            "homepage": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org",
+            "homepage": "https://github.com/wikimedia/interconnection-wordpress-theme",
             "keywords": [
                 "Themes",
                 "WordPress"
             ],
             "support": {
-                "issues": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/issues",
-                "source": "https://github.com/wpcomvip/wikimedia-blog-wikimedia-org"
+                "issues": "https://github.com/wikimedia/interconnection-wordpress-theme/issues",
+                "source": "https://github.com/wikimedia/interconnection-wordpress-theme"
             },
-            "time": "2023-01-20T00:12:09+00:00"
+            "time": "2023-01-23T16:53:00+00:00"
         }
     ],
     "packages-dev": [],
