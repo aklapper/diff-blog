@@ -36,6 +36,7 @@
   "prefer-stable": true,
   "require": {
     "php": "^8",
+    "composer/installers": "^1.10",
     "wikimedia/interconnection-wordpress-theme": "dev-release"
   },
   "extra": {
@@ -48,6 +49,9 @@
       ],
       "themes/interconnection": [
         "wikimedia/interconnection-wordpress-theme"
+      ],
+      "themes/{$name}/": [
+        "type:wordpress-theme"
       ]
     }
   }
