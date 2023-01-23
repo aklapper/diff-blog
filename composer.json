@@ -63,10 +63,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-virtual",
-        "version": "1.13.2",
+        "version": "1.13.4",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&version=1.13.4&key=***REMOVED***",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.13.4",
           "type": "zip"
         }
       }
@@ -78,7 +78,7 @@
         "version": "5.4.1",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&version=5.4.1&key=***REMOVED***",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.4.1",
           "type": "zip"
         }
       }
@@ -93,7 +93,7 @@
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "^3.5.3",
     "the-events-calendar/events-calendar-pro": "^6.0.6",
-    "the-events-calendar/events-virtual": "^1.13.2",
+    "the-events-calendar/events-virtual": "^1.13.4",
     "the-events-calendar/the-events-calendar-filterbar": "^5.4.1",
     "wikimedia/interconnection-wordpress-theme": "dev-release",
     "wpackagist-plugin/capability-manager-enhanced": "^2.6.0",
