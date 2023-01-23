@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c6c99aa9db3ed128de7f619bd4b4d8e",
+    "content-hash": "555c51362802858933d533849d7aee3f",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -52,11 +52,11 @@
         },
         {
             "name": "automattic/co-authors-plus",
-            "version": "3.5.3",
+            "version": "3.5.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/Co-Authors-Plus.git",
-                "reference": "2357c6575a705181443f1bd9a5e31b143427aa55"
+                "reference": "215d31c39b8c919d431feec978ae86f7542be7c7"
             },
             "require": {
                 "composer/installers": "~1.0",
@@ -73,6 +73,11 @@
                 "yoast/phpunit-polyfills": "^1.0.1"
             },
             "type": "wordpress-plugin",
+            "autoload": {
+                "classmap": [
+                    "php"
+                ]
+            },
             "scripts": {
                 "cs": [
                     "@php ./vendor/bin/phpcs -p -s -v -n . --standard=\"WordPress-VIP-Go\" --extensions=php --ignore=\"/vendor/*,/node_modules/*,/tests/*\""
@@ -119,7 +124,7 @@
                 "source": "https://github.com/Automattic/Co-Authors-Plus",
                 "forum": "http://wordpress.org/support/plugin/co-authors-plus"
             },
-            "time": "2022-10-24T18:20:27+00:00"
+            "time": "2023-01-19T16:00:20+00:00"
         },
         {
             "name": "automattic/post-meta-inspector",
@@ -428,15 +433,15 @@
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
-            "version": "2.6.0",
+            "version": "2.6.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/capability-manager-enhanced/",
-                "reference": "tags/2.6.0"
+                "reference": "tags/2.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.6.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.6.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -464,15 +469,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar",
-            "version": "6.0.3",
+            "version": "6.0.7.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
-                "reference": "tags/6.0.3"
+                "reference": "tags/6.0.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.0.3.zip"
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.0.7.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -518,15 +523,15 @@
         },
         {
             "name": "wpackagist-plugin/wpdiscuz",
-            "version": "7.5",
+            "version": "7.5.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
-                "reference": "tags/7.5"
+                "reference": "tags/7.5.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.5.2.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
