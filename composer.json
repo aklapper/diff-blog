@@ -26,12 +26,18 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:wikimedia/interconnection-wordpress-theme.git"
     }
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^8"
+    "php": "^8",
+    "composer/installers": "^1.10",
+    "wikimedia/interconnection-wordpress-theme": "dev-release"
   },
   "extra": {
     "installer-types": [
@@ -40,6 +46,12 @@
     "installer-paths": {
       "plugins/{$name}/": [
         "type:wordpress-plugin"
+      ],
+      "themes/interconnection": [
+        "wikimedia/interconnection-wordpress-theme"
+      ],
+      "themes/{$name}/": [
+        "type:wordpress-theme"
       ]
     }
   }
