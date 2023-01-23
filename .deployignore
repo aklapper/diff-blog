@@ -19,10 +19,6 @@
 # be included in the generated build.
 # ===================================================================
 
-# Related to PHP Code Sniffer
-**/vendor/*
-/themes/interconnection/composer.lock
-
 # Node Modules
 /node_modules/
 */*/node_modules/
