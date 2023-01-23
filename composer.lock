@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "555c51362802858933d533849d7aee3f",
+    "content-hash": "0abe27c419ace95b4585b95c2f886ab1",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -350,10 +350,10 @@
         },
         {
             "name": "the-events-calendar/events-calendar-pro",
-            "version": "6.0.2.1",
+            "version": "6.0.6",
             "dist": {
                 "type": "zip",
-                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.2.1"
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.6"
             },
             "type": "wordpress-plugin"
         },
