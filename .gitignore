@@ -15,6 +15,18 @@
 
 # Composer-managed themes & plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
 /themes/interconnection
+/plugins/capability-manager-enhanced
+/plugins/co-authors-plus
+/plugins/events-calendar-pro
+/plugins/events-virtual
+/plugins/fieldmanager
+/plugins/post-meta-inspector
+/plugins/publishpress
+/plugins/the-events-calendar-category-colors
+/plugins/the-events-calendar-filterbar
+/plugins/the-events-calendar
+/plugins/wikipedia-preview
+/plugins/wpdiscuz
 
 # Files built in CI: DO NOT INCLUDE THESE LINES in .deployignore file.
 /client-mu-plugins/diff-blocks/dist

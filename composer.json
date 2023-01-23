@@ -28,8 +28,60 @@
       "url": "https://wpackagist.org"
     },
     {
+      "type": "git",
+      "url": "https://github.com/Automattic/Post-Meta-Inspector.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/Automattic/Co-Authors-Plus.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/publishpress/PublishPress-Capabilities.git"
+    },
+    {
       "type": "vcs",
       "url": "git@github.com:wikimedia/interconnection-wordpress-theme.git"
+    },
+    {
+      "type": "vcs",
+      "url": "git@github.com:wikimedia/wikipediapreview-wordpress.git"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/events-calendar-pro",
+        "version": "6.0.2.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.2.1",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/events-virtual",
+        "version": "1.13.2",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&version=1.13.4&key=***REMOVED***",
+          "type": "zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "the-events-calendar/the-events-calendar-filterbar",
+        "version": "5.4.1",
+        "type": "wordpress-plugin",
+        "dist": {
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&version=5.4.1&key=***REMOVED***",
+          "type": "zip"
+        }
+      }
     }
   ],
   "minimum-stability": "dev",
@@ -37,13 +89,28 @@
   "require": {
     "php": "^8",
     "composer/installers": "^1.10",
-    "wikimedia/interconnection-wordpress-theme": "dev-release"
+    "alleyinteractive/wordpress-fieldmanager": "1.5.0",
+    "automattic/post-meta-inspector": "*",
+    "automattic/co-authors-plus": "3.5.3",
+    "publishpress/capability-manager-enhanced": "2.6.0",
+    "the-events-calendar/events-calendar-pro": "6.0.2.1",
+    "the-events-calendar/events-virtual": "1.13.2",
+    "the-events-calendar/the-events-calendar-filterbar": "5.4.1",
+    "wikimedia/interconnection-wordpress-theme": "dev-release",
+    "wpackagist-plugin/publishpress": "^3.9.0",
+    "wpackagist-plugin/the-events-calendar":"6.0.3",
+    "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1",
+    "wpackagist-plugin/wikipedia-preview":"^1.6",
+    "wpackagist-plugin/wpdiscuz":"7.5"
   },
   "extra": {
     "installer-types": [
       "wordpress-plugin"
     ],
     "installer-paths": {
+      "plugins/fieldmanager": [
+        "alleyinteractive/wordpress-fieldmanager"
+      ],
       "plugins/{$name}/": [
         "type:wordpress-plugin"
       ],

@@ -4,8 +4,194 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "492cc35f7c3cdffd2e630aaa40d14989",
+    "content-hash": "ad2f9f2acb733088fd65ae11dee3d8e0",
     "packages": [
+        {
+            "name": "alleyinteractive/wordpress-fieldmanager",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alleyinteractive/wordpress-fieldmanager.git",
+                "reference": "0cb5e63ee4fd96fc06aff0623b6402df9861abdb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alleyinteractive/wordpress-fieldmanager/zipball/0cb5e63ee4fd96fc06aff0623b6402df9861abdb",
+                "reference": "0cb5e63ee4fd96fc06aff0623b6402df9861abdb",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "require-dev": {
+                "alleyinteractive/alley-coding-standards": "^0.3.0",
+                "phpunit/phpunit": "^5.7.21 || ^7.5",
+                "yoast/phpunit-polyfills": "^1.0"
+            },
+            "type": "wordpress-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Alley Interactive",
+                    "email": "noreply@alley.co"
+                }
+            ],
+            "description": "A library to build forms and admin screens for WordPress",
+            "keywords": [
+                "plugin",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/alleyinteractive/wordpress-fieldmanager/issues",
+                "source": "https://github.com/alleyinteractive/wordpress-fieldmanager/tree/1.5.0"
+            },
+            "time": "2022-03-30T20:00:15+00:00"
+        },
+        {
+            "name": "automattic/co-authors-plus",
+            "version": "3.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/Co-Authors-Plus.git",
+                "reference": "2357c6575a705181443f1bd9a5e31b143427aa55"
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "automattic/vipwpcs": "^2.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
+                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-coding-standards/wpcs": "^2.3.0",
+                "yoast/phpunit-polyfills": "^1.0.1"
+            },
+            "type": "wordpress-plugin",
+            "scripts": {
+                "cs": [
+                    "@php ./vendor/bin/phpcs -p -s -v -n . --standard=\"WordPress-VIP-Go\" --extensions=php --ignore=\"/vendor/*,/node_modules/*,/tests/*\""
+                ],
+                "cbf": [
+                    "@php ./vendor/bin/phpcbf -p -s -v -n . --standard=\"WordPress-VIP-Go\" --extensions=php --ignore=\"/vendor/*,/node_modules/*,/tests/*\""
+                ],
+                "lint": [
+                    "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git"
+                ],
+                "lint-ci": [
+                    "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --checkstyle"
+                ],
+                "prepare": [
+                    "bash bin/install-wp-tests.sh wordpress_test root root localhost"
+                ],
+                "integration": [
+                    "@php ./vendor/bin/phpunit --testsuite WP_Tests"
+                ],
+                "integration-ms": [
+                    "@putenv WP_MULTISITE=1",
+                    "@composer integration"
+                ]
+            },
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Bachhuber",
+                    "email": "d@danielbachhuber.com",
+                    "homepage": "http://danielbachhuber.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Automattic",
+                    "homepage": "http://automattic.com/"
+                }
+            ],
+            "description": "Multiple bylines and Guest Authors for WordPress",
+            "homepage": "http://wordpress.org/plugins/co-authors-plus/",
+            "support": {
+                "issues": "https://github.com/Automattic/Co-Authors-Plus/issues",
+                "source": "https://github.com/Automattic/Co-Authors-Plus",
+                "forum": "http://wordpress.org/support/plugin/co-authors-plus"
+            },
+            "time": "2022-10-24T18:20:27+00:00"
+        },
+        {
+            "name": "automattic/post-meta-inspector",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Automattic/Post-Meta-Inspector.git",
+                "reference": "d00545ffde74dc6dc7dc6e1a8cd89de7000aa960"
+            },
+            "require": {
+                "composer/installers": "~1.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "automattic/vipwpcs": "^2.2",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
+                "php-parallel-lint/php-parallel-lint": "^1.0",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
+                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-coding-standards/wpcs": "^2.3.0",
+                "yoast/phpunit-polyfills": "^0.2.0"
+            },
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "scripts": {
+                "cbf": [
+                    "@php ./vendor/bin/phpcbf"
+                ],
+                "coverage": [
+                    "@php ./vendor/bin/phpunit --coverage-html ./build/coverage-html"
+                ],
+                "coverage-ci": [
+                    "@php ./vendor/bin/phpunit"
+                ],
+                "cs": [
+                    "@php ./vendor/bin/phpcs"
+                ],
+                "lint": [
+                    "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git"
+                ],
+                "lint-ci": [
+                    "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --checkstyle"
+                ],
+                "prepare-ci": [
+                    "bash bin/install-wp-tests.sh wordpress_test root root localhost"
+                ],
+                "test": [
+                    "@php ./vendor/bin/phpunit --testsuite WP_Tests"
+                ],
+                "test-ms": [
+                    "@putenv WP_MULTISITE=1",
+                    "@composer test"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Automattic",
+                    "homepage": "https://automattic.com/"
+                }
+            ],
+            "description": "Peer inside your post meta.",
+            "homepage": "https://github.com/Automattic/post-meta-inspector/",
+            "support": {
+                "issues": "https://github.com/Automattic/post-meta-inspector/issues",
+                "source": "https://github.com/Automattic/post-meta-inspector"
+            },
+            "time": "2021-06-24T22:25:06+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.12.0",
@@ -158,6 +344,387 @@
             "time": "2021-09-13T08:19:44+00:00"
         },
         {
+            "name": "pimple/pimple",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silexphp/Pimple.git",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silexphp/Pimple/zipball/9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "reference": "9e403941ef9d65d20cba7d54e29fe906db42cf32",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^3.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Pimple": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Pimple, a simple Dependency Injection Container",
+            "homepage": "http://pimple.sensiolabs.org",
+            "keywords": [
+                "container",
+                "dependency injection"
+            ],
+            "support": {
+                "issues": "https://github.com/silexphp/Pimple/issues",
+                "source": "https://github.com/silexphp/Pimple/tree/master"
+            },
+            "time": "2018-01-21T07:42:36+00:00"
+        },
+        {
+            "name": "psr/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/container.git",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common Container Interface (PHP FIG PSR-11)",
+            "homepage": "https://github.com/php-fig/container",
+            "keywords": [
+                "PSR-11",
+                "container",
+                "container-interface",
+                "container-interop",
+                "psr"
+            ],
+            "support": {
+                "issues": "https://github.com/php-fig/container/issues",
+                "source": "https://github.com/php-fig/container/tree/master"
+            },
+            "time": "2017-02-14T16:28:37+00:00"
+        },
+        {
+            "name": "publishpress/capability-manager-enhanced",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/PublishPress-Capabilities.git",
+                "reference": "16186a5f895b2f302323e2e467d30b5b201dad3a"
+            },
+            "require": {
+                "php": ">=5.6.20",
+                "pimple/pimple": "3.2.3.*",
+                "psr/container": "1.0.0",
+                "publishpress/publishpress-instance-protection": "^1.0",
+                "publishpress/wordpress-banners": "^1.2",
+                "publishpress/wordpress-reviews": "^1.1",
+                "publishpress/wordpress-version-notices": "^1"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "plugin-name": "capability-manager-enhanced",
+                "plugin-slug": "capsman-enhanced",
+                "plugin-folder": "capability-manager-enhanced"
+            },
+            "scripts": {
+                "build": [
+                    "builder/docker/scripts/build build"
+                ],
+                "build-unpacked": [
+                    "builder/docker/scripts/build build-dir"
+                ]
+            },
+            "license": [
+                "GPL-2"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "time": "2022-10-25T14:48:42+00:00"
+        },
+        {
+            "name": "publishpress/publishpress-instance-protection",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/publishpress-instance-protection.git",
+                "reference": "6a4e7038c95fac43264b1d61a5cdae2b1e3cc4ee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/publishpress-instance-protection/zipball/6a4e7038c95fac43264b1d61a5cdae2b1e3cc4ee",
+                "reference": "6a4e7038c95fac43264b1d61a5cdae2b1e3cc4ee",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "description": "Library for protecting WordPress plugins to run twice.",
+            "homepage": "http://publishpress.com/",
+            "keywords": [
+                "wordpress plugin"
+            ],
+            "support": {
+                "issues": "https://github.com/publishpress/publishpress-instance-protection/issues",
+                "source": "https://github.com/publishpress/publishpress-instance-protection/tree/v1.0.3"
+            },
+            "time": "2022-10-28T16:14:03+00:00"
+        },
+        {
+            "name": "publishpress/wordpress-banners",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/wordpress-banners.git",
+                "reference": "bcb5f9f00973d53e2db027f9a05c059f18743fae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/wordpress-banners/zipball/bcb5f9f00973d53e2db027f9a05c059f18743fae",
+                "reference": "bcb5f9f00973d53e2db027f9a05c059f18743fae",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "BannersMain.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                }
+            ],
+            "description": "Display banners in admin pages of PublishPress Plugins.",
+            "homepage": "http://publishpress.com/",
+            "support": {
+                "issues": "https://github.com/publishpress/wordpress-banners/issues",
+                "source": "https://github.com/publishpress/wordpress-banners/tree/v1.3.1"
+            },
+            "time": "2022-08-15T18:07:23+00:00"
+        },
+        {
+            "name": "publishpress/wordpress-reviews",
+            "version": "v1.1.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/wordpress-reviews.git",
+                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/wordpress-reviews/zipball/028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
+                "reference": "028e573eb7c5da2455a7a823cabbbe5e3f89ca9c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20"
+            },
+            "require-dev": {
+                "codeception/module-asserts": "^1.0",
+                "codeception/module-cli": "^1.0",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-rest": "^1.3",
+                "codeception/module-webdriver": "^1.0",
+                "codeception/util-universalframework": "^1.0",
+                "lucatume/wp-browser": "^3",
+                "overtrue/phplint": "^2.1",
+                "phpmd/phpmd": "^2.8",
+                "publishpress/publishpress-plugin-builder": "^1.2",
+                "sebastian/phpcpd": "^5.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "wp-cli/i18n-command": "^2.2",
+                "wp-cli/wp-cli": "^2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "ReviewsController.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com"
+                },
+                {
+                    "name": "Daniel Iser",
+                    "homepage": "https://github.com/danieliser/WP-Product-In-Dash-Review-Requests"
+                }
+            ],
+            "description": "Library for showing a five-star review banner.",
+            "homepage": "http://publishpress.com/",
+            "keywords": [
+                "review",
+                "reviews",
+                "wordpress plugin"
+            ],
+            "support": {
+                "issues": "https://github.com/publishpress/wordpress-reviews/issues",
+                "source": "https://github.com/publishpress/wordpress-reviews/tree/v1.1.19"
+            },
+            "time": "2022-06-03T13:38:53+00:00"
+        },
+        {
+            "name": "publishpress/wordpress-version-notices",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/publishpress/WordPress-Version-Notices.git",
+                "reference": "a46b552ac4cbec26d743307611e5dd8d56f80a57"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/publishpress/WordPress-Version-Notices/zipball/a46b552ac4cbec26d743307611e5dd8d56f80a57",
+                "reference": "a46b552ac4cbec26d743307611e5dd8d56f80a57",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.20",
+                "pimple/pimple": "~3.2.0",
+                "psr/container": "~1.0.0"
+            },
+            "require-dev": {
+                "codeception/module-asserts": "^1.0",
+                "codeception/module-cli": "^1.0",
+                "codeception/module-db": "^1.0",
+                "codeception/module-filesystem": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-rest": "^1.3",
+                "codeception/module-webdriver": "^1.0",
+                "codeception/util-universalframework": "^1.0",
+                "composer/composer": "2.2.12",
+                "lucatume/wp-browser": "^3",
+                "overtrue/phplint": "^2.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PPVersionNotices\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "PublishPress",
+                    "email": "help@publishpress.com",
+                    "homepage": "https://publishpress.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Library for displaying version notices for Pro plugins in WordPress.",
+            "support": {
+                "issues": "https://github.com/publishpress/WordPress-Version-Notices/issues",
+                "source": "https://github.com/publishpress/WordPress-Version-Notices/tree/1.1.4"
+            },
+            "time": "2022-06-06T15:45:54+00:00"
+        },
+        {
+            "name": "the-events-calendar/events-calendar-pro",
+            "version": "6.0.2.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.2.1"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "the-events-calendar/events-virtual",
+            "version": "1.13.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&version=1.13.4&key=***REMOVED***"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
+            "name": "the-events-calendar/the-events-calendar-filterbar",
+            "version": "5.4.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&version=5.4.1&key=***REMOVED***"
+            },
+            "type": "wordpress-plugin"
+        },
+        {
             "name": "wikimedia/interconnection-wordpress-theme",
             "version": "dev-release",
             "source": {
@@ -212,6 +779,96 @@
                 "source": "https://github.com/wikimedia/interconnection-wordpress-theme"
             },
             "time": "2023-01-23T16:53:00+00:00"
+        },
+        {
+            "name": "wpackagist-plugin/publishpress",
+            "version": "3.10.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/publishpress/",
+                "reference": "tags/3.10.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/publishpress.3.10.1.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/publishpress/"
+        },
+        {
+            "name": "wpackagist-plugin/the-events-calendar",
+            "version": "6.0.3",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
+                "reference": "tags/6.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.0.3.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/the-events-calendar/"
+        },
+        {
+            "name": "wpackagist-plugin/the-events-calendar-category-colors",
+            "version": "7.1.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/the-events-calendar-category-colors/",
+                "reference": "tags/7.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar-category-colors.7.1.1.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/the-events-calendar-category-colors/"
+        },
+        {
+            "name": "wpackagist-plugin/wikipedia-preview",
+            "version": "1.6.0",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wikipedia-preview/",
+                "reference": "tags/1.6.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wikipedia-preview.1.6.0.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/wikipedia-preview/"
+        },
+        {
+            "name": "wpackagist-plugin/wpdiscuz",
+            "version": "7.5",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
+                "reference": "tags/7.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.5.zip"
+            },
+            "require": {
+                "composer/installers": "^1.0 || ^2.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/wpdiscuz/"
         }
     ],
     "packages-dev": [],
