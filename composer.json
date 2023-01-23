@@ -89,19 +89,19 @@
   "require": {
     "php": "^8",
     "composer/installers": "^1.10",
-    "alleyinteractive/wordpress-fieldmanager": "1.5.0",
+    "alleyinteractive/wordpress-fieldmanager": "^1.5.0",
     "automattic/post-meta-inspector": "*",
-    "automattic/co-authors-plus": "3.5.3",
-    "publishpress/capability-manager-enhanced": "2.6.0",
-    "the-events-calendar/events-calendar-pro": "6.0.2.1",
-    "the-events-calendar/events-virtual": "1.13.2",
-    "the-events-calendar/the-events-calendar-filterbar": "5.4.1",
+    "automattic/co-authors-plus": "^3.5.3",
+    "the-events-calendar/events-calendar-pro": "^6.0.2.1",
+    "the-events-calendar/events-virtual": "^1.13.2",
+    "the-events-calendar/the-events-calendar-filterbar": "^5.4.1",
     "wikimedia/interconnection-wordpress-theme": "dev-release",
+    "wpackagist-plugin/capability-manager-enhanced": "^2.6.0",
     "wpackagist-plugin/publishpress": "^3.9.0",
-    "wpackagist-plugin/the-events-calendar":"6.0.3",
-    "wpackagist-plugin/the-events-calendar-category-colors":"7.1.1",
-    "wpackagist-plugin/wikipedia-preview":"^1.6",
-    "wpackagist-plugin/wpdiscuz":"7.5"
+    "wpackagist-plugin/the-events-calendar": "^6.0.3",
+    "wpackagist-plugin/the-events-calendar-category-colors": "^7.1.1",
+    "wpackagist-plugin/wikipedia-preview": "^1.6",
+    "wpackagist-plugin/wpdiscuz": "^7.5"
   },
   "extra": {
     "installer-types": [
