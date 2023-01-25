@@ -3,7 +3,6 @@ Diff (diff.wikimedia.org) is a blog by and for the Wikimedia volunteer community
 
 The maintenance and support of Diff is facilitated by the Communications team at the Foundation with dedicated staff to support the editorial process. We plan to present Diff to all community-facing teams, and we are looking forward to hearing your feedback and suggestions. If you have any questions or ideas for something you'd like to share, please let us know.
 
-
 ## Reporting issues
 Site not working? Have a bug to report? Let us know!
 
@@ -14,35 +13,53 @@ Site not working? Have a bug to report? Let us know!
 ## Architecture
 Diff is hosted on WordPress VIP. For local development, see this guide. https://wpvip.com/documentation/vip-go/local-vip-go-development-environment/
 
-Diff uses a WordPress theme called "Interconnection" based on \_s (underscores) a popular starter theme framework. It is designed by hang Do Thi Duc and follows the Wikimeida Design (https://design.wikimedia.org/style-guide/)  and branding (https://meta.wikimedia.org/wiki/Brand) style guides.
+Diff uses a WordPress theme called "Interconnection." It is designed by hang Do Thi Duc and follows the Wikimedia Design (https://design.wikimedia.org/style-guide/) and branding (https://meta.wikimedia.org/wiki/Brand) style guides. Development of Interconnection is handled in [the theme's own repository, wikimedia/interconnection-wordpress-theme](https://github.com/wikimedia/interconnection-wordpress-theme).
 
-Diff uses the following plugins.
+Diff uses the following plugins:
+
 * Polylang for translation
 * PublishPress for editoral workflow
 * wpDiscuz for comments
 * Co-Authors Plus for authorship
 * Fieldmanager to assist media attribution
-* AMP for distribution
+* The Events Calendar for event coordination
 * Diff customizations for small tweaks to the editing interface to help new folks
 
-## Theme development
-Development occurs primarily within the [themes/interconnection](themes/interconnection/) folder.
+## Installation
 
-Run `composer install` to enable the use of PHPCS for linting theme code.
+Most dependencies for the diff.wikimedia.org site are managed using [Composer](https://getcomposer.org/). After cloning the repository, run
+
+```
+composer install
+```
+
+to pull down the plugins and themes necessary to run the Diff site.
+
+To work on the Interconnection theme specifically, you will want to replace the Composer source code package with the actual theme source:
+
+```sh
+# Remove the original checkout
+rm -rf themes/interconnection
+# Re-install using the actual repository source
+composer install wikimedia/shiro-wordpress-theme --prefer-source
+```
+
+## Diff Blocks
+There is a custom plugin in [client-mu-plugins/diff-blocks](https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/tree/production/client-mu-plugins/diff-blocks) which exposes Diff-specific [Block Editor](https://wordpress.org/documentation/article/wordpress-block-editor/) blocks and customizations.
+
+Run `npm install` to enable the frontend asset build process. The project currently requires Node v14; if you use [nvm](https://github.com/nvm-sh/nvm), you can run `nvm use` (or `nvm install v14`) in the theme directory to set the correct version.
+
+In the project root directory (the same folder as this README), run
+
+```sh
+nvm use
+npm install
+npm run build
+```
+
+These commands will generate the CSS and JS assets in `client-mu-plugins/diff-blocks/` necessary to use that Diff Blocks plugin.
 
 Run `npm install` to enable the frontend asset build process. The theme currently requires Node v14; if you use [nvm](https://github.com/nvm-sh/nvm), you can run `nvm use` (or `nvm install v14`) in the theme directory to set the correct version.
-
-Useful commands, all usable from within the theme directory:
-
- Command                   | Description
--------------------------- | --------------------------------------------------------
-`npm run`                  | See a list of all available npm commands
-`npm run compile`          | Meta-command to lint and compile the CSS, including RTL
-`npm run compile:css`      | Build the sass files into a single CSS file
-`npm run watch:css`        | Monitor sass files for changes and automatically rebuild
-`npm run lint:scss`        | Check the sass code for errors
-`npm run lint:js`          | Check the JS files for errors
-`composer lint:php`        | Check theme PHP files for errors
 
 ## Testing
 When making changes to the site, test that the design and functionality works locally before pushing changes to the `develop` branch for staging verification, and that all key site functions still work as expected. This is a partial list of tests and checks you may want to perform:
@@ -59,38 +76,16 @@ When making changes to the site, test that the design and functionality works lo
 If the local environment passes the majority of the above checks, you may merge your code into `develop` for testing on the remote [staging environment](https://blog-wikimedia-org-develop.go-vip.net/).
 
 ## Plugin updates
-To update plugins, it is useful to have a local environment which supports [WP_CLI](https://wp-cli.org/) such as [VVV](https://varyingvagrantvagrants.org/) or [Chassis](https://docs.chassis.io/en/latest/). SSH into your virtual machine (for example by using `vagrant ssh`), and use this command to upgrade all plugins automatically:
+To update plugins, first run
 
 ```
-wp plugin update --all
+composer update
 ```
 
-WP_CLI will upgrade any plugins which are available through the WordPress plugin directory, and then output status like this:
-```
-+-------------------------------------+-------------+-------------+---------+
-| name                                | old_version | new_version | status  |
-+-------------------------------------+-------------+-------------+---------+
-| co-authors-plus                     | 3.4.8       | 3.5.1       | Updated |
-| polylang                            | 2.8.4       | 3.2.2       | Updated |
-| publishpress                        | 3.7.0       | 3.7.1       | Updated |
-| wikipedia-preview                   | 1.2.0       | 1.3.0       | Updated |
-| wpdiscuz                            | 7.2.2       | 7.3.17      | Updated |
-| wpdiscuz-comment-search             | 7.0.3       | 7.0.4       | Error   |
-| wpdiscuz-report-flagging            | 7.0.4       | 7.0.10      | Error   |
-| wpdiscuz-subscribe-manager          | 7.0.2       | 7.0.4       | Error   |
-| wpdiscuz-syntax-highlighter         | 1.0.2       | 1.0.3       | Error   |
-| wpdiscuz-user-comment-mentioning    | 7.0.6       | 7.1.5       | Error   |
-| wpdiscuz-widgets                    | 7.0.6       | 7.1.3       | Error   |
-+-------------------------------------+-------------+-------------+---------+
-Error: Only updated 5 of 11 plugins.
-```
-(Note that the wpDiscuz plugin addons did not install. These modules are paid addons to wpDiscuz, and are not available from the WP directory. You may need to contact GVector support to get the files necessary to upgrade these plugins.)
+to install available updates for Composer-managed plugins.
 
-On a new git branch, add and commit each plugin separately, _e.g._:
+You will see [version ranges listed for each dependency in `composer.json`](https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/blob/production/composer.json#L89-L105)—for major version upgrades, you will need to change this number and re-run `composer update plugin/name` to install the newer version. Minor version upgrades should be able to be installed automatically as long as the version constraint for that plugin is sufficiently flexible. As an example, a version preceded by a carat `^` will permit all subsequent minor and patch releases to be installed, but will require manual editing to upgrade to a new major version.
 
-```
-git add plugins/co-authors-plus
-git commit -m "Upgrade co-authors-plus to 3.5.1 (was 3.4.8)"
-```
+A small number of plugins are still managed manually, specifically the `wpdiscuz` extensions and the Polylang Pro multilingual tools. These must be downloaded manually from the relevant plugin vendor. To upgrade a manual plugin, delete the copy in your local environment, replace it with the folder downloaded from the plugin vendor, and use `git` to commit the changed files.
 
-After committing all relevant plugin updates, test the site locally as detailed above in "Testing" before pushing your changes to the staging site. Pay special attention to any major plugin version updates, such as the v2 to v3 change for Polylang in this example: major version updates sometimes alter key functionality, so it is always wise to review the plugin's changelog to check for breaking changes. Also be sure to check your environment's PHP logs to validate that none of the plugin updates cause warnings or fatal errors while browsing the site.
+After committing all relevant plugin updates, test the site locally as detailed above in "Testing" before pushing your changes to the staging site. Pay special attention to any major plugin version updates: major version updates sometimes alter key functionality, so it is always wise to review the plugin's changelog to check for breaking changes. Also be sure to check your environment's PHP logs to validate that none of the plugin updates cause warnings or fatal errors while browsing the site.
