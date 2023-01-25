@@ -44,6 +44,20 @@ rm -rf themes/interconnection
 composer install wikimedia/interconnection-wordpress-theme --prefer-source
 ```
 
+## Theme Development
+
+1. Create a PR branch off of the `main` branch in the `wikimedia/interconnection-wordpress-theme` repo.
+2. For testing your changes, merge the new PR branch into the `develop` branch; the theme will build to the `release-develop` branch automatically.
+3. Switch to the `wpcomvip/wikimedia-blog-wikimedia-org` repo and checkout into the `develop` branch.
+4. Open the `composer.json` file in the `wpcomvip/wikimedia-blog-wikimedia-org` repo.
+5. Under the `require` section, update the `"wikimedia/interconnection-wordpress-theme": "dev-release"` line to use the `release-develop` branch of the theme like this:
+   ```
+   "wikimedia/interconnection-wordpress-theme": "dev-release-develop"
+   ``` 
+6. Run `composer update wikimedia/interconnection-wordpress-theme --prefer-source` to update the theme in the `composer.lock` file.
+7. Commit the `composer.json` and `composer.lock` file changes on the `develop` branch; this step will trigger the development build on VIP.
+8. Test your changes on the dev site here: https://blog-wikimedia-org-develop.go-vip.net/.
+
 ## Diff Blocks
 There is a custom plugin in [client-mu-plugins/diff-blocks](https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/tree/production/client-mu-plugins/diff-blocks) which exposes Diff-specific [Block Editor](https://wordpress.org/documentation/article/wordpress-block-editor/) blocks and customizations.
 
