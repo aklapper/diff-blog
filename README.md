@@ -51,9 +51,9 @@ composer install wikimedia/interconnection-wordpress-theme --prefer-source
 3. Switch to the `wpcomvip/wikimedia-blog-wikimedia-org` repo and checkout into the `develop` branch.
 4. Open the `composer.json` file in the `wpcomvip/wikimedia-blog-wikimedia-org` repo.
 5. Under the `require` section, update the `"wikimedia/interconnection-wordpress-theme": "dev-release"` line to use the `release-develop` branch of the theme like this:
-   ```
+   ```json
    "wikimedia/interconnection-wordpress-theme": "dev-release-develop"
-   ``` 
+   ```
 6. Run `composer update wikimedia/interconnection-wordpress-theme --prefer-source` to update the theme in the `composer.lock` file.
 7. Commit the `composer.json` and `composer.lock` file changes on the `develop` branch; this step will trigger the development build on VIP.
 8. Test your changes on the dev site here: https://blog-wikimedia-org-develop.go-vip.net/.
