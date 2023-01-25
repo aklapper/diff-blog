@@ -41,7 +41,7 @@ To work on the Interconnection theme specifically, you will want to replace the 
 # Remove the original checkout
 rm -rf themes/interconnection
 # Re-install using the actual repository source
-composer install wikimedia/shiro-wordpress-theme --prefer-source
+composer install wikimedia/interconnection-wordpress-theme --prefer-source
 ```
 
 ## Diff Blocks
