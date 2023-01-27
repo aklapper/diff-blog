@@ -25,7 +25,7 @@ function diff_no_jetpack_menu_non_admins() {
 //limit access to Tools and Comments capabilities to admins
 //These menu items are useless given there are no tools to configure for other roles like Contributors
 
-add_action('admin_init', 'diff_remove_tools_comments_pages');
+add_action('admin_menu', 'diff_remove_tools_comments_pages');
 
 function diff_remove_tools_comments_pages() {
 	if (!current_user_can ('manage_options')
@@ -231,3 +231,88 @@ add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 3 );
 //Increase export of calendar events to 100
 
 add_filter( 'tribe_ical_feed_posts_per_page', function() { return 100; } );
+
+
+/**
+ * Hijack dispatching of POST and PUT requests for tribe_events objects to
+ * strip off certain meta if the current user is not able to publish posts.
+ *
+ * There is a bug in the REST API where even an unchanged value for meta
+ * keys with permissions callbacks which a Contributor cannot pass will
+ * cause a permissions error for the entire request when saved in the editor.
+ *
+ * This is a hack, and should be removed if we ever determine the bug is fixed.
+ *
+ * @param mixed           $dispatch_result Dispatch result, will be used if not empty.
+ * @param WP_REST_Request $request         Request used to generate the response.
+ * @param string          $route           Route matched for the request.
+ * @param array           $handler         Route handler used for the request.
+ * @return mixed Potentially a response object, or else null.
+ */
+function diff_skip_some_meta_when_saving_events_as_contributor( $dispatch_result, $request, $route, $handler ) {
+    if ( $request->get_method() === 'GET' ) {
+        // Not trying to update anything, permissions are not in play.
+        return $dispatch_result;
+    }
+
+    if ( ! is_callable( $handler['callback'] ) ) {
+        // Don't continue if we can't invoke the request in the same manner that
+        // the core WP_REST_Server#respond_to_request() would.
+        return $dispatch_result;
+    }
+
+    if ( ! str_contains( $route, 'tribe_events' ) ) {
+        // At present we only observe this issue on event posts.
+        return $dispatch_result;
+    }
+
+    if ( current_user_can( 'publish_posts' ) ) {
+        // Current user can probably pass any required meta permissions checks.
+        return $dispatch_result;
+    }
+
+    /**
+     * Filters the meta keys which should be ignored when saving an event
+     * post object while logged in as a Contributor. Permits meta to be
+     * skipped while saving which would otherwise potentially cause a
+     * permissions error.
+     *
+     * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
+     */
+    $prohibited_meta_keys = apply_filters( 'diff/contributor_ignored_event_meta', [] );
+
+    $includes_prohibited_meta = false;
+    $updated_meta = $request->get_param( 'meta' );
+    foreach ( $prohibited_meta_keys as $meta_key ) {
+        if ( isset( $updated_meta[ $meta_key ] ) ) {
+            unset( $updated_meta[ $meta_key ] );
+            $includes_prohibited_meta = true;
+        }
+    }
+
+    if ( $includes_prohibited_meta ) {
+        // One or more of the keys in the meta array are known to cause a
+        // permissions error on save. Invoke the request dispatcher callback
+        // manually using our adapted version of the $request which has had
+        // those meta values removed in the loop above, and return that
+        // version of the response to short-circuit WP's own logic.
+        $request->set_param( 'meta', $updated_meta );
+        return call_user_func( $handler['callback'], $request );
+    }
+
+    // No issues here.
+    return $dispatch_result;
+}
+add_filter( 'rest_dispatch_request', 'diff_skip_some_meta_when_saving_events_as_contributor', 10, 4 );
+
+/**
+ * Register the meta keys which should be skipped when saving an event as a contributor.
+ *
+ * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
+ * @return string[] Updated keys array.
+ */
+function diff_set_contributor_ignored_event_meta( $keys ) {
+    $keys[] = 'jetpack_post_was_ever_published';
+    return $keys;
+}
+add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored_event_meta' );
