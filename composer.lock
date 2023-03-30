@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cbd455a0f09f59d0b1319d0bc815bf3",
+    "content-hash": "b081126b48c211c0094672ca59b5a6c4",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
