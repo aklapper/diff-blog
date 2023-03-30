@@ -99,7 +99,7 @@
     "wpackagist-plugin/capability-manager-enhanced": "^2.6.0",
     "wpackagist-plugin/publishpress": "^3.9.0",
     "wpackagist-plugin/the-events-calendar": "^6.0.3",
-    "wpackagist-plugin/the-events-calendar-category-colors": "^7.1.1",
+    "wpackagist-plugin/the-events-calendar-category-colors": "^7.2.0",
     "wpackagist-plugin/wikipedia-preview": "^1.6",
     "wpackagist-plugin/wpdiscuz": "^7.5"
   },
