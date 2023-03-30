@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "edac6c73517dd217374bbf8e29be62ec",
+    "content-hash": "3cbd455a0f09f59d0b1319d0bc815bf3",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -350,28 +350,28 @@
         },
         {
             "name": "the-events-calendar/events-calendar-pro",
-            "version": "6.0.6",
+            "version": "6.0.9.2",
             "dist": {
                 "type": "zip",
-                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.6"
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.9.2"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/events-virtual",
-            "version": "1.13.4",
+            "version": "1.13.6",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.13.4"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.13.6"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/the-events-calendar-filterbar",
-            "version": "5.4.1",
+            "version": "5.4.4",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.4.1"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.4.4"
             },
             "type": "wordpress-plugin"
         },
