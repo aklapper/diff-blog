@@ -316,3 +316,32 @@ function diff_set_contributor_ignored_event_meta( $keys ) {
     return $keys;
 }
 add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored_event_meta' );
+
+/**
+ * Hide certain admin notices from non-admin users, or on local.
+ *
+ * It is not helpful to tell ordinary contributors to take actions which are
+ * restricted to users capable of administering plugins.
+ */
+function diff_hide_certain_plugin_admin_notices() {
+    // Hide these notices even for admins if local, they tend to be meaningless.
+    $is_local = wp_get_environment_type() === 'local';
+    $admin_user = current_user_can( 'edit_plugins' ) || current_user_can( 'administrator' );
+    if ( $admin_user && ! $is_local ) {
+        return;
+    }
+
+    $suppressed_selectors = [
+        '.notice#blogpublic-notice', // Only relevant for local / development environments.
+        '.notice.is-dismissible[class*=wpdiscuz-]', // WPDiscuz activation nags.
+        '.notice.is-dismissible[class*=tribe-]', // Events Calendar nags.
+    ];
+
+    wp_register_style( 'diff-suppress-plugin-notices', false );
+    wp_add_inline_style(
+        'diff-suppress-plugin-notices',
+        join( ',', $suppressed_selectors ) . ' { display: none; }'
+    );
+    wp_enqueue_style( 'diff-suppress-plugin-notices' );
+}
+add_action( 'admin_enqueue_scripts', 'diff_hide_certain_plugin_admin_notices' );
