@@ -325,7 +325,7 @@ add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored
  */
 function diff_hide_certain_plugin_admin_notices() {
     // Hide these notices even for admins if local, they tend to be meaningless.
-    $is_local = false; //wp_get_environment_type() === 'local';
+    $is_local = wp_get_environment_type() === 'local';
     $is_admin_user = current_user_can( 'edit_plugins' ) || current_user_can( 'administrator' );
     if ( $is_admin_user && ! $is_local ) {
         return;
