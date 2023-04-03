@@ -335,6 +335,7 @@ function diff_hide_certain_plugin_admin_notices() {
         '.notice#blogpublic-notice', // Only relevant for local / development environments.
         '.notice.is-dismissible[class*=wpdiscuz-]', // WPDiscuz activation nags.
         '.notice.is-dismissible[class*=tribe-]', // Events Calendar nags.
+        '.notice.notice-wikipediapreview', // Wikipedia preview nags.
     ];
 
     wp_register_style( 'diff-suppress-plugin-notices', false );
