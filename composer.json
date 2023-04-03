@@ -51,10 +51,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
-        "version": "6.0.9.2",
+        "version": "6.0.10",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.9.2",
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.10",
           "type": "zip"
         }
       }
@@ -92,7 +92,7 @@
     "alleyinteractive/wordpress-fieldmanager": "^1.5.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "^3.5.3",
-    "the-events-calendar/events-calendar-pro": "^6.0.9.2",
+    "the-events-calendar/events-calendar-pro": "^6.0.10",
     "the-events-calendar/events-virtual": "^1.13.6",
     "the-events-calendar/the-events-calendar-filterbar": "^5.4.4",
     "wikimedia/interconnection-wordpress-theme": "dev-release",
