@@ -52,7 +52,7 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 		$comments = $this->get_comments_with_ip();
 
 		if ( count( $comments ) > 1 ) {
-			$label    = $dry_run ? 'Querying Comments' : 'Deleting ' . count( $comments ) . ' Recorded IP Address';
+			$label    = $dry_run ? 'Querying Comments' : 'Deleting ' . count( $comments ) . ' Recorded IP Addresses';
 			$progress = \WP_CLI\Utils\make_progress_bar( $label, count( $comments ) );
 
 			foreach ( $comments as $comment ) {
