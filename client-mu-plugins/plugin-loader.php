@@ -22,6 +22,8 @@
 require_once __DIR__ . '/asset-loader/asset-loader.php';
 // Editor blocks for the Diff site.
 require_once __DIR__ . '/diff-blocks/plugin.php';
+// Custom comments functionality for the Diff site.
+require_once __DIR__ . '/diff-comments/plugin.php';
 
 /**
  * Disable New Relic browser monitoring.
