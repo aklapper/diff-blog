@@ -18,7 +18,7 @@ function bootstrap() {
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		require __DIR__ . '/class-remove-comment-author-ip.php';
 
-		WP_CLI::add_command( 'diff-comments-remove-ip', __NAMESPACE__ . '\\Remove_Comment_Author_IP' );
+		WP_CLI::add_command( 'comments remove-ip', __NAMESPACE__ . '\\Remove_Comment_Author_IP' );
 	}
 }
 
