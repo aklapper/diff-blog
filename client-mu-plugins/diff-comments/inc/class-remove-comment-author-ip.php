@@ -86,7 +86,7 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 	 */
 	private function get_comments_with_ip() {
 		// Get all comments.
-		$args     = [
+		$args         = [
 			'status' => 'all',
 			'number' => '',
 		];
