@@ -39,7 +39,7 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 		global $wpdb;
 
 		$dry_run   = \WP_CLI\Utils\get_flag_value( $assoc_args, 'dry-run' );
-		$ip_string = \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip-string' );
+		$ip_string = sanitize_text_field( \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip-string' ) );
 
 		// Get all comments with recorded IP.
 		$comments = $this->get_comments_with_ip();
