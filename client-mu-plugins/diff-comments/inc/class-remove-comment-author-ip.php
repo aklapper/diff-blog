@@ -32,8 +32,8 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 	 *
 	 * ## EXAMPLES
 	 *
-	 *    wp comments remove-ip --dry-run
-	 *    wp comments remove-ip --ip-string="IP Removed for Privacy"
+	 *    wp comment remove-ip --dry-run
+	 *    wp comment remove-ip --ip-string="IP Removed for Privacy"
 	 *
 	 * @param array $args List of arguments passed to the commands.
 	 * @param array $assoc_args Arguments passed to the command parsed into key/value pairs.
