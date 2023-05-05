@@ -53,7 +53,7 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 			} else {
 				WP_CLI::confirm( 'Are you sure you want to delete the IP address from ' . count( $comments ) . ' comments in the database?', $assoc_args );
 
-				$wpdb->query( $wpdb->prepare( "UPDATE wp_comments SET comment_author_IP = '%s'", $ip_string ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->comments SET comment_author_IP = %s", $ip_string ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 				WP_CLI::success( sprintf( '%d comments had the author IP removed.', count( $comments ) ) );
 			}
