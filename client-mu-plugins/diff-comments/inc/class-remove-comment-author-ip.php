@@ -24,6 +24,9 @@ class Remove_Comment_Author_IP extends WP_CLI_Command {
 	 * [--dry-run]
 	 * : Run the command without committing changes.
 	 *
+	 * [--yes]
+	 * : Do not prompt for confirmation.
+	 *
 	 * [--ip-string]
 	 * : An optional string to replace the IP address in all comments.
 	 *
