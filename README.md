@@ -11,7 +11,7 @@ Site not working? Have a bug to report? Let us know!
 * Email the team at diff{{at}}wikimedia.org
 
 ## Architecture
-Diff is hosted on WordPress VIP. For local development, see this guide. https://wpvip.com/documentation/vip-go/local-vip-go-development-environment/
+Diff is hosted on WordPress VIP.
 
 Diff uses a WordPress theme called "Interconnection." It is designed by hang Do Thi Duc and follows the Wikimedia Design (https://design.wikimedia.org/style-guide/) and branding (https://meta.wikimedia.org/wiki/Brand) style guides. Development of Interconnection is handled in [the theme's own repository, wikimedia/interconnection-wordpress-theme](https://github.com/wikimedia/interconnection-wordpress-theme).
 
@@ -25,18 +25,68 @@ Diff uses the following plugins:
 * The Events Calendar for event coordination
 * Diff customizations for small tweaks to the editing interface to help new folks
 
-## Installation
+## Local development environment setup
 
-Most dependencies for the diff.wikimedia.org site are managed using [Composer](https://getcomposer.org/). After cloning the repository, run
+### These guides may be useful
+- https://wpvip.com/documentation/vip-go/local-vip-go-development-environment/
+- https://dev.hmn.md/2023/01/25/steps-to-create-a-vip-local-env-that-uses-docker/
 
+### Note
+Node version > 18 is needed by VIP dev-env - some engineers reported problems starting the environment and importing the database with prior versions of Node.
+
+### Summarized step-by-step after installing VIP dev-env
+- Clone Wikimedia Diff repo, copy it's location
+- Most dependencies for the diff.wikimedia.org site are managed using [Composer](https://getcomposer.org/). After cloning the repository, run
 ```
 composer install
 ```
-
 to pull down the plugins and themes necessary to run the Diff site.
+- Creating the local environment using VIP dev-env:
+```
+nvm use 18
+vip dev-env create --slug=wikimediadiff
+```
+   - *WordPress site title*: "Wikimedia Diff Local Environment"
+   - *Multisite*: Select "No", Wikimedia Diff is a single site which uses Polylang instead of MLP
+   - *PHP version to use*: Select "8.0" - Some errors starting WordPress where reported when selecting versions higher than 8.0
+   - *WordPress*: Select the same version of WordPress running on production. To figure it out, open [http://diff.wikimedia.org](http://diff.wikimedia.org) and look for the tag `<meta name="generator" content="WordPress VERSION_NUMBER" />` on the source code. 
+   - *How would you like to source vip-go-mu-plugins*: Select "Demo" for automatically fetched vip-go-mu-plugins
+   - *How would you like to source application-code*: Select "Custom" and paste the location where you cloned Wikimedia Diff repo.
+   - *Enable Elasticsearch*: Select "No"
+   - *Enable phpMyAdmin*: Select "No"
+   - *Enable XDebug*: Select "Yes"
+   - *Enable MailHog*: Select "No"
+- Start your environment using `vip dev-env start --slug=wikimediadiff`
+- You now probably have [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running, without the database and media files
 
+### Importing database and media files
+- Start downloading latest media backup from [VIP Dashboard](https://dashboard.wpvip.com/apps/1309/production/data/media/backups) as it may take a while to finish 
+- Download latest production database backup from [VIP Dashboard](https://dashboard.wpvip.com/apps/1309/production/data/database/backups)
+*Note before importing the database:* The problem below was reported when importing the production database. The solution found for it was manually editing the SQL file to delete the table `protected_embeds` creation and its records.
+```
+Error:  SQL Error: tables without wp_ prefix found: protected_embeds
+Recommendation: Please make sure all table names are prefixed with `wp_`
+SQL validation failed due to 1 error(s)
+```
+- Extract, rename your production database to `database.sql` and copy it to the project's root directory
+- After manually removing `protected_embeds` table creation and its records from database dump file, import the database using:
+```
+vip dev-env import sql database.sql --slug=wikimediadiff --search-replace="diff.wikimedia.org,wikimediadiff.vipdev.lndo.site"
+```
+- If everything worked as expected when importing, you now probably have [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running with the latest production database, without the media files
+- Extract your media files on your project root directory. The expected location is `/wp-content/uploads`.
+- Import media files using `vip dev-env import media ./wp-content/uploads --slug=wikimediadiff`
+- Flush cache and restart your instance
+```
+vip dev-env exec --slug wikimediadiff -- wp cache flush
+vip dev-env stop --slug wikimediadiff
+vip dev-env stop --slug wikimediadiff
+```
+- If media files aren't still available, you may try opening one of those in a new tab and accepting a unsecure connection.
+- It's expected you having [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running at this moment, have fun!
+
+### Interconnection theme
 To work on the Interconnection theme specifically, you will want to replace the Composer source code package with the actual theme source:
-
 ```sh
 # Remove the original checkout
 rm -rf themes/interconnection
