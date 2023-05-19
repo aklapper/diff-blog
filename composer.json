@@ -48,10 +48,6 @@
       "url": "git@github.com:wikimedia/wikipediapreview-wordpress.git"
     },
     {
-      "type": "vcs",
-      "url": "git@github.com:ryanhellyer/disable-emojis.git"
-    },
-    {
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
@@ -96,7 +92,6 @@
     "alleyinteractive/wordpress-fieldmanager": "^1.5.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "^3.5.3",
-    "ryanhellyer/disable-emojis": "dev-release",
     "the-events-calendar/events-calendar-pro": "^6.0.10",
     "the-events-calendar/events-virtual": "^1.13.6",
     "the-events-calendar/the-events-calendar-filterbar": "^5.4.4",
