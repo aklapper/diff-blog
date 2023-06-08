@@ -49,19 +49,19 @@ const ContentLicensingNotice = () => {
 					onChange={ setDisclaimerAgreement }
 					help={
 						<p>
-							<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/3.0/">
-								{ __( 'CC BY-SA 3.0 license', 'diff-blocks' ) }
+							<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/">
+								{ __( 'CC BY-SA 4.0 license', 'diff-blocks' ) }
 							</a>
 						</p>
 					}
-					label={ __( 'By clicking publish, you agree to license your work under the CC BY-SA 3.0 license. Please be aware that this license is irrevocable and allows others to use and remix your work off of Wikimedia websites.', 'diff-blocks' ) }
+					label={ __( 'By clicking publish, you agree to license your work under the CC BY-SA 4.0 license. Please be aware that this license is irrevocable and allows others to use and remix your work off of Wikimedia websites.', 'diff-blocks' ) }
 				/>
 			) : (
 				<>
-					<p>{ __( 'You agree to license your work under the CC BY-SA 3.0 license. Please be aware that this license is irrevocable and allows others to use and remix your work off of Wikimedia websites.', 'diff-blocks' ) }</p>
+					<p>{ __( 'You agree to license your work under the CC BY-SA 4.0 license. Please be aware that this license is irrevocable and allows others to use and remix your work off of Wikimedia websites.', 'diff-blocks' ) }</p>
 					<p>
-						<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/3.0/">
-							{ __( 'CC BY-SA 3.0 license', 'diff-blocks' ) }
+						<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/by-sa/4.0/">
+							{ __( 'CC BY-SA 4.0 license', 'diff-blocks' ) }
 						</a>
 					</p>
 				</>
