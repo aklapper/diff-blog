@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be2e8c16e53a71b053d9f306d97ff732",
+    "content-hash": "241d35b45cdfd84b34be2f22c68e0b0a",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -52,11 +52,11 @@
         },
         {
             "name": "automattic/co-authors-plus",
-            "version": "3.5.10",
+            "version": "3.5.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/Co-Authors-Plus.git",
-                "reference": "d87bffbda4aa5e9f1a700278ba00e6ab4296b5af"
+                "reference": "33ae3b0c8adf54f0ad193caa5fa13f166fcc4ddc"
             },
             "require": {
                 "composer/installers": "~1.0",
@@ -65,18 +65,26 @@
             "require-dev": {
                 "automattic/vipwpcs": "^2.2",
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7",
+                "dms/phpunit-arraysubset-asserts": "^0.5.0",
                 "php-parallel-lint/php-parallel-lint": "^1.0",
                 "phpcompatibility/phpcompatibility-wp": "^2.1",
-                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7",
+                "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9",
                 "squizlabs/php_codesniffer": "^3.5",
+                "wp-cli/extension-command": "^2.0",
+                "wp-cli/wp-cli-tests": "^3",
                 "wp-coding-standards/wpcs": "^2.3.0",
-                "yoast/phpunit-polyfills": "^1.0.1"
+                "yoast/wp-test-utils": "^1.1"
             },
             "type": "wordpress-plugin",
             "autoload": {
                 "classmap": [
                     "php"
                 ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Automattic\\CoAuthorsPlus\\Tests\\": "tests/"
+                }
             },
             "scripts": {
                 "cs": [
@@ -95,11 +103,20 @@
                     "bash bin/install-wp-tests.sh wordpress_test root root localhost"
                 ],
                 "integration": [
-                    "@php ./vendor/bin/phpunit --testsuite WP_Tests"
+                    "@php ./vendor/bin/phpunit --exclude=ms-required"
                 ],
                 "integration-ms": [
                     "@putenv WP_MULTISITE=1",
-                    "@composer integration"
+                    "@php ./vendor/bin/phpunit --exclude=ms-excluded"
+                ],
+                "behat": [
+                    "run-behat-tests"
+                ],
+                "behat-rerun": [
+                    "rerun-behat-tests"
+                ],
+                "prepare-behat-tests": [
+                    "install-package-tests"
                 ]
             },
             "license": [
@@ -124,11 +141,11 @@
                 "source": "https://github.com/Automattic/Co-Authors-Plus",
                 "forum": "http://wordpress.org/support/plugin/co-authors-plus"
             },
-            "time": "2023-01-24T12:25:22+00:00"
+            "time": "2023-08-28T08:21:37+00:00"
         },
         {
             "name": "automattic/post-meta-inspector",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/Post-Meta-Inspector.git",
@@ -350,28 +367,28 @@
         },
         {
             "name": "the-events-calendar/events-calendar-pro",
-            "version": "6.0.10",
+            "version": "6.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.10"
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.1.1"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/events-virtual",
-            "version": "1.13.6",
+            "version": "1.15.1",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.13.6"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.1"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/the-events-calendar-filterbar",
-            "version": "5.4.4",
+            "version": "5.5.1",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.4.4"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.1"
             },
             "type": "wordpress-plugin"
         },
@@ -381,12 +398,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "bcf54acad2e44f3db61b91c35e92efcf6494f030"
+                "reference": "fb8184bf0dfbec9f3330462bbde390ccdabf0644"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/bcf54acad2e44f3db61b91c35e92efcf6494f030",
-                "reference": "bcf54acad2e44f3db61b91c35e92efcf6494f030",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/fb8184bf0dfbec9f3330462bbde390ccdabf0644",
+                "reference": "fb8184bf0dfbec9f3330462bbde390ccdabf0644",
                 "shasum": ""
             },
             "require": {
@@ -429,19 +446,19 @@
                 "issues": "https://github.com/wikimedia/interconnection-wordpress-theme/issues",
                 "source": "https://github.com/wikimedia/interconnection-wordpress-theme"
             },
-            "time": "2023-05-04T18:47:51+00:00"
+            "time": "2023-05-19T08:00:51+00:00"
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
-            "version": "2.7.0",
+            "version": "2.9.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/capability-manager-enhanced/",
-                "reference": "tags/2.7.0"
+                "reference": "tags/2.9.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.7.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.9.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -451,15 +468,15 @@
         },
         {
             "name": "wpackagist-plugin/publishpress",
-            "version": "3.10.1",
+            "version": "3.12.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/publishpress/",
-                "reference": "tags/3.10.1"
+                "reference": "tags/3.12.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/publishpress.3.10.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/publishpress.3.12.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -469,15 +486,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar",
-            "version": "6.0.11",
+            "version": "6.2.0.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
-                "reference": "tags/6.0.11"
+                "reference": "tags/6.2.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.0.11.zip"
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.2.0.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -487,15 +504,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar-category-colors",
-            "version": "7.2.0",
+            "version": "7.3.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar-category-colors/",
-                "reference": "tags/7.2.0"
+                "reference": "tags/7.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar-category-colors.7.2.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar-category-colors.7.3.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -505,15 +522,15 @@
         },
         {
             "name": "wpackagist-plugin/wikipedia-preview",
-            "version": "1.9.0",
+            "version": "1.11.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wikipedia-preview/",
-                "reference": "tags/1.9.0"
+                "reference": "tags/1.11.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wikipedia-preview.1.9.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/wikipedia-preview.1.11.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -523,15 +540,15 @@
         },
         {
             "name": "wpackagist-plugin/wpdiscuz",
-            "version": "7.5.4",
+            "version": "7.6.3",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
-                "reference": "tags/7.5.4"
+                "reference": "tags/7.6.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.5.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.3.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
