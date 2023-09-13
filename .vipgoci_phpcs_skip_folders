@@ -1,1 +1,10 @@
 /plugins/mw-oauth-client/vendor
+/plugins/polylang-pro
+/plugins/wpdiscuz-comment-search
+/plugins/wpdiscuz-comment-translation
+/plugins/wpdiscuz-frontend-moderation
+/plugins/wpdiscuz-report-flagging
+/plugins/wpdiscuz-subscribe-manager
+/plugins/wpdiscuz-syntax-highlighter
+/plugins/wpdiscuz-user-comment-mentioning
+/plugins/wpdiscuz-widgets

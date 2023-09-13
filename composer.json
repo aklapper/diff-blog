@@ -19,7 +19,8 @@
     "sort-order": true,
     "allow-plugins": {
       "composer/installers": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "cweagans/composer-patches": true
     }
   },
   "repositories": [
@@ -51,10 +52,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
-        "version": "6.0.10",
+        "version": "6.1.1",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.0.10",
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.1.1",
           "type": "zip"
         }
       }
@@ -63,10 +64,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-virtual",
-        "version": "1.13.6",
+        "version": "1.15.1",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.13.6",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.1",
           "type": "zip"
         }
       }
@@ -75,10 +76,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/the-events-calendar-filterbar",
-        "version": "5.4.4",
+        "version": "5.5.1",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.4.4",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.1",
           "type": "zip"
         }
       }
@@ -89,19 +90,20 @@
   "require": {
     "php": "^8",
     "composer/installers": "^1.10",
+    "cweagans/composer-patches": "^1.7",
     "alleyinteractive/wordpress-fieldmanager": "^1.5.0",
     "automattic/post-meta-inspector": "*",
-    "automattic/co-authors-plus": "^3.5.3",
-    "the-events-calendar/events-calendar-pro": "^6.0.10",
-    "the-events-calendar/events-virtual": "^1.13.6",
-    "the-events-calendar/the-events-calendar-filterbar": "^5.4.4",
+    "automattic/co-authors-plus": "^3.5.15",
+    "the-events-calendar/events-calendar-pro": "^6.1.1",
+    "the-events-calendar/events-virtual": "^1.15.1",
+    "the-events-calendar/the-events-calendar-filterbar": "^5.5.1",
     "wikimedia/interconnection-wordpress-theme": "dev-release",
-    "wpackagist-plugin/capability-manager-enhanced": "^2.7.0",
-    "wpackagist-plugin/publishpress": "^3.10.1",
-    "wpackagist-plugin/the-events-calendar": "^6.0.11",
-    "wpackagist-plugin/the-events-calendar-category-colors": "^7.2.0",
-    "wpackagist-plugin/wikipedia-preview": "^1.9.0",
-    "wpackagist-plugin/wpdiscuz": "^7.5"
+    "wpackagist-plugin/capability-manager-enhanced": "^2.9.1",
+    "wpackagist-plugin/publishpress": "^3.12.0",
+    "wpackagist-plugin/the-events-calendar": "^6.2.0",
+    "wpackagist-plugin/the-events-calendar-category-colors": "^7.3.0",
+    "wpackagist-plugin/wikipedia-preview": "^1.11.0",
+    "wpackagist-plugin/wpdiscuz": "^7.6"
   },
   "extra": {
     "installer-types": [
@@ -120,6 +122,11 @@
       "themes/{$name}/": [
         "type:wordpress-theme"
       ]
+    },
+    "patches": {
+      "wpackagist-plugin/wpdiscuz": {
+        "suppress file system access warnings": ".patches/wpdiscuz-suppress-filesystem-access-warnings.patch"
+      }
     }
   }
 }
