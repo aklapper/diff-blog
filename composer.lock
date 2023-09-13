@@ -446,12 +446,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "fb8184bf0dfbec9f3330462bbde390ccdabf0644"
+                "reference": "7623a5ff23fd8817434b649a5a2745a41c020a12"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/fb8184bf0dfbec9f3330462bbde390ccdabf0644",
-                "reference": "fb8184bf0dfbec9f3330462bbde390ccdabf0644",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/7623a5ff23fd8817434b649a5a2745a41c020a12",
+                "reference": "7623a5ff23fd8817434b649a5a2745a41c020a12",
                 "shasum": ""
             },
             "require": {
@@ -494,7 +494,7 @@
                 "issues": "https://github.com/wikimedia/interconnection-wordpress-theme/issues",
                 "source": "https://github.com/wikimedia/interconnection-wordpress-theme"
             },
-            "time": "2023-05-19T08:00:51+00:00"
+            "time": "2023-09-13T18:25:50+00:00"
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
