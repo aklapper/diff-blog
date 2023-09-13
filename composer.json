@@ -19,7 +19,8 @@
     "sort-order": true,
     "allow-plugins": {
       "composer/installers": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "cweagans/composer-patches": true
     }
   },
   "repositories": [
@@ -89,6 +90,7 @@
   "require": {
     "php": "^8",
     "composer/installers": "^1.10",
+    "cweagans/composer-patches": "^1.7",
     "alleyinteractive/wordpress-fieldmanager": "^1.5.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "^3.5.15",
@@ -120,6 +122,11 @@
       "themes/{$name}/": [
         "type:wordpress-theme"
       ]
+    },
+    "patches": {
+      "wpackagist-plugin/wpdiscuz": {
+        "suppress file system access warnings": ".patches/wpdiscuz-suppress-filesystem-access-warnings.patch"
+      }
     }
   }
 }
