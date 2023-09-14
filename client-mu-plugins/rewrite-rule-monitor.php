@@ -9,6 +9,10 @@ namespace Rewrite_Monitor;
 
 use Exception;
 
+// Adjust PHPCS for our needs.
+// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only logging to error_log.
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
+
 /**
  * Hash the request information to provide a unique-enough identifier for us to correlate log messages.
  *
@@ -71,6 +75,7 @@ function generateCallTrace() : string {
  * Log out the number of rewrites currently present in the global.
  */
 function log_rewrite_count() : void {
+    global $wp_rewrite;
     error_log(
         sprintf(
             "%s - \$wp_rewrite %s defined during %s. %s",
@@ -134,6 +139,5 @@ function alert_once_changed( $old_value, $value, $option ) : void {
         is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
         is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
     ) );
-    // log_rewrite_count();
 }
 add_action( 'update_option_rewrite_rules', __NAMESPACE__ . '\\alert_once_changed', 10, 3 );
