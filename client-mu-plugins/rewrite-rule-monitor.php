@@ -90,9 +90,9 @@ function log_rewrite_count() : void {
 /**
  * Alert (with backtrace) when the rewrites are going to be updated.
  *
- * @param mixed $pre       Passthrough value for pre_ filter.
- * @param mixed $value     New value.
- * @param mixed $old_value Old value.
+ * @param mixed  $value     New value.
+ * @param mixed  $old_value Old value.
+ * @param string $option    Name of option being updated.
  */
 function alert_on_change( $value, $old_value, $option ) {
     error_log(
@@ -107,8 +107,8 @@ function alert_on_change( $value, $old_value, $option ) {
             '%s - %s changed: %s old rules, %s new rules. is_admin? %s; is REST? %s; Current user: %d',
             get_request_details(),
             $option,
-            is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : 'unknown (' . print_r( $old_value, true ) . ')' ),
-            is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : 'unknown (' . print_r( $value, true ) . ')' ),
+            is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
+            is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
             is_admin() ? 'true' : 'false',
             defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
             is_user_logged_in() ? get_current_user_id() : 0
@@ -131,8 +131,8 @@ function alert_once_changed( $old_value, $value, $option ) : void {
         '%s - rewrite_rules changed in %s action. %s old rules, %s new rules.',
         get_request_details(),
         current_action(),
-        is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : 'unknown (' . gettype( $old_value ) . ')' ),
-        is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : 'unknown (' . gettype( $value ) . ')' ),
+        is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
+        is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
     ) );
     // log_rewrite_count();
 }
