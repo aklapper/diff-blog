@@ -3,6 +3,11 @@
  * Plugin Name: Rewrite Debugger
  * Plugin Author: Human Made
  * Plugin Description: Log diagnostics information when rewrites change.
+ *
+ * Plugin created 2023-09 while troubleshooting Polylang rewrites issue: All polylang rewrites
+ * periodically disappear from the site, causing all non-English content to become inaccessible.
+ * @see https://support.wpvip.com/hc/en-us/requests/172999
+ * @see https://hmn.slack.com/archives/C011TP2PSHJ/p1693405818743349
  */
 
 namespace Rewrite_Monitor;
@@ -12,6 +17,7 @@ use Exception;
 // Adjust PHPCS for our needs.
 // phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only logging to error_log.
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
+// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Necessary under the circumstances.
 
 /**
  * Hash the request information to provide a unique-enough identifier for us to correlate log messages.
