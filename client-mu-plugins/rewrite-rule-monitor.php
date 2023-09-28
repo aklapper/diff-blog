@@ -115,12 +115,13 @@ function alert_on_change( $value, $old_value, $option ) {
     );
     error_log(
         sprintf(
-            '%s - rewrite_rules changed: %s old rules, %s new rules. is_admin? %s; is REST? %s; Current user: %d',
+            '%s - rewrite_rules changed: %s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d',
             get_request_details(),
             is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
             is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
             is_admin() ? 'true' : 'false',
             defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
             is_user_logged_in() ? get_current_user_id() : 0
         )
     );
