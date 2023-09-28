@@ -167,9 +167,10 @@ function get_rewrite_count() : int {
 function alert_before_delete( $option ) : void {
     if ( $option === 'rewrite_rules' ) {
         error_log( sprintf(
-            '%s - rewrite_rules are going to be DELETED, currently there are %d. %s',
+            '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
             get_request_details(),
             get_rewrite_count(),
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
             generateCallTrace()
         ) );
     }
