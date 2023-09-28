@@ -115,13 +115,13 @@ function alert_on_change( $value, $old_value, $option ) {
     );
     error_log(
         sprintf(
-            '%s - %s changed: %s old rules, %s new rules. is_admin? %s; is REST? %s; Current user: %d',
+            '%s - rewrite_rules changed: %s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d',
             get_request_details(),
-            $option,
             is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
             is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
             is_admin() ? 'true' : 'false',
             defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
             is_user_logged_in() ? get_current_user_id() : 0
         )
     );
@@ -147,3 +147,48 @@ function alert_once_changed( $old_value, $value, $option ) : void {
     ) );
 }
 add_action( 'update_option_rewrite_rules', __NAMESPACE__ . '\\alert_once_changed', 10, 3 );
+
+/**
+ * Check the current count of rewrites within the stored option.
+ */
+function get_rewrite_count() : int {
+    $rewrites = get_option( 'rewrite_rules', [] );
+    if ( is_countable( $rewrites ) ) {
+        return count( $rewrites );
+    }
+    return 0;
+}
+
+/**
+ * Alert when detecting the option is about to be deleted.
+ *
+ * @param string $option Name of option being deleted.
+ * @return void
+ */
+function alert_before_delete( $option ) : void {
+    if ( $option === 'rewrite_rules' ) {
+        error_log( sprintf(
+            '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
+            get_request_details(),
+            get_rewrite_count(),
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+            generateCallTrace()
+        ) );
+    }
+}
+add_action( 'delete_option', __NAMESPACE__ . '\\alert_before_delete' );
+
+/**
+ * Alert when detecting an option has been deleted.
+ *
+ * @param string $option Name of option being deleted.
+ * @return void
+ */
+function alert_after_delete( $option ) : void {
+    error_log( sprintf(
+        '%s - rewrite_rules DELETED in %s action.',
+        get_request_details(),
+        current_action(),
+    ) );
+}
+add_action( 'delete_option_rewrite_rules', __NAMESPACE__ . '\\alert_after_delete' );
