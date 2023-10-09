@@ -212,7 +212,7 @@ function alert_before_add( $option, $value ) {
         ) );
     }
 }
-add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add' );
+add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add', 10, 2 );
 
 /**
  * Alert when detecting the option has been added.
