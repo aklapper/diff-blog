@@ -192,3 +192,41 @@ function alert_after_delete( $option ) : void {
     ) );
 }
 add_action( 'delete_option_rewrite_rules', __NAMESPACE__ . '\\alert_after_delete' );
+
+/**
+ * Log a note when rewrite rules are going to be updated.
+ *
+ * @param string $option Name of the option to add.
+ * @param mixed  $value  Value of the option.
+ * @return void
+ */
+function alert_before_add( $option, $value ) {
+    if ( $option === 'rewrite_rules' ) {
+        error_log( sprintf(
+            '%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming. Polylang is %s. %s',
+            get_request_details(),
+            get_rewrite_count(),
+            is_countable( $value ) ? count( $value ) : '(unknown)',
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+            generateCallTrace()
+        ) );
+    }
+}
+add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add' );
+
+/**
+ * Alert when detecting the option has been added.
+ *
+ * @param string $option Name of option being added.
+ * @return void
+ */
+function alert_when_added( $option ) : void {
+    error_log( sprintf(
+        '%s - rewrite_rules were added, now there are %d. Polylang is %s. %s',
+        get_request_details(),
+        get_rewrite_count(),
+        is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+        generateCallTrace()
+    ) );
+}
+add_action( 'add_option_rewrite_rules', __NAMESPACE__ . '\\alert_when_added' );
