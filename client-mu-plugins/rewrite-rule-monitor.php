@@ -59,6 +59,9 @@ function register_monitoring_log_post_type() : void {
     );
 }
 
+/**
+ * Expose the state data for the log entry on the REST response.
+ */
 function register_rest_fields() : void {
     register_rest_field(
         POST_TYPE,
@@ -132,7 +135,7 @@ function simplify_rewrite_monitoring_log_rest_output( WP_HTTP_Response $result, 
 function log_to_db( string $title, string $message, bool $output_to_error_log = true ) : void {
     $log_item_id = wp_insert_post(
         [
-            'post_title'   => sprintf( '[%s] %s', $title, get_unique_request_id() ),
+            'post_title'   => sprintf( '%s [%s]', $title, get_unique_request_id() ),
             'post_type'    => POST_TYPE,
             'post_content' => $message,
             'post_status'  => 'publish',
