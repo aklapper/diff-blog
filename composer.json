@@ -136,5 +136,8 @@
         "suppress file system access warnings": ".patches/wpdiscuz-suppress-filesystem-access-warnings.patch"
       }
     }
+  },
+  "scripts": {
+    "check-php-compatibility": "phpcs --standard=PHPCompatibilityWP --severity=1 --runtime-set testVersion 8.1- --extensions=php ."
   }
 }
