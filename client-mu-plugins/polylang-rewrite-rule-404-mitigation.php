@@ -49,12 +49,12 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
 		return;
 	}
 
+	global $wp_rewrite;
+
 	if ( ! isset( $wp_rewrite ) || empty( $wp_rewrite->rules ) ) {
 		// Safeguard against a missing-global state which should not be reachable.
 		return;
 	}
-
-	global $wp_rewrite;
 
 	foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
 		if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
