@@ -83,22 +83,46 @@ function register_rest_fields() : void {
  * @return array Streamlined output.
  */
 function simplify_rest_log_item( array $item ) : array {
-    return array_merge(
-        [
-            'id'       => $item['id'],
-            'title'    => $item['title']['rendered'],
-            'date'     => $item['date'],
-            'date_gmt' => $item['date_gmt'],
-            // Restore the appearance of the trace in the raw content.
-            'content'  => preg_replace(
-                '/-&gt;/',
-                '->',
-                get_post( $item['id'] )->post_content ?? '(invalid ID)'
-            ),
-            'type'     => $item['type'],
-        ],
-        $item['log_item_fields']
-    );
+    $slim_item = [
+        'id' => $item['id'],
+    ];
+
+    // Respect which ?_fields were provided by the base endpoint.
+    if ( isset( $item['title']['rendered'] ) ) {
+        $slim_item['title']['rendered'] = $item['title']['rendered'];
+    }
+    if ( isset( $item['date'] ) ) {
+        $slim_item['date'] = $item['date'];
+    }
+    if ( isset( $item['date_gmt'] ) ) {
+        $slim_item['date_gmt'] = $item['date_gmt'];
+    }
+    if ( isset( $item['content'] ) ) {
+        // We always want the raw content.
+        $slim_item['content'] = preg_replace(
+            // Fix formatting of trace arrows.
+            '/-&gt;/',
+            '->',
+            get_post( $item['id'] )->post_content ?? '(invalid ID)'
+        );
+    }
+    if ( isset( $item['type'] ) ) {
+        $slim_item['type'] = $item['type'];
+    }
+
+    // Get (and slim down as necessary) the state metadata for this item.
+    $log_state_metadata = get_post_meta( $item['id'], META_KEY, true );
+    if ( empty( $log_state_metadata ) ) {
+        $log_state_metadata = [];
+    }
+    $requested_fields = ! empty( $_GET['_fields'] ?? '' ) ? explode( ',', sanitize_text_field( $_GET['_fields'] ) ) : [];
+    foreach ( $log_state_metadata as $field_name => $value ) {
+        if ( empty( $requested_fields ) || rest_is_field_included( $field_name, $requested_fields ) ) {
+            $slim_item[ $field_name ] = $value;
+        }
+    }
+
+    return $slim_item;
 }
 
 /**
