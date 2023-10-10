@@ -115,7 +115,7 @@ function simplify_rest_log_item( array $item ) : array {
     if ( empty( $log_state_metadata ) ) {
         $log_state_metadata = [];
     }
-    $requested_fields = ! empty( $_GET['_fields'] ?? '' ) ? explode( ',', sanitize_text_field( $_GET['_fields'] ) ) : [];
+    $requested_fields = ! empty( $_GET['_fields'] ?? '' ) ? explode( ',', sanitize_text_field( $_GET['_fields'] ) ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
     foreach ( $log_state_metadata as $field_name => $value ) {
         if ( empty( $requested_fields ) || rest_is_field_included( $field_name, $requested_fields ) ) {
             $slim_item[ $field_name ] = $value;
