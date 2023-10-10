@@ -44,19 +44,6 @@ bootstrap();
  * @return void
  */
 function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
-    global $wp_rewrite;
-    // When was the last time we flushed rewrites?
-    $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
-    error_log( print_r( [ // phpcs:ignore
-        'plugin active?' => is_polylang_active() ? 'true' : 'false',
-        'current url?' => sanitize_text_field( $_SERVER['REQUEST_URI'] ), // phpcs:ignore
-        'rewrite set?' => isset( $wp_rewrite ) ? 'true' : 'false',
-        'rewrite count?' => count( $wp_rewrite->rules ?? [] ),
-        'cache?' => $last_rewrite_flush,
-        'cache type?' => gettype( $last_rewrite_flush ),
-        'waiting for cache?' => is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30,
-    ], true ) );
-
     if ( ! is_polylang_active() ) {
         // Take no action if Polylang is not active at all.
         return;
@@ -66,6 +53,8 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
         // Safeguard against a missing-global state which should not be reachable.
         return;
     }
+
+    global $wp_rewrite;
 
     foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
         if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
@@ -82,6 +71,8 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
         }
     }
 
+    // When was the last time we flushed rewrites?
+    $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
     if ( is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30 ) {
         // Only try flushing once every 30s to avoid excessive option thrashing.
         return;
