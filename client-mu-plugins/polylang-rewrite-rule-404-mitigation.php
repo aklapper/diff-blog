@@ -44,12 +44,21 @@ bootstrap();
  * @return void
  */
 function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
+    error_log( print_r( wp_load_alloptions(), true ) );
+    global $wp_rewrite;
+    // When was the last time we flushed rewrites?
+    $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
+    error_log( print_r( [
+        'plugin active?' => is_polylang_active() ? 'true' : 'false',
+        'current url?' => sanitize_text_field( $_SERVER['REQUEST_URI'] ),
+        'rewrite set?' => isset( $wp_rewrite ) ? 'true' : 'false',
+        'rewrite count?' => count( $wp_rewrite->rules ?? [] ),
+        'cache?' => $last_rewrite_flush,
+    ], true ) );
     if ( ! is_polylang_active() ) {
         // Take no action if Polylang is not active at all.
         return;
     }
-
-    global $wp_rewrite;
 
     if ( ! isset( $wp_rewrite ) || empty( $wp_rewrite->rules ) ) {
         // Safeguard against a missing-global state which should not be reachable.
@@ -63,8 +72,6 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
         }
     }
 
-    // When was the last time we flushed rewrites?
-    $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
     if ( is_int( $last_rewrite_flush ) && time() - $last_rewrite_flush < 30 ) {
         // Only try flushing once every 30s to avoid excessive option thrashing.
         return;
@@ -74,5 +81,6 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
     // Since Polylang Pro is active, the regenerated rules SHOULD include Polylang's.
     error_log( 'Polylang rewrites missing on 404. Deleting rewrite_rules.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
     delete_option( 'rewrite_rules' ); // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.LowCacheTime -- Missing rules equal downtime, must be prompt.
+    wp_cache_delete( 'rewrite_rules', 'options' );
     wp_cache_set( CACHE_KEY, time(), CACHE_GROUP, 30 );
 }
