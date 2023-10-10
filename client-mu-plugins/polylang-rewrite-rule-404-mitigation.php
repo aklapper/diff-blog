@@ -72,9 +72,7 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
 
     // Delete the option. This will prompt WordPress to reconstruct it on the next page view.
     // Since Polylang Pro is active, the regenerated rules SHOULD include Polylang's.
-    // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
-    error_log( 'Polylang rewrites missing on 404. Deleting rewrite_rules.' );
-    delete_option( 'rewrite_rules' );
-    // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.LowCacheTime -- Missing rules equal downtime, must be prompt.
+    error_log( 'Polylang rewrites missing on 404. Deleting rewrite_rules.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
+    delete_option( 'rewrite_rules' ); // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.LowCacheTime -- Missing rules equal downtime, must be prompt.
     wp_cache_set( CACHE_KEY, time(), CACHE_GROUP, 30 );
 }
