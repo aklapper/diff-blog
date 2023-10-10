@@ -19,12 +19,22 @@ use Exception;
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Necessary under the circumstances.
 
+function bootstrap() : void {
+    add_filter( 'pre_update_option_rewrite_rules', __NAMESPACE__ . '\\alert_on_change', 10, 3 );
+    add_action( 'update_option_rewrite_rules', __NAMESPACE__ . '\\alert_once_changed', 10, 3 );
+    add_action( 'delete_option', __NAMESPACE__ . '\\alert_before_delete' );
+    add_action( 'delete_option_rewrite_rules', __NAMESPACE__ . '\\alert_after_delete' );
+    add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add', 10, 2 );
+    add_action( 'add_option_rewrite_rules', __NAMESPACE__ . '\\alert_when_added' );
+}
+bootstrap();
+
 /**
  * Hash the request information to provide a unique-enough identifier for us to correlate log messages.
  *
  * @return string
  */
-function get_unique_request_id() : string {
+function _get_unique_request_id() : string {
     return substr(
         hash(
             'md5',
@@ -45,10 +55,10 @@ function get_unique_request_id() : string {
  *
  * @return string
  */
-function get_request_details() : string {
+function _get_request_details() : string {
     return sprintf(
         '[%s]: %s %s',
-        get_unique_request_id(),
+        _get_unique_request_id(),
         $_SERVER['REQUEST_METHOD'] ?? '?',
         $_SERVER['REQUEST_URI'] ?? '/unknown/'
     );
@@ -59,7 +69,7 @@ function get_request_details() : string {
  *
  * @return string
  */
-function generateCallTrace() : string {
+function _generate_call_trace() : string {
     $e = new Exception();
     $trace = explode( "\n", $e->getTraceAsString() );
     // reverse array to make steps line up chronologically.
@@ -80,12 +90,12 @@ function generateCallTrace() : string {
 /**
  * Log out the number of rewrites currently present in the global.
  */
-function log_rewrite_count() : void {
+function _log_rewrite_global_count() : void {
     global $wp_rewrite;
     error_log(
         sprintf(
             "%s - \$wp_rewrite %s defined during %s. %s",
-            get_request_details(),
+            _get_request_details(),
             isset( $wp_rewrite ) ? 'is' : 'is not',
             current_action(),
             isset( $wp_rewrite ) ? sprintf(
@@ -99,6 +109,35 @@ function log_rewrite_count() : void {
 }
 
 /**
+ * Log out the number of rewrites currently present in the option.
+ */
+function _log_rewrite_option_count() : void {
+    $rewrites = get_option( 'rewrite_rules', null );
+    error_log(
+        sprintf(
+            "%s - rewrite_rules option %s defined during %s. %s",
+            _get_request_details(),
+            isset( $rewrites ) ? 'is' : 'is not',
+            current_action(),
+            isset( $rewrites )
+                ? ( is_countable( $rewrites ) ? count( $rewrites ) . ' rewrites in option.' : '(not countable).' )
+                : ''
+        )
+    );
+}
+
+/**
+ * Check the current count of rewrites within the stored option.
+ */
+function _get_rewrite_count() : int {
+    $rewrites = get_option( 'rewrite_rules', [] );
+    if ( is_countable( $rewrites ) ) {
+        return count( $rewrites );
+    }
+    return 0;
+}
+
+/**
  * Alert (with backtrace) when the rewrites are going to be updated.
  *
  * @param mixed  $value     New value.
@@ -108,27 +147,23 @@ function log_rewrite_count() : void {
 function alert_on_change( $value, $old_value, $option ) {
     error_log(
         sprintf(
-            '%s - rewrite_rules CHANGING in pre_update_option_rewrite_rules. %s',
-            get_request_details(),
-            generateCallTrace()
-        )
-    );
-    error_log(
-        sprintf(
-            '%s - rewrite_rules changed: %s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d',
-            get_request_details(),
+            "%s - %s CHANGING in pre_update_option_rewrite_rules\n%s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d\n%s",
+            _get_request_details(),
+            $option,
             is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
             is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
             is_admin() ? 'true' : 'false',
             defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            is_user_logged_in() ? get_current_user_id() : 0
+            is_user_logged_in() ? get_current_user_id() : 0,
+            _generate_call_trace()
         )
     );
+    _log_rewrite_global_count();
+    _log_rewrite_option_count();
 
     return $value;
 }
-add_filter( 'pre_update_option_rewrite_rules', __NAMESPACE__ . '\\alert_on_change', 10, 3 );
 
 /**
  * Alert once the filter value has changed.
@@ -140,23 +175,13 @@ add_filter( 'pre_update_option_rewrite_rules', __NAMESPACE__ . '\\alert_on_chang
 function alert_once_changed( $old_value, $value, $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules changed in %s action. %s old rules, %s new rules.',
-        get_request_details(),
+        _get_request_details(),
         current_action(),
         is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
         is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
     ) );
-}
-add_action( 'update_option_rewrite_rules', __NAMESPACE__ . '\\alert_once_changed', 10, 3 );
-
-/**
- * Check the current count of rewrites within the stored option.
- */
-function get_rewrite_count() : int {
-    $rewrites = get_option( 'rewrite_rules', [] );
-    if ( is_countable( $rewrites ) ) {
-        return count( $rewrites );
-    }
-    return 0;
+    _log_rewrite_global_count();
+    _log_rewrite_option_count();
 }
 
 /**
@@ -169,14 +194,13 @@ function alert_before_delete( $option ) : void {
     if ( $option === 'rewrite_rules' ) {
         error_log( sprintf(
             '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
-            get_request_details(),
-            get_rewrite_count(),
+            _get_request_details(),
+            _get_rewrite_count(),
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            generateCallTrace()
+            _generate_call_trace()
         ) );
     }
 }
-add_action( 'delete_option', __NAMESPACE__ . '\\alert_before_delete' );
 
 /**
  * Alert when detecting an option has been deleted.
@@ -187,11 +211,12 @@ add_action( 'delete_option', __NAMESPACE__ . '\\alert_before_delete' );
 function alert_after_delete( $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules DELETED in %s action.',
-        get_request_details(),
+        _get_request_details(),
         current_action(),
     ) );
+    _log_rewrite_global_count();
+    _log_rewrite_option_count();
 }
-add_action( 'delete_option_rewrite_rules', __NAMESPACE__ . '\\alert_after_delete' );
 
 /**
  * Log a note when rewrite rules are going to be updated.
@@ -204,15 +229,14 @@ function alert_before_add( $option, $value ) {
     if ( $option === 'rewrite_rules' ) {
         error_log( sprintf(
             '%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming. Polylang is %s. %s',
-            get_request_details(),
-            get_rewrite_count(),
+            _get_request_details(),
+            _get_rewrite_count(),
             is_countable( $value ) ? count( $value ) : '(unknown)',
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            generateCallTrace()
+            _generate_call_trace()
         ) );
     }
 }
-add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add', 10, 2 );
 
 /**
  * Alert when detecting the option has been added.
@@ -223,10 +247,9 @@ add_action( 'add_option', __NAMESPACE__ . '\\alert_before_add', 10, 2 );
 function alert_when_added( $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules were added, now there are %d. Polylang is %s. %s',
-        get_request_details(),
-        get_rewrite_count(),
+        _get_request_details(),
+        _get_rewrite_count(),
         is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-        generateCallTrace()
+        _generate_call_trace()
     ) );
 }
-add_action( 'add_option_rewrite_rules', __NAMESPACE__ . '\\alert_when_added' );
