@@ -24,14 +24,14 @@ const CACHE_GROUP = 'polylang_debugging';
  * Get the activation state of Polylang Pro.
  */
 function is_polylang_active() : bool {
-    return is_plugin_active( 'polylang-pro/polylang.php' );
+	return is_plugin_active( 'polylang-pro/polylang.php' );
 }
 
 /**
  * Connect namespace functions to actions and hooks.
  */
 function bootstrap() : void {
-    add_action( 'set_404', __NAMESPACE__ . '\\check_polylang_rewrite_status_on_404' );
+	add_action( 'set_404', __NAMESPACE__ . '\\check_polylang_rewrite_status_on_404' );
 }
 bootstrap();
 
@@ -44,44 +44,44 @@ bootstrap();
  * @return void
  */
 function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
-    if ( ! is_polylang_active() ) {
-        // Take no action if Polylang is not active at all.
-        return;
-    }
+	if ( ! is_polylang_active() ) {
+		// Take no action if Polylang is not active at all.
+		return;
+	}
 
-    if ( ! isset( $wp_rewrite ) || empty( $wp_rewrite->rules ) ) {
-        // Safeguard against a missing-global state which should not be reachable.
-        return;
-    }
+	if ( ! isset( $wp_rewrite ) || empty( $wp_rewrite->rules ) ) {
+		// Safeguard against a missing-global state which should not be reachable.
+		return;
+	}
 
-    global $wp_rewrite;
+	global $wp_rewrite;
 
-    foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
-        if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
-            // Use presence of French language code or the lack of a lang=
-            // attribute in the matched query as quick checks for whether this
-            // is not a Polylang Pro rewrite.
-            continue;
-        }
-        if ( preg_match( '/(\?|&)name=/', $matched_query ) ) {
-            // Has a language capture group, a lang= parameter, AND a name=
-            // component? That sure looks like a Polylang single-post rewrite!
-            // Things look OK.
-            return;
-        }
-    }
+	foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
+		if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
+			// Use presence of French language code or the lack of a lang=
+			// attribute in the matched query as quick checks for whether this
+			// is not a Polylang Pro rewrite.
+			continue;
+		}
+		if ( preg_match( '/(\?|&)name=/', $matched_query ) ) {
+			// Has a language capture group, a lang= parameter, AND a name=
+			// component? That sure looks like a Polylang single-post rewrite!
+			// Things look OK.
+			return;
+		}
+	}
 
-    // When was the last time we flushed rewrites?
-    $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
-    if ( is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30 ) {
-        // Only try flushing once every 30s to avoid excessive option thrashing.
-        return;
-    }
+	// When was the last time we flushed rewrites?
+	$last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
+	if ( is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30 ) {
+		// Only try flushing once every 30s to avoid excessive option thrashing.
+		return;
+	}
 
-    // Delete the option. This will prompt WordPress to reconstruct it on the next page view.
-    // Since Polylang Pro is active, the regenerated rules SHOULD include Polylang's.
-    error_log( 'Polylang rewrites missing on 404. Deleting rewrite_rules.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
-    delete_option( 'rewrite_rules' );
-    wp_cache_delete( 'rewrite_rules', 'options' );
-    wp_cache_set( CACHE_KEY, time(), CACHE_GROUP, 30 ); // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.LowCacheTime -- Missing rules equal downtime, must be prompt.
+	// Delete the option. This will prompt WordPress to reconstruct it on the next page view.
+	// Since Polylang Pro is active, the regenerated rules SHOULD include Polylang's.
+	error_log( 'Polylang rewrites missing on 404. Deleting rewrite_rules.' ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
+	delete_option( 'rewrite_rules' );
+	wp_cache_delete( 'rewrite_rules', 'options' );
+	wp_cache_set( CACHE_KEY, time(), CACHE_GROUP, 30 ); // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.LowCacheTime -- Missing rules equal downtime, must be prompt.
 }
