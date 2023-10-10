@@ -82,44 +82,41 @@ function register_rest_fields() : void {
  * @param array $item Log post data, as array.
  * @return array Streamlined output.
  */
-function simplify_rest_log_item( array $item ) : array {
-    $slim_item = [
-        'id' => $item['id'],
-    ];
-
-    // Respect which ?_fields were provided by the base endpoint.
-    if ( isset( $item['title']['rendered'] ) ) {
-        $slim_item['title']['rendered'] = $item['title']['rendered'];
-    }
-    if ( isset( $item['date'] ) ) {
-        $slim_item['date'] = $item['date'];
-    }
-    if ( isset( $item['date_gmt'] ) ) {
-        $slim_item['date_gmt'] = $item['date_gmt'];
-    }
-    if ( isset( $item['content'] ) ) {
-        // We always want the raw content.
-        $slim_item['content'] = preg_replace(
-            // Fix formatting of trace arrows.
-            '/-&gt;/',
-            '->',
-            get_post( $item['id'] )->post_content ?? '(invalid ID)'
-        );
-    }
-    if ( isset( $item['type'] ) ) {
-        $slim_item['type'] = $item['type'];
-    }
-
-    // Get (and slim down as necessary) the state metadata for this item.
+function simplify_rest_log_item( array $item, string $fields = '' ) : array {
+    // Get state metadata for this item.
     $log_state_metadata = get_post_meta( $item['id'], META_KEY, true );
     if ( empty( $log_state_metadata ) ) {
         $log_state_metadata = [];
     }
-    $requested_fields = ! empty( $_GET['_fields'] ?? '' ) ? explode( ',', sanitize_text_field( $_GET['_fields'] ) ) : []; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-    foreach ( $log_state_metadata as $field_name => $value ) {
-        if ( empty( $requested_fields ) || rest_is_field_included( $field_name, $requested_fields ) ) {
-            $slim_item[ $field_name ] = $value;
+
+    $requested_fields = ! empty( $fields ) ? explode( ',', $fields ) : [];
+    $slim_item = [];
+    // Loop over all expected properties, checking each one against any provided
+    // _fields query parameter filtering.
+    foreach ( array_merge(
+        [
+            'id'       => $item['id'] ?? null,
+            'title'    => $item['title']['rendered'] ?? null,
+            'date'     => $item['date'] ?? null,
+            'date_gmt' => $item['date_gmt'] ?? null,
+            'content'  => isset( $item['content'] )
+                // We always want the raw content.
+                ? preg_replace(
+                    // Fix formatting of trace arrows.
+                    '/-&gt;/',
+                    '->',
+                    get_post( $item['id'] )->post_content ?? '(invalid ID)'
+                )
+                : null,
+            'type'     => $item['type'] ?? null,
+        ],
+        $log_state_metadata
+    ) as $field => $value ) {
+        if ( is_null( $value ) || ( ! empty( $fields ) && ! rest_is_field_included( $field, $requested_fields ) ) ) {
+            // Field was excluded through _fields REST query parameter.
+            continue;
         }
+        $slim_item[ $field ] = $value;
     }
 
     return $slim_item;
@@ -139,12 +136,20 @@ function simplify_rewrite_monitoring_log_rest_output( WP_HTTP_Response $result, 
 
     $data = $result->get_data();
 
+    $requested_fields = $request->get_param( '_fields' ) ?? '';
     if ( isset( $data['id'] ) ) {
         // Single post.
-        return rest_ensure_response( simplify_rest_log_item( $data ) );
+        return rest_ensure_response( simplify_rest_log_item( $data, $requested_fields ) );
     }
 
-    return rest_ensure_response( array_map( __NAMESPACE__ . '\\simplify_rest_log_item', $data ) );
+    return rest_ensure_response(
+        array_map(
+            function( $item ) use ( $requested_fields ) {
+                return simplify_rest_log_item( $item, $requested_fields );
+            },
+            $data
+        )
+    );
 }
 
 /**
