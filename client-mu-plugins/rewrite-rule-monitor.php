@@ -66,8 +66,6 @@ function register_rest_fields() : void {
         [
             'get_callback' => function( array $log_post ) {
                 $fields = get_post_meta( $log_post['id'], META_KEY, true );
-                error_log( "Fetching" );
-                error_log( print_r( $fields, true ) );
                 return ! empty( $fields ) ? $fields : [];
             },
         ]
@@ -140,27 +138,24 @@ function log_to_db( string $title, string $message, bool $output_to_error_log = 
             'post_status'  => 'publish',
         ]
     );
+    $status_array = [
+        'action'            => $title,
+        'request_id'        => get_unique_request_id(),
+        'request_method'    => sanitize_text_field( $_SERVER['REQUEST_METHOD'] ?? '?' ),
+        'request_uri'       => sanitize_text_field( $_SERVER['REQUEST_URI'] ?? '/unknown/' ),
+        'global_rule_count' => get_wp_rewrites_global_status(),
+        'option_rule_count' => get_option_status(),
+        'is_admin'          => is_admin() ? 'true' : 'false',
+        'is_rest'           => defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
+        'is_cli'            => defined( 'WP_CLI' ) && WP_CLI ? 'true' : 'false',
+        'user'              => is_user_logged_in() ? get_current_user_id() : ( ( defined( 'WP_CLI' ) && WP_CLI ) ? 'CLI user' : 'anonymous' ),
+        'plugin_status'     => is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+    ];
     if ( ! empty( $log_item_id ) ) {
-        add_post_meta(
-            $log_item_id,
-            META_KEY,
-            [
-                'action'            => $title,
-                'request_id'        => get_unique_request_id(),
-                'request_method'    => sanitize_text_field( $_SERVER['REQUEST_METHOD'] ?? '?' ),
-                'request_uri'       => sanitize_text_field( $_SERVER['REQUEST_URI'] ?? '/unknown/' ),
-                'global_rule_count' => get_wp_rewrites_global_status(),
-                'option_rule_count' => get_option_status(),
-                'is_admin'          => is_admin() ? 'true' : 'false',
-                'is_rest'           => defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
-                'is_cli'            => defined( 'WP_CLI' ) && WP_CLI ? 'true' : 'false',
-                'user'              => is_user_logged_in() ? get_current_user_id() : ( ( defined( 'WP_CLI' ) && WP_CLI ) ? 'CLI user' : 'anonymous' ),
-                'plugin_status'     => is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            ]
-        );
+        add_post_meta( $log_item_id, META_KEY, $status_array );
     }
     if ( $output_to_error_log ) {
-        error_log( $message );
+        error_log( $message . "\n" . wp_json_encode( $status_array ) );
     }
 }
 
