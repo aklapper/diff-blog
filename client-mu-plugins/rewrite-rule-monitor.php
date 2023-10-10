@@ -13,13 +13,22 @@
 namespace Rewrite_Monitor;
 
 use Exception;
+use WP_HTTP_Response;
+use WP_REST_Request;
+use WP_REST_Server;
+
+const POST_TYPE = 'rewrite_monitor_log';
 
 // Adjust PHPCS for our needs.
-// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only logging to error_log.
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Necessary under the circumstances.
 // phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r -- Necessary under the circumstances.
 
 function bootstrap() : void {
+    // Infrastructure to persistently capture monitoring messages.
+    add_action( 'init', __NAMESPACE__ . '\\register_monitoring_log_post_type' );
+    add_filter( 'rest_post_dispatch', __NAMESPACE__ . '\\simplify_rewrite_monitoring_log_rest_output', 10, 3 );
+
+    // Monitoring.
     add_filter( 'pre_update_option_rewrite_rules', __NAMESPACE__ . '\\alert_on_change', 10, 3 );
     add_action( 'update_option_rewrite_rules', __NAMESPACE__ . '\\alert_once_changed', 10, 3 );
     add_action( 'delete_option', __NAMESPACE__ . '\\alert_before_delete' );
@@ -28,6 +37,93 @@ function bootstrap() : void {
     add_action( 'add_option_rewrite_rules', __NAMESPACE__ . '\\alert_when_added' );
 }
 bootstrap();
+
+/**
+ * Add a custom post type to be used for logging monitoring messages to the database.
+ */
+function register_monitoring_log_post_type() : void {
+    register_post_type(
+        POST_TYPE,
+        [
+            'label'              => 'Rewrite modification log entry',
+            'public'             => false,
+            'publicly_queryable' => false,
+            'show_ui'            => false,
+            'show_in_rest'       => true,
+            'rest_base'          => 'rewrite_logs',
+            'rest_namespace'     => 'wiki/v1',
+            'supports'           => [ 'title', 'editor' ],
+        ]
+    );
+}
+
+/**
+ * Take a normal REST response from the rewrite logs endpoint and return a
+ * formatted subset of that log item's data.
+ *
+ * @param array $item Log post data, as array.
+ * @return array Streamlined output.
+ */
+function simplify_rest_log_item( array $item ) : array {
+    return [
+        'id'       => $item['id'],
+        'title'    => $item['title']['rendered'],
+        // Restore the appearance of the trace in the raw content.
+        'content'  => preg_replace(
+            '/-&gt;/',
+            '->',
+            get_post( $item['id'] )->post_content ?? '(invalid ID)'
+        ),
+        'date'     => $item['date'],
+        'date_gmt' => $item['date_gmt'],
+        'type'     => $item['type'],
+    ];
+}
+
+/**
+ * Remove irrelevant fields from log REST endpoint to simplify visual scanning of recent events.
+ *
+ * @param WP_HTTP_Response $result Outgoing REST response.
+ * @return WP_HTTP_Response Filtered response.
+ */
+function simplify_rewrite_monitoring_log_rest_output( WP_HTTP_Response $result, WP_REST_Server $server, WP_REST_Request $request ) : WP_HTTP_Response {
+    if ( strpos( $request->get_route(), '/wiki/v1/rewrite_logs' ) !== 0 ) {
+        // Only alters rewrite_monitor_log responses.
+        return $result;
+    }
+
+    $data = $result->get_data();
+
+    if ( isset( $data['id'] ) ) {
+        // Single post.
+        return rest_ensure_response( simplify_rest_log_item( $data ) );
+    }
+
+    return rest_ensure_response( array_map( __NAMESPACE__ . '\\simplify_rest_log_item', $data ) );
+}
+
+/**
+ * Add this event into a custom post type in the database.
+ *
+ * These can be easily queried via the REST API, and deleted en masse via WP-CLI.
+ *
+ * @param string $title               Identifying title for visual filtering via REST API.
+ * @param string $message             Content to log.
+ * @param bool   $output_to_error_log Whether to output message to error log. Default true.
+ */
+function log_to_db( string $title, string $message, bool $output_to_error_log = true ) : void {
+    wp_insert_post(
+        [
+            'post_title'   => sprintf( '%s: %s [%s]', date( 'Y-m-d H:i:s' ), $title, get_unique_request_id() ),
+            'post_type'    => POST_TYPE,
+            'post_content' => $message,
+            'post_status'  => 'publish',
+        ]
+    );
+    if ( $output_to_error_log ) {
+        error_log( $message );
+    }
+}
 
 /**
  * Hash the request information to provide a unique-enough identifier for us to correlate log messages.
@@ -40,9 +136,9 @@ function get_unique_request_id() : string {
             'md5',
             sprintf(
                 '%s%s%s',
-                $_SERVER['REQUEST_METHOD'] ?? '?',
-                $_SERVER['REQUEST_URI'] ?? '/unknown/',
-                $_SERVER['REQUEST_TIME'] ?? 0
+                sanitize_text_field( $_SERVER['REQUEST_METHOD'] ?? '?' ),
+                sanitize_text_field( $_SERVER['REQUEST_URI'] ?? '/unknown/' ),
+                sanitize_text_field( $_SERVER['REQUEST_TIME'] ?? 0 )
             )
         ),
         0,
@@ -59,8 +155,8 @@ function get_request_details() : string {
     return sprintf(
         '[%s]: %s %s',
         get_unique_request_id(),
-        $_SERVER['REQUEST_METHOD'] ?? '?',
-        $_SERVER['REQUEST_URI'] ?? '/unknown/'
+        sanitize_text_field( $_SERVER['REQUEST_METHOD'] ?? '?' ),
+        sanitize_text_field( $_SERVER['REQUEST_URI'] ?? '/unknown/' )
     );
 }
 
@@ -84,7 +180,7 @@ function generate_call_trace() : string {
         $result[] = ( $i + 1 )  . ')' . substr( $trace[$i], strpos( $trace[$i], ' ' ) );
     }
 
-    return implode( ", ", $result );
+    return str_replace( '\\', '\\\\', implode( "\n ", $result ) );
 }
 
 /**
@@ -92,7 +188,8 @@ function generate_call_trace() : string {
  */
 function log_rewrite_global_count() : void {
     global $wp_rewrite;
-    error_log(
+    log_to_db(
+        'Rewrite status',
         sprintf(
             "%s - \$wp_rewrite %s defined during %s. %s",
             get_request_details(),
@@ -113,7 +210,8 @@ function log_rewrite_global_count() : void {
  */
 function log_rewrite_option_count() : void {
     $rewrites = get_option( 'rewrite_rules', null );
-    error_log(
+    log_to_db(
+        '$wp_rewrite status',
         sprintf(
             "%s - rewrite_rules option %s defined during %s. %s",
             get_request_details(),
@@ -145,7 +243,8 @@ function get_rewrite_count() : int {
  * @param string $option    Name of option being updated.
  */
 function alert_on_change( $value, $old_value, $option ) {
-    error_log(
+    log_to_db(
+        'Pre-Update',
         sprintf(
             "%s - %s CHANGING in pre_update_option_rewrite_rules\n%s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d\n%s",
             get_request_details(),
@@ -173,13 +272,16 @@ function alert_on_change( $value, $old_value, $option ) {
  * @param string $option    Name of option being updated.
  */
 function alert_once_changed( $old_value, $value, $option ) : void {
-    error_log( sprintf(
-        '%s - rewrite_rules changed in %s action. %s old rules, %s new rules.',
-        get_request_details(),
-        current_action(),
-        is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
-        is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
-    ) );
+    log_to_db(
+        'Updated',
+        sprintf(
+            '%s - rewrite_rules changed in %s action. %s old rules, %s new rules.',
+            get_request_details(),
+            current_action(),
+            is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
+            is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
+        )
+    );
     log_rewrite_global_count();
     log_rewrite_option_count();
 }
@@ -192,13 +294,17 @@ function alert_once_changed( $old_value, $value, $option ) : void {
  */
 function alert_before_delete( $option ) : void {
     if ( $option === 'rewrite_rules' ) {
-        error_log( sprintf(
-            '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
-            get_request_details(),
-            get_rewrite_count(),
-            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            generate_call_trace()
-        ) );
+        log_to_db(
+            'Will Delete',
+            sprintf(
+                '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
+                get_request_details(),
+                get_rewrite_count(),
+                is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+                generate_call_trace()
+            ),
+            true
+        );
     }
 }
 
@@ -209,11 +315,14 @@ function alert_before_delete( $option ) : void {
  * @return void
  */
 function alert_after_delete( $option ) : void {
-    error_log( sprintf(
-        '%s - rewrite_rules DELETED in %s action.',
-        get_request_details(),
-        current_action(),
-    ) );
+    log_to_db(
+        'Deleted',
+        sprintf(
+            '%s - rewrite_rules DELETED in %s action.',
+            get_request_details(),
+            current_action(),
+        )
+    );
     log_rewrite_global_count();
     log_rewrite_option_count();
 }
@@ -227,14 +336,18 @@ function alert_after_delete( $option ) : void {
  */
 function alert_before_add( $option, $value ) {
     if ( $option === 'rewrite_rules' ) {
-        error_log( sprintf(
-            '%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming. Polylang is %s. %s',
-            get_request_details(),
-            get_rewrite_count(),
-            is_countable( $value ) ? count( $value ) : '(unknown)',
-            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            generate_call_trace()
-        ) );
+        log_to_db(
+            'Will Add',
+            sprintf(
+                '%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming. Polylang is %s. %s',
+                get_request_details(),
+                get_rewrite_count(),
+                is_countable( $value ) ? count( $value ) : '(unknown)',
+                is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+                generate_call_trace()
+            ),
+            true
+        );
     }
 }
 
@@ -245,11 +358,14 @@ function alert_before_add( $option, $value ) {
  * @return void
  */
 function alert_when_added( $option ) : void {
-    error_log( sprintf(
-        '%s - rewrite_rules were added, now there are %d. Polylang is %s. %s',
-        get_request_details(),
-        get_rewrite_count(),
-        is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-        generate_call_trace()
-    ) );
+    log_to_db(
+        'Added',
+        sprintf(
+            '%s - rewrite_rules were added, now there are %d. Polylang is %s. %s',
+            get_request_details(),
+            get_rewrite_count(),
+            is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
+            generate_call_trace()
+        )
+    );
 }
