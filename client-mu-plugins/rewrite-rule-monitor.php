@@ -158,7 +158,8 @@ function log_to_db( string $title, string $message, bool $output_to_error_log = 
         add_post_meta( $log_item_id, META_KEY, $status_array );
     }
     if ( $output_to_error_log ) {
-        error_log( $message . "\n" . wp_json_encode( $status_array ) );
+        // Strip stack trace out of runtime logs to keep things cleaner.
+        error_log( preg_replace( '/\s*Stack Trace:.*$/', '', $message ) . "\n" . wp_json_encode( $status_array ) );
     }
 }
 
@@ -262,7 +263,7 @@ function alert_on_change( $value, $old_value, $option ) {
     log_to_db(
         'Pre-Update',
         sprintf(
-            "%s - %s CHANGING in pre_update_option_rewrite_rules\n%s old rules, %s new rules. Current user: %d\n%s",
+            "%s - %s CHANGING in pre_update_option_rewrite_rules\n> %s old rules, %s new rules. Current user: %d\nStack Trace:\n%s",
             get_request_details(),
             $option,
             is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
@@ -306,7 +307,7 @@ function alert_before_delete( $option ) : void {
         log_to_db(
             'Will Delete',
             sprintf(
-                "%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s.\n%s",
+                "%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s.\nStack Trace:\n%s",
                 get_request_details(),
                 get_rewrite_count(),
                 is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
@@ -327,7 +328,7 @@ function alert_after_delete( $option ) : void {
     log_to_db(
         'Deleted',
         sprintf(
-            "%s - rewrite_rules DELETED.\n%s",
+            "%s - rewrite_rules DELETED.\nStack Trace:\n%s",
             get_request_details(),
             generate_call_trace()
         )
@@ -346,7 +347,7 @@ function alert_before_add( $option, $value ) {
         log_to_db(
             'Will Add',
             sprintf(
-                "%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming.\n%s",
+                "%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming.\nStack Trace:\n%s",
                 get_request_details(),
                 get_rewrite_count(),
                 is_countable( $value ) ? count( $value ) : '(unknown)',
@@ -367,7 +368,7 @@ function alert_when_added( $option ) : void {
     log_to_db(
         'Added',
         sprintf(
-            "%s - rewrite_rules were added, now there are %d.\n%s",
+            "%s - rewrite_rules were added, now there are %d.\nStack Trace:\n%s",
             get_request_details(),
             get_rewrite_count(),
             generate_call_trace()
