@@ -44,7 +44,6 @@ bootstrap();
  * @return void
  */
 function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
-    error_log( print_r( wp_load_alloptions(), true ) );
     global $wp_rewrite;
     // When was the last time we flushed rewrites?
     $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
@@ -54,7 +53,9 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
         'rewrite set?' => isset( $wp_rewrite ) ? 'true' : 'false',
         'rewrite count?' => count( $wp_rewrite->rules ?? [] ),
         'cache?' => $last_rewrite_flush,
+        'cache type?' => gettype( $last_rewrite_flush ),
     ], true ) );
+
     if ( ! is_polylang_active() ) {
         // Take no action if Polylang is not active at all.
         return;
@@ -67,6 +68,7 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
 
     foreach ( $wp_rewrite->rules as $pattern => $handler ) {
         if ( strpos( $pattern, '|fr|' ) !== false && strpos( $handler, 'lang=' ) !== false ) {
+            error_log( $pattern . ' => ' . $handler );
             // This sure looks like a Polylang rewrite. Things look OK.
             return;
         }
