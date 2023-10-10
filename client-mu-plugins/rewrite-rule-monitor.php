@@ -34,7 +34,7 @@ bootstrap();
  *
  * @return string
  */
-function _get_unique_request_id() : string {
+function get_unique_request_id() : string {
     return substr(
         hash(
             'md5',
@@ -55,10 +55,10 @@ function _get_unique_request_id() : string {
  *
  * @return string
  */
-function _get_request_details() : string {
+function get_request_details() : string {
     return sprintf(
         '[%s]: %s %s',
-        _get_unique_request_id(),
+        get_unique_request_id(),
         $_SERVER['REQUEST_METHOD'] ?? '?',
         $_SERVER['REQUEST_URI'] ?? '/unknown/'
     );
@@ -69,7 +69,7 @@ function _get_request_details() : string {
  *
  * @return string
  */
-function _generate_call_trace() : string {
+function generate_call_trace() : string {
     $e = new Exception();
     $trace = explode( "\n", $e->getTraceAsString() );
     // reverse array to make steps line up chronologically.
@@ -90,12 +90,12 @@ function _generate_call_trace() : string {
 /**
  * Log out the number of rewrites currently present in the global.
  */
-function _log_rewrite_global_count() : void {
+function log_rewrite_global_count() : void {
     global $wp_rewrite;
     error_log(
         sprintf(
             "%s - \$wp_rewrite %s defined during %s. %s",
-            _get_request_details(),
+            get_request_details(),
             isset( $wp_rewrite ) ? 'is' : 'is not',
             current_action(),
             isset( $wp_rewrite ) ? sprintf(
@@ -111,12 +111,12 @@ function _log_rewrite_global_count() : void {
 /**
  * Log out the number of rewrites currently present in the option.
  */
-function _log_rewrite_option_count() : void {
+function log_rewrite_option_count() : void {
     $rewrites = get_option( 'rewrite_rules', null );
     error_log(
         sprintf(
             "%s - rewrite_rules option %s defined during %s. %s",
-            _get_request_details(),
+            get_request_details(),
             isset( $rewrites ) ? 'is' : 'is not',
             current_action(),
             isset( $rewrites )
@@ -129,7 +129,7 @@ function _log_rewrite_option_count() : void {
 /**
  * Check the current count of rewrites within the stored option.
  */
-function _get_rewrite_count() : int {
+function get_rewrite_count() : int {
     $rewrites = get_option( 'rewrite_rules', [] );
     if ( is_countable( $rewrites ) ) {
         return count( $rewrites );
@@ -148,7 +148,7 @@ function alert_on_change( $value, $old_value, $option ) {
     error_log(
         sprintf(
             "%s - %s CHANGING in pre_update_option_rewrite_rules\n%s old rules, %s new rules. is_admin? %s; is REST? %s;. Polylang is %s. Current user: %d\n%s",
-            _get_request_details(),
+            get_request_details(),
             $option,
             is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
             is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
@@ -156,11 +156,11 @@ function alert_on_change( $value, $old_value, $option ) {
             defined( 'REST_REQUEST ') && REST_REQUEST ? 'true' : 'false',
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
             is_user_logged_in() ? get_current_user_id() : 0,
-            _generate_call_trace()
+            generate_call_trace()
         )
     );
-    _log_rewrite_global_count();
-    _log_rewrite_option_count();
+    log_rewrite_global_count();
+    log_rewrite_option_count();
 
     return $value;
 }
@@ -175,13 +175,13 @@ function alert_on_change( $value, $old_value, $option ) {
 function alert_once_changed( $old_value, $value, $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules changed in %s action. %s old rules, %s new rules.',
-        _get_request_details(),
+        get_request_details(),
         current_action(),
         is_countable( $old_value ) ? count( $old_value ) : ( empty( $old_value ) ? 0 : '(' . print_r( $old_value, true ) . ')' ),
         is_countable( $value ) ? count( $value ) : ( empty( $value ) ? 0 : '(' . print_r( $value, true ) . ')' ),
     ) );
-    _log_rewrite_global_count();
-    _log_rewrite_option_count();
+    log_rewrite_global_count();
+    log_rewrite_option_count();
 }
 
 /**
@@ -194,10 +194,10 @@ function alert_before_delete( $option ) : void {
     if ( $option === 'rewrite_rules' ) {
         error_log( sprintf(
             '%s - rewrite_rules are going to be DELETED, currently there are %d. Polylang is %s. %s',
-            _get_request_details(),
-            _get_rewrite_count(),
+            get_request_details(),
+            get_rewrite_count(),
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            _generate_call_trace()
+            generate_call_trace()
         ) );
     }
 }
@@ -211,11 +211,11 @@ function alert_before_delete( $option ) : void {
 function alert_after_delete( $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules DELETED in %s action.',
-        _get_request_details(),
+        get_request_details(),
         current_action(),
     ) );
-    _log_rewrite_global_count();
-    _log_rewrite_option_count();
+    log_rewrite_global_count();
+    log_rewrite_option_count();
 }
 
 /**
@@ -229,11 +229,11 @@ function alert_before_add( $option, $value ) {
     if ( $option === 'rewrite_rules' ) {
         error_log( sprintf(
             '%s - rewrite_rules are going to be ADDED, currently there are %d, %d incoming. Polylang is %s. %s',
-            _get_request_details(),
-            _get_rewrite_count(),
+            get_request_details(),
+            get_rewrite_count(),
             is_countable( $value ) ? count( $value ) : '(unknown)',
             is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-            _generate_call_trace()
+            generate_call_trace()
         ) );
     }
 }
@@ -247,9 +247,9 @@ function alert_before_add( $option, $value ) {
 function alert_when_added( $option ) : void {
     error_log( sprintf(
         '%s - rewrite_rules were added, now there are %d. Polylang is %s. %s',
-        _get_request_details(),
-        _get_rewrite_count(),
+        get_request_details(),
+        get_rewrite_count(),
         is_plugin_active( 'polylang-pro/polylang.php' ) ? 'active' : 'inactive',
-        _generate_call_trace()
+        generate_call_trace()
     ) );
 }
