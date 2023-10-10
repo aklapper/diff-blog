@@ -47,13 +47,14 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
     global $wp_rewrite;
     // When was the last time we flushed rewrites?
     $last_rewrite_flush = wp_cache_get( CACHE_KEY, CACHE_GROUP );
-    error_log( print_r( [
+    error_log( print_r( [ // phpcs:ignore
         'plugin active?' => is_polylang_active() ? 'true' : 'false',
-        'current url?' => sanitize_text_field( $_SERVER['REQUEST_URI'] ),
+        'current url?' => sanitize_text_field( $_SERVER['REQUEST_URI'] ), // phpcs:ignore
         'rewrite set?' => isset( $wp_rewrite ) ? 'true' : 'false',
         'rewrite count?' => count( $wp_rewrite->rules ?? [] ),
         'cache?' => $last_rewrite_flush,
         'cache type?' => gettype( $last_rewrite_flush ),
+        'waiting for cache?' => is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30,
     ], true ) );
 
     if ( ! is_polylang_active() ) {
@@ -66,15 +67,22 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
         return;
     }
 
-    foreach ( $wp_rewrite->rules as $pattern => $handler ) {
-        if ( strpos( $pattern, '|fr|' ) !== false && strpos( $handler, 'lang=' ) !== false ) {
-            error_log( $pattern . ' => ' . $handler );
-            // This sure looks like a Polylang rewrite. Things look OK.
+    foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
+        if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
+            // Use presence of French language code or the lack of a lang=
+            // attribute in the matched query as quick checks for whether this
+            // is not a Polylang Pro rewrite.
+            continue;
+        }
+        if ( preg_match( '/(\?|&)name=/', $matched_query ) ) {
+            // Has a language capture group, a lang= parameter, AND a name=
+            // component? That sure looks like a Polylang single-post rewrite!
+            // Things look OK.
             return;
         }
     }
 
-    if ( is_int( $last_rewrite_flush ) && time() - $last_rewrite_flush < 30 ) {
+    if ( is_int( $last_rewrite_flush ) && ( time() - $last_rewrite_flush ) < 30 ) {
         // Only try flushing once every 30s to avoid excessive option thrashing.
         return;
     }
