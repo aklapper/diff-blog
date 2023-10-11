@@ -31,7 +31,7 @@ function is_polylang_active() : bool {
  * Connect namespace functions to actions and hooks.
  */
 function bootstrap() : void {
-	add_action( 'set_404', __NAMESPACE__ . '\\check_polylang_rewrite_status_on_404' );
+	// add_action( 'set_404', __NAMESPACE__ . '\\check_polylang_rewrite_status_on_404' );
 }
 bootstrap();
 
