@@ -57,7 +57,7 @@ function check_polylang_rewrite_status_on_404( WP_Query $query ) : void {
 	}
 
 	foreach ( $wp_rewrite->rules as $rule_pattern => $matched_query ) {
-		if ( strpos( $rule_pattern, '|fr|' ) === false || preg_match( '/(\?|&)lang=/', $matched_query ) ) {
+		if ( strpos( $rule_pattern, '|fr|' ) === false || ! preg_match( '/(\?|&)lang=/', $matched_query ) ) {
 			// Use presence of French language code or the lack of a lang=
 			// attribute in the matched query as quick checks for whether this
 			// is not a Polylang Pro rewrite.
