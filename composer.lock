@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59cad29cb259848dfc39bfd1c68eb0f0",
+    "content-hash": "dc9af0ee1db424e08f6f2e21c3d488fb",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -501,6 +501,69 @@
                 }
             ],
             "time": "2023-09-20T01:47:08+00:00"
+        },
+        {
+            "name": "wikimedia/wikimedia-wordpress-security-plugin",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin.git",
+                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wikimedia/wikimedia-wordpress-security-plugin/zipball/f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
+                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "require-dev": {
+                "automattic/vipwpcs": "^3.0",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "phpcompatibility/php-compatibility": "dev-develop as 9.99.99",
+                "phpcompatibility/phpcompatibility-wp": "^2.1",
+                "phpcsstandards/php_codesniffer": "^3.5",
+                "staabm/annotate-pull-request-from-checkstyle": "^1.8",
+                "wp-coding-standards/wpcs": "^3.0",
+                "wpackagist-plugin/disable-emojis": "^1.7.6"
+            },
+            "default-branch": true,
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-types": [
+                    "wordpress-plugin"
+                ],
+                "installer-paths": {
+                    "inc/bundled-plugins/disable-emojis": [
+                        "wpackagist-plugin/disable-emojis"
+                    ]
+                }
+            },
+            "scripts": {
+                "lint": [
+                    "phpcs --standard=phpcs.dist.xml plugin.php inc"
+                ],
+                "lint:fix": [
+                    "phpcbf --standard=phpcs.dist.xml plugin.php inc"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Wikimedia WordPress Security Plugin",
+            "support": {
+                "source": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/tree/main",
+                "issues": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/issues"
+            },
+            "funding": [
+                {
+                    "type": "custom",
+                    "url": "https://donate.wikimedia.org/?utm_medium=gitHub&utm_campaign=sponsorButton&utm_source=wpsecurityplugin"
+                }
+            ],
+            "time": "2023-12-11T18:57:02+00:00"
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
@@ -1635,6 +1698,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "wikimedia/interconnection-wordpress-theme": 20,
+        "wikimedia/wikimedia-wordpress-security-plugin": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": true,
@@ -1643,5 +1707,5 @@
         "php": "^8"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
