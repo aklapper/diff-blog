@@ -49,6 +49,10 @@
       "url": "git@github.com:wikimedia/wikipediapreview-wordpress.git"
     },
     {
+      "type": "vcs",
+      "url": "git@github.com:wikimedia/wikimedia-wordpress-security-plugin.git"
+    },
+    {
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
@@ -103,7 +107,8 @@
     "wpackagist-plugin/the-events-calendar": "^6.2.0",
     "wpackagist-plugin/the-events-calendar-category-colors": "^7.3.0",
     "wpackagist-plugin/wikipedia-preview": "^1.11.0",
-    "wpackagist-plugin/wpdiscuz": "^7.6"
+    "wpackagist-plugin/wpdiscuz": "^7.6",
+    "wikimedia/wikimedia-wordpress-security-plugin": "dev-main"
   },
   "require-dev": {
     "automattic/vipwpcs": "^1.0",

@@ -12,6 +12,7 @@
 /plugins/rewrite-rules-inspector/
 /plugins/two-factor/
 /plugins/vaultpress/
+/plugins/wikimedia-wordpress-security-plugin
 
 # Composer-managed themes & plugins: DO NOT INCLUDE THESE LINES in .deployignore file.
 /themes/interconnection
