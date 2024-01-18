@@ -44,7 +44,7 @@ to pull down the plugins and themes necessary to run the Diff site.
 - Creating the local environment using VIP dev-env:
 ```
 nvm use 18
-vip dev-env create --slug=wikimediadiff --media-redirect-domain=blog-wikimedia-org-develop.go-vip.net
+vip dev-env create --slug=diff --media-redirect-domain=blog-wikimedia-org-develop.go-vip.net
 ```
    - *WordPress site title*: "Wikimedia Diff Local Environment"
    - *Multisite*: Select "No", Wikimedia Diff is a single site which uses Polylang instead of MLP
@@ -57,15 +57,15 @@ vip dev-env create --slug=wikimediadiff --media-redirect-domain=blog-wikimedia-o
    - *Enable XDebug*: Select "Yes"
    - *Enable MailHog*: Select "No"
    - Note: The `--media-redirect-domain` argument will proxy requests for missing local images to the dev environment. This way you can quickly get your local running, and use media locally as expected, without having to download a large file export from the VIP dashboard.
-- Start your environment using `vip dev-env start --slug=wikimediadiff`
-- You now probably have [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running, without any site content.
+- Start your environment using `vip dev-env start --slug=diff`
+- You now probably have [http://diff.vipdev.lndo.site/](http://diff.vipdev.lndo.site/) up and running, without any site content.
 
 ### Importing database
 
 The most straightforward way to populate your local site with real content is to use the VIP dev-env `sync` command.
 
 ```
-vip dev-env sync sql @blog-wikimedia-org.production --slug=wikimediadiff
+vip dev-env sync sql @blog-wikimedia-org.production --slug=diff
 ```
 
 Assuming you have VIP CLI access to the production site, this will pull the latest database backup from production and adapt it for use in your local environment.
@@ -87,26 +87,26 @@ SQL validation failed due to 1 error(s)
 - Extract, rename your production database to `database.sql` and copy it to the project's root directory
 - After manually removing `protected_embeds` table creation and its records from database dump file, import the database using:
 ```
-vip dev-env import sql database.sql --slug=wikimediadiff --search-replace="diff.wikimedia.org,wikimediadiff.vipdev.lndo.site"
+vip dev-env import sql database.sql --slug=diff --search-replace="diff.wikimedia.org,diff.vipdev.lndo.site"
 ```
 
 </details>
 
-If everything worked as expected when importing, you now probably have [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running with the latest production database, and media should be loading from the Dev site thanks to the `--media-redirect-domain` argument we used before.
+If everything worked as expected when importing, you now probably have [http://diff.vipdev.lndo.site/](http://diff.vipdev.lndo.site/) up and running with the latest production database, and media should be loading from the Dev site thanks to the `--media-redirect-domain` argument we used before.
 
 If you are **not** seeing images, the dev environment may be out of date with production (or you may be offline). You may always also download media files manually from the [VIP Dashboard](https://dashboard.wpvip.com/apps/1309/production/media/backups).
 
 - Extract your media files on your project root directory.
   - The expected location is `/wp-content/uploads`
-- Import media files using `vip dev-env import media ./wp-content/uploads --slug=wikimediadiff`
+- Import media files using `vip dev-env import media ./wp-content/uploads --slug=diff`
 - Flush cache and restart your instance
 ```
-vip dev-env exec --slug wikimediadiff -- wp cache flush
-vip dev-env stop --slug wikimediadiff
-vip dev-env stop --slug wikimediadiff
+vip dev-env exec --slug diff -- wp cache flush
+vip dev-env stop --slug diff
+vip dev-env stop --slug diff
 ```
 - If media files still aren't available, you may try opening one of those in a new tab and accepting a unsecure connection.
-- You should have [http://wikimediadiff.vipdev.lndo.site/](http://wikimediadiff.vipdev.lndo.site/) up and running at this moment, have fun!
+- You should have [http://diff.vipdev.lndo.site/](http://diff.vipdev.lndo.site/) up and running at this moment, have fun!
 
 ### Interconnection theme
 To work on the Interconnection theme specifically, you will want to replace the Composer source code package with the actual theme source:
