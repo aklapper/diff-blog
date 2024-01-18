@@ -48,7 +48,7 @@ vip dev-env create --slug=diff --media-redirect-domain=blog-wikimedia-org-develo
 ```
    - *WordPress site title*: "Wikimedia Diff Local Environment"
    - *Multisite*: Select "No", Wikimedia Diff is a single site which uses Polylang instead of MLP
-   - *PHP version to use*: Select "8.0" - Some errors starting WordPress where reported when selecting versions higher than 8.0
+   - *PHP version to use*: Select "8.1" - Some errors starting WordPress where reported when selecting versions higher than 8.0
    - *WordPress*: Select the same version of WordPress running on production. To figure it out, open [http://diff.wikimedia.org](http://diff.wikimedia.org) and look for the tag `<meta name="generator" content="WordPress VERSION_NUMBER" />` on the source code.
    - *How would you like to source vip-go-mu-plugins*: Select "Demo" for automatically fetched vip-go-mu-plugins
    - *How would you like to source application-code*: Select "Custom" and paste the location where you cloned Wikimedia Diff repo.
