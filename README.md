@@ -58,7 +58,8 @@ vip dev-env create --slug=diff --media-redirect-domain=blog-wikimedia-org-develo
    - *Enable MailHog*: Select "No"
    - Note: The `--media-redirect-domain` argument will proxy requests for missing local images to the dev environment. This way you can quickly get your local running, and use media locally as expected, without having to download a large file export from the VIP dashboard.
 - Start your environment using `vip dev-env start --slug=diff`
-- You now probably have [http://diff.vipdev.lndo.site/](http://diff.vipdev.lndo.site/) up and running, without any site content.
+
+You should now be able to visit [diff.vipdev.lndo.site](http://diff.vipdev.lndo.site/) and see a basic WordPress install.
 
 ### Importing database
 
@@ -78,13 +79,12 @@ If you do not have CLI access to the VIP environment, request a database backup 
 
 - Start downloading latest media backup from [VIP Dashboard](https://dashboard.wpvip.com/apps/1309/production/data/media/backups) as it may take a while to finish
 - Download latest production database backup from [VIP Dashboard](https://dashboard.wpvip.com/apps/1309/production/data/database/backups)
-*Note before importing the database:* The problem below was reported when importing the production database. The solution found for it was manually editing the SQL file to delete the table `protected_embeds` creation and its records.
-```
-Error:  SQL Error: tables without wp_ prefix found: protected_embeds
-Recommendation: Please make sure all table names are prefixed with `wp_`
-SQL validation failed due to 1 error(s)
-```
 - Extract, rename your production database to `database.sql` and copy it to the project's root directory
+
+> ⚠️ **Note on potential database import issue**
+>
+> If you encounter the error `tables without wp_ prefix found`, you can safely remove the lines in your SQL export file which relate to the table `protected_embeds` and then retry the import.
+
 - After manually removing `protected_embeds` table creation and its records from database dump file, import the database using:
 ```
 vip dev-env import sql database.sql --slug=diff --search-replace="diff.wikimedia.org,diff.vipdev.lndo.site"
@@ -108,6 +108,9 @@ vip dev-env stop --slug diff
 - If media files still aren't available, you may try opening one of those in a new tab and accepting a unsecure connection.
 - You should have [http://diff.vipdev.lndo.site/](http://diff.vipdev.lndo.site/) up and running at this moment, have fun!
 
+
+## Theme Development
+
 ### Interconnection theme
 To work on the Interconnection theme specifically, you will want to replace the Composer source code package with the actual theme source:
 ```sh
@@ -117,7 +120,7 @@ rm -rf themes/interconnection
 composer install wikimedia/interconnection-wordpress-theme --prefer-source
 ```
 
-## Theme Development
+### Theme Development Workflow
 
 1. Create a PR branch off of the `main` branch in the `wikimedia/interconnection-wordpress-theme` repo.
 2. For testing your changes, merge the new PR branch into the theme repository's `develop` branch; the theme will build to the `release-develop` branch automatically.
