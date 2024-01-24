@@ -9,65 +9,62 @@ Subject: [PATCH] Suppress file system access warnings
  2 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/forms/wpdFormAttr/Form.php b/forms/wpdFormAttr/Form.php
-index 74b70b9..a2cdc13 100644
+index 18d8170..274473e 100644
 --- a/forms/wpdFormAttr/Form.php
 +++ b/forms/wpdFormAttr/Form.php
-@@ -1864,7 +1864,7 @@ class Form {
- 		$theme          = $theme ? $theme : $this->generalOptions["theme"];
- 		$layouts        = [];
- 		$path           = $theme . "/layouts/";
--		$scannedLayouts = scandir( $path );
-+		$scannedLayouts = @scandir( $path );
- 		unset( $scannedLayouts[0] );
- 		unset( $scannedLayouts[1] );
- 		foreach ( $scannedLayouts as $k => $scannedLayout ) {
-@@ -1880,7 +1880,7 @@ class Form {
- 		$themes = [];
- 		$path   = str_replace( "\\", "/", WPDISCUZ_DIR_PATH ) . "/themes/";
- 		if ( is_dir( $path ) && is_readable( $path ) ) {
--			$scannedThemes = scandir( $path );
-+			$scannedThemes = @scandir( $path );
- 			if ( $scannedThemes && is_array( $scannedThemes ) ) {
- 				unset( $scannedThemes[0] );
- 				unset( $scannedThemes[1] );
-@@ -1901,7 +1901,7 @@ class Form {
- 		$uplDir    = wp_upload_dir();
- 		$themesDir = str_replace( "\\", "/", $uplDir["basedir"] ) . wpdFormConst::THEMES_DIR;
- 		if ( is_dir( $themesDir ) && is_readable( $themesDir ) ) {
--			$scannedThemes = scandir( $themesDir );
-+			$scannedThemes = @scandir( $themesDir );
- 			if ( $scannedThemes && is_array( $scannedThemes ) ) {
- 				unset( $scannedThemes[0] );
- 				unset( $scannedThemes[1] );
-@@ -1925,7 +1925,7 @@ class Form {
- 
- 	public function getDefaultTheme() {
- 		$path          = str_replace( "\\", "/", WPDISCUZ_DIR_PATH ) . "/themes/";
--		$scannedThemes = scandir( $path );
-+		$scannedThemes = @scandir( $path );
- 		unset( $scannedThemes[0] );
- 		unset( $scannedThemes[1] );
- 		foreach ( $scannedThemes as $k => $scannedTheme ) {
+@@ -1929,7 +1929,7 @@ class Form
+         $theme = $theme ? $theme : $this->generalOptions["theme"];
+         $layouts = [];
+         $path = $theme . "/layouts/";
+-        $scannedLayouts = scandir($path);
++        $scannedLayouts = @scandir($path);
+         unset($scannedLayouts[0]);
+         unset($scannedLayouts[1]);
+         foreach ($scannedLayouts as $k => $scannedLayout) {
+@@ -1946,7 +1946,7 @@ class Form
+         $themes = [];
+         $path = str_replace("\\", "/", WPDISCUZ_DIR_PATH) . "/themes/";
+         if (is_dir($path) && is_readable($path)) {
+-            $scannedThemes = scandir($path);
++            $scannedThemes = @scandir($path);
+             if ($scannedThemes && is_array($scannedThemes)) {
+                 unset($scannedThemes[0]);
+                 unset($scannedThemes[1]);
+@@ -1967,7 +1967,7 @@ class Form
+         $uplDir = wp_upload_dir();
+         $themesDir = str_replace("\\", "/", $uplDir["basedir"]) . wpdFormConst::THEMES_DIR;
+         if (is_dir($themesDir) && is_readable($themesDir)) {
+-            $scannedThemes = scandir($themesDir);
++            $scannedThemes = @scandir($themesDir);
+             if ($scannedThemes && is_array($scannedThemes)) {
+                 unset($scannedThemes[0]);
+                 unset($scannedThemes[1]);
+@@ -1992,7 +1992,7 @@ class Form
+     public function getDefaultTheme()
+     {
+         $path = str_replace("\\", "/", WPDISCUZ_DIR_PATH) . "/themes/";
+-        $scannedThemes = scandir($path);
++        $scannedThemes = @scandir($path);
+         unset($scannedThemes[0]);
+         unset($scannedThemes[1]);
+         foreach ($scannedThemes as $k => $scannedTheme) {
 diff --git a/utils/class.WpdiscuzCache.php b/utils/class.WpdiscuzCache.php
-index 3b2a80f..a6b2190 100644
+index 5de0a3b..b7d16bc 100644
 --- a/utils/class.WpdiscuzCache.php
 +++ b/utils/class.WpdiscuzCache.php
-@@ -48,6 +48,7 @@ class WpdiscuzCache implements WpDiscuzConstants {
-     }
- 
-     public function deleteGravatarsFolder() {
-+        return; // Cannot delete directories on VIP filesystem.
-         if (!class_exists("WP_Filesystem_Direct")) {
-             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
-             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
-@@ -153,6 +154,7 @@ class WpdiscuzCache implements WpDiscuzConstants {
-     }
- 
-     private function resetCache($path) {
-+        return; // Cannot delete directories on VIP filesystem.
-         if (!class_exists("WP_Filesystem_Direct")) {
-             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
-             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
--- 
-2.39.2 (Apple Git-143)
+@@ -53,6 +53,7 @@ class WpdiscuzCache implements WpDiscuzConstants
 
+     public function deleteGravatarsFolder()
+     {
++        return; // Cannot delete directories on VIP filesystem.
+         if (!class_exists("WP_Filesystem_Direct")) {
+             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
+             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
+@@ -170,6 +171,7 @@ class WpdiscuzCache implements WpDiscuzConstants
+
+     private function resetCache($path)
+     {
++        return; // Cannot delete directories on VIP filesystem.
+         if (!class_exists("WP_Filesystem_Direct")) {
+             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-base.php";
+             require_once ABSPATH . "wp-admin/includes/class-wp-filesystem-direct.php";
