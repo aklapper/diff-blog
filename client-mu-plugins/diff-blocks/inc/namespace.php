@@ -60,6 +60,14 @@ function enqueue_block_editor_assets() {
 			'handle' => 'diff-blocks'
 		]
 	);
+
+	wp_localize_script(
+		'diff-blocks',
+		'diffBlocksData',
+		[
+			'isAdminRole' => current_user_can( 'manage_options' ),
+		]
+	);
 }
 
 /**
