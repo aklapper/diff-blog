@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc9af0ee1db424e08f6f2e21c3d488fb",
+    "content-hash": "603b44c7e9a5b6cac311762b427b6ccc",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -414,28 +414,28 @@
         },
         {
             "name": "the-events-calendar/events-calendar-pro",
-            "version": "6.2.1",
+            "version": "6.3.1.1",
             "dist": {
                 "type": "zip",
-                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.2.1"
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.3.1.1"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/events-virtual",
-            "version": "1.15.4",
+            "version": "1.15.6",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.4"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.6"
             },
             "type": "wordpress-plugin"
         },
         {
             "name": "the-events-calendar/the-events-calendar-filterbar",
-            "version": "5.5.2",
+            "version": "5.5.3",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.2"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.3"
             },
             "type": "wordpress-plugin"
         },
@@ -566,15 +566,15 @@
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
-            "version": "2.11.1",
+            "version": "2.13.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/capability-manager-enhanced/",
-                "reference": "tags/2.11.1"
+                "reference": "tags/2.13.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.11.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/capability-manager-enhanced.2.13.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -584,15 +584,15 @@
         },
         {
             "name": "wpackagist-plugin/publishpress",
-            "version": "3.12.2",
+            "version": "4.0.3",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/publishpress/",
-                "reference": "tags/3.12.2"
+                "reference": "tags/4.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/publishpress.3.12.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/publishpress.4.0.3.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -602,15 +602,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar",
-            "version": "6.2.9",
+            "version": "6.3.4",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
-                "reference": "tags/6.2.9"
+                "reference": "tags/6.3.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.2.9.zip"
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.3.4.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -656,15 +656,15 @@
         },
         {
             "name": "wpackagist-plugin/wpdiscuz",
-            "version": "7.6.14",
+            "version": "7.6.15",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
-                "reference": "tags/7.6.14"
+                "reference": "tags/7.6.15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.14.zip"
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.15.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
