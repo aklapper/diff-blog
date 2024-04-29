@@ -43,6 +43,7 @@ add_filter( 'wmf/security/csp/allowed_origins', __NAMESPACE__ . '\\maybe_add_loc
 function permit_custom_iframe_providers( array $allowed_origins, string $policy_type ) : array {
 	if ( in_array( $policy_type, [ 'frame-src' ], true ) ) {
 		$allowed_origins[] = 'https://*.wikimedia.org';
+		$allowed_origins[] = 'https://*.wikipedia.org';
 		$allowed_origins[] = 'https://datawrapper.dwcdn.net/';
 	}
 
