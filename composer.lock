@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "603b44c7e9a5b6cac311762b427b6ccc",
+    "content-hash": "eace6edb128846f851cefe416f049dc5",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -431,10 +431,10 @@
         },
         {
             "name": "the-events-calendar/events-virtual",
-            "version": "1.15.6",
+            "version": "1.15.8",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.6"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.8"
             },
             "type": "wordpress-plugin"
         },
