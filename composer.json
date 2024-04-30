@@ -56,10 +56,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
-        "version": "6.3.1.1",
+        "version": "6.4.0",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.3.1.1",
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.4.0",
           "type": "zip"
         }
       }
