@@ -8,7 +8,7 @@ namespace Diff\Security_Plugin_Integration;
 use WP_REST_Request;
 
 /**
- * Permit image embeds from all trusted Wikimedia and Wikipedia domains.
+ * Permit image embeds from Wikipedia's trusted domains.
  *
  * @param string[] $allowed_origins List of origins to allow in this CSP.
  * @param string   $policy_type     CSP type.
@@ -16,7 +16,7 @@ use WP_REST_Request;
  */
 function allow_wikipedia_images( array $allowed_origins, string $policy_type ): array {
 	if ( 'img-src' === $policy_type ) {
-		$allowed_origins[] = 'https://*.wikimedia.org/';
+		$allowed_origins[] = 'https://wikipedia.org';
 		$allowed_origins[] = 'https://*.wikipedia.org';
 	}
 
@@ -33,12 +33,13 @@ add_filter( 'wmf/security/csp/allowed_origins', __NAMESPACE__ . '\\allow_wikiped
  * @return string[] Filtered policy allowed origins array.
  */
 function maybe_add_local_media_proxy_origins( array $allowed_origins, string $policy_type ): array {
-	if ( 'img-src' === $policy_type && 'local' !== wp_get_environment_type() ) {
+	if ( 'img-src' === $policy_type && 'local' === wp_get_environment_type() ) {
 		/**
 		 * Permit proxying images through to production or to develop.
 		 *
 		 * @see https://docs.wpvip.com/how-tos/dev-env-add-media/#h-proxy-media-files
 		 */
+		$allowed_origins[] = 'https://*.wikimedia.org';
 		$allowed_origins[] = 'https://blog-wikimedia-org-develop.go-vip.net';
 	}
 
