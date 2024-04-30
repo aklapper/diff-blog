@@ -26,7 +26,8 @@ function maybe_add_local_media_proxy_origins( array $allowed_origins, string $po
 		 *
 		 * @see https://docs.wpvip.com/how-tos/dev-env-add-media/#h-proxy-media-files
 		 */
-		$allowed_origins[] = 'https://diff.wikimedia.org/';
+		$allowed_origins[] = 'https://*.wikimedia.org/';
+		$allowed_origins[] = 'https://*.wikipedia.org';
 		$allowed_origins[] = 'https://blog-wikimedia-org-develop.go-vip.net';
 	}
 
