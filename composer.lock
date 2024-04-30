@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eace6edb128846f851cefe416f049dc5",
+    "content-hash": "fc9e604bffbcfd2b589bffc6e47950b9",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -440,10 +440,10 @@
         },
         {
             "name": "the-events-calendar/the-events-calendar-filterbar",
-            "version": "5.5.3",
+            "version": "5.5.4",
             "dist": {
                 "type": "zip",
-                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.3"
+                "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.4"
             },
             "type": "wordpress-plugin"
         },

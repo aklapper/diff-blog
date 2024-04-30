@@ -80,10 +80,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/the-events-calendar-filterbar",
-        "version": "5.5.3",
+        "version": "5.5.4",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.3",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.4",
           "type": "zip"
         }
       }
