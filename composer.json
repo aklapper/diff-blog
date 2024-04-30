@@ -137,6 +137,9 @@
       ]
     },
     "patches": {
+      "wpackagist-plugin/the-events-calendar-category-colors": {
+        "TECCC 7.3.0: Pass empty value as string to avoid type warning": "https://github.com/the-events-calendar/the-events-calendar-category-colors/commit/c4146d495fd28c358d5810c7e9f7143710c114df.patch"
+      },
       "wpackagist-plugin/wpdiscuz": {
         "suppress file system access warnings": ".patches/wpdiscuz-suppress-filesystem-access-warnings.patch"
       }
