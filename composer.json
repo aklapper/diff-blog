@@ -56,10 +56,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
-        "version": "6.3.1.1",
+        "version": "6.4.0",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.3.1.1",
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.4.0",
           "type": "zip"
         }
       }
@@ -68,10 +68,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-virtual",
-        "version": "1.15.6",
+        "version": "1.15.8",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.6",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=events-virtual&key=***REMOVED***&version=1.15.8",
           "type": "zip"
         }
       }
@@ -80,10 +80,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/the-events-calendar-filterbar",
-        "version": "5.5.3",
+        "version": "5.5.4",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.3",
+          "url": "https://pue.tri.be/api/plugins/v2/download?plugin=tribe-filterbar&key=***REMOVED***&version=5.5.4",
           "type": "zip"
         }
       }
@@ -137,6 +137,9 @@
       ]
     },
     "patches": {
+      "wpackagist-plugin/the-events-calendar-category-colors": {
+        "TECCC 7.3.0: Pass empty value as string to avoid type warning": "https://github.com/the-events-calendar/the-events-calendar-category-colors/commit/c4146d495fd28c358d5810c7e9f7143710c114df.patch"
+      },
       "wpackagist-plugin/wpdiscuz": {
         "suppress file system access warnings": ".patches/wpdiscuz-suppress-filesystem-access-warnings.patch"
       }
