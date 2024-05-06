@@ -449,6 +449,7 @@ function diff_polylang_redirect_to_real_homepage_after_lang_param_override() {
 	if ( is_home() && get_query_var( 'lang' ) === 'en-US' ) {
 		// Polylang will have done its thing; redirect to the bare homepage.
 		wp_redirect( home_url() );
+		exit;
 	}
 }
 add_action( 'template_redirect', 'diff_polylang_redirect_to_real_homepage_after_lang_param_override' );
