@@ -43,6 +43,8 @@
         <exclude name="WordPress.PHP.YodaConditions" />
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
         <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+        <!-- We support hook namespacing. -->
+        <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
         <!-- Package tags are not useful. -->
         <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
 	</rule>

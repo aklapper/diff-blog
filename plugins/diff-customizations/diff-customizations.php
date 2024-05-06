@@ -8,8 +8,9 @@
  * Author URI: https://meta.wikimedia.org/wiki/Community_Relations
  */
 
-// limit access to Jetpack to admins
-
+/**
+ * Limit access to Jetpack to admins
+ */
 function diff_no_jetpack_menu_non_admins() {
 	if (
 		class_exists( 'Jetpack' )
@@ -22,7 +23,7 @@ add_action( 'admin_menu', 'diff_no_jetpack_menu_non_admins', 999 );
 
 
 /**
- * limit access to Tools and Comments capabilities to admins
+ * Limit access to Tools and Comments capabilities to admins
  *
  * These menu items are useless given there are no tools to configure for other roles like Contributors
  */
@@ -37,7 +38,7 @@ add_action( 'admin_menu', 'diff_remove_tools_comments_pages' );
 
 
 /**
- * remove commments from adimin bar
+ * Remove commments from adimin bar
  */
 function diff_remove_admin_menus() {
 	if ( ! current_user_can( 'manage_options' )
@@ -80,15 +81,19 @@ add_action( 'admin_notices', 'diff_contributor_admin_notice' );
  * A little notice for the main block editor
  */
 function block_notice_enqueue() {
+	// Increment version when script content changes.
 	wp_enqueue_script(
 		'block_notice-script',
-		plugins_url( 'block-notice.js', __FILE__ )
+		plugins_url( 'block-notice.js', __FILE__ ),
+		[],
+		'1.0',
+		true
 	);
 }
 add_action( 'enqueue_block_editor_assets', 'block_notice_enqueue' );
 
 /**
- * add editorial calendar to toolbar
+ * Add editorial calendar to toolbar
  */
 function diff_calendar_toolbar( $wp_admin_bar ) {
 		$args = [
@@ -101,7 +106,7 @@ function diff_calendar_toolbar( $wp_admin_bar ) {
 add_action( 'admin_bar_menu', 'diff_calendar_toolbar', 999 );
 
 /**
- * disable comments on media attachments
+ * Disable comments on media attachments
  */
 function diff_filter_media_comment_status( $open, $post_id ) {
 	$post = get_post( $post_id );
@@ -113,7 +118,7 @@ function diff_filter_media_comment_status( $open, $post_id ) {
 add_filter( 'comments_open', 'diff_filter_media_comment_status', 10, 2 );
 
 /**
- * disble Jetpack module for WordPress.com login
+ * Disble Jetpack module for WordPress.com login
  */
 function diff_disable_jetpack_sso( $modules ) {
 	if ( isset( $modules['sso'] ) ) {
@@ -158,7 +163,7 @@ add_filter( 'manage_edit-tribe_venue_columns', 'diff_remove_language_columns', 1
 add_filter( 'manage_edit-tribe_organizer_columns', 'diff_remove_language_columns', 110 );
 
 /**
- * disable full screen editing (it is confusing people)
+ * Disable full screen editing (it is confusing people)
  */
 function diff_disable_editor_fullscreen_by_default() {
 	$script = "window.onload = function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } }";
@@ -171,13 +176,14 @@ add_action( 'enqueue_block_editor_assets', 'diff_disable_editor_fullscreen_by_de
  * Custom CSS for WordPress Dashboard
  */
 function diff_admin_stylesheet() {
-	wp_enqueue_style( 'diff_admin-styles', get_stylesheet_directory_uri() . '/admin.css' );
+	// Increment version when stylesheet content changes.
+	wp_enqueue_style( 'diff_admin-styles', get_stylesheet_directory_uri() . '/admin.css', [], '1.0' );
 }
 add_action( 'admin_enqueue_scripts', 'diff_admin_stylesheet' );
 
 
 /**
- * allow contributor role to add string translations in Polylang
+ * Allow contributor role to add string translations in Polylang
  */
 function diff_contributor_string_translation() {
 	if ( ! current_user_can( 'manage_options' ) && function_exists( 'PLL' ) ) {
@@ -197,7 +203,7 @@ function diff_fb_verify() {
 add_action( 'wp_head', 'diff_fb_verify' );
 
 /**
- * filter domains so Jetpack Photon works
+ * Filter domains so Jetpack Photon works
  */
 function jetpack_photon_unbanned_domains( $skip, $image_url ) {
 	$unbanned_host_patterns = [
@@ -227,7 +233,7 @@ add_filter( 'js_do_concat', 'diff_js_do_concat' );
 /**
  * Add fallback image for related posts feature
  */
-function diff_custom_image( $media, $post_id, $args ) {
+function diff_custom_image( $media, $post_id ) {
 	if ( $media ) {
 		return $media;
 	} else {
@@ -244,7 +250,7 @@ function diff_custom_image( $media, $post_id, $args ) {
 		];
 	}
 }
-add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 3 );
+add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 2 );
 
 // Increase export of calendar events to 100
 add_filter(
@@ -347,7 +353,9 @@ add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored
  */
 function diff_hide_certain_plugin_admin_notices() {
 	// Hide these notices even for admins if local, they tend to be meaningless.
-	$is_local      = wp_get_environment_type() === 'local';
+	$is_local = wp_get_environment_type() === 'local';
+
+	// phpcs:ignore WordPress.WP.Capabilities.RoleFound -- TODO: Shift to cap check, not role.
 	$is_admin_user = current_user_can( 'edit_plugins' ) || current_user_can( 'administrator' );
 	if ( $is_admin_user && ! $is_local ) {
 		return;
@@ -360,7 +368,7 @@ function diff_hide_certain_plugin_admin_notices() {
 		'.notice.notice-wikipediapreview', // Wikipedia preview nags.
 	];
 
-	wp_register_style( 'diff-suppress-plugin-notices', false );
+	wp_register_style( 'diff-suppress-plugin-notices', false, [], '1.0' );
 	wp_add_inline_style(
 		'diff-suppress-plugin-notices',
 		join( ',', $suppressed_selectors ) . ' { display: none; }'
