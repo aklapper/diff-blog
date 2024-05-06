@@ -5,7 +5,7 @@
  */
 declare( strict_types=1 );
 
-namespace WikimediaDiff\Blocks\Asset_Loader\Utilities;
+namespace WikimediaDiff\Asset_Loader\Utilities;
 
 const SCRIPT_DEBUG_WARNING = 'Hot reloading was requested but SCRIPT_DEBUG is false. Your bundle will not load. Please enable SCRIPT_DEBUG or disable hot reloading.';
 

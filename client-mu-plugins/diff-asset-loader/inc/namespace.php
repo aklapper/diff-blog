@@ -8,7 +8,7 @@
  */
 declare( strict_types=1 );
 
-namespace WikimediaDiff\Blocks\Asset_Loader;
+namespace WikimediaDiff\Asset_Loader;
 
 /**
  * Register a script asset. Loads dependencies and version information from the

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Wikimedia Diff Blocks
+ * Plugin Name: Wikimedia Diff Asset Loader
  * Plugin URI: https://github.com/wpcomvip/wikimedia-blog-wikimedia-org
- * Description: Blocks and other editorial functionality for the Interconnection theme.
+ * Description: Reusable asset loader framework to permit hot-reloading with wp-scripts.
  * Author: Human Made
  * Author URI: https://humanmade.com/
  * Version: 1.0.0
@@ -12,13 +12,11 @@
  * @package wikimediadiff
  */
 
-namespace WikimediaDiff\Blocks;
+namespace WikimediaDiff\Asset_Loader;
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
 // Require utility functions.
 require_once __DIR__ . '/inc/namespace.php';
-
-// Kick off.
-bootstrap();
+require_once __DIR__ . '/inc/utilities.php';

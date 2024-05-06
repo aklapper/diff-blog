@@ -5,7 +5,7 @@
 
 namespace WikimediaDiff\Blocks;
 
-use WikimediaDiff\Blocks\Asset_Loader;
+use WikimediaDiff\Asset_Loader;
 
 /**
  * Add all our hooks.
