@@ -94,6 +94,8 @@ add_action( 'enqueue_block_editor_assets', 'block_notice_enqueue' );
 
 /**
  * Add editorial calendar to toolbar
+ *
+ * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
  */
 function diff_calendar_toolbar( $wp_admin_bar ) {
 		$args = [
@@ -107,6 +109,11 @@ add_action( 'admin_bar_menu', 'diff_calendar_toolbar', 999 );
 
 /**
  * Disable comments on media attachments
+ *
+ * @param bool $open    Whether the current post is open for comments.
+ * @param int  $post_id The post ID.
+ *
+ * @return bool Whether comments are open.
  */
 function diff_filter_media_comment_status( $open, $post_id ) {
 	$post = get_post( $post_id );
@@ -118,7 +125,10 @@ function diff_filter_media_comment_status( $open, $post_id ) {
 add_filter( 'comments_open', 'diff_filter_media_comment_status', 10, 2 );
 
 /**
- * Disble Jetpack module for WordPress.com login
+ * Disable Jetpack module for WordPress.com login
+ *
+ * @param array $modules Jetpack modules array.
+ * @return array Filtered available modules.
  */
 function diff_disable_jetpack_sso( $modules ) {
 	if ( isset( $modules['sso'] ) ) {
@@ -204,6 +214,11 @@ add_action( 'wp_head', 'diff_fb_verify' );
 
 /**
  * Filter domains so Jetpack Photon works
+ *
+ * @param bool   $skip      Should the image be returned as is, without going
+ *                          through Photon. Default to false.
+ * @param string $image_url Image URL.
+ * @return bool Filtered $skip value.
  */
 function jetpack_photon_unbanned_domains( $skip, $image_url ) {
 	$unbanned_host_patterns = [
@@ -221,6 +236,9 @@ add_filter( 'jetpack_photon_skip_for_url', 'jetpack_photon_unbanned_domains', 10
 
 /**
  * Disable JS concatenation for admin users
+ *
+ * @param bool $do_concat Whether to concatenate JS.
+ * @return bool Filtered concatenation value
  */
 function diff_js_do_concat( $do_concat ) {
 	if ( is_admin() ) {
@@ -232,6 +250,11 @@ add_filter( 'js_do_concat', 'diff_js_do_concat' );
 
 /**
  * Add fallback image for related posts feature
+ *
+ * @param array $media Array of images that would be good for a specific post.
+ * @param int   $post_id Post ID.
+ *
+ * @return array Filtered array.
  */
 function diff_custom_image( $media, $post_id ) {
 	if ( $media ) {
@@ -336,7 +359,7 @@ add_filter( 'rest_dispatch_request', 'diff_skip_some_meta_when_saving_events_as_
 /**
  * Register the meta keys which should be skipped when saving an event as a contributor.
  *
- * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
+ * @param string[] $keys Meta keys which cannot be saved as a Contributor.
  * @return string[] Updated keys array.
  */
 function diff_set_contributor_ignored_event_meta( $keys ) {
