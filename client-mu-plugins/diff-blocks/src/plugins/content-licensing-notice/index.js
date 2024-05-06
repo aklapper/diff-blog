@@ -78,3 +78,9 @@ const settings = {
 };
 
 registerPlugin( name, settings );
+
+// HMR boilerplate.
+if ( module.hot ) {
+	module.hot.accept();
+	module.hot.dispose( () => unregisterPlugin( name ) );
+}

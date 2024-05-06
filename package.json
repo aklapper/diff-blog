@@ -17,8 +17,8 @@
 		"not dead"
 	],
 	"scripts": {
-		"start": "wp-scripts start --webpack-src-dir=client-mu-plugins/diff-blocks/src --output-path=client-mu-plugins/diff-blocks/build",
-		"build": "wp-scripts build --webpack-src-dir=client-mu-plugins/diff-blocks/src --output-path=client-mu-plugins/diff-blocks/build",
+		"start": "wp-scripts start --config=.config/webpack.config.js --webpack-src-dir=client-mu-plugins/diff-blocks/src --output-path=client-mu-plugins/diff-blocks/build --hot",
+		"build": "wp-scripts build --config=.config/webpack.config.js --webpack-src-dir=client-mu-plugins/diff-blocks/src --output-path=client-mu-plugins/diff-blocks/build",
 		"lint:blocks": "wp-scripts lint-js client-mu-plugins/diff-blocks"
 	},
 	"devDependencies": {

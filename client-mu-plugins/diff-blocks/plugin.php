@@ -19,6 +19,8 @@ defined( 'ABSPATH' ) || exit;
 
 // Require utility functions.
 require_once __DIR__ . '/inc/namespace.php';
+require_once __DIR__ . '/inc/asset-loader/namespace.php';
+require_once __DIR__ . '/inc/asset-loader/utilities.php';
 
 // Kick off.
 bootstrap();
