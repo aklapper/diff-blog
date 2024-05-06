@@ -139,6 +139,12 @@ function diff_disable_jetpack_sso( $modules ) {
 add_filter( 'jetpack_get_available_modules', 'diff_disable_jetpack_sso' );
 
 /**
+ * Turn off AI writing features that undermine the unique community voice this
+ * site is intended to amplify.
+ */
+add_filter( 'jetpack_ai_enabled', '__return_false' );
+
+/**
  * Remove the Polylang plugin admin language columns.
  *
  * We are using a very low priority to make sure this filter runs
