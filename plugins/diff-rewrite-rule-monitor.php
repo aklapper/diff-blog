@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Rewrite Debugger
+ * Plugin Name: Diff Rewrite Debugger
  * Plugin Author: Human Made
  * Plugin Description: Log diagnostics information when rewrites change.
  *
