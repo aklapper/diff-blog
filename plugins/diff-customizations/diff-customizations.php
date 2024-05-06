@@ -66,9 +66,9 @@ add_action( 'admin_menu', 'diff_disable_dashboard_widgets' );
  */
 function diff_contributor_admin_notice() {
 	global $pagenow;
-	if ( $pagenow == 'index.php' ) {
+	if ( $pagenow === 'index.php' ) {
 		$user = wp_get_current_user();
-		if ( in_array( 'contributor', (array) $user->roles ) ) {
+		if ( in_array( 'contributor', (array) $user->roles, true ) ) {
 			echo '<div class="notice notice-info is-dismissible">
 		  <p>Welcome to Diff. Please review the <a href="https://diff.wikimedia.org/editorial-guidelines/">editorial guidelines</a>. Click on <a href="post-new.php">+ New</a> to start writing.</p>
 		 </div>';
@@ -117,7 +117,7 @@ add_action( 'admin_bar_menu', 'diff_calendar_toolbar', 999 );
  */
 function diff_filter_media_comment_status( $open, $post_id ) {
 	$post = get_post( $post_id );
-	if ( $post->post_type == 'attachment' ) {
+	if ( $post->post_type === 'attachment' ) {
 		return false;
 	}
 	return $open;
