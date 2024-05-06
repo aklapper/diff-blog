@@ -29,6 +29,7 @@ function bootstrap() : void {
 	add_action( 'init', __NAMESPACE__ . '\\register_monitoring_log_post_type' );
 	add_action( 'rest_api_init', __NAMESPACE__ . '\\register_rest_fields' );
 	add_filter( 'rest_post_dispatch', __NAMESPACE__ . '\\simplify_rewrite_monitoring_log_rest_output', 10, 3 );
+	add_filter( 'wmf/security/rest_api/public_endpoint', __NAMESPACE__ . '\\allow_anonymous_access_to_rewrite_diagnostics', 10, 2 );
 
 	// Monitoring.
 	add_filter( 'pre_update_option_rewrite_rules', __NAMESPACE__ . '\\alert_on_change', 10, 3 );
@@ -134,6 +135,11 @@ function simplify_rewrite_monitoring_log_rest_output( WP_HTTP_Response $result, 
 		return $result;
 	}
 
+	if ( $result->get_status() > 200 ) {
+		// Pass errors through unchanged.
+		return $result;
+	}
+
 	$data = $result->get_data();
 
 	$requested_fields = $request->get_param( '_fields' ) ?? '';
@@ -150,6 +156,20 @@ function simplify_rewrite_monitoring_log_rest_output( WP_HTTP_Response $result, 
 			$data
 		)
 	);
+}
+
+/**
+ * Allow rewrite logs to be accessed directly without authentication.
+ *
+ * @param bool            $is_allowed Whether the endpoint is publicly accessible, false by default.
+ * @param WP_REST_Request $request    Active REST Request object.
+ * @return bool Whether the anonymous request should be permitted.
+ */
+function allow_anonymous_access_to_rewrite_diagnostics( bool $is_allowed, WP_REST_Request $request ) : bool {
+	if ( $request->get_route() === '/wiki/v1/rewrite_logs' ) {
+		return true;
+	}
+	return $is_allowed;
 }
 
 /**
