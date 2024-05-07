@@ -1,0 +1,55 @@
+<ruleset name="coding-style">
+    <description>Diff repo PHP standards</description>
+
+    <!-- 2. Files -->
+    <exclude-pattern>client-mu-plugins/asset-loader</exclude-pattern>
+    <exclude-pattern>mu-plugins/</exclude-pattern>
+    <exclude-pattern>node_modules</exclude-pattern>
+    <exclude-pattern>plugins/capability-manager-enhanced</exclude-pattern>
+    <exclude-pattern>plugins/co-authors-plus</exclude-pattern>
+    <exclude-pattern>plugins/events-calendar-pro</exclude-pattern>
+    <exclude-pattern>plugins/events-virtual</exclude-pattern>
+    <exclude-pattern>plugins/fieldmanager</exclude-pattern>
+    <exclude-pattern>plugins/index.php</exclude-pattern>
+    <exclude-pattern>plugins/mw-oauth-client</exclude-pattern>
+    <exclude-pattern>plugins/polylang-pro</exclude-pattern>
+    <exclude-pattern>plugins/post-meta-inspector</exclude-pattern>
+    <exclude-pattern>plugins/publishpress</exclude-pattern>
+    <exclude-pattern>plugins/the-events-calendar-category-colors</exclude-pattern>
+    <exclude-pattern>plugins/the-events-calendar-filterbar</exclude-pattern>
+    <exclude-pattern>plugins/the-events-calendar</exclude-pattern>
+    <exclude-pattern>plugins/wikimedia-wordpress-security-plugin</exclude-pattern>
+    <exclude-pattern>plugins/wikipedia-preview</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-comment-search</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-comment-translation</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-frontend-moderation</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-report-flagging</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-subscribe-manager</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-syntax-highlighter</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-user-comment-mentioning</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz-widgets</exclude-pattern>
+    <exclude-pattern>plugins/wpdiscuz</exclude-pattern>
+    <exclude-pattern>themes/</exclude-pattern>
+    <exclude-pattern>vendor/</exclude-pattern>
+    <exclude-pattern>vip-config/vip-config.php</exclude-pattern>
+
+    <!-- 2.1. PHP Tags -->
+    <arg name="extensions" value="php"/>
+
+	<!-- <config name="show_progress" value="1"/> -->
+
+	<!-- Use WP coding standards (with judicious opinionated overrides) -->
+	<rule ref="WordPress">
+        <exclude name="WordPress.PHP.YodaConditions" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+        <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+        <!-- We support hook namespacing. -->
+        <exclude name="WordPress.NamingConventions.ValidHookName.UseUnderscores" />
+        <!-- Package tags are not useful. -->
+        <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+	</rule>
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found" />
+
+    <rule ref="WordPress-VIP-Go" />
+
+</ruleset>

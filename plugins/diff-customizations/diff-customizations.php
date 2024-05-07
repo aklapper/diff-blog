@@ -1,17 +1,16 @@
 <?php
-/*
-Plugin Name: Diff Customizations
-Plugin URI: https://diff.wikimedia.org
-Description: Adds customizations seperate from theme.
-Version: 0.5
-Author: Chris Koerner
-Author URI: https://meta.wikimedia.org/wiki/Community_Relations
-*/
+/**
+ * Plugin Name: Diff Customizations
+ * Plugin URI: https://diff.wikimedia.org
+ * Description: Adds customizations seperate from theme.
+ * Version: 0.5
+ * Author: Chris Koerner
+ * Author URI: https://meta.wikimedia.org/wiki/Community_Relations
+ */
 
-//limit access to Jetpack to admins
-
-add_action( 'admin_menu', 'diff_no_jetpack_menu_non_admins', 999 );
-
+/**
+ * Limit access to Jetpack to admins
+ */
 function diff_no_jetpack_menu_non_admins() {
 	if (
 		class_exists( 'Jetpack' )
@@ -20,110 +19,130 @@ function diff_no_jetpack_menu_non_admins() {
 		remove_menu_page( 'jetpack' );
 	}
 }
+add_action( 'admin_menu', 'diff_no_jetpack_menu_non_admins', 999 );
 
 
-//limit access to Tools and Comments capabilities to admins
-//These menu items are useless given there are no tools to configure for other roles like Contributors
-
-add_action('admin_menu', 'diff_remove_tools_comments_pages');
-
+/**
+ * Limit access to Tools and Comments capabilities to admins
+ *
+ * These menu items are useless given there are no tools to configure for other roles like Contributors
+ */
 function diff_remove_tools_comments_pages() {
-	if (!current_user_can ('manage_options')
-	){
+	if ( ! current_user_can( 'manage_options' )
+	) {
 		remove_menu_page( 'edit-comments.php' );
-		remove_menu_page('tools.php');
-    }
+		remove_menu_page( 'tools.php' );
+	}
 }
+add_action( 'admin_menu', 'diff_remove_tools_comments_pages' );
 
 
-//remove commments from adimin bar
-
+/**
+ * Remove commments from adimin bar
+ */
+function diff_remove_admin_menus() {
+	if ( ! current_user_can( 'manage_options' )
+	) {
+		global $wp_admin_bar;
+		$wp_admin_bar->remove_menu( 'comments' );
+	}
+}
 add_action( 'wp_before_admin_bar_render', 'diff_remove_admin_menus' );
 
-function diff_remove_admin_menus() {
-	if (!current_user_can ('manage_options')
-	){
-    global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('comments');
-    }
+
+/**
+ * Let's remove some unnecessary widgets from the WordPress dashboard
+ */
+function diff_disable_dashboard_widgets() {
+	remove_meta_box( 'dashboard_quick_press', 'dashboard', 'side' ); // Remove Quick Draft
+	remove_meta_box( 'dashboard_primary', 'dashboard', 'core' ); // Remove WordPress Events and News
+	remove_meta_box( 'notepad_widget', 'dashboard', 'core' ); // Remove Notepad widget
 }
+add_action( 'admin_menu', 'diff_disable_dashboard_widgets' );
 
 
-//Let's remove some unnecessary widgets from the WordPress dashboard
-
-function diff_disable_dashboard_widgets()
-{
-    remove_meta_box('dashboard_quick_press', 'dashboard', 'side'); // Remove Quick Draft
-    remove_meta_box('dashboard_primary', 'dashboard', 'core'); // Remove WordPress Events and News
-    remove_meta_box('notepad_widget', 'dashboard', 'core'); // Remove Notepad widget
+/**
+ * A little notice to contributors when they login
+ */
+function diff_contributor_admin_notice() {
+	global $pagenow;
+	if ( $pagenow === 'index.php' ) {
+		$user = wp_get_current_user();
+		if ( in_array( 'contributor', (array) $user->roles, true ) ) {
+			echo '<div class="notice notice-info is-dismissible">
+		  <p>Welcome to Diff. Please review the <a href="https://diff.wikimedia.org/editorial-guidelines/">editorial guidelines</a>. Click on <a href="post-new.php">+ New</a> to start writing.</p>
+		 </div>';
+		}
+	}
 }
-add_action('admin_menu', 'diff_disable_dashboard_widgets');
+add_action( 'admin_notices', 'diff_contributor_admin_notice' );
 
-
-//A little notice to contributors when they login
-
-function diff_contributor_admin_notice(){
-    global $pagenow;
-    if ( $pagenow == 'index.php' ) {
-    $user = wp_get_current_user();
-    if ( in_array( 'contributor', (array) $user->roles ) ) {
-    echo '<div class="notice notice-info is-dismissible">
-          <p>Welcome to Diff. Please review the <a href="https://diff.wikimedia.org/editorial-guidelines/">editorial guidelines</a>. Click on <a href="post-new.php">+ New</a> to start writing.</p>
-         </div>';
-    }
-}
-}
-add_action('admin_notices', 'diff_contributor_admin_notice');
-
-//one for the main editor
+/**
+ * A little notice for the main block editor
+ */
 function block_notice_enqueue() {
-    wp_enqueue_script(
-        'block_notice-script',
-        plugins_url( 'block-notice.js', __FILE__ )
-    );
+	// Increment version when script content changes.
+	wp_enqueue_script(
+		'block_notice-script',
+		plugins_url( 'block-notice.js', __FILE__ ),
+		[],
+		'1.0',
+		true
+	);
 }
 add_action( 'enqueue_block_editor_assets', 'block_notice_enqueue' );
 
-//add editorial calendar to toolbar
+/**
+ * Add editorial calendar to toolbar
+ *
+ * @param \WP_Admin_Bar $wp_admin_bar Admin bar instance.
+ */
+function diff_calendar_toolbar( $wp_admin_bar ) {
+		$args = [
+			'id'    => 'calendar',
+			'title' => 'Editorial Calendar',
+			'href'  => admin_url() . 'admin.php?page=pp-calendar',
+		];
+		$wp_admin_bar->add_node( $args );
+}
 add_action( 'admin_bar_menu', 'diff_calendar_toolbar', 999 );
 
-function diff_calendar_toolbar( $wp_admin_bar ) {
-        $args = array(
-                'id'    => 'calendar',
-                'title' => 'Editorial Calendar',
-                'href'  => admin_url() . 'admin.php?page=pp-calendar',
-        );
-        $wp_admin_bar->add_node( $args );
-}
-
-//disable comments on media attachments
+/**
+ * Disable comments on media attachments
+ *
+ * @param bool $open    Whether the current post is open for comments.
+ * @param int  $post_id The post ID.
+ *
+ * @return bool Whether comments are open.
+ */
 function diff_filter_media_comment_status( $open, $post_id ) {
-    $post = get_post( $post_id );
-    if( $post->post_type == 'attachment' ) {
-        return false;
-    }
-    return $open;
+	$post = get_post( $post_id );
+	if ( $post->post_type === 'attachment' ) {
+		return false;
+	}
+	return $open;
 }
-add_filter( 'comments_open', 'diff_filter_media_comment_status', 10 , 2 );
+add_filter( 'comments_open', 'diff_filter_media_comment_status', 10, 2 );
 
-//disble Jetpack module for WordPress.com login
-
-add_filter( 'jetpack_get_available_modules', 'diff_disable_jetpack_sso' );
+/**
+ * Disable Jetpack module for WordPress.com login
+ *
+ * @param array $modules Jetpack modules array.
+ * @return array Filtered available modules.
+ */
 function diff_disable_jetpack_sso( $modules ) {
-    if( isset( $modules['sso'] ) ) {
-        unset( $modules['sso'] );
-    }
-    return $modules;
+	if ( isset( $modules['sso'] ) ) {
+		unset( $modules['sso'] );
+	}
+	return $modules;
 }
+add_filter( 'jetpack_get_available_modules', 'diff_disable_jetpack_sso' );
 
-add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-tribe_events_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-tribe_events_cat_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-tribe_venue_columns', 'diff_remove_language_columns', 110 );
-add_filter( 'manage_edit-tribe_organizer_columns', 'diff_remove_language_columns', 110 );
+/**
+ * Turn off AI writing features that undermine the unique community voice this
+ * site is intended to amplify.
+ */
+add_filter( 'jetpack_ai_enabled', '__return_false' );
 
 /**
  * Remove the Polylang plugin admin language columns.
@@ -150,8 +169,18 @@ function diff_remove_language_columns( $columns ) {
 	return $columns;
 }
 
-//disable full screen editing (it is confusing people)
+add_filter( 'manage_edit-page_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-category_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-post_tag_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_events_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_events_cat_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_venue_columns', 'diff_remove_language_columns', 110 );
+add_filter( 'manage_edit-tribe_organizer_columns', 'diff_remove_language_columns', 110 );
 
+/**
+ * Disable full screen editing (it is confusing people)
+ */
 function diff_disable_editor_fullscreen_by_default() {
 	$script = "window.onload = function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } }";
 	wp_add_inline_script( 'wp-blocks', $script );
@@ -159,78 +188,106 @@ function diff_disable_editor_fullscreen_by_default() {
 add_action( 'enqueue_block_editor_assets', 'diff_disable_editor_fullscreen_by_default' );
 
 
-//Custom CSS for WordPress Dashboard
+/**
+ * Custom CSS for WordPress Dashboard
+ */
 function diff_admin_stylesheet() {
-  wp_enqueue_style('diff_admin-styles', get_stylesheet_directory_uri().'/admin.css');
+	// Increment version when stylesheet content changes.
+	wp_enqueue_style( 'diff_admin-styles', get_stylesheet_directory_uri() . '/admin.css', [], '1.0' );
 }
-add_action('admin_enqueue_scripts', 'diff_admin_stylesheet');
+add_action( 'admin_enqueue_scripts', 'diff_admin_stylesheet' );
 
 
-//allow contributor role to add string translations in Polylang
-
-add_action( 'admin_menu', 'diff_contributor_string_translation');
-
+/**
+ * Allow contributor role to add string translations in Polylang
+ */
 function diff_contributor_string_translation() {
-    if ( ! current_user_can( 'manage_options' ) && function_exists( 'PLL' ) ) {
-        add_menu_page( __( 'Strings translations', 'polylang' ), __( 'Languages', 'polylang' ), 'edit_posts', 'mlang_strings', array( PLL(), 'languages_page' ), 'dashicons-translation' );
-    }
+	if ( ! current_user_can( 'manage_options' ) && function_exists( 'PLL' ) ) {
+		add_menu_page( __( 'Strings translations', 'polylang' ), __( 'Languages', 'polylang' ), 'edit_posts', 'mlang_strings', [ PLL(), 'languages_page' ], 'dashicons-translation' );
+	}
 }
+add_action( 'admin_menu', 'diff_contributor_string_translation' );
 
-/* Verify domain for Facebook */
-add_action('wp_head', 'diff_fb_verify');
-function diff_fb_verify(){
-?>
-<meta name ="facebook-domain-verification" content="yk2blq9pquiyqqsigh6bsjsxyck9g0" />
-<?php
-};
+/**
+ * Verify domain for Facebook
+ */
+function diff_fb_verify() {
+	?>
+	<meta name ="facebook-domain-verification" content="yk2blq9pquiyqqsigh6bsjsxyck9g0" />
+	<?php
+}
+add_action( 'wp_head', 'diff_fb_verify' );
 
-// filter domains so Jetpack Photon works
+/**
+ * Filter domains so Jetpack Photon works
+ *
+ * @param bool   $skip      Should the image be returned as is, without going
+ *                          through Photon. Default to false.
+ * @param string $image_url Image URL.
+ * @return bool Filtered $skip value.
+ */
+function jetpack_photon_unbanned_domains( $skip, $image_url ) {
+	$unbanned_host_patterns = [
+		'/^(techblog|diff|policy)\.wikimedia\.org$/',
+	];
+	$host                   = wp_parse_url( $image_url, PHP_URL_HOST );
+	foreach ( $unbanned_host_patterns as $unbanned_host_pattern ) {
+		if ( 1 === preg_match( $unbanned_host_pattern, $host ) ) {
+			return false;
+		}
+	}
+	return $skip;
+}
 add_filter( 'jetpack_photon_skip_for_url', 'jetpack_photon_unbanned_domains', 10, 2 );
 
-function jetpack_photon_unbanned_domains( $skip, $image_url ) {
-    $unbanned_host_patterns = array(
-        '/^(techblog|diff|policy)\.wikimedia\.org$/',
-    );
-    $host = wp_parse_url( $image_url, PHP_URL_HOST );
-    foreach ( $unbanned_host_patterns as $unbanned_host_pattern ) {
-        if ( 1 === preg_match( $unbanned_host_pattern, $host ) ) {
-            return false;
-        }
-    }
-    return $skip;
-}
-
-// Disable JS concatenation for admin users
-add_filter( 'js_do_concat', 'diff_js_do_concat');
-function diff_js_do_concat( $do_concat) {
-if( is_admin() ) {
-	return false;
+/**
+ * Disable JS concatenation for admin users
+ *
+ * @param bool $do_concat Whether to concatenate JS.
+ * @return bool Filtered concatenation value
+ */
+function diff_js_do_concat( $do_concat ) {
+	if ( is_admin() ) {
+		return false;
 	}
 	return $do_concat;
-	};
-
-//Add fallback image for related posts feature
-
-function diff_custom_image( $media, $post_id, $args ) {
-if ( $media ) {
-	return $media;
-} else {
-	$permalink = get_permalink( $post_id );
-	$url = apply_filters( 'jetpack_photon_url', 'https://diff.wikimedia.org/wp-content/uploads/2020/12/related-post-placeholder.jpg' );
-
-	return array( array(
-		'type'  => 'image',
-		'from'  => 'custom_fallback',
-		'src'   => esc_url( $url ),
-		'href'  => $permalink,
-	) );
 }
+add_filter( 'js_do_concat', 'diff_js_do_concat' );
+
+/**
+ * Add fallback image for related posts feature
+ *
+ * @param array $media Array of images that would be good for a specific post.
+ * @param int   $post_id Post ID.
+ *
+ * @return array Filtered array.
+ */
+function diff_custom_image( $media, $post_id ) {
+	if ( $media ) {
+		return $media;
+	} else {
+		$permalink = get_permalink( $post_id );
+		$url       = apply_filters( 'jetpack_photon_url', 'https://diff.wikimedia.org/wp-content/uploads/2020/12/related-post-placeholder.jpg' );
+
+		return [
+			[
+				'type' => 'image',
+				'from' => 'custom_fallback',
+				'src'  => esc_url( $url ),
+				'href' => $permalink,
+			],
+		];
+	}
 }
-add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 3 );
+add_filter( 'jetpack_images_get_images', 'diff_custom_image', 10, 2 );
 
-//Increase export of calendar events to 100
-
-add_filter( 'tribe_ical_feed_posts_per_page', function() { return 100; } );
+// Increase export of calendar events to 100
+add_filter(
+	'tribe_ical_feed_posts_per_page',
+	function () {
+		return 100;
+	}
+);
 
 
 /**
@@ -250,70 +307,70 @@ add_filter( 'tribe_ical_feed_posts_per_page', function() { return 100; } );
  * @return mixed Potentially a response object, or else null.
  */
 function diff_skip_some_meta_when_saving_events_as_contributor( $dispatch_result, $request, $route, $handler ) {
-    if ( $request->get_method() === 'GET' ) {
-        // Not trying to update anything, permissions are not in play.
-        return $dispatch_result;
-    }
+	if ( $request->get_method() === 'GET' ) {
+		// Not trying to update anything, permissions are not in play.
+		return $dispatch_result;
+	}
 
-    if ( ! is_callable( $handler['callback'] ) ) {
-        // Don't continue if we can't invoke the request in the same manner that
-        // the core WP_REST_Server#respond_to_request() would.
-        return $dispatch_result;
-    }
+	if ( ! is_callable( $handler['callback'] ) ) {
+		// Don't continue if we can't invoke the request in the same manner that
+		// the core WP_REST_Server#respond_to_request() would.
+		return $dispatch_result;
+	}
 
-    if ( ! str_contains( $route, 'tribe_events' ) ) {
-        // At present we only observe this issue on event posts.
-        return $dispatch_result;
-    }
+	if ( ! str_contains( $route, 'tribe_events' ) ) {
+		// At present we only observe this issue on event posts.
+		return $dispatch_result;
+	}
 
-    if ( current_user_can( 'publish_posts' ) ) {
-        // Current user can probably pass any required meta permissions checks.
-        return $dispatch_result;
-    }
+	if ( current_user_can( 'publish_posts' ) ) {
+		// Current user can probably pass any required meta permissions checks.
+		return $dispatch_result;
+	}
 
-    /**
-     * Filters the meta keys which should be ignored when saving an event
-     * post object while logged in as a Contributor. Permits meta to be
-     * skipped while saving which would otherwise potentially cause a
-     * permissions error.
-     *
-     * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
-     */
-    $prohibited_meta_keys = apply_filters( 'diff/contributor_ignored_event_meta', [] );
+	/**
+	 * Filters the meta keys which should be ignored when saving an event
+	 * post object while logged in as a Contributor. Permits meta to be
+	 * skipped while saving which would otherwise potentially cause a
+	 * permissions error.
+	 *
+	 * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
+	 */
+	$prohibited_meta_keys = apply_filters( 'diff/contributor_ignored_event_meta', [] );
 
-    $includes_prohibited_meta = false;
-    $updated_meta = $request->get_param( 'meta' );
-    foreach ( $prohibited_meta_keys as $meta_key ) {
-        if ( isset( $updated_meta[ $meta_key ] ) ) {
-            unset( $updated_meta[ $meta_key ] );
-            $includes_prohibited_meta = true;
-        }
-    }
+	$includes_prohibited_meta = false;
+	$updated_meta             = $request->get_param( 'meta' );
+	foreach ( $prohibited_meta_keys as $meta_key ) {
+		if ( isset( $updated_meta[ $meta_key ] ) ) {
+			unset( $updated_meta[ $meta_key ] );
+			$includes_prohibited_meta = true;
+		}
+	}
 
-    if ( $includes_prohibited_meta ) {
-        // One or more of the keys in the meta array are known to cause a
-        // permissions error on save. Invoke the request dispatcher callback
-        // manually using our adapted version of the $request which has had
-        // those meta values removed in the loop above, and return that
-        // version of the response to short-circuit WP's own logic.
-        $request->set_param( 'meta', $updated_meta );
-        return call_user_func( $handler['callback'], $request );
-    }
+	if ( $includes_prohibited_meta ) {
+		// One or more of the keys in the meta array are known to cause a
+		// permissions error on save. Invoke the request dispatcher callback
+		// manually using our adapted version of the $request which has had
+		// those meta values removed in the loop above, and return that
+		// version of the response to short-circuit WP's own logic.
+		$request->set_param( 'meta', $updated_meta );
+		return call_user_func( $handler['callback'], $request );
+	}
 
-    // No issues here.
-    return $dispatch_result;
+	// No issues here.
+	return $dispatch_result;
 }
 add_filter( 'rest_dispatch_request', 'diff_skip_some_meta_when_saving_events_as_contributor', 10, 4 );
 
 /**
  * Register the meta keys which should be skipped when saving an event as a contributor.
  *
- * @param string[] $meta_keys Meta keys which cannot be saved as a Contributor.
+ * @param string[] $keys Meta keys which cannot be saved as a Contributor.
  * @return string[] Updated keys array.
  */
 function diff_set_contributor_ignored_event_meta( $keys ) {
-    $keys[] = 'jetpack_post_was_ever_published';
-    return $keys;
+	$keys[] = 'jetpack_post_was_ever_published';
+	return $keys;
 }
 add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored_event_meta' );
 
@@ -324,25 +381,27 @@ add_filter( 'diff/contributor_ignored_event_meta', 'diff_set_contributor_ignored
  * restricted to users capable of administering plugins.
  */
 function diff_hide_certain_plugin_admin_notices() {
-    // Hide these notices even for admins if local, they tend to be meaningless.
-    $is_local = wp_get_environment_type() === 'local';
-    $is_admin_user = current_user_can( 'edit_plugins' ) || current_user_can( 'administrator' );
-    if ( $is_admin_user && ! $is_local ) {
-        return;
-    }
+	// Hide these notices even for admins if local, they tend to be meaningless.
+	$is_local = wp_get_environment_type() === 'local';
 
-    $suppressed_selectors = [
-        '.notice#blogpublic-notice', // Only relevant for local / development environments.
-        '.notice.is-dismissible[class*=wpdiscuz-]', // WPDiscuz activation nags.
-        '.notice.is-dismissible[class*=tribe-]', // Events Calendar nags.
-        '.notice.notice-wikipediapreview', // Wikipedia preview nags.
-    ];
+	// phpcs:ignore WordPress.WP.Capabilities.RoleFound -- TODO: Shift to cap check, not role.
+	$is_admin_user = current_user_can( 'edit_plugins' ) || current_user_can( 'administrator' );
+	if ( $is_admin_user && ! $is_local ) {
+		return;
+	}
 
-    wp_register_style( 'diff-suppress-plugin-notices', false );
-    wp_add_inline_style(
-        'diff-suppress-plugin-notices',
-        join( ',', $suppressed_selectors ) . ' { display: none; }'
-    );
-    wp_enqueue_style( 'diff-suppress-plugin-notices' );
+	$suppressed_selectors = [
+		'.notice#blogpublic-notice', // Only relevant for local / development environments.
+		'.notice.is-dismissible[class*=wpdiscuz-]', // WPDiscuz activation nags.
+		'.notice.is-dismissible[class*=tribe-]', // Events Calendar nags.
+		'.notice.notice-wikipediapreview', // Wikipedia preview nags.
+	];
+
+	wp_register_style( 'diff-suppress-plugin-notices', false, [], '1.0' );
+	wp_add_inline_style(
+		'diff-suppress-plugin-notices',
+		join( ',', $suppressed_selectors ) . ' { display: none; }'
+	);
+	wp_enqueue_style( 'diff-suppress-plugin-notices' );
 }
 add_action( 'admin_enqueue_scripts', 'diff_hide_certain_plugin_admin_notices' );
