@@ -405,3 +405,50 @@ function diff_hide_certain_plugin_admin_notices() {
 	wp_enqueue_style( 'diff-suppress-plugin-notices' );
 }
 add_action( 'admin_enqueue_scripts', 'diff_hide_certain_plugin_admin_notices' );
+
+/**
+ * Filter the dropdown list of Polylang URLs to ensure that if we are directing
+ * to the homepage, we manually add a ?lang attribute to force Polylang to switch
+ * back to English (site default) instead of redirecting immediately to the user's
+ * selected language variant.
+ *
+ * Needs to be coupled with a hook to redirect to the bare homepage after the
+ * language has been updated, see below.
+ *
+ * Note: It's not clear whether this is a Polylang bug, or a consequence of some
+ * other functionality we have added on Diff.
+ *
+ * @param string $html html returned/outputted by the template tag.
+ * @param array  $args arguments passed to the template tag.
+ *
+ * @return string Filtered template tag HTML.
+ */
+function diff_polylang_cannot_switch_to_english_on_homepage_link_fix( string $html, array $args ) {
+	if ( ! is_home() ) {
+		return $html;
+	}
+
+	// Rewrite the English homepage URL in the switcher to include ?lang=en-US.
+	// It does not get properly intercepted by the rewrite rule since it does
+	// not go through diff.wikimedia.org/en/, and just goes direct to /.
+	$base_site_url = trailingslashit( home_url() );
+	return str_replace(
+		$base_site_url . '" lang="en-US"',
+		$base_site_url . '?lang=en-US" lang="en-US"',
+		$html
+	);
+}
+add_filter( 'pll_the_languages', 'diff_polylang_cannot_switch_to_english_on_homepage_link_fix', 10, 2 );
+
+/**
+ * The page /?lang=en-US will not match any posts, since it does not hit a valid
+ * rewrite rule. Manually redirect to the actual homepage once Polylang has had
+ * time to do its thing and swap back to English mode.
+ */
+function diff_polylang_redirect_to_real_homepage_after_lang_param_override() {
+	if ( is_home() && get_query_var( 'lang' ) === 'en-US' ) {
+		// Polylang will have done its thing; redirect to the bare homepage.
+		wp_redirect( home_url() );
+	}
+}
+add_action( 'template_redirect', 'diff_polylang_redirect_to_real_homepage_after_lang_param_override' );
