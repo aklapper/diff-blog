@@ -151,6 +151,7 @@ function show_editor_debug_mode_warning() : void {
  */
 function show_local_frontend_debug_mode_warning() : void {
 	if ( wp_get_environment_type() !== 'local' ) {
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 		error_log( SCRIPT_DEBUG_WARNING );
 		return;
 	}
