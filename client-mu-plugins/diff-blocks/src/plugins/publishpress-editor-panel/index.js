@@ -1,3 +1,4 @@
+import { registerPlugin, unregisterPlugin } from '@wordpress/plugins';
 import { useDispatch } from '@wordpress/data';
 
 const { isAdminRole } = window.diffBlocksData;
@@ -14,8 +15,10 @@ const RemovePublishPressPanel = () => {
 	}
 };
 
-export const name = 'publishpress-editor-panel';
+const name = 'publishpress-editor-panel';
 
-export const settings = {
+const settings = {
 	render: RemovePublishPressPanel,
 };
+
+registerPlugin( name, settings );

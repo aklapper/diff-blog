@@ -4,6 +4,7 @@ import { CheckboxControl } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { PluginPrePublishPanel } from '@wordpress/edit-post';
 import { useState, useEffect } from '@wordpress/element';
+import { registerPlugin, unregisterPlugin } from '@wordpress/plugins';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -70,8 +71,10 @@ const ContentLicensingNotice = () => {
 	);
 };
 
-export const name = 'content-licensing-notice';
+const name = 'content-licensing-notice';
 
-export const settings = {
+const settings = {
 	render: ContentLicensingNotice,
 };
+
+registerPlugin( name, settings );

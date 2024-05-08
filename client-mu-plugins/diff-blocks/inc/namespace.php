@@ -32,33 +32,12 @@ function get_webpack_manifest() : ?string {
  * Enqueue block editor-only JavaScript and CSS.
  */
 function enqueue_block_editor_assets() {
-	$manifest = get_webpack_manifest();
-
-	if ( empty( $manifest ) ) {
-		return;
-	}
-
-	Asset_Loader\enqueue_asset(
-		$manifest,
-		'editor.js',
-		[
-			'dependencies' => [
-				'wp-block-editor',
-				'wp-blocks',
-				'wp-element',
-				'wp-i18n',
-			],
-			'handle' => 'diff-blocks'
-		]
-	);
-
-	Asset_Loader\enqueue_asset(
-		$manifest,
-		'editor.css',
-		[
-			'dependencies' => [],
-			'handle' => 'diff-blocks'
-		]
+	$editor_asset_file = include( plugin_dir_path( __DIR__ ) . 'build/editor.asset.php');
+	wp_enqueue_script(
+		'diff-blocks',
+		plugins_url( 'build/editor.js', __DIR__ ),
+		$editor_asset_file['dependencies'],
+		$editor_asset_file['version']
 	);
 
 	wp_localize_script(
