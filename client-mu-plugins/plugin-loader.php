@@ -20,6 +20,8 @@
  */
 // https://github.com/humanmade/asset-loader, for loading webpack-generated asset bundles.
 require_once __DIR__ . '/asset-loader/asset-loader.php';
+// Diff's own internal asset-loader.
+require_once __DIR__ . '/diff-asset-loader/plugin.php';
 // Editor blocks for the Diff site.
 require_once __DIR__ . '/diff-blocks/plugin.php';
 // Custom comments functionality for the Diff site.
