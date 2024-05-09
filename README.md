@@ -3,6 +3,10 @@ Diff (diff.wikimedia.org) is a blog by and for the Wikimedia volunteer community
 
 The maintenance and support of Diff is facilitated by the Communications team at the Foundation with dedicated staff to support the editorial process. We plan to present Diff to all community-facing teams, and we are looking forward to hearing your feedback and suggestions. If you have any questions or ideas for something you'd like to share, please let us know.
 
+
+> [!TIP]
+> [Click this quick link to create a Production Release PR](https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/compare/production...preprod?expand=1&title=Production%20Release%20YYYY-MM-DD&body=Please%20add%20a%20list%20of%20the%20tickets%20which%20will%20deploy%20in%20this%20release&labels=skip-phpcs-scan) which will deploy all current approved code from the `preprod` virtual branch (where PRs are merged after approval on `develop`) to the Production environment.
+
 ## Reporting issues
 Site not working? Have a bug to report? Let us know!
 
@@ -196,6 +200,6 @@ This is the expected development flow for a feature:
 - PR is code-approved, and merged to `preprod`. `preprod` should be merged into `develop` to deploy the approved
     - Note: If a feature needs testing during development, the branch should be manually merged into `develop` as soon as the PR is opened so that it may deploy to the staging site for testing. Changes to the PR should be merged to `develop` whenever they are pushed to ensure the latest version of the feature is deployed to Dev.
 - Feature is tested in Develop environment
-- Once the feature is approved, [**Click here to create a release PR**](https://github.com/wpcomvip/wikimedia-blog-wikimedia-org/compare/production...preprod?expand=1&title=Production%20Release%20YYYY-MM-DD&body=Please%20add%20a%20list%20of%20the%20tickets%20which%20will%20deploy%20in%20this%20release&labels=skip-phpcs-scan)
+- Once the feature is approved, **Click the link in the Tip at the top of this README to create a release PR**
 
 All releases should be done by deploying *from* `preprod` *to* `production`. This provides consistency with other Foundation projects and allows a final review of the expected features and bugfixes before they are released.

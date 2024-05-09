@@ -31,6 +31,7 @@
 
 # Files built in CI: DO NOT INCLUDE THESE LINES in .deployignore file.
 /client-mu-plugins/diff-blocks/dist
+/client-mu-plugins/diff-blocks/build
 
 # Composer (repo root only)
 /vendor/
