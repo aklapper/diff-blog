@@ -453,30 +453,29 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "86a560153ce9fc10dd22fac101ce6669bf26c5f1"
+                "reference": "14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/86a560153ce9fc10dd22fac101ce6669bf26c5f1",
-                "reference": "86a560153ce9fc10dd22fac101ce6669bf26c5f1",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81",
+                "reference": "14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.0"
+                "php": ">8.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "php-parallel-lint/php-parallel-lint": "^1.2.0",
-                "wp-cli/i18n-command": "^2.2",
-                "wptrt/wpthemereview": "^0.2.1"
+                "automattic/vipwpcs": "^3.0",
+                "staabm/annotate-pull-request-from-checkstyle": "^1.8",
+                "wp-cli/i18n-command": "^2.6"
             },
             "type": "wordpress-theme",
             "scripts": {
-                "lint:wpcs": [
-                    "@php ./vendor/squizlabs/php_codesniffer/bin/phpcs"
+                "phpcs": [
+                    "phpcs --standard=./phpcs.xml --extensions=php -s ."
                 ],
-                "lint:php": [
-                    "@php ./vendor/bin/parallel-lint --exclude .git --exclude vendor ."
+                "phpcbf": [
+                    "phpcbf --standard=./phpcs.xml --extensions=php ."
                 ],
                 "make-pot": [
                     "wp i18n make-pot . languages/interconnection.pot"
@@ -507,7 +506,7 @@
                     "url": "https://donate.wikimedia.org/?utm_medium=gitHub&utm_campaign=sponsorButton&utm_source=interconnection"
                 }
             ],
-            "time": "2024-04-29T22:31:47+00:00"
+            "time": "2024-05-08T13:54:54+00:00"
         },
         {
             "name": "wikimedia/wikimedia-wordpress-security-plugin",
