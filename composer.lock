@@ -663,15 +663,15 @@
         },
         {
             "name": "wpackagist-plugin/wpdiscuz",
-            "version": "7.6.18",
+            "version": "7.6.19",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
-                "reference": "tags/7.6.18"
+                "reference": "tags/7.6.19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.18.zip"
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.19.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
