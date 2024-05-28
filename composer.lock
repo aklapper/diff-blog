@@ -514,12 +514,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin.git",
-                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c"
+                "reference": "0b7c9ca73520433bf3296c1da2212cfb06ee1f45"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/wikimedia-wordpress-security-plugin/zipball/f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
-                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
+                "url": "https://api.github.com/repos/wikimedia/wikimedia-wordpress-security-plugin/zipball/0b7c9ca73520433bf3296c1da2212cfb06ee1f45",
+                "reference": "0b7c9ca73520433bf3296c1da2212cfb06ee1f45",
                 "shasum": ""
             },
             "require": {
@@ -560,7 +560,7 @@
             ],
             "description": "Wikimedia WordPress Security Plugin",
             "support": {
-                "source": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/tree/main",
+                "source": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/tree/v1.1.0",
                 "issues": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/issues"
             },
             "funding": [
@@ -569,7 +569,7 @@
                     "url": "https://donate.wikimedia.org/?utm_medium=gitHub&utm_campaign=sponsorButton&utm_source=wpsecurityplugin"
                 }
             ],
-            "time": "2023-12-11T18:57:02+00:00"
+            "time": "2024-05-09T13:57:53+00:00"
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
