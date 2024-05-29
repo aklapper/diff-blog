@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1daaf8769527f2eb4598b1e85bcd6d3",
+    "content-hash": "400a420f28556f54210f06591ed6959e",
     "packages": [
         {
             "name": "alleyinteractive/wordpress-fieldmanager",
@@ -422,10 +422,10 @@
         },
         {
             "name": "the-events-calendar/events-calendar-pro",
-            "version": "6.4.0",
+            "version": "6.5.0",
             "dist": {
                 "type": "zip",
-                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.4.0"
+                "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.5.0"
             },
             "type": "wordpress-plugin"
         },
@@ -514,12 +514,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin.git",
-                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c"
+                "reference": "f457a928fd68c842fcec410500fa74e93c2d62ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/wikimedia-wordpress-security-plugin/zipball/f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
-                "reference": "f7c046c4774aeb7468f0e3b9a3b7ea1858fa043c",
+                "url": "https://api.github.com/repos/wikimedia/wikimedia-wordpress-security-plugin/zipball/f457a928fd68c842fcec410500fa74e93c2d62ff",
+                "reference": "f457a928fd68c842fcec410500fa74e93c2d62ff",
                 "shasum": ""
             },
             "require": {
@@ -560,7 +560,7 @@
             ],
             "description": "Wikimedia WordPress Security Plugin",
             "support": {
-                "source": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/tree/main",
+                "source": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/tree/v1.1.1",
                 "issues": "https://github.com/wikimedia/wikimedia-wordpress-security-plugin/issues"
             },
             "funding": [
@@ -569,7 +569,7 @@
                     "url": "https://donate.wikimedia.org/?utm_medium=gitHub&utm_campaign=sponsorButton&utm_source=wpsecurityplugin"
                 }
             ],
-            "time": "2023-12-11T18:57:02+00:00"
+            "time": "2024-05-29T16:47:15+00:00"
         },
         {
             "name": "wpackagist-plugin/capability-manager-enhanced",
@@ -591,15 +591,15 @@
         },
         {
             "name": "wpackagist-plugin/publishpress",
-            "version": "4.1.0",
+            "version": "4.2.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/publishpress/",
-                "reference": "tags/4.1.0"
+                "reference": "tags/4.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/publishpress.4.1.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/publishpress.4.2.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -609,15 +609,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar",
-            "version": "6.4.0.1",
+            "version": "6.5.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
-                "reference": "tags/6.4.0.1"
+                "reference": "tags/6.5.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.4.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.6.5.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -663,15 +663,15 @@
         },
         {
             "name": "wpackagist-plugin/wpdiscuz",
-            "version": "7.6.18",
+            "version": "7.6.19",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wpdiscuz/",
-                "reference": "tags/7.6.18"
+                "reference": "tags/7.6.19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.18.zip"
+                "url": "https://downloads.wordpress.org/plugin/wpdiscuz.7.6.19.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -683,32 +683,32 @@
     "packages-dev": [
         {
             "name": "automattic/vipwpcs",
-            "version": "3.0.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-                "reference": "1b8960ebff9ea3eb482258a906ece4d1ee1e25fd"
+                "reference": "2b1d206d81b74ed999023cffd924f862ff2753c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/1b8960ebff9ea3eb482258a906ece4d1ee1e25fd",
-                "reference": "1b8960ebff9ea3eb482258a906ece4d1ee1e25fd",
+                "url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/2b1d206d81b74ed999023cffd924f862ff2753c8",
+                "reference": "2b1d206d81b74ed999023cffd924f862ff2753c8",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
-                "phpcsstandards/phpcsextra": "^1.1.0",
-                "phpcsstandards/phpcsutils": "^1.0.8",
-                "sirbrillig/phpcs-variable-analysis": "^2.11.17",
-                "squizlabs/php_codesniffer": "^3.7.2",
-                "wp-coding-standards/wpcs": "^3.0"
+                "phpcsstandards/phpcsextra": "^1.2.1",
+                "phpcsstandards/phpcsutils": "^1.0.11",
+                "sirbrillig/phpcs-variable-analysis": "^2.11.18",
+                "squizlabs/php_codesniffer": "^3.9.2",
+                "wp-coding-standards/wpcs": "^3.1.0"
             },
             "require-dev": {
                 "php-parallel-lint/php-console-highlighter": "^1.0.0",
                 "php-parallel-lint/php-parallel-lint": "^1.3.2",
                 "phpcompatibility/php-compatibility": "^9",
                 "phpcsstandards/phpcsdevtools": "^1.0",
-                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7"
+                "phpunit/phpunit": "^4 || ^5 || ^6 || ^7 || ^8 || ^9"
             },
             "type": "phpcodesniffer-standard",
             "notification-url": "https://packagist.org/downloads/",
@@ -733,7 +733,7 @@
                 "source": "https://github.com/Automattic/VIP-Coding-Standards",
                 "wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
             },
-            "time": "2023-09-05T11:01:05+00:00"
+            "time": "2024-05-10T20:31:09+00:00"
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
@@ -1097,22 +1097,22 @@
         },
         {
             "name": "phpcsstandards/phpcsutils",
-            "version": "1.0.11",
+            "version": "1.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHPCSUtils.git",
-                "reference": "c457da9dabb60eb7106dd5e3c05132b1a6539c6a"
+                "reference": "87b233b00daf83fb70f40c9a28692be017ea7c6c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/c457da9dabb60eb7106dd5e3c05132b1a6539c6a",
-                "reference": "c457da9dabb60eb7106dd5e3c05132b1a6539c6a",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHPCSUtils/zipball/87b233b00daf83fb70f40c9a28692be017ea7c6c",
+                "reference": "87b233b00daf83fb70f40c9a28692be017ea7c6c",
                 "shasum": ""
             },
             "require": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.4.1 || ^0.5 || ^0.6.2 || ^0.7 || ^1.0",
                 "php": ">=5.4",
-                "squizlabs/php_codesniffer": "^3.9.0 || 4.0.x-dev@dev"
+                "squizlabs/php_codesniffer": "^3.10.0 || 4.0.x-dev@dev"
             },
             "require-dev": {
                 "ext-filter": "*",
@@ -1181,7 +1181,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-04-24T11:47:18+00:00"
+            "time": "2024-05-20T13:34:27+00:00"
         },
         {
             "name": "sirbrillig/phpcs-variable-analysis",
@@ -1243,16 +1243,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.9.2",
+            "version": "3.10.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "aac1f6f347a5c5ac6bc98ad395007df00990f480"
+                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/aac1f6f347a5c5ac6bc98ad395007df00990f480",
-                "reference": "aac1f6f347a5c5ac6bc98ad395007df00990f480",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/8f90f7a53ce271935282967f53d0894f8f1ff877",
+                "reference": "8f90f7a53ce271935282967f53d0894f8f1ff877",
                 "shasum": ""
             },
             "require": {
@@ -1319,7 +1319,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-04-23T20:25:34+00:00"
+            "time": "2024-05-22T21:24:41+00:00"
         },
         {
             "name": "wp-coding-standards/wpcs",
