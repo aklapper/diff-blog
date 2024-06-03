@@ -453,12 +453,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wikimedia/interconnection-wordpress-theme.git",
-                "reference": "14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81"
+                "reference": "3f29329aa17940bf13aef4883ebaa3bbb7ab4c5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81",
-                "reference": "14d60ff1bd952cac1ab5dc094c1b9cf24f5adf81",
+                "url": "https://api.github.com/repos/wikimedia/interconnection-wordpress-theme/zipball/3f29329aa17940bf13aef4883ebaa3bbb7ab4c5f",
+                "reference": "3f29329aa17940bf13aef4883ebaa3bbb7ab4c5f",
                 "shasum": ""
             },
             "require": {
@@ -506,7 +506,7 @@
                     "url": "https://donate.wikimedia.org/?utm_medium=gitHub&utm_campaign=sponsorButton&utm_source=interconnection"
                 }
             ],
-            "time": "2024-05-08T13:54:54+00:00"
+            "time": "2024-06-03T15:16:40+00:00"
         },
         {
             "name": "wikimedia/wikimedia-wordpress-security-plugin",
