@@ -61,7 +61,7 @@ function restore_original_nicename_for_reencoded_users( array $data, bool $updat
 
 	// The original array will hold the properly-encoded username from the
 	// MediaWiki side. Use that value as display_name and user_nicename.
-	$display_name = mb_substr( strip_tags( $userdata['user_login'] ?? '' ), 0, 50 );
+	$display_name = mb_substr( wp_strip_all_tags( $userdata['user_login'] ?? '' ), 0, 50 );
 	if ( ! empty( $display_name ) ) {
 		$data['user_nicename'] = $display_name;
 		$data['display_name'] = $display_name;
@@ -93,7 +93,7 @@ function set_nickname_for_reencoded_users( $meta, $user, $update, $userdata ) {
 
 	// The original array will hold the properly-encoded username from the
 	// MediaWiki side. Use that value as meta nickname.
-	$display_name = mb_substr( strip_tags( $userdata['user_login'] ?? '' ), 0, 50 );
+	$display_name = mb_substr( wp_strip_all_tags( $userdata['user_login'] ?? '' ), 0, 50 );
 	if ( ! empty( $display_name ) ) {
 		$meta['nickname'] = $display_name;
 	}
