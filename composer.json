@@ -56,10 +56,10 @@
       "type": "package",
       "package": {
         "name": "the-events-calendar/events-calendar-pro",
-        "version": "6.5.0",
+        "version": "7.0.0",
         "type": "wordpress-plugin",
         "dist": {
-          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=6.5.0",
+          "url": "https://evnt.is/fetch-ecp?key=***REMOVED***&version=7.0.0",
           "type": "zip"
         }
       }
@@ -98,13 +98,13 @@
     "alleyinteractive/wordpress-fieldmanager": "^1.6.0",
     "automattic/post-meta-inspector": "*",
     "automattic/co-authors-plus": "^3.5.15",
-    "the-events-calendar/events-calendar-pro": "^6.3.1.1",
+    "the-events-calendar/events-calendar-pro": "^7.0.0",
     "the-events-calendar/events-virtual": "^1.15.6",
     "the-events-calendar/the-events-calendar-filterbar": "^5.5.3",
     "wikimedia/interconnection-wordpress-theme": "dev-release",
     "wpackagist-plugin/capability-manager-enhanced": "^2.13.0",
     "wpackagist-plugin/publishpress": "^4.0.3",
-    "wpackagist-plugin/the-events-calendar": "^6.3.4",
+    "wpackagist-plugin/the-events-calendar": "^6.6.0",
     "wpackagist-plugin/the-events-calendar-category-colors": "^7.3.0",
     "wpackagist-plugin/wikipedia-preview": "^1.11.0",
     "wpackagist-plugin/wpdiscuz": "^7.6.15",
